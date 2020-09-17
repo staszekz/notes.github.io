@@ -1,21 +1,21 @@
 import React from 'react';
-import { MyButton } from 'components/Button/Button';
+import { NavLink, Link, withRouter } from 'react-router-dom';
+import Button from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
 
 const Bar = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 12vh;
   position: fixed;
   top: 0;
   right: 0%;
   display: flex;
-
   align-items: center;
   justify-content: space-between;
   font-size: ${({ isBig }) => (isBig ? '3em' : '1.5em')};
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
-  /* background: pink; */
+  background: ${({ theme }) => theme.colors.dark};
 `;
 
 const StyledButtonPlace = styled.div`
@@ -37,7 +37,7 @@ const StyledLogo = styled.div`
   /* background: transparent; */
 `;
 
-const ButtonIcon = styled.button`
+const ButtonIcon = styled(Link)`
   width: 60px;
   height: 60px;
   border-radius: 20px;
@@ -58,10 +58,10 @@ const NavBar = () => (
   <Bar>
     <StyledButtonPlace>
       <StyledLogo>Your Note & ToDo </StyledLogo>
-      <MyButton> todo</MyButton>
-      <MyButton> notes</MyButton>
+      <Button to="/todos">todos</Button>
+      <Button to="/notes">notes</Button>
     </StyledButtonPlace>
-    <ButtonIcon icon={logoutIcon} />
+    <ButtonIcon to="signin" icon={logoutIcon} />
   </Bar>
 );
 

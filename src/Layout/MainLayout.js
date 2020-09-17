@@ -1,31 +1,26 @@
 import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
+import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
 
 const StyledWrapper = styled.div`
-  height: 100vh;
-  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   background: ${({ theme }) => theme.colors.dark};
-  position: relative;
-
-  /* ::before {
-    content: '';
-    width: 40px;
-    height: 40px;
-    display: block;
-    background: hotpink;
-  } */
+  /* position: relative; */
 `;
 
-const Layout = ({ children }) => (
+const MainLayout = ({ children }) => (
   <ThemeProvider theme={theme}>
-    <>
-      <StyledWrapper>{children}</StyledWrapper>
-    </>
+    <StyledWrapper>
+      <NavBar />
+      {children}
+    </StyledWrapper>
   </ThemeProvider>
 );
 
-export default Layout;
+export default MainLayout;

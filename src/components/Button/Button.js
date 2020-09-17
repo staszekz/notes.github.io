@@ -1,8 +1,8 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import styled from 'styled-components';
+import { NavLink, Link, useRouteMatch } from 'react-router-dom';
 
-const StyledButton = styled.button`
+const StyledButton = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,11 +27,9 @@ const StyledButton = styled.button`
     box-shadow: 0 10px 20px -15px red;
     background: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
+    text-decoration: none;
   }
 `;
 
-export const MyButton = ({ children }) => (
-  <>
-    <StyledButton>{children}</StyledButton>
-  </>
-);
+const Button = ({ children, to }) => <StyledButton to={to}>{children}</StyledButton>;
+export default Button;
