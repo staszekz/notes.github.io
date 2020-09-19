@@ -1,21 +1,60 @@
 // TodoItem.js
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import editIcon from 'assets/icons/edit.svg';
+import saveIcon from 'assets/icons/save.svg';
+import deleteIcon from 'assets/icons/trash.svg';
+import { DATABASE_URL } from 'utils/database';
 
-const StyledTd = styled.td`
-  color: 'pink';
+const StyledTdWithHover = styled.td`
+  min-width: 30vw;
   :hover {
     color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
-const TodoItem = ({ todo, index }) => {
+const StyledButton = styled.button`
+  color: black;
+  height: 40px;
+  width: 40px;
+  border-radius: 10px;
+`;
+
+const TodoItem = ({ todo, index, onSave, onEdit }) => {
+  const [isEdited, setIsEdited] = useState(false);
+  const [value, setValue] = useState(todo);
+
+  const handleOnEdit = editID => {
+    onEdit(editID);
+  };
+
+  // const handleChangeValue = e => setValue(...value, (content = e.target.value));
+
+  const handleOnDelete = () => {
+    console.log(`deleted`);
+  };
+
   return (
     <tr key={todo.id}>
-      <td>{index + 1}</td>
-      <StyledTd as="td">{todo.content}</StyledTd>
-      <td>{todo.deadline}</td>
-      <td>{todo.completed ? '✔️' : '✖️'}</td>
+      {console.log(`todo item`, todo)}
+      <td className="align-middle">{index + 1}</td>
+      <StyledTdWithHover className="align-middle text-xl-left" as="td">
+        {todo.content}
+      </StyledTdWithHover>
+
+      <td className="align-middle">
+        <StyledButton onClick={() => handleOnEdit(todo.id)}>
+          <img src={editIcon} />{' '}
+        </StyledButton>
+      </td>
+      <td className="align-middle">
+        <StyledButton onClick={handleOnDelete}>
+          {' '}
+          <img src={deleteIcon} />
+        </StyledButton>
+      </td>
+      <td className="align-middle"> {todo.deadline}</td>
+      <td className="align-middle">{todo.completed ? '✔️' : '✖️'}</td>
     </tr>
   );
 };

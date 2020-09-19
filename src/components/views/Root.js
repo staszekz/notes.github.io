@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import GlobalStyle from 'Theme/GlobalStyle';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import Todos from 'components/views/Todos';
@@ -9,14 +9,17 @@ import SignIn from 'components/views/SignIn';
 
 const Root = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route path="/todos" component={Todos} />
-        <Route path="/notes" component={Notes} />
-        <Route path="/signin" component={SignIn} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route path="/todos" component={Todos} />
+          <Route path="/notes" component={Notes} />
+          <Route path="/signin" component={SignIn} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 };
 

@@ -1,3 +1,6 @@
+import TodoItem from 'components/Todo/TodoItem';
+import firebase from 'firebase';
+
 const firebaseConfig = {
   apiKey: 'AIzaSyBJrGkMXNIRPDTV6mwtNuFonE5N3conc58',
   authDomain: 'notes-and-todos-6756c.firebaseapp.com',
@@ -11,3 +14,5 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+export const DATABASE_URL = firebaseConfig.databaseURL;

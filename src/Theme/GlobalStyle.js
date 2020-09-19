@@ -17,8 +17,9 @@ body{
   margin: 0;
   font-family: 'Grandstander', sans-serif;
 }
-
-
+ th, td {
+   text-align: center;
+ }
 
 `;
 
