@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import MainLayout from 'Layout/MainLayout';
 import GlobalStyle from 'Theme/GlobalStyle';
@@ -6,31 +6,9 @@ import { StyledH1 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import Todoinput from 'components/Todo/TodoInput';
 import { DATABASE_URL } from 'utils/database';
-import { render } from '@testing-library/react';
 import TodoInput from 'components/Todo/TodoInput';
-
-// const data = [
-//   {
-//     id: 1,
-//     content: 'jakies zadanie do zrobienia',
-//     deadline: 'jutro 12',
-//     completed: false,
-//   },
-//   {
-//     id: 2,
-//     content: 'drugie zadanie',
-//     deadline: '2020.12.03',
-//     completed: true,
-//   },
-//   {
-//     id: 3,
-//     content: 'trzecie zadanie',
-//     deadline: '2020.11.03',
-//     completed: true,
-//   },
-// ];
+import AddTask from 'components/Form/Form';
 
 const StyledTodoList = styled.div`
   width: 60%;
@@ -65,7 +43,7 @@ class Todos extends React.Component {
               };
             })
           : [];
-        // console.log(arrayTodos);
+        console.log(arrayTodos);
         this.setState({
           todos: arrayTodos,
           isLoading: false,
@@ -73,15 +51,11 @@ class Todos extends React.Component {
       });
   };
 
-  // resetEditId = () => {
-  //   setEditedID(null);
-  // };
   componentDidMount() {
     this.fetchTodos();
   }
 
   saveClicked = editID => {
-    console.log(this.state.todos);
     this.fetchTodos();
     this.setState({
       editID: null,
@@ -92,8 +66,15 @@ class Todos extends React.Component {
     this.setState({ editID });
   };
 
+  handleDeleteClick = deletedId => {
+    fetch(`${DATABASE_URL}/todos/${deletedId}.json`, {
+      method: 'DELETE',
+    }).then(() => {
+      this.fetchTodos();
+    });
+  };
+
   render() {
-    const { todo } = this.props;
     const { isLoading } = this.state;
     return (
       <>
@@ -143,16 +124,24 @@ class Todos extends React.Component {
                         {this.state.editID === todo.id ? (
                           <TodoInput
                             key={todo.id}
+                            id={todo.id}
                             index={index}
-                            todo={todo}
-                            onSave={() => this.saveClicked(todo.id)}
+                            content={todo.content}
+                            completed={todo.completed}
+                            deadline={todo.deadline}
+                            onSave={this.saveClicked}
+                            onDelete={this.handleDeleteClick}
                           />
                         ) : (
                           <TodoItem
                             key={todo.id}
+                            id={todo.id}
                             index={index}
-                            todo={todo}
-                            onEdit={() => this.handleEdit(todo.id)}
+                            content={todo.content}
+                            completed={todo.completed}
+                            deadline={todo.deadline}
+                            onEdit={this.handleEdit}
+                            onDelete={this.handleDeleteClick}
                           />
                         )}
                       </>
@@ -161,6 +150,7 @@ class Todos extends React.Component {
               </tbody>
             </StyledTable>
           </StyledTodoList>
+          <AddTask onAdd={this.fetchTodos} />
         </MainLayout>
       </>
     );

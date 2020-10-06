@@ -28,8 +28,9 @@ const StyledInput = styled.input`
 
 class TodoInput extends React.Component {
   state = {
-    content: this.props.todo.content,
-    deadline: this.props.todo.deadline,
+    content: this.props.content,
+    deadline: this.props.deadline,
+    completed: this.props.completed,
   };
 
   handleOnSave = id => {
@@ -46,23 +47,23 @@ class TodoInput extends React.Component {
   };
   handleInputChange = e => {
     this.setState({
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
   };
 
   render() {
-    const { todo, index } = this.props;
-    const { content, deadline } = this.state;
+    const { index, id } = this.props;
+    const { content, deadline, completed } = this.state;
     return (
       <>
-        <tr key={todo.id}>
+        <tr key={id}>
           <td className="align-middle">{index + 1}</td>
           <td className="align-middle">
             <StyledInput name="content" value={content} onChange={this.handleInputChange} />
           </td>
 
           <td className="align-middle">
-            <StyledButton onClick={() => this.handleOnSave(todo.id)}>
+            <StyledButton onClick={() => this.handleOnSave(id)}>
               <img src={saveIcon} alt="save icon" />
             </StyledButton>
           </td>
@@ -80,7 +81,7 @@ class TodoInput extends React.Component {
               onChange={this.handleInputChange}
             />
           </td>
-          <td className="align-middle">{todo.completed ? '✔️' : '❌'}</td>
+          <td className="align-middle">{completed ? '✔️' : '❌'}</td>
         </tr>
       </>
     );
