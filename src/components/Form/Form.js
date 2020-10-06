@@ -39,8 +39,7 @@ class AddTask extends Component {
       [e.target.name]: e.target.value,
     });
   };
-  rend;
-  er() {
+  render() {
     return (
       <form>
         <label htmlFor="newTask">Dodaj zadanie:</label>
