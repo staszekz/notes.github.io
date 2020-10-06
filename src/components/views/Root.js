@@ -11,7 +11,7 @@ const Root = () => {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Switch>
           <Route exact path="/" component={App} />
           <Route path="/todos" component={Todos} />
