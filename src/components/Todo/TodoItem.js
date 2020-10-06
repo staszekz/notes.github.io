@@ -13,7 +13,7 @@ const StyledTdWithHover = styled.td`
   }
 `;
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   color: black;
   height: 40px;
   width: 40px;
@@ -24,9 +24,9 @@ const TodoItem = ({ todo, index, onSave, onEdit }) => {
   const [isEdited, setIsEdited] = useState(false);
   const [value, setValue] = useState(todo);
 
-  const handleOnEdit = editID => {
-    onEdit(editID);
-  };
+  // const handleOnEdit = editID => {
+  //   onEdit(editID);
+  // };
 
   // const handleChangeValue = e => setValue(...value, (content = e.target.value));
 
@@ -43,7 +43,7 @@ const TodoItem = ({ todo, index, onSave, onEdit }) => {
       </StyledTdWithHover>
 
       <td className="align-middle">
-        <StyledButton onClick={() => handleOnEdit(todo.id)}>
+        <StyledButton onClick={() => onEdit(todo.id)}>
           <img src={editIcon} />{' '}
         </StyledButton>
       </td>

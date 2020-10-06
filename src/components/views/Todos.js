@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import TodoForm from 'components/Todo/TodoForm';
 import { DATABASE_URL } from 'utils/database';
+import { render } from '@testing-library/react';
 
 const data = [
   {
@@ -20,6 +21,12 @@ const data = [
     id: 2,
     content: 'drugie zadanie',
     deadline: '2020.12.03',
+    completed: true,
+  },
+  {
+    id: 3,
+    content: 'trzecie zadanie',
+    deadline: '2020.11.03',
     completed: true,
   },
 ];
@@ -38,12 +45,14 @@ const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
-const Todos = () => {
-  const [todos, setTodos] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [editedID, setEditedID] = useState(null);
+class Todos extends React.Component {
+  state = {
+    todos: {},
+    isLoading: false,
+    editID: null,
+  };
 
-  // const fetchTodos = () => {
+  // fetchTodos = () => {
   //   fetch(`${DATABASE_URL}/todos.json`)
   //     .then(r => r.json())
   //     .then(todos => {
@@ -61,87 +70,94 @@ const Todos = () => {
   //     });
   // };
 
-  useEffect(() => {
+  // resetEditId = () => {
+  //   setEditedID(null);
+  // };
+
+  saveClicked = editID => {
     // fetchTodos();
-  }, []);
-
-  const resetEditId = () => {
-    setEditedID(null);
+    this.setState({
+      editID: null,
+    });
   };
 
-  const saveClicked = () => {
-    // fetchTodos();
-    resetEditId();
+  handleEdit = editID => {
+    // console.log(editID);
+    this.setState({ editID });
   };
 
-  const handleEdit = editID => {
-    setEditedID(editID);
-  };
-
-  return (
-    <>
-      <GlobalStyle />
-      <MainLayout>
-        <StyledTodoList>
-          <StyledH1>todos list</StyledH1>
-          <StyledTable striped responsive>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Content</th>
-                <th>Edit</th>
-                <th>Remove</th>
-                <th>Deadline</th>
-                <th>Completed</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
+  render() {
+    const { todo } = this.props;
+    const { isLoading } = this.state;
+    return (
+      <>
+        <GlobalStyle />
+        <MainLayout>
+          <StyledTodoList>
+            <StyledH1>todos list</StyledH1>
+            <StyledTable striped responsive>
+              <thead>
                 <tr>
-                  <td colSpan={12}>
-                    <Spinner animation="border" />
-                  </td>
+                  <th>#</th>
+                  <th>Content</th>
+                  <th>Edit</th>
+                  <th>Remove</th>
+                  <th>Deadline</th>
+                  <th>Completed</th>
                 </tr>
-              ) : (
-                data
-                  // .filter(todo => {
-                  //   const textFilter = todo.title
-                  //     .toLowerCase()
-                  //     .includes(this.state.filter.toLowerCase());
+              </thead>
+              <tbody>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={12}>
+                      <Spinner animation="border" />
+                    </td>
+                  </tr>
+                ) : (
+                  data
+                    // .filter(todo => {
+                    //   const textFilter = todo.title
+                    //     .toLowerCase()
+                    //     .includes(this.state.filter.toLowerCase());
 
-                  //   if (this.state.showCompleted && this.state.showInCompleted) {
-                  //     return textFilter;
-                  //   } else if (this.state.showCompleted) {
-                  //     return textFilter && todo.completed === true;
-                  //   } else if (this.state.showInCompleted) {
-                  //     return textFilter && todo.completed === false;
-                  //   } else {
-                  //     return false;
-                  //   }
-                  // })
-                  .map((todo, index) => (
-                    <>
-                      {console.log(`todo`, todo)}
+                    //   if (this.state.showCompleted && this.state.showInCompleted) {
+                    //     return textFilter;
+                    //   } else if (this.state.showCompleted) {
+                    //     return textFilter && todo.completed === true;
+                    //   } else if (this.state.showInCompleted) {
+                    //     return textFilter && todo.completed === false;
+                    //   } else {
+                    //     return false;
+                    //   }
+                    // })
+                    .map((todo, index) => (
+                      <>
+                        {console.log(`todo`, todo)}
 
-                      {editedID === todo.id ? (
-                        <TodoForm key={todo.id} index={index} todo={todo} />
-                      ) : (
-                        <TodoItem
-                          key={todo.id}
-                          index={index}
-                          todo={todo}
-                          onSave={saveClicked}
-                          onEdit={handleEdit}
-                        />
-                      )}
-                    </>
-                  ))
-              )}
-            </tbody>
-          </StyledTable>
-        </StyledTodoList>
-      </MainLayout>
-    </>
-  );
-};
+                        {this.state.editID === todo.id ? (
+                          <TodoForm
+                            key={todo.id}
+                            index={index}
+                            todo={todo}
+                            onSave={() => this.saveClicked(todo.id)}
+                          />
+                        ) : (
+                          <TodoItem
+                            key={todo.id}
+                            index={index}
+                            todo={todo}
+                            onEdit={() => this.handleEdit(todo.id)}
+                          />
+                        )}
+                      </>
+                    ))
+                )}
+              </tbody>
+            </StyledTable>
+          </StyledTodoList>
+        </MainLayout>
+      </>
+    );
+  }
+}
 export default Todos;

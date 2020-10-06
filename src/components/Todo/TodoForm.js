@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import editIcon from 'assets/icons/edit.svg';
-
+import saveIcon from 'assets/icons/save.svg';
+import { StyledButton } from 'components/Todo/TodoItem';
 import { DATABASE_URL } from 'utils/database';
 
 const TodoForm = ({ todo, index, onSave }) => {
@@ -13,9 +13,6 @@ const TodoForm = ({ todo, index, onSave }) => {
   //     onSave();
   //   });
   // };
-  const handleOnSave = editID => {
-    onSave(editID);
-  };
 
   return (
     <>
@@ -27,11 +24,9 @@ const TodoForm = ({ todo, index, onSave }) => {
         </td>
 
         <td className="align-middle">
-          <button onClick={() => handleOnSave(todo.id)}>
-            {' '}
-            edit
-            <img src={editIcon} />{' '}
-          </button>
+          <StyledButton onClick={() => onSave(todo.id)}>
+            <img src={saveIcon} alt="save icon" />
+          </StyledButton>
         </td>
         <td className="align-middle">
           <input value={todo.deadline} />
