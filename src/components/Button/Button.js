@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { NavLink, Link, useRouteMatch } from 'react-router-dom';
 
-const StyledButtonLink = styled(Link)`
+export const StyledButtonLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,4 +32,5 @@ const StyledButtonLink = styled(Link)`
 `;
 
 const Button = ({ children, to }) => <StyledButtonLink to={to}>{children}</StyledButtonLink>;
+
 export default Button;

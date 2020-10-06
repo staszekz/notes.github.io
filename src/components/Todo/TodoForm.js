@@ -1,40 +1,47 @@
 import React from 'react';
 import styled from 'styled-components';
-import saveIcon from 'assets/icons/save.svg';
-import { StyledButton } from 'components/Todo/TodoItem';
-import { DATABASE_URL } from 'utils/database';
+import Input from '../../atoms/Input/Input';
+import { StyledButtonLink } from 'components/Button/Button';
 
-const TodoForm = ({ todo, index, onSave }) => {
-  // const handleOnSave = id => {
-  //   fetch(`${DATABASE_URL}/todos/${id}.json`, {
-  //     method: 'PUT',
-  //     body: JSON.stringify(value),
-  //   }).then(() => {
-  //     onSave();
-  //   });
-  // };
+// import pageContext from '../../../context';
 
-  return (
-    <>
-      <tr key={todo.id}>
-        {console.log(`todo item`, todo)}
-        <td className="align-middle">{index + 1}</td>
-        <td className="align-middle">
-          <input className="align-middle text-xl-left" as="td" value={todo.content} />
-        </td>
+const StyledWrapper = styled.div`
+  border-left: 10px solid ${({ theme, activecolor }) => theme[activecolor]};
+  z-index: 9999;
+  position: fixed;
+  display: flex;
+  padding: 100px 90px;
+  flex-direction: column;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 680px;
+  background-color: white;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+  transform: translate(${({ isVisible }) => (isVisible ? '0' : '100%')});
+  transition: transform 0.25s ease-in-out;
+`;
 
-        <td className="align-middle">
-          <StyledButton onClick={() => onSave(todo.id)}>
-            <img src={saveIcon} alt="save icon" />
-          </StyledButton>
-        </td>
-        <td className="align-middle">
-          <input value={todo.deadline} />
-        </td>
-        <td className="align-middle">{todo.completed ? '✔️' : '✖️'}</td>
-      </tr>
-    </>
-  );
-};
+const StyledTextArea = styled(input)`
+  margin: 30px 0 100px;
+  border-radius: 20px;
+  height: 30vh;
+`;
+
+const StyledInput = styled(input)`
+  margin-top: 30px;
+`;
+
+const TodoForm = () => (
+  <StyledWrapper isVisible={isVisible} activecolor={pageContext}>
+    <h1>Create new {pageContext}</h1>
+    <StyledInput placeholder="title" />
+    {pageContext === 'twitters' && <StyledInput placeholder="link" />}
+
+    {pageContext === 'articles' && <StyledInput placeholder="link" />}
+    <StyledTextArea as="textarea" placeholder="title" />
+    <StyledButtonLink>Add Note</StyledButtonLink>
+  </StyledWrapper>
+);
 
 export default TodoForm;

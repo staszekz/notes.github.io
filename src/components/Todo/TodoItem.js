@@ -1,16 +1,21 @@
 // TodoItem.js
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import editIcon from 'assets/icons/edit.svg';
 import saveIcon from 'assets/icons/save.svg';
 import deleteIcon from 'assets/icons/trash.svg';
 import { DATABASE_URL } from 'utils/database';
 
 const StyledTdWithHover = styled.td`
-  min-width: 30vw;
+  width: 30vw;
   :hover {
     color: ${({ theme }) => theme.colors.primary};
   }
+  ${({ deadline }) =>
+    deadline &&
+    css`
+      width: 8vw;
+    `}
 `;
 
 export const StyledButton = styled.button`
@@ -36,7 +41,7 @@ const TodoItem = ({ todo, index, onSave, onEdit }) => {
 
   return (
     <tr key={todo.id}>
-      {console.log(`todo item`, todo)}
+      {/* {console.log(`todo item`, todo)} */}
       <td className="align-middle">{index + 1}</td>
       <StyledTdWithHover className="align-middle text-xl-left" as="td">
         {todo.content}
@@ -49,12 +54,14 @@ const TodoItem = ({ todo, index, onSave, onEdit }) => {
       </td>
       <td className="align-middle">
         <StyledButton onClick={handleOnDelete}>
-          {' '}
           <img src={deleteIcon} />
         </StyledButton>
       </td>
-      <td className="align-middle"> {todo.deadline}</td>
-      <td className="align-middle">{todo.completed ? '✔️' : '✖️'}</td>
+      <StyledTdWithHover deadline className="align-middle" as="td">
+        {' '}
+        {todo.deadline}
+      </StyledTdWithHover>
+      <td className="align-middle">{todo.completed ? '✔️' : '❌'}</td>
     </tr>
   );
 };

@@ -13,6 +13,6 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+// firebase.analytics();
 
 export const DATABASE_URL = firebaseConfig.databaseURL;

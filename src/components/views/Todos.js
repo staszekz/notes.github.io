@@ -6,30 +6,31 @@ import { StyledH1 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import TodoForm from 'components/Todo/TodoForm';
+import Todoinput from 'components/Todo/TodoInput';
 import { DATABASE_URL } from 'utils/database';
 import { render } from '@testing-library/react';
+import TodoInput from 'components/Todo/TodoInput';
 
-const data = [
-  {
-    id: 1,
-    content: 'jakies zadanie do zrobienia',
-    deadline: 'jutro 12',
-    completed: false,
-  },
-  {
-    id: 2,
-    content: 'drugie zadanie',
-    deadline: '2020.12.03',
-    completed: true,
-  },
-  {
-    id: 3,
-    content: 'trzecie zadanie',
-    deadline: '2020.11.03',
-    completed: true,
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     content: 'jakies zadanie do zrobienia',
+//     deadline: 'jutro 12',
+//     completed: false,
+//   },
+//   {
+//     id: 2,
+//     content: 'drugie zadanie',
+//     deadline: '2020.12.03',
+//     completed: true,
+//   },
+//   {
+//     id: 3,
+//     content: 'trzecie zadanie',
+//     deadline: '2020.11.03',
+//     completed: true,
+//   },
+// ];
 
 const StyledTodoList = styled.div`
   width: 60%;
@@ -48,41 +49,46 @@ const StyledTable = styled(Table)`
 class Todos extends React.Component {
   state = {
     todos: {},
-    isLoading: false,
+    isLoading: true,
     editID: null,
   };
 
-  // fetchTodos = () => {
-  //   fetch(`${DATABASE_URL}/todos.json`)
-  //     .then(r => r.json())
-  //     .then(todos => {
-  //       const arrayTodos = todos
-  //         ? Object.keys(todos).map(key => {
-  //             return {
-  //               id: key,
-  //               ...todos[key],
-  //             };
-  //           })
-  //         : [];
-  //       console.log(arrayTodos);
-  //       setTodos(arrayTodos);
-  //       setIsLoading(false);
-  //     });
-  // };
+  fetchTodos = () => {
+    fetch(`${DATABASE_URL}/todos.json`)
+      .then(r => r.json())
+      .then(todos => {
+        const arrayTodos = todos
+          ? Object.keys(todos).map(key => {
+              return {
+                id: key,
+                ...todos[key],
+              };
+            })
+          : [];
+        // console.log(arrayTodos);
+        this.setState({
+          todos: arrayTodos,
+          isLoading: false,
+        });
+      });
+  };
 
   // resetEditId = () => {
   //   setEditedID(null);
   // };
+  componentDidMount() {
+    this.fetchTodos();
+  }
 
   saveClicked = editID => {
-    // fetchTodos();
+    console.log(this.state.todos);
+    this.fetchTodos();
     this.setState({
       editID: null,
     });
   };
 
   handleEdit = editID => {
-    // console.log(editID);
     this.setState({ editID });
   };
 
@@ -114,7 +120,7 @@ class Todos extends React.Component {
                     </td>
                   </tr>
                 ) : (
-                  data
+                  this.state.todos
                     // .filter(todo => {
                     //   const textFilter = todo.title
                     //     .toLowerCase()
@@ -132,10 +138,10 @@ class Todos extends React.Component {
                     // })
                     .map((todo, index) => (
                       <>
-                        {console.log(`todo`, todo)}
+                        {/* {console.log(`todo`, todo)} */}
 
                         {this.state.editID === todo.id ? (
-                          <TodoForm
+                          <TodoInput
                             key={todo.id}
                             index={index}
                             todo={todo}
