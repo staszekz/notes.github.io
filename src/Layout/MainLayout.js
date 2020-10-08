@@ -27,18 +27,20 @@ const StyledWrapper = styled.div`
   /* position: relative; */
 `;
 
-// const Styledp = styled.p`
-//   ${({ isVisible }) => isVisible ? 'background-color: pink' : 'background-color: white'}
 
-// `;
 
 const MainLayout = ({ children, onAdd }) => {
 
   const [isNewItemBarVisible, setIsNewItemBarVisible] = useState(false);
 
   const handleIsVisible = () => {
-    setIsNewItemBarVisible(state => !state);
+    setIsNewItemBarVisible(prevState => !prevState);
   };
+
+  const isModalOpen = () => {
+    setIsNewItemBarVisible(prevState => !prevState);
+    onAdd();
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -47,7 +49,7 @@ const MainLayout = ({ children, onAdd }) => {
         <>
           {children}
           <StyledAddItemButton onClick={handleIsVisible}>➕</StyledAddItemButton>
-          <Modal onAdd={onAdd} isVisible={isNewItemBarVisible} />
+          <Modal onAdd={isModalOpen} isVisible={isNewItemBarVisible} />
         </>
       </StyledWrapper>
     </ThemeProvider>

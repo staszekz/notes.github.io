@@ -52,6 +52,7 @@ class AddTask extends Component {
       return alert('wprowadź zadanie');
     }
     this.putDataInDatabase();
+
   };
 
   handleOnChange = e => {

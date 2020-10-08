@@ -26,10 +26,6 @@ const StyledTable = styled(Table)`
 `;
 
 
-// const StyledEmptyList = styled.h2`
-
-// `;
-
 class Todos extends React.Component {
   state = {
     todos: [],
@@ -60,7 +56,6 @@ class Todos extends React.Component {
   componentDidMount() {
     this.fetchTodos();
   }
-
   saveClicked = editID => {
     this.fetchTodos();
     this.setState({
