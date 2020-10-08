@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Link, withRouter } from 'react-router-dom';
-import Button from 'components/Button/Button';
+import ButtonLink from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
 
@@ -58,8 +58,8 @@ const NavBar = () => (
   <Bar>
     <StyledButtonPlace>
       <StyledLogo>Your Note & ToDo </StyledLogo>
-      <Button to="/todos">todos</Button>
-      <Button to="/notes">notes</Button>
+      <ButtonLink to="/todos">todos</ButtonLink>
+      <ButtonLink to="/notes">notes</ButtonLink>
     </StyledButtonPlace>
     <ButtonIcon to="signin" icon={logoutIcon} />
   </Bar>

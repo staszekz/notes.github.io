@@ -1,7 +1,27 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
+import { StyledInput } from 'components/Todo/TodoInput'
+import { StyledButton } from 'components/Button/Button'
 import { DATABASE_URL } from 'utils/database';
+
+
+const StyledLabel = styled.label`
+   color: white;
+   display: block;
+`;
+
+
+const StyledModalInput = styled(StyledInput)`
+width: 70%;
+margin: 1rem auto;
+`;
+
+const StyledForm = styled.form`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+`;
 
 class AddTask extends Component {
   state = {
@@ -41,24 +61,24 @@ class AddTask extends Component {
   };
   render() {
     return (
-      <form>
-        <label htmlFor="newTask">Dodaj zadanie:</label>
-        <input
+      <StyledForm>
+        <StyledLabel htmlFor="newTask">Dodaj zadanie:</StyledLabel>
+        <StyledModalInput
           name="content"
           placeholder="wprowadź nowe zadanie"
           value={this.state.content}
           onChange={this.handleOnChange}
-        ></input>
-        <input
+        ></StyledModalInput>
+        <StyledModalInput deadline
           name="deadline"
           placeholder="wprowadź deadline"
           value={this.state.deadline}
           onChange={this.handleOnChange}
-        ></input>
-        <button type="submit" onClick={this.handleOnInputClick}>
+        ></StyledModalInput>
+        <StyledButton modal type="submit" onClick={this.handleOnInputClick}>
           Dodaj zadanie
-        </button>
-      </form>
+        </StyledButton>
+      </StyledForm>
     );
   }
 }

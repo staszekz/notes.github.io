@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import MainLayout from 'Layout/MainLayout';
 import GlobalStyle from 'Theme/GlobalStyle';
 import { StyledH1 } from 'components/H1/H1';
+import { StyledH2 } from 'components/H1/H1'
 import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
@@ -24,9 +25,14 @@ const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
+
+// const StyledEmptyList = styled.h2`
+
+// `;
+
 class Todos extends React.Component {
   state = {
-    todos: {},
+    todos: [],
     isLoading: true,
     editID: null,
   };
@@ -37,11 +43,11 @@ class Todos extends React.Component {
       .then(todos => {
         const arrayTodos = todos
           ? Object.keys(todos).map(key => {
-              return {
-                id: key,
-                ...todos[key],
-              };
-            })
+            return {
+              id: key,
+              ...todos[key],
+            };
+          })
           : [];
         console.log(arrayTodos);
         this.setState({
@@ -75,82 +81,88 @@ class Todos extends React.Component {
   };
 
   render() {
-    const { isLoading } = this.state;
+    const { isLoading, todos, editID } = this.state;
     return (
       <>
         <GlobalStyle />
-        <MainLayout>
+        <MainLayout onAdd={this.fetchTodos}>
           <StyledTodoList>
-            <StyledH1>todos list</StyledH1>
-            <StyledTable striped responsive>
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Content</th>
-                  <th>Edit</th>
-                  <th>Remove</th>
-                  <th>Deadline</th>
-                  <th>Completed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={12}>
-                      <Spinner animation="border" />
-                    </td>
-                  </tr>
-                ) : (
-                  this.state.todos
-                    // .filter(todo => {
-                    //   const textFilter = todo.title
-                    //     .toLowerCase()
-                    //     .includes(this.state.filter.toLowerCase());
+            {todos.length ? (
+              <>
+                <StyledH1>todos list</StyledH1>
+                <StyledTable striped responsive>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Content</th>
+                      <th>Edit</th>
+                      <th>Remove</th>
+                      <th>Deadline</th>
+                      <th>Completed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {isLoading ? (
+                      <tr>
+                        <td colSpan={12}>
+                          <Spinner animation="border" />
+                        </td>
+                      </tr>
+                    ) : (
+                        todos
+                          // .filter(todo => {
+                          //   const textFilter = todo.title
+                          //     .toLowerCase()
+                          //     .includes(this.state.filter.toLowerCase());
 
-                    //   if (this.state.showCompleted && this.state.showInCompleted) {
-                    //     return textFilter;
-                    //   } else if (this.state.showCompleted) {
-                    //     return textFilter && todo.completed === true;
-                    //   } else if (this.state.showInCompleted) {
-                    //     return textFilter && todo.completed === false;
-                    //   } else {
-                    //     return false;
-                    //   }
-                    // })
-                    .map((todo, index) => (
-                      <>
-                        {/* {console.log(`todo`, todo)} */}
+                          //   if (this.state.showCompleted && this.state.showInCompleted) {
+                          //     return textFilter;
+                          //   } else if (this.state.showCompleted) {
+                          //     return textFilter && todo.completed === true;
+                          //   } else if (this.state.showInCompleted) {
+                          //     return textFilter && todo.completed === false;
+                          //   } else {
+                          //     return false;
+                          //   }
+                          // })
+                          .map((todo, index) => (
+                            <>
+                              {/* {console.log(`todo`, todo)} */}
 
-                        {this.state.editID === todo.id ? (
-                          <TodoInput
-                            key={todo.id}
-                            id={todo.id}
-                            index={index}
-                            content={todo.content}
-                            completed={todo.completed}
-                            deadline={todo.deadline}
-                            onSave={this.saveClicked}
-                            onDelete={this.handleDeleteClick}
-                          />
-                        ) : (
-                          <TodoItem
-                            key={todo.id}
-                            id={todo.id}
-                            index={index}
-                            content={todo.content}
-                            completed={todo.completed}
-                            deadline={todo.deadline}
-                            onEdit={this.handleEdit}
-                            onDelete={this.handleDeleteClick}
-                          />
-                        )}
-                      </>
-                    ))
-                )}
-              </tbody>
-            </StyledTable>
+                              {editID === todo.id ? (
+                                <TodoInput
+                                  key={todo.id}
+                                  id={todo.id}
+                                  index={index}
+                                  content={todo.content}
+                                  completed={todo.completed}
+                                  deadline={todo.deadline}
+                                  onSave={this.saveClicked}
+                                  onDelete={this.handleDeleteClick}
+                                />
+                              ) : (
+                                  <TodoItem
+                                    key={todo.id}
+                                    id={todo.id}
+                                    index={index}
+                                    content={todo.content}
+                                    completed={todo.completed}
+                                    deadline={todo.deadline}
+                                    onEdit={this.handleEdit}
+                                    onDelete={this.handleDeleteClick}
+                                  />
+                                )}
+                            </>
+                          ))
+                      )}
+                  </tbody>
+                </StyledTable>
+              </>
+            ) : (
+                <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
+              )}
           </StyledTodoList>
-          <AddTask onAdd={this.fetchTodos} />
+          {/* <AddTask onAdd={this.fetchTodos} /> */}
         </MainLayout>
       </>
     );

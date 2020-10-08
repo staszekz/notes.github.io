@@ -6,7 +6,7 @@ import deleteIcon from 'assets/icons/trash.svg';
 import { StyledButton } from 'components/Todo/TodoItem';
 import { DATABASE_URL } from 'utils/database';
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
   background-color: lightgray;
   border: none;
   border-radius: 20px;
@@ -33,12 +33,12 @@ class TodoInput extends React.Component {
     completed: this.props.completed,
   };
 
-  handleOnSave = id => {
-    fetch(`${DATABASE_URL}/todos/${id}.json`, {
+  handleOnSave = () => {
+    fetch(`${DATABASE_URL}/todos/${this.props.id}.json`, {
       method: 'PUT',
       body: JSON.stringify(this.state),
     }).then(() => {
-      this.props.onSave(id);
+      this.props.onSave(this.props.id);
     });
   };
 
@@ -63,7 +63,7 @@ class TodoInput extends React.Component {
           </td>
 
           <td className="align-middle">
-            <StyledButton onClick={() => this.handleOnSave(id)}>
+            <StyledButton onClick={this.handleOnSave}>
               <img src={saveIcon} alt="save icon" />
             </StyledButton>
           </td>

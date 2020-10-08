@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { NavLink, Link, useRouteMatch } from 'react-router-dom';
 
-export const StyledButtonLink = styled(Link)`
+export const StyledButton = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,7 +10,7 @@ export const StyledButtonLink = styled(Link)`
   width: 20%;
   padding: 1rem;
   height: 60px;
-  background: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.white};
   border-radius: 50px;
   border: none;
   color: ${({ theme }) => theme.colors.white};
@@ -29,8 +29,12 @@ export const StyledButtonLink = styled(Link)`
     color: ${({ theme }) => theme.colors.white};
     text-decoration: none;
   }
+  ${({ modal }) => modal && css`
+   width: 40%;
+   margin-top: 2rem;
+  `}
 `;
 
-const Button = ({ children, to }) => <StyledButtonLink to={to}>{children}</StyledButtonLink>;
+const ButtonLink = ({ children, to }) => <StyledButton to={to}>{children}</StyledButton>;
 
-export default Button;
+export default ButtonLink;
