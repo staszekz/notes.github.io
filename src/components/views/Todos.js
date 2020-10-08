@@ -82,9 +82,9 @@ class Todos extends React.Component {
         <GlobalStyle />
         <MainLayout onAdd={this.fetchTodos}>
           <StyledTodoList>
-            {todos.length ? (
+            {todos.length &&
               <>
-                <StyledH1>todos list</StyledH1>
+                <StyledH1>Todos List</StyledH1>
                 <StyledTable striped responsive>
                   <thead>
                     <tr>
@@ -152,10 +152,8 @@ class Todos extends React.Component {
                       )}
                   </tbody>
                 </StyledTable>
-              </>
-            ) : (
-                <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
-              )}
+              </>}
+            {!todos.length && <StyledH2>Your todo list is empty! Enter new task! </StyledH2>}
           </StyledTodoList>
           {/* <AddTask onAdd={this.fetchTodos} /> */}
         </MainLayout>
