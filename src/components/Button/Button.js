@@ -31,7 +31,7 @@ export const StyledButton = styled(Link)`
   }
   ${({ modal }) => modal && css`
    width: 40%;
-   margin-top: 2rem;
+   /* margin-top: 2rem; */
   `}
 `;
 

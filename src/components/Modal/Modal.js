@@ -28,6 +28,7 @@ const Modal = ({ isVisible, onAdd }) => {
 	return (
 		<StyledWrapper isVisible={isVisible}>
 			<AddTask onAdd={onAdd}></AddTask>
+
 		</StyledWrapper>
 	)
 };

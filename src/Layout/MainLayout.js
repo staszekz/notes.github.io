@@ -17,14 +17,15 @@ z-index: 2;
 `;
 
 const StyledWrapper = styled.div`
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; */
   background: ${({ theme }) => theme.colors.dark};
-  /* position: relative; */
+
+  filter: blur(${({ onModalOpen }) => onModalOpen && '5px'});
 `;
 
 
@@ -44,14 +45,14 @@ const MainLayout = ({ children, onAdd }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledWrapper>
+      <StyledWrapper onModalOpen={isNewItemBarVisible}>
         <NavBar />
         <>
           {children}
           <StyledAddItemButton onClick={handleIsVisible}>➕</StyledAddItemButton>
-          <Modal onAdd={isModalOpen} isVisible={isNewItemBarVisible} />
         </>
       </StyledWrapper>
+      <Modal onAdd={isModalOpen} isVisible={isNewItemBarVisible} />
     </ThemeProvider>
   )
 

@@ -15,5 +15,7 @@ export const StyledH2 = styled.h2`
   text-align: center;
   padding: 3rem;
   margin-bottom: 4rem;
+  position: relative;
+  top: 13vh;
   /* background-color: red; */
 `;

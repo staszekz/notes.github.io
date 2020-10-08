@@ -7,6 +7,7 @@ import { DATABASE_URL } from 'utils/database';
 
 const StyledTdWithHover = styled.td`
   width: 30vw;
+  /* height: 300px; */
   :hover {
     color: ${({ theme }) => theme.colors.primary};
   }

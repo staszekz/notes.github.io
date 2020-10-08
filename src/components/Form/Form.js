@@ -18,9 +18,20 @@ margin: 1rem auto;
 
 const StyledForm = styled.form`
 display: flex;
+height: 100%;
 flex-direction: column;
 justify-content: center;
 align-items: center;
+`;
+
+
+const StyledButtonWrapper = styled.div`
+ display: flex;
+ justify-content: space-evenly;
+width: 90%;
+margin-top: auto;
+
+
 `;
 
 class AddTask extends Component {
@@ -76,9 +87,13 @@ class AddTask extends Component {
           value={this.state.deadline}
           onChange={this.handleOnChange}
         ></StyledModalInput>
-        <StyledButton modal type="submit" onClick={this.handleOnInputClick}>
-          Dodaj zadanie
+        <StyledButtonWrapper>
+
+          <StyledButton modal type="submit" onClick={this.handleOnInputClick}>
+            Dodaj zadanie
         </StyledButton>
+          <StyledButton onClick={this.onQuit}>quit</StyledButton>
+        </StyledButtonWrapper>
       </StyledForm>
     );
   }

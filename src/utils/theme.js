@@ -18,5 +18,6 @@ export const theme = {
   media: {
     phone: '@media(min-width: 1024px)',
     desktop: '@media(min-width: 724px)',
-  },
+  }
+
 };
