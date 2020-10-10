@@ -43,13 +43,15 @@ class TodoInput extends React.Component {
   };
 
   handleOnDelete = () => {
-    console.log(`deleted`);
+    this.props.onDelete(this.props.id);
   };
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
+
+
 
   render() {
     const { index, id } = this.props;

@@ -25,13 +25,27 @@ export const StyledButton = styled.button`
   border-radius: 10px;
 `;
 
-const TodoItem = ({ content, id, deadline, completed, index, onEdit, onDelete }) => {
+const TodoItem = ({
+  content,
+  id,
+  deadline,
+  completed,
+  index,
+  onEdit,
+  onDelete,
+  onCompleteCheck,
+}) => {
+  
   const handleOnEdit = () => {
     onEdit(id);
   };
 
   const handleOnDelete = () => {
     onDelete(id);
+  };
+
+  const handleCompletedCheck = () => {
+    onCompleteCheck(id);
   };
 
   return (
@@ -53,7 +67,9 @@ const TodoItem = ({ content, id, deadline, completed, index, onEdit, onDelete })
       <StyledTdWithHover deadline className="align-middle" as="td">
         {deadline}
       </StyledTdWithHover>
-      <td className="align-middle">{completed ? '✔️' : '❌'}</td>
+      <td className="align-middle" onClick={handleCompletedCheck}>
+        {completed ? '✔️' : '❌'}
+      </td>
     </tr>
   );
 };
