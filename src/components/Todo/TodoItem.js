@@ -18,6 +18,10 @@ const StyledTdWithHover = styled.td`
     `}
 `;
 
+const StyledTd = styled.td`
+  cursor: pointer;
+`;
+
 export const StyledButton = styled.button`
   color: black;
   height: 40px;
@@ -35,7 +39,6 @@ const TodoItem = ({
   onDelete,
   onCompleteCheck,
 }) => {
-  
   const handleOnEdit = () => {
     onEdit(id);
   };
@@ -45,7 +48,7 @@ const TodoItem = ({
   };
 
   const handleCompletedCheck = () => {
-    onCompleteCheck(id);
+    onCompleteCheck(id, content, deadline);
   };
 
   return (
@@ -67,9 +70,9 @@ const TodoItem = ({
       <StyledTdWithHover deadline className="align-middle" as="td">
         {deadline}
       </StyledTdWithHover>
-      <td className="align-middle" onClick={handleCompletedCheck}>
+      <StyledTd className="align-middle" onClick={handleCompletedCheck}>
         {completed ? '✔️' : '❌'}
-      </td>
+      </StyledTd>
     </tr>
   );
 };

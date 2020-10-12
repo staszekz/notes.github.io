@@ -12,7 +12,7 @@ import { DATABASE_URL } from 'utils/database';
 import TodoInput from 'components/Todo/TodoInput';
 import AddTask from 'components/Form/Form';
 
-import { fetchTodos, addNewTask } from 'reducers';
+import { fetchTodos, addNewTask, setCompleted } from 'reducers';
 
 const StyledTodoList = styled.div`
   width: 60%;
@@ -78,7 +78,9 @@ class Todos extends React.Component {
   //   });
   // };
 
-  // handleCompleteCheck = completeID => {};
+  // handleCompleteCheck = () => {
+  //   this.props.setCompleted(this.props.completeID);
+  // };
 
   render() {
     // const { isLoading, todos, editID } = this.state;
@@ -146,7 +148,7 @@ class Todos extends React.Component {
                         deadline={todo.deadline}
                         // onEdit={this.handleEdit}
                         // onDelete={this.handleDeleteClick}
-                        // onCompleteCheck={this.handleCompleteCheck}
+                        onCompleteCheck={this.props.setCompleted}
                       />
                     ))
                 )}
@@ -171,6 +173,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchTodos,
   addNewTask,
+  setCompleted,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todos);
