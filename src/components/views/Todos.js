@@ -12,7 +12,7 @@ import { DATABASE_URL } from 'utils/database';
 import TodoInput from 'components/Todo/TodoInput';
 import AddTask from 'components/Form/Form';
 
-import { fetchTodos, addNewTask, setCompleted } from 'reducers';
+import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers';
 
 const StyledTodoList = styled.div`
   width: 60%;
@@ -30,45 +30,23 @@ const StyledTable = styled(Table)`
 `;
 
 class Todos extends React.Component {
-  // state = {
-  //   todos: [],
-  //   isLoading: true,
-  //   editID: null,
-  // };
-
-  // fetchTodos = () => {
-  //   fetch(`${DATABASE_URL}/todos.json`)
-  //     .then(r => r.json())
-  //     .then(todos => {
-  //       const arrayTodos = todos
-  //         ? Object.keys(todos).map(key => {
-  //             return {
-  //               id: key,
-  //               ...todos[key],
-  //             };
-  //           })
-  //         : [];
-  //       console.log(arrayTodos);
-  //       this.setState({
-  //         todos: arrayTodos,
-  //         isLoading: false,
-  //       });
-  //     });
-  // };
+  state = {
+    editID: null,
+  };
 
   componentDidMount() {
     this.props.fetchTodos();
   }
-  // saveClicked = editID => {
-  //   this.fetchTodos();
-  //   this.setState({
-  //     editID: null,
-  //   });
-  // };
+  handleOnSave = (task, editedId) => {
+    this.props.editTask(task, editedId);
+    this.setState({
+      editID: null,
+    });
+  };
 
-  // handleEdit = editID => {
-  //   this.setState({ editID });
-  // };
+  handleEdit = editID => {
+    this.setState({ editID });
+  };
 
   // handleDeleteClick = deletedId => {
   //   fetch(`${DATABASE_URL}/todos/${deletedId}.json`, {
@@ -78,16 +56,12 @@ class Todos extends React.Component {
   //   });
   // };
 
-  // handleCompleteCheck = () => {
-  //   this.props.setCompleted(this.props.completeID);
-  // };
-
   render() {
-    // const { isLoading, todos, editID } = this.state;
+    const { isLoading, fetchTodos, todos, deleteTask, setCompleted } = this.props;
     return (
       <>
         <GlobalStyle />
-        <MainLayout onAdd={this.props.fetchTodos}>
+        <MainLayout onAdd={fetchTodos}>
           <StyledTodoList>
             {/* tutaj wrzucić LI LOADING  */}
             <StyledH1>Todos List</StyledH1>
@@ -103,14 +77,14 @@ class Todos extends React.Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.isLoading ? (
+                {isLoading ? (
                   <tr>
                     <td colSpan={12}>
                       <Spinner animation="border" />
                     </td>
                   </tr>
                 ) : (
-                  this.props.todos
+                  todos
                     // .filter(todo => {
                     //   const textFilter = todo.title
                     //     .toLowerCase()
@@ -126,37 +100,39 @@ class Todos extends React.Component {
                     //     return false;
                     //   }
                     // })
-                    .map((todo, index) => (
-                      // editID === todo.id ? (
-                      //   <TodoInput
-                      //     key={todo.id}
-                      //     id={todo.id}
-                      //     index={index}
-                      //     content={todo.content}
-                      //     completed={todo.completed}
-                      //     deadline={todo.deadline}
-                      //     onSave={this.saveClicked}
-                      //     onDelete={this.handleDeleteClick}
-                      //   />
-                      // ) : (
-                      <TodoItem
-                        key={todo.id}
-                        id={todo.id}
-                        index={index}
-                        content={todo.content}
-                        completed={todo.completed}
-                        deadline={todo.deadline}
-                        // onEdit={this.handleEdit}
-                        // onDelete={this.handleDeleteClick}
-                        onCompleteCheck={this.props.setCompleted}
-                      />
-                    ))
+                    .map((todo, index) =>
+                      this.state.editID === todo.id ? (
+                        <TodoInput
+                          key={todo.id}
+                          id={todo.id}
+                          index={index}
+                          content={todo.content}
+                          completed={todo.completed}
+                          deadline={todo.deadline}
+                          onSave={this.handleOnSave}
+                          onDelete={deleteTask}
+                          onCompleteCheck={setCompleted}
+                        />
+                      ) : (
+                        <TodoItem
+                          key={todo.id}
+                          id={todo.id}
+                          index={index}
+                          content={todo.content}
+                          completed={todo.completed}
+                          deadline={todo.deadline}
+                          onEdit={this.handleEdit}
+                          onDelete={deleteTask}
+                          onCompleteCheck={setCompleted}
+                        />
+                      ),
+                    )
                 )}
               </tbody>
             </StyledTable>
             {/* </>} */}
           </StyledTodoList>
-          {!this.props.isLoading && !this.props.todos.length && (
+          {!isLoading && !todos.length && (
             <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
           )}
         </MainLayout>
@@ -174,6 +150,8 @@ const mapDispatchToProps = {
   fetchTodos,
   addNewTask,
   setCompleted,
+  deleteTask,
+  editTask,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todos);

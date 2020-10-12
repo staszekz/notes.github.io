@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
 import saveIcon from 'assets/icons/save.svg';
 import deleteIcon from 'assets/icons/trash.svg';
 
 import { StyledButton } from 'components/Todo/TodoItem';
 import { DATABASE_URL } from 'utils/database';
+
+import { editTask } from 'reducers';
 
 export const StyledInput = styled.input`
   background-color: lightgray;
@@ -34,24 +37,17 @@ class TodoInput extends React.Component {
   };
 
   handleOnSave = () => {
-    fetch(`${DATABASE_URL}/todos/${this.props.id}.json`, {
-      method: 'PUT',
-      body: JSON.stringify(this.state),
-    }).then(() => {
-      this.props.onSave(this.props.id);
-    });
+    this.props.onSave(this.state, this.props.id);
   };
 
-  handleOnDelete = () => {
-    this.props.onDelete(this.props.id);
-  };
+  // handleOnDelete = () => {
+  //   this.props.onDelete(this.props.id);
+  // };
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
     });
   };
-
-
 
   render() {
     const { index, id } = this.props;
@@ -90,4 +86,8 @@ class TodoInput extends React.Component {
   }
 }
 
-export default TodoInput;
+const mapDispatchToProps = {
+  editTask,
+};
+
+export default connect(null, mapDispatchToProps)(TodoInput);

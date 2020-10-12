@@ -30,22 +30,6 @@ export const todosReducer = (state = initialState, action) => {
         isLoading: true,
       };
 
-    case ADD_TASK:
-      return {
-        error: null,
-        isLoading: false,
-        editID: null,
-        todos: action.payload,
-      };
-
-    // case SET_COMPLETED:
-    //   return {
-    //     ...state,
-    //     todos: state.todos.map(task =>
-    //       task.id === action.payload ? { ...task, completed: true } : task,
-    //     ),
-    //   };
-
     default:
       return state;
   }
@@ -54,34 +38,8 @@ export const todosReducer = (state = initialState, action) => {
 export const setLoading = () => ({ type: SET_LOADING });
 export const setTodos = todos => ({ type: SET_TODOS, payload: todos });
 
-// export const setCompletedAction = (editID, task) => ({
-//   type: SET_COMPLETED,
-//   payload: editID,
-//   todos: task,
-// });
-
-export const setCompleted = (completedId, content, deadline, completed) => {
+const fetchWithoutLoading = () => {
   return dispatch => {
-    // dispatch(setCompletedAction());
-
-    console.log('completed', content, deadline);
-    fetch(`${DATABASE_URL}/todos/${completedId}.json`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        content,
-        deadline,
-        completed: !completed,
-      }),
-    }).then(() => {
-      dispatch(fetchTodos());
-    });
-  };
-};
-
-export const fetchTodos = () => {
-  return dispatch => {
-    dispatch(setLoading());
-
     fetch(`${DATABASE_URL}/todos.json`)
       .then(r => r.json())
       .then(todos => {
@@ -98,9 +56,29 @@ export const fetchTodos = () => {
   };
 };
 
-export const addNewTask = taskData => {
-  dispatch(setLoading());
+export const setCompleted = (completedId, content, deadline, completed) => {
+  return dispatch => {
+    fetch(`${DATABASE_URL}/todos/${completedId}.json`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        content,
+        deadline,
+        completed: !completed,
+      }),
+    }).then(() => {
+      dispatch(fetchWithoutLoading());
+    });
+  };
+};
 
+export const fetchTodos = () => {
+  return dispatch => {
+    dispatch(setLoading());
+    dispatch(fetchWithoutLoading());
+  };
+};
+
+export const addNewTask = taskData => {
   fetch(`${DATABASE_URL}/todos/.json`, {
     method: 'POST',
     body: JSON.stringify(taskData),
@@ -109,7 +87,24 @@ export const addNewTask = taskData => {
   });
 };
 
-// export const editTask = editID =>{
-//   dispatch(setLoading);
+export const deleteTask = deletedId => {
+  return dispatch => {
+    fetch(`${DATABASE_URL}/todos/${deletedId}.json`, {
+      method: 'DELETE',
+    }).then(() => {
+      dispatch(fetchWithoutLoading());
+    });
+  };
+};
 
-// }
+export const editTask = (task, editedId) => {
+  return dispatch => {
+    // dispatch(setLoading());
+    fetch(`${DATABASE_URL}/todos/${editedId}.json`, {
+      method: 'PUT',
+      body: JSON.stringify(task),
+    }).then(() => {
+      dispatch(fetchWithoutLoading());
+    });
+  };
+};
