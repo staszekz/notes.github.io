@@ -48,7 +48,7 @@ const TodoItem = ({
   };
 
   const handleCompletedCheck = () => {
-    onCompleteCheck(id, content, deadline);
+    onCompleteCheck(id, content, deadline, completed);
   };
 
   return (

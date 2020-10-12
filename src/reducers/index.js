@@ -38,13 +38,13 @@ export const todosReducer = (state = initialState, action) => {
         todos: action.payload,
       };
 
-    case SET_COMPLETED:
-      return {
-        ...state,
-        todos: state.todos.map(task =>
-          task.id === action.payload ? { ...task, completed: true } : task,
-        ),
-      };
+    // case SET_COMPLETED:
+    //   return {
+    //     ...state,
+    //     todos: state.todos.map(task =>
+    //       task.id === action.payload ? { ...task, completed: true } : task,
+    //     ),
+    //   };
 
     default:
       return state;
@@ -54,23 +54,23 @@ export const todosReducer = (state = initialState, action) => {
 export const setLoading = () => ({ type: SET_LOADING });
 export const setTodos = todos => ({ type: SET_TODOS, payload: todos });
 
-export const setCompletedAction = (editID, task) => ({
-  type: SET_COMPLETED,
-  payload: editID,
-  todos: task,
-});
+// export const setCompletedAction = (editID, task) => ({
+//   type: SET_COMPLETED,
+//   payload: editID,
+//   todos: task,
+// });
 
-export const setCompleted = (completedId, content, deadline) => {
+export const setCompleted = (completedId, content, deadline, completed) => {
   return dispatch => {
-    dispatch(setCompletedAction());
-    // const toAdd = state.todos.filter(task => task.id === completedId);
+    // dispatch(setCompletedAction());
+
     console.log('completed', content, deadline);
     fetch(`${DATABASE_URL}/todos/${completedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({
         content,
         deadline,
-        completed: true,
+        completed: !completed,
       }),
     }).then(() => {
       dispatch(fetchTodos());
