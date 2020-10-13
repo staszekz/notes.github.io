@@ -3,7 +3,8 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import editIcon from 'assets/icons/edit.svg';
 import deleteIcon from 'assets/icons/trash.svg';
-import { DATABASE_URL } from 'utils/database';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const StyledTdWithHover = styled.td`
   width: 30vw;
@@ -16,10 +17,6 @@ const StyledTdWithHover = styled.td`
     css`
       width: 8vw;
     `}
-`;
-
-const StyledTd = styled.td`
-  cursor: pointer;
 `;
 
 export const StyledButton = styled.button`
@@ -70,9 +67,15 @@ const TodoItem = ({
       <StyledTdWithHover deadline className="align-middle" as="td">
         {deadline}
       </StyledTdWithHover>
-      <StyledTd className="align-middle" onClick={handleCompletedCheck}>
-        {completed ? '✔️' : '❌'}
-      </StyledTd>
+      <td className="align-middle">
+        <StyledButton onClick={handleCompletedCheck}>
+          {completed ? (
+            <FontAwesomeIcon icon={faCheck} size="1.5x" color="green" />
+          ) : (
+            <FontAwesomeIcon icon={faTimes} size="1.5x" color="red" />
+          )}
+        </StyledButton>
+      </td>
     </tr>
   );
 };

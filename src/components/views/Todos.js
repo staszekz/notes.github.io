@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import MainLayout from 'Layout/MainLayout';
@@ -8,11 +8,9 @@ import { StyledH2 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import { DATABASE_URL } from 'utils/database';
 import TodoInput from 'components/Todo/TodoInput';
-import AddTask from 'components/Form/Form';
 
-import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers';
+import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
 
 const StyledTodoList = styled.div`
   width: 60%;
@@ -29,23 +27,20 @@ const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
 `;
 
-class Todos extends React.Component {
-  state = {
-    editID: null,
+const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
+  const [editID, setEditedID] = useState(null);
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const handleOnSave = (task, editedId) => {
+    editTask(task, editedId);
+    setEditedID(null);
   };
 
-  componentDidMount() {
-    this.props.fetchTodos();
-  }
-  handleOnSave = (task, editedId) => {
-    this.props.editTask(task, editedId);
-    this.setState({
-      editID: null,
-    });
-  };
-
-  handleEdit = editID => {
-    this.setState({ editID });
+  const handleEdit = editedID => {
+    setEditedID(editedID);
   };
 
   // handleDeleteClick = deletedId => {
@@ -56,95 +51,92 @@ class Todos extends React.Component {
   //   });
   // };
 
-  render() {
-    const { isLoading, fetchTodos, todos, deleteTask, setCompleted } = this.props;
-    return (
-      <>
-        <GlobalStyle />
-        <MainLayout onAdd={fetchTodos}>
-          <StyledTodoList>
-            {/* tutaj wrzucić LI LOADING  */}
-            <StyledH1>Todos List</StyledH1>
-            <StyledTable striped responsive>
-              <thead>
+  return (
+    <>
+      <GlobalStyle />
+      <MainLayout onAddFetch={fetchTodos}>
+        <StyledTodoList>
+          {/* tutaj wrzucić LI LOADING  */}
+          <StyledH1>Todos List</StyledH1>
+          <StyledTable striped responsive>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Content</th>
+                <th>Edit</th>
+                <th>Remove</th>
+                <th>Deadline</th>
+                <th>Completed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {isLoading ? (
                 <tr>
-                  <th>#</th>
-                  <th>Content</th>
-                  <th>Edit</th>
-                  <th>Remove</th>
-                  <th>Deadline</th>
-                  <th>Completed</th>
+                  <td colSpan={12}>
+                    <Spinner animation="border" />
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {isLoading ? (
-                  <tr>
-                    <td colSpan={12}>
-                      <Spinner animation="border" />
-                    </td>
-                  </tr>
-                ) : (
-                  todos
-                    // .filter(todo => {
-                    //   const textFilter = todo.title
-                    //     .toLowerCase()
-                    //     .includes(this.state.filter.toLowerCase());
+              ) : (
+                todos
+                  // .filter(todo => {
+                  //   const textFilter = todo.title
+                  //     .toLowerCase()
+                  //     .includes(this.state.filter.toLowerCase());
 
-                    //   if (this.state.showCompleted && this.state.showInCompleted) {
-                    //     return textFilter;
-                    //   } else if (this.state.showCompleted) {
-                    //     return textFilter && todo.completed === true;
-                    //   } else if (this.state.showInCompleted) {
-                    //     return textFilter && todo.completed === false;
-                    //   } else {
-                    //     return false;
-                    //   }
-                    // })
-                    .map((todo, index) =>
-                      this.state.editID === todo.id ? (
-                        <TodoInput
-                          key={todo.id}
-                          id={todo.id}
-                          index={index}
-                          content={todo.content}
-                          completed={todo.completed}
-                          deadline={todo.deadline}
-                          onSave={this.handleOnSave}
-                          onDelete={deleteTask}
-                          onCompleteCheck={setCompleted}
-                        />
-                      ) : (
-                        <TodoItem
-                          key={todo.id}
-                          id={todo.id}
-                          index={index}
-                          content={todo.content}
-                          completed={todo.completed}
-                          deadline={todo.deadline}
-                          onEdit={this.handleEdit}
-                          onDelete={deleteTask}
-                          onCompleteCheck={setCompleted}
-                        />
-                      ),
-                    )
-                )}
-              </tbody>
-            </StyledTable>
-            {/* </>} */}
-          </StyledTodoList>
-          {!isLoading && !todos.length && (
-            <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
-          )}
-        </MainLayout>
-      </>
-    );
-  }
-}
+                  //   if (this.state.showCompleted && this.state.showInCompleted) {
+                  //     return textFilter;
+                  //   } else if (this.state.showCompleted) {
+                  //     return textFilter && todo.completed === true;
+                  //   } else if (this.state.showInCompleted) {
+                  //     return textFilter && todo.completed === false;
+                  //   } else {
+                  //     return false;
+                  //   }
+                  // })
+                  .map((todo, index) =>
+                    editID === todo.id ? (
+                      <TodoInput
+                        key={todo.id}
+                        id={todo.id}
+                        index={index}
+                        content={todo.content}
+                        completed={todo.completed}
+                        deadline={todo.deadline}
+                        onSave={handleOnSave}
+                        onDelete={deleteTask}
+                        onCompleteCheck={setCompleted}
+                      />
+                    ) : (
+                      <TodoItem
+                        key={todo.id}
+                        id={todo.id}
+                        index={index}
+                        content={todo.content}
+                        completed={todo.completed}
+                        deadline={todo.deadline}
+                        onEdit={handleEdit}
+                        onDelete={deleteTask}
+                        onCompleteCheck={setCompleted}
+                      />
+                    ),
+                  )
+              )}
+            </tbody>
+          </StyledTable>
+          {/* </>} */}
+        </StyledTodoList>
+        {!isLoading && !todos.length && (
+          <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
+        )}
+      </MainLayout>
+    </>
+  );
+};
 
 const mapStateToProps = state => ({
-  todos: state.todos,
-  isLoading: state.isLoading,
-  error: state.error,
+  todos: state.todosReducer.todos,
+  isLoading: state.todosReducer.isLoading,
+  error: state.todosReducer.error,
 });
 const mapDispatchToProps = {
   fetchTodos,

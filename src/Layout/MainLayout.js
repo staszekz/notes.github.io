@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
 import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
 import { StyledButton } from 'components/Button/Button';
-import Modal from 'components/Modal/Modal'
-
+import Modal from 'components/Modal/Modal';
+import plusIcon from 'assets/icons/plus.svg';
+import { toggleModalOpen } from 'reducers/modalReducer';
 
 const StyledAddItemButton = styled(StyledButton)`
-position: fixed;
-top: 90%;
-left: 90%;
-width: 60px;
-height: 60px;
-z-index: 2;
-
+  position: fixed;
+  top: 90%;
+  left: 90%;
+  width: 60px;
+  height: 60px;
+  z-index: 2;
 `;
 
 const StyledWrapper = styled.div`
@@ -25,37 +26,41 @@ const StyledWrapper = styled.div`
   align-items: center; */
   background: ${({ theme }) => theme.colors.dark};
 
-  filter: blur(${({ onModalOpen }) => onModalOpen && '5px'});
+  filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
-
-
-const MainLayout = ({ children, onAdd }) => {
-
-  const [isNewItemBarVisible, setIsNewItemBarVisible] = useState(false);
-
+const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen }) => {
   const handleIsVisible = () => {
-    setIsNewItemBarVisible(prevState => !prevState);
+    toggleModalOpen();
   };
 
-  const isModalOpen = () => {
-    setIsNewItemBarVisible(prevState => !prevState);
-    onAdd();
-  }
+  const handleAddTask = () => {
+    toggleModalOpen();
+    onAddFetch();
+  };
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledWrapper onModalOpen={isNewItemBarVisible}>
+      <StyledWrapper isModalOpen={isModalOpen}>
         <NavBar />
         <>
           {children}
-          <StyledAddItemButton onClick={handleIsVisible}>➕</StyledAddItemButton>
+          <StyledAddItemButton onClick={handleIsVisible}>
+            <span>
+              <img src={plusIcon} />
+            </span>
+          </StyledAddItemButton>
         </>
       </StyledWrapper>
-      <Modal onAdd={isModalOpen} isVisible={isNewItemBarVisible} />
+      <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
     </ThemeProvider>
-  )
-
+  );
 };
 
-export default MainLayout;
+const mapStateToProps = state => ({
+  isModalOpen: state.modalReducer.isModalOpen,
+});
+const mapDispatchToProps = {
+  toggleModalOpen,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { StyledInput } from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Button/Button';
-import { DATABASE_URL } from 'utils/database';
+import escIcon from 'assets/icons/esc.svg';
+import { addNewTask } from 'reducers/todosReducer';
+import { toggleModalOpen } from 'reducers/modalReducer';
 
 const StyledLabel = styled.label`
   color: white;
@@ -37,25 +40,18 @@ class AddTask extends Component {
   };
 
   putDataInDatabase = () => {
-    fetch(`${DATABASE_URL}/todos/.json`, {
-      method: 'POST',
-      body: JSON.stringify(this.state),
-    })
-      .then(() => {
-        this.props.onAdd();
-      })
-      .then(() => {
-        this.setState({
-          content: '',
-          deadline: '',
-        });
-      });
+    this.props.addNewTask(this.state);
+    this.props.toggleModalOpen();
+    this.setState({
+      content: '',
+      deadline: '',
+    });
   };
 
-  handleOnInputClick = e => {
+  handleOnAddClick = e => {
     e.preventDefault();
     if (!this.state.content) {
-      return alert('wprowadź zadanie');
+      return alert('Please add new task or quit!');
     }
     this.putDataInDatabase();
   };
@@ -65,32 +61,43 @@ class AddTask extends Component {
       [e.target.name]: e.target.value,
     });
   };
+
+  onQuit = () => {
+    this.props.toggleModalOpen();
+  };
+
   render() {
     return (
       <StyledForm>
-        <StyledLabel htmlFor="newTask">Dodaj zadanie:</StyledLabel>
+        <StyledLabel htmlFor="newTask">Add new task:</StyledLabel>
         <StyledModalInput
           name="content"
-          placeholder="wprowadź nowe zadanie"
+          placeholder="new task"
           value={this.state.content}
           onChange={this.handleOnChange}
         ></StyledModalInput>
         <StyledModalInput
           deadline
           name="deadline"
-          placeholder="wprowadź deadline"
+          placeholder="new deadline"
           value={this.state.deadline}
           onChange={this.handleOnChange}
         ></StyledModalInput>
         <StyledButtonWrapper>
-          <StyledButton modal type="submit" onClick={this.handleOnInputClick}>
-            Dodaj zadanie
+          <StyledButton modal type="submit" onClick={this.handleOnAddClick}>
+            <img src={escIcon} />
           </StyledButton>
-          <StyledButton onClick={this.onQuit}>quit</StyledButton>
+          <StyledButton onClick={this.onQuit}>
+            <img src={escIcon} />
+          </StyledButton>
         </StyledButtonWrapper>
       </StyledForm>
     );
   }
 }
 
-export default AddTask;
+const mapDispatchToProps = {
+  addNewTask,
+  toggleModalOpen,
+};
+export default connect(null, mapDispatchToProps)(AddTask);

@@ -9,10 +9,10 @@ const initialState = {
 
 //actions
 const SET_LOADING = 'SET_LOADING';
-const ADD_TASK = 'ADD_TASK';
-const SET_COMPLETED = 'SET_COMPLETED';
+// const ADD_TASK = 'ADD_TASK';
+// const SET_COMPLETED = 'SET_COMPLETED';
 const SET_TODOS = 'SET_TODOS';
-const EDIT_TASK = 'EDIT_TASK';
+// const EDIT_TASK = 'EDIT_TASK';
 
 export const todosReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -79,12 +79,14 @@ export const fetchTodos = () => {
 };
 
 export const addNewTask = taskData => {
-  fetch(`${DATABASE_URL}/todos/.json`, {
-    method: 'POST',
-    body: JSON.stringify(taskData),
-  }).then(() => {
-    dispatch(setTodos());
-  });
+  return dispatch => {
+    fetch(`${DATABASE_URL}/todos/.json`, {
+      method: 'POST',
+      body: JSON.stringify(taskData),
+    }).then(() => {
+      dispatch(fetchWithoutLoading());
+    });
+  };
 };
 
 export const deleteTask = deletedId => {
@@ -99,7 +101,6 @@ export const deleteTask = deletedId => {
 
 export const editTask = (task, editedId) => {
   return dispatch => {
-    // dispatch(setLoading());
     fetch(`${DATABASE_URL}/todos/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify(task),
