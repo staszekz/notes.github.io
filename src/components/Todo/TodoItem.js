@@ -57,6 +57,9 @@ const TodoItem = ({
       <StyledTdWithHover className="align-middle text-xl-left" as="td">
         {content}
       </StyledTdWithHover>
+      <StyledTdWithHover deadline className="align-middle" as="td">
+        {deadline}
+      </StyledTdWithHover>
       <td className="align-middle">
         <StyledButton onClick={handleOnEdit}>
           <FontAwesomeIcon icon={faEdit} />
@@ -67,9 +70,7 @@ const TodoItem = ({
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
       </td>
-      <StyledTdWithHover deadline className="align-middle" as="td">
-        {deadline}
-      </StyledTdWithHover>
+
       <td className="align-middle">
         <StyledButton onClick={handleCompletedCheck}>
           {completed ? (
