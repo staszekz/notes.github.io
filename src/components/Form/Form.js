@@ -6,6 +6,8 @@ import { StyledButton } from 'components/Button/Button';
 import escIcon from 'assets/icons/esc.svg';
 import { addNewTask } from 'reducers/todosReducer';
 import { toggleModalOpen } from 'reducers/modalReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 
 const StyledLabel = styled.label`
   color: white;
@@ -15,6 +17,9 @@ const StyledLabel = styled.label`
 const StyledModalInput = styled(StyledInput)`
   width: 70%;
   margin: 1rem auto;
+  ${({ theme }) => theme.media.phone} {
+    width: 100%;
+  }
 `;
 
 const StyledForm = styled.form`
@@ -85,10 +90,10 @@ class AddTask extends Component {
         ></StyledModalInput>
         <StyledButtonWrapper>
           <StyledButton modal type="submit" onClick={this.handleOnAddClick}>
-            <img src={escIcon} />
+            <FontAwesomeIcon icon={faPlus} />
           </StyledButton>
           <StyledButton onClick={this.onQuit}>
-            <img src={escIcon} />
+            <FontAwesomeIcon icon={faUndo} color="red" />
           </StyledButton>
         </StyledButtonWrapper>
       </StyledForm>

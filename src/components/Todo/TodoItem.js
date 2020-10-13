@@ -1,10 +1,9 @@
 // TodoItem.js
 import React from 'react';
 import styled, { css } from 'styled-components';
-import editIcon from 'assets/icons/edit.svg';
-import deleteIcon from 'assets/icons/trash.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 
 const StyledTdWithHover = styled.td`
   width: 30vw;
@@ -21,9 +20,13 @@ const StyledTdWithHover = styled.td`
 
 export const StyledButton = styled.button`
   color: black;
+  background: white;
   height: 40px;
   width: 40px;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TodoItem = ({
@@ -56,12 +59,12 @@ const TodoItem = ({
       </StyledTdWithHover>
       <td className="align-middle">
         <StyledButton onClick={handleOnEdit}>
-          <img src={editIcon} />{' '}
+          <FontAwesomeIcon icon={faEdit} />
         </StyledButton>
       </td>
       <td className="align-middle">
         <StyledButton onClick={handleOnDelete}>
-          <img src={deleteIcon} />
+          <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
       </td>
       <StyledTdWithHover deadline className="align-middle" as="td">
@@ -70,9 +73,9 @@ const TodoItem = ({
       <td className="align-middle">
         <StyledButton onClick={handleCompletedCheck}>
           {completed ? (
-            <FontAwesomeIcon icon={faCheck} size="1.5x" color="green" />
+            <FontAwesomeIcon icon={faCheck} color="green" />
           ) : (
-            <FontAwesomeIcon icon={faTimes} size="1.5x" color="red" />
+            <FontAwesomeIcon icon={faTimes} color="red" />
           )}
         </StyledButton>
       </td>

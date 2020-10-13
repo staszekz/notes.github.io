@@ -13,13 +13,13 @@ import TodoInput from 'components/Todo/TodoInput';
 import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
 
 const StyledTodoList = styled.div`
-  width: 60%;
+  width: 70%;
   margin: 0 auto;
   position: relative;
   top: 13vh;
 
-  @media (max-width: 1200px) {
-    width: 80%;
+  ${({ theme }) => theme.media.phone} {
+    width: 95%;
   }
 `;
 
@@ -43,18 +43,10 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
     setEditedID(editedID);
   };
 
-  // handleDeleteClick = deletedId => {
-  //   fetch(`${DATABASE_URL}/todos/${deletedId}.json`, {
-  //     method: 'DELETE',
-  //   }).then(() => {
-  //     this.fetchTodos();
-  //   });
-  // };
-
   return (
     <>
       <GlobalStyle />
-      <MainLayout onAddFetch={fetchTodos}>
+      <MainLayout onAddFetch={fetchTodos} button>
         <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>

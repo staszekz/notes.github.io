@@ -9,18 +9,24 @@ export const StyledButton = styled(Link)`
   text-decoration: none;
   width: 20%;
   padding: 1rem;
-  height: 60px;
+  height: 50px;
   background: ${({ theme }) => theme.colors.white};
   border-radius: 50px;
   border: none;
-  color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 2rem;
   font-weight: 600;
   transition: box-shadow 0.3s ease;
 
-  ${({ theme }) => theme.media.desktop} {
+  ${({ theme }) => theme.media.phone} {
     background: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.primary};
+    font-size: ${({ theme }) => theme.fontSize.xs};
+    width: 50px;
+  }
+  ${({ theme }) => theme.media.landscape} {
+    height: 30px;
+    font-size: ${({ theme }) => theme.fontSize.s};
   }
 
   :hover {
@@ -33,7 +39,6 @@ export const StyledButton = styled(Link)`
     modal &&
     css`
       width: 40%;
-      /* margin-top: 2rem; */
     `}
 `;
 

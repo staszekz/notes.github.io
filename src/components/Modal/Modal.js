@@ -19,6 +19,15 @@ const StyledWrapper = styled.div`
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   /* transform: translate(${({ isVisible }) => (isVisible ? '-100%' : '100%')}); */
   transition: transform 0.25s ease -in -out;
+
+  ${({ theme }) => theme.media.phone} {
+    height: 60%;
+    width: 90%;
+  }
+  ${({ theme }) => theme.media.landscape} {
+    height: 60%;
+    width: 80%;
+  }
 `;
 
 const Modal = ({ isVisible, onAdd }) => {

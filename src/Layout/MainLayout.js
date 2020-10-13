@@ -5,16 +5,18 @@ import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
 import { StyledButton } from 'components/Button/Button';
 import Modal from 'components/Modal/Modal';
-import plusIcon from 'assets/icons/plus.svg';
 import { toggleModalOpen } from 'reducers/modalReducer';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
-  top: 90%;
-  left: 90%;
-  width: 60px;
-  height: 60px;
+  top: 85vh;
+  left: 80vw;
+  width: 50px;
+  height: 50px;
   z-index: 2;
+  display: ${({ button }) => (button ? 'flex' : 'none')};
 `;
 
 const StyledWrapper = styled.div`
@@ -29,7 +31,7 @@ const StyledWrapper = styled.div`
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
-const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen }) => {
+const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button }) => {
   const handleIsVisible = () => {
     toggleModalOpen();
   };
@@ -45,10 +47,8 @@ const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen }) => {
         <NavBar />
         <>
           {children}
-          <StyledAddItemButton onClick={handleIsVisible}>
-            <span>
-              <img src={plusIcon} />
-            </span>
+          <StyledAddItemButton onClick={handleIsVisible} button={button}>
+            <FontAwesomeIcon icon={faPlus} />
           </StyledAddItemButton>
         </>
       </StyledWrapper>

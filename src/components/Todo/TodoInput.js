@@ -15,6 +15,7 @@ export const StyledInput = styled.input`
   width: 100%;
   padding: 0.5rem 0.5rem;
   float: left;
+  text-align: center;
 
   ::placeholder {
     text-transform: uppercase;
@@ -25,7 +26,6 @@ export const StyledInput = styled.input`
     deadline &&
     css`
       width: 100%;
-      text-align: center;
     `}
 `;
 

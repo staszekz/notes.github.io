@@ -16,6 +16,7 @@ const Bar = styled.div`
   font-size: ${({ isBig }) => (isBig ? '3em' : '1.5em')};
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
   background: ${({ theme }) => theme.colors.dark};
+  z-index: 2;
 `;
 
 const StyledButtonPlace = styled.div`
@@ -26,16 +27,18 @@ const StyledButtonPlace = styled.div`
   align-items: center;
 `;
 
-const StyledLogo = styled.div`
-  width: 30%;
-  height: 60px;
-  border: 2px solid ${({ theme }) => theme.colors.primary};
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: 50px;
-  text-align: center;
-  line-height: 60px;
-  /* background: transparent; */
-`;
+// const StyledLogo = styled(ButtonLink)`
+//   width: 30%;
+//   height: 60px;
+//   border: 2px solid ${({ theme }) => theme.colors.primary};
+//   color: ${({ theme }) => theme.colors.white};
+//   border-radius: 50px;
+//   text-align: center;
+//   line-height: 60px;
+//   background: transparent;
+
+//   /* background: transparent; */
+// `;
 
 const ButtonIcon = styled(Link)`
   width: 60px;
@@ -57,7 +60,7 @@ const ButtonIcon = styled(Link)`
 const NavBar = () => (
   <Bar>
     <StyledButtonPlace>
-      <StyledLogo>Your Note & ToDo </StyledLogo>
+      <ButtonLink to="/">home</ButtonLink>
       <ButtonLink to="/todos">todos</ButtonLink>
       <ButtonLink to="/notes">notes</ButtonLink>
     </StyledButtonPlace>

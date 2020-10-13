@@ -9,6 +9,8 @@ const GlobalStyle = createGlobalStyle`
 
 html{
   font-size: 62.5%;
+  height: 100%;
+}
 }
 
 body{
@@ -16,8 +18,7 @@ body{
   padding: 0;
   margin: 0;
   font-family: 'Grandstander', sans-serif;
-  height: 100vh;
-}
+  
  th, td {
    text-align: center;
  }
