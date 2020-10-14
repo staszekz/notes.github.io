@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
-import saveIcon from 'assets/icons/save.svg';
-import deleteIcon from 'assets/icons/trash.svg';
 import { StyledButton } from 'components/Todo/TodoItem';
 import { editTask } from 'reducers/todosReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+
 import {StyledTd} from 'components/Todo/TodoItem'
 
 export const StyledInput = styled.input`
@@ -41,6 +41,13 @@ class TodoInput extends React.Component {
     this.props.onSave(this.state, this.props.id);
   };
 
+  onEnterSave = (e) =>{
+    if(e.key === 'Enter'){
+      this.handleOnSave();
+    }
+  }
+
+
   handleInputChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -64,7 +71,12 @@ class TodoInput extends React.Component {
         <tr key={id}>
           <td className="align-middle">{index + 1}</td>
           <td className="align-middle">
-            <StyledInput name="content" value={content} onChange={this.handleInputChange} />
+            <StyledInput 
+            name="content" 
+            value={content} 
+            onChange={this.handleInputChange} 
+            onKeyDown={this.onEnterSave}
+            />
           </td>
 
           <td className="align-middle">
@@ -73,24 +85,25 @@ class TodoInput extends React.Component {
               deadline
               value={deadline}
               onChange={this.handleInputChange}
+              onKeyDown={this.onEnterSave}
             />
           </td>
           <StyledTd className="align-middle">
-            <StyledButton onClick={this.handleOnSave}>
-              <img src={saveIcon} alt="save icon" />
+            <StyledButton onClick={this.handleOnSave} >
+            <FontAwesomeIcon icon={faSave} />
             </StyledButton>
          
          
             <StyledButton onClick={this.handleOnDelete}>
-              <img src={deleteIcon} alt="delete icon" />
+            <FontAwesomeIcon icon={faTrashAlt} />
             </StyledButton>
        
 
               <StyledButton onClick={this.handleCompletedCheck}>
               {completed ? (
-                <FontAwesomeIcon icon={faCheck} size="1.5x" color="green" />
+                <FontAwesomeIcon icon={faCheck}  color="green" />
               ) : (
-                <FontAwesomeIcon icon={faTimes} size="1.5x" color="red" />
+                <FontAwesomeIcon icon={faTimes} color="red" />
               )}
             </StyledButton>
           </StyledTd>

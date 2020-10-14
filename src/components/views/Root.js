@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import GlobalStyle from 'Theme/GlobalStyle';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import Todos from 'components/views/Todos';

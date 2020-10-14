@@ -1,5 +1,4 @@
-import TodoItem from 'components/Todo/TodoItem';
-import firebase from 'firebase';
+import firebase from 'firebase/app';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBJrGkMXNIRPDTV6mwtNuFonE5N3conc58',

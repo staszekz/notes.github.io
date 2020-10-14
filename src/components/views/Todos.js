@@ -3,10 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import MainLayout from 'Layout/MainLayout';
 import GlobalStyle from 'Theme/GlobalStyle';
-import NavBar from 'components/NavBar/NavBar.js';
-
-import { StyledH1 } from 'components/H1/H1';
-import { StyledH2 } from 'components/H1/H1';
+import { StyledH1, StyledH2 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
@@ -23,6 +20,10 @@ const StyledTodoList = styled.div`
 
   ${({ theme }) => theme.media.phone} {
     width: 95%;
+
+  }
+  ${({ theme }) => theme.media.landscape} {
+    width: 95%;
   }
 `;
 
@@ -36,7 +37,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   const handleOnSave = (task, editedId) => {
     editTask(task, editedId);
@@ -50,7 +51,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
   return (
     <>
       <GlobalStyle />
-      <MainLayout onAddFetch={fetchTodos} button>
+      <MainLayout onAddFetch={fetchTodos} button='true'>
          <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { StyledInput } from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Button/Button';
-import escIcon from 'assets/icons/esc.svg';
 import { addNewTask } from 'reducers/todosReducer';
 import { toggleModalOpen } from 'reducers/modalReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,6 +60,12 @@ class AddTask extends Component {
     this.putDataInDatabase();
   };
 
+  onEnterSave = e => {
+    if (e.key === 'Enter') {
+      this.handleOnAddClick(e);
+    }
+  };
+
   handleOnChange = e => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -80,6 +85,7 @@ class AddTask extends Component {
           placeholder="new task"
           value={this.state.content}
           onChange={this.handleOnChange}
+          onKeyDown={this.onEnterSave}
         ></StyledModalInput>
         <StyledModalInput
           deadline
@@ -87,9 +93,14 @@ class AddTask extends Component {
           placeholder="new deadline"
           value={this.state.deadline}
           onChange={this.handleOnChange}
+          onKeyDown={this.onEnterSave}
         ></StyledModalInput>
         <StyledButtonWrapper>
-          <StyledButton modal type="submit" onClick={this.handleOnAddClick}>
+          <StyledButton
+            modal="true"
+            type="submit"
+            onClick={this.handleOnAddClick}
+                     >
             <FontAwesomeIcon icon={faPlus} />
           </StyledButton>
           <StyledButton onClick={this.onQuit}>

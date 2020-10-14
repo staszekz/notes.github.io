@@ -14,7 +14,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
   top: 85vh;
-  left: 80vw;
+  left: 85vw;
   width: 50px;
   height: 50px;
   z-index: 2;

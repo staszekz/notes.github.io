@@ -3,7 +3,6 @@ import {Link } from 'react-router-dom';
 import ButtonLink from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
-import { theme } from 'utils/theme';
 
 
 const Bar = styled.div`
@@ -43,8 +42,8 @@ const StyledButtonPlace = styled.div`
 // `;
 
 const ButtonIcon = styled(Link)`
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 20px;
   margin-right: 1%;
   background-image: url(${({ icon }) => icon});
@@ -56,6 +55,10 @@ const ButtonIcon = styled(Link)`
   background-color: ${({ active }) => (active ? 'white' : 'transparent')};
   &.active {
     background-color: white;
+  }
+  ${({theme})=> theme.media.landscape}{
+  width: 30px;
+  height: 30px;
   }
 `;
 

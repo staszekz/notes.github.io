@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { theme } from 'utils/theme';
 import AddTask from 'components/Form/Form';
 
 const StyledWrapper = styled.div`

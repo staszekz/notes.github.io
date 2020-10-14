@@ -16,8 +16,7 @@ export const theme = {
     xl: '4rem',
   },
   media: {
-    phone: '@media(max-width: 414px)',
-
+    phone: '@media(max-width: 520px)',
     desktop: '@media(min-width: 724px)',
     landscape: '@media(max-width: 736px) and (orientation: landscape) ',
   },
