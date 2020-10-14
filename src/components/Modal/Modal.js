@@ -17,7 +17,7 @@ const StyledWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.dark};
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   /* transform: translate(${({ isVisible }) => (isVisible ? '-100%' : '100%')}); */
-  transition: transform 0.25s ease -in -out;
+  transition: transform 0.25s ease-in-out;
 
   ${({ theme }) => theme.media.phone} {
     height: 60%;

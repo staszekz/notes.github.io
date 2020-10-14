@@ -9,10 +9,7 @@ const initialState = {
 
 //actions
 const SET_LOADING = 'SET_LOADING';
-// const ADD_TASK = 'ADD_TASK';
-// const SET_COMPLETED = 'SET_COMPLETED';
 const SET_TODOS = 'SET_TODOS';
-// const EDIT_TASK = 'EDIT_TASK';
 
 export const todosReducer = (state = initialState, action) => {
   switch (action.type) {

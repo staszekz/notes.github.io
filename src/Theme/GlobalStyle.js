@@ -18,6 +18,8 @@ body{
   margin: 0;
   font-family: 'Nunito', sans-serif;
   background-color: #0f1c21;
+  /* background-color: pink; */
+
   
  th, td {
    text-align: center;

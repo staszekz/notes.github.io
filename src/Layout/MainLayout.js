@@ -9,8 +9,6 @@ import { toggleModalOpen } from 'reducers/modalReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
-
-
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
   top: 85vh;
@@ -22,14 +20,7 @@ const StyledAddItemButton = styled(StyledButton)`
 `;
 
 const StyledWrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
-  background-color: ${({ theme }) => theme.colors.dark};
-
+background-color: ${({ theme }) => theme.colors.dark};
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
@@ -44,18 +35,13 @@ const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button
   };
 
   return (
- 
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} isModalOpen={isModalOpen}>
+        <StyledAddItemButton onClick={handleIsVisible} button={button}>
+          <FontAwesomeIcon icon={faPlus} />
+        </StyledAddItemButton>
+        <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
         <NavBar />
-      <StyledWrapper isModalOpen={isModalOpen}>
-      
-          {children}
-       
-      </StyledWrapper>
-          <StyledAddItemButton onClick={handleIsVisible} button={button}>
-            <FontAwesomeIcon icon={faPlus} />
-          </StyledAddItemButton>
-      <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
+        <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
     </ThemeProvider>
   );
 };

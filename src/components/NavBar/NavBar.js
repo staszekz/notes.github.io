@@ -28,19 +28,6 @@ const StyledButtonPlace = styled.div`
   align-items: center;
 `;
 
-// const StyledLogo = styled(ButtonLink)`
-//   width: 30%;
-//   height: 60px;
-//   border: 2px solid ${({ theme }) => theme.colors.primary};
-//   color: ${({ theme }) => theme.colors.white};
-//   border-radius: 50px;
-//   text-align: center;
-//   line-height: 60px;
-//   background: transparent;
-
-//   /* background: transparent; */
-// `;
-
 const ButtonIcon = styled(Link)`
   width: 50px;
   height: 50px;
@@ -65,11 +52,11 @@ const ButtonIcon = styled(Link)`
 const NavBar = () => (
   <Bar>
     <StyledButtonPlace>
-      <ButtonLink to="/">home</ButtonLink>
+      <ButtonLink to="/home">home</ButtonLink>
       <ButtonLink to="/todos">todos</ButtonLink>
       <ButtonLink to="/notes">notes</ButtonLink>
     </StyledButtonPlace>
-    <ButtonIcon to="signin" icon={logoutIcon} />
+    <ButtonIcon to="/signin" icon={logoutIcon} />
   </Bar>
 );
 
