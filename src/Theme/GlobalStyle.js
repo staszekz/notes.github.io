@@ -9,20 +9,20 @@ const GlobalStyle = createGlobalStyle`
 
 html{
   font-size: 62.5%;
-  height: 100%;
+
 }
-}
+
 
 body{
   font-size: 1.6rem;
   padding: 0;
   margin: 0;
   font-family: 'Grandstander', sans-serif;
+  background-color: #0f1c21;
   
  th, td {
    text-align: center;
- }
-
+ }}
 `;
 
 export default GlobalStyle;

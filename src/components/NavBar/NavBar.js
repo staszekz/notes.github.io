@@ -1,8 +1,10 @@
 import React from 'react';
-import { NavLink, Link, withRouter } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 import ButtonLink from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
+import { theme } from 'utils/theme';
+
 
 const Bar = styled.div`
   width: 100%;

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import MainLayout from 'Layout/MainLayout';
 import GlobalStyle from 'Theme/GlobalStyle';
+import NavBar from 'components/NavBar/NavBar.js';
+
 import { StyledH1 } from 'components/H1/H1';
 import { StyledH2 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
@@ -14,6 +16,7 @@ import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'redu
 
 const StyledTodoList = styled.div`
   width: 70%;
+  height: 100%;
   margin: 0 auto;
   position: relative;
   top: 13vh;
@@ -25,6 +28,7 @@ const StyledTodoList = styled.div`
 
 const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
+ table-layout: auto;
 `;
 
 const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
@@ -47,7 +51,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
     <>
       <GlobalStyle />
       <MainLayout onAddFetch={fetchTodos} button>
-        <StyledTodoList>
+         <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
           <StyledTable striped responsive>
@@ -55,10 +59,10 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
               <tr>
                 <th>#</th>
                 <th>Content</th>
-                <th>Edit</th>
-                <th>Remove</th>
                 <th>Deadline</th>
-                <th>Completed</th>
+                <th>Edition</th>
+                {/* <th>Remove</th>
+                <th>Completed</th> */}
               </tr>
             </thead>
             <tbody>

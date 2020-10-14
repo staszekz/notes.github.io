@@ -7,6 +7,7 @@ import { StyledButton } from 'components/Todo/TodoItem';
 import { editTask } from 'reducers/todosReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
+import {StyledTd} from 'components/Todo/TodoItem'
 
 export const StyledInput = styled.input`
   background-color: lightgray;
@@ -22,11 +23,11 @@ export const StyledInput = styled.input`
     letter-spacing: 1px;
     font-size: 1.2rem;
   }
-  ${({ deadline }) =>
+  /* ${({ deadline }) =>
     deadline &&
     css`
-      width: 100%;
-    `}
+      width: inherit;
+    `} */
 `;
 
 class TodoInput extends React.Component {
@@ -67,33 +68,32 @@ class TodoInput extends React.Component {
           </td>
 
           <td className="align-middle">
-            <StyledButton onClick={this.handleOnSave}>
-              <img src={saveIcon} alt="save icon" />
-            </StyledButton>
-          </td>
-          <td className="align-middle">
-            <StyledButton onClick={this.handleOnDelete}>
-              <img src={deleteIcon} alt="delete icon" />
-            </StyledButton>
-          </td>
-
-          <td className="align-middle">
-            <StyledInput
+              <StyledInput
               name="deadline"
               deadline
               value={deadline}
               onChange={this.handleInputChange}
             />
           </td>
-          <td className="align-middle">
-            <StyledButton onClick={this.handleCompletedCheck}>
+          <StyledTd className="align-middle">
+            <StyledButton onClick={this.handleOnSave}>
+              <img src={saveIcon} alt="save icon" />
+            </StyledButton>
+         
+         
+            <StyledButton onClick={this.handleOnDelete}>
+              <img src={deleteIcon} alt="delete icon" />
+            </StyledButton>
+       
+
+              <StyledButton onClick={this.handleCompletedCheck}>
               {completed ? (
                 <FontAwesomeIcon icon={faCheck} size="1.5x" color="green" />
               ) : (
                 <FontAwesomeIcon icon={faTimes} size="1.5x" color="red" />
               )}
             </StyledButton>
-          </td>
+          </StyledTd>
         </tr>
       </>
     );

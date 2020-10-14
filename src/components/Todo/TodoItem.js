@@ -6,7 +6,7 @@ import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 
 const StyledTdWithHover = styled.td`
-  width: 30vw;
+  width: 50%;
   /* height: 300px; */
   :hover {
     color: ${({ theme }) => theme.colors.primary};
@@ -14,8 +14,16 @@ const StyledTdWithHover = styled.td`
   ${({ deadline }) =>
     deadline &&
     css`
-      width: 8vw;
+      width: 10vw;
     `}
+`;
+
+ export const StyledTd = styled.td`
+ /* display: flex;  */
+ /* align-items: center; */
+ /* justify-content: space-around; */
+ width: fit-content;
+ /* border-top: none; */
 `;
 
 export const StyledButton = styled.button`
@@ -24,9 +32,10 @@ export const StyledButton = styled.button`
   height: 40px;
   width: 40px;
   border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${({theme})=> theme.media.phone}{
+    height: 30px;
+  width: 30px;
+  }
 `;
 
 const TodoItem = ({
@@ -54,24 +63,19 @@ const TodoItem = ({
   return (
     <tr key={id}>
       <td className="align-middle">{index + 1}</td>
-      <StyledTdWithHover className="align-middle text-xl-left" as="td">
+      <StyledTdWithHover className="align-middle" >
         {content}
       </StyledTdWithHover>
-      <StyledTdWithHover deadline className="align-middle" as="td">
+      <StyledTdWithHover deadline className="align-middle">
         {deadline}
       </StyledTdWithHover>
-      <td className="align-middle">
+      <StyledTd className="align-middle">
         <StyledButton onClick={handleOnEdit}>
           <FontAwesomeIcon icon={faEdit} />
         </StyledButton>
-      </td>
-      <td className="align-middle">
-        <StyledButton onClick={handleOnDelete}>
+         <StyledButton onClick={handleOnDelete}>
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
-      </td>
-
-      <td className="align-middle">
         <StyledButton onClick={handleCompletedCheck}>
           {completed ? (
             <FontAwesomeIcon icon={faCheck} color="green" />
@@ -79,7 +83,7 @@ const TodoItem = ({
             <FontAwesomeIcon icon={faTimes} color="red" />
           )}
         </StyledButton>
-      </td>
+      </StyledTd>
     </tr>
   );
 };

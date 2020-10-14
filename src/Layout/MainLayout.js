@@ -9,6 +9,8 @@ import { toggleModalOpen } from 'reducers/modalReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+
+
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
   top: 85vh;
@@ -20,13 +22,13 @@ const StyledAddItemButton = styled(StyledButton)`
 `;
 
 const StyledWrapper = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100%;
   /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center; */
-  background: ${({ theme }) => theme.colors.dark};
+  background-color: ${({ theme }) => theme.colors.dark};
 
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
@@ -42,16 +44,17 @@ const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button
   };
 
   return (
+ 
     <ThemeProvider theme={theme}>
-      <StyledWrapper isModalOpen={isModalOpen}>
         <NavBar />
-        <>
+      <StyledWrapper isModalOpen={isModalOpen}>
+      
           {children}
+       
+      </StyledWrapper>
           <StyledAddItemButton onClick={handleIsVisible} button={button}>
             <FontAwesomeIcon icon={faPlus} />
           </StyledAddItemButton>
-        </>
-      </StyledWrapper>
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
     </ThemeProvider>
   );
