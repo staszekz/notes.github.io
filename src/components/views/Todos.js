@@ -34,6 +34,7 @@ const StyledTable = styled(Table)`
 
 const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
   const [editID, setEditedID] = useState(null);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
     fetchTodos();
@@ -48,6 +49,11 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
     setEditedID(editedID);
   };
 
+const handleFilterChange = e => {
+  setFilter(e.target.value)
+}
+
+
   return (
     <>
       <GlobalStyle />
@@ -55,6 +61,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
          <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
+          <input value={filter} onChange={handleFilterChange}></input>
           <StyledTable striped responsive>
             <thead>
               <tr>
@@ -75,10 +82,12 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
                 </tr>
               ) : (
                 todos
-                  // .filter(todo => {
-                  //   const textFilter = todo.title
-                  //     .toLowerCase()
-                  //     .includes(this.state.filter.toLowerCase());
+                  .filter(todo => {
+                    const textFilter = todo.content
+                      .toLowerCase()
+                      .includes(filter.toLowerCase())
+                    return textFilter;
+                    })
 
                   //   if (this.state.showCompleted && this.state.showInCompleted) {
                   //     return textFilter;
