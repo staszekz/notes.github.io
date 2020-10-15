@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePageLayout from 'Layout/HomePageLayout';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import GlobalStyles from 'Theme/GlobalStyle';
 import ButtonLink from 'components/Button/Button';
 

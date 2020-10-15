@@ -17,7 +17,7 @@ export const theme = {
   },
   media: {
     phone: '@media(max-width: 520px)',
-    desktop: '@media(min-width: 724px)',
+    tablet: '@media(max-width: 768px)',
     landscape: '@media(max-width: 736px) and (orientation: landscape) ',
   },
 };

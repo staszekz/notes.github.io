@@ -8,6 +8,8 @@ import TodoItem from 'components/Todo/TodoItem';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import TodoInput from 'components/Todo/TodoInput';
+import { StyledButton } from 'components/Todo/TodoItem';
+
 
 import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
 
@@ -30,6 +32,43 @@ const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
   table-layout: auto;
 `;
+
+const StyledInput = styled.input`
+width: 40%;
+height: 40px;
+border: 2px solid ${({ theme }) => theme.colors.primary};
+border-radius: 5px;
+color: white;
+background-color:${({ theme }) => theme.colors.dark}; 
+margin-bottom: 0.5rem;
+margin-right: 0.5rem;
+${({theme})=> theme.media.tablet}{
+  ::placeholder{
+  font-size: 1.5rem;
+}
+}
+
+
+`;
+
+const StyledButtonClear = styled(StyledButton)`
+width: 20%;
+margin-bottom: 0.5rem;
+`;
+
+const StyledFiltersWrapper = styled.div`
+width: 50%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+${({theme})=> theme.media.tablet}{
+  width: 100%;
+}
+${({theme})=> theme.media.landscape}{
+  width: 100%;
+}
+`;
+
 
 const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
   const [editID, setEditedID] = useState(null);
@@ -68,17 +107,20 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
         <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
-          <input
-            placeholder="filter by content"
+          <StyledFiltersWrapper>
+
+          <StyledInput
+            placeholder="🔎 by content"
             value={filterContent}
             onChange={handleFilterContentChange}
-          ></input>
-          <input
-            placeholder="filter by deadline"
+          ></StyledInput>
+          <StyledInput
+            placeholder="🔎 by deadline"
             value={filterDeadline}
             onChange={handleFilterDeadlineChange}
-          ></input>
-          <button onClick={clearFilter}>Clear</button>
+          ></StyledInput>
+          <StyledButtonClear onClick={clearFilter}>Clear</StyledButtonClear>
+          </StyledFiltersWrapper>
           <StyledTable striped responsive>
             <thead>
               <tr>

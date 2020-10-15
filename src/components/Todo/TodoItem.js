@@ -7,7 +7,6 @@ import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 
 const StyledTdWithHover = styled.td`
   width: 50%;
-  /* height: 300px; */
   :hover {
     color: ${({ theme }) => theme.colors.primary};
   }
@@ -19,11 +18,7 @@ const StyledTdWithHover = styled.td`
 `;
 
  export const StyledTd = styled.td`
- /* display: flex;  */
- /* align-items: center; */
- /* justify-content: space-around; */
  width: fit-content;
- /* border-top: none; */
 `;
 
 export const StyledButton = styled.button`
