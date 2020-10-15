@@ -20,7 +20,6 @@ const StyledTodoList = styled.div`
 
   ${({ theme }) => theme.media.phone} {
     width: 95%;
-
   }
   ${({ theme }) => theme.media.landscape} {
     width: 95%;
@@ -29,16 +28,17 @@ const StyledTodoList = styled.div`
 
 const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
- table-layout: auto;
+  table-layout: auto;
 `;
 
 const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
   const [editID, setEditedID] = useState(null);
-  const [filter, setFilter] = useState('');
+  const [filterContent, setFilterContent] = useState('');
+  const [filterDeadline, setFilterDeadline] = useState('');
 
   useEffect(() => {
     fetchTodos();
-  }, []);// eslint-disable-line react-hooks/exhaustive-deps
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleOnSave = (task, editedId) => {
     editTask(task, editedId);
@@ -49,19 +49,36 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
     setEditedID(editedID);
   };
 
-const handleFilterChange = e => {
-  setFilter(e.target.value)
-}
+  const handleFilterContentChange = e => {
+    setFilterContent(e.target.value);
+  };
+  const handleFilterDeadlineChange = e => {
+    setFilterDeadline(e.target.value);
+  };
 
+  const clearFilter = () => {
+    setFilterContent('');
+    setFilterDeadline('');
+  };
 
   return (
     <>
       <GlobalStyle />
-      <MainLayout onAddFetch={fetchTodos} button='true'>
-         <StyledTodoList>
+      <MainLayout onAddFetch={fetchTodos} button="true">
+        <StyledTodoList>
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
-          <input value={filter} onChange={handleFilterChange}></input>
+          <input
+            placeholder="filter by content"
+            value={filterContent}
+            onChange={handleFilterContentChange}
+          ></input>
+          <input
+            placeholder="filter by deadline"
+            value={filterDeadline}
+            onChange={handleFilterDeadlineChange}
+          ></input>
+          <button onClick={clearFilter}>Clear</button>
           <StyledTable striped responsive>
             <thead>
               <tr>
@@ -69,8 +86,6 @@ const handleFilterChange = e => {
                 <th>Content</th>
                 <th>Deadline</th>
                 <th>Edition</th>
-                {/* <th>Remove</th>
-                <th>Completed</th> */}
               </tr>
             </thead>
             <tbody>
@@ -82,12 +97,11 @@ const handleFilterChange = e => {
                 </tr>
               ) : (
                 todos
-                  .filter(todo => {
-                    const textFilter = todo.content
-                      .toLowerCase()
-                      .includes(filter.toLowerCase())
-                    return textFilter;
-                    })
+                  .filter(todo => (todo.content.toLowerCase().includes(filterContent.toLowerCase())
+                  
+                  ))
+                  .filter(todo => (todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase())
+                  ))
 
                   //   if (this.state.showCompleted && this.state.showInCompleted) {
                   //     return textFilter;
