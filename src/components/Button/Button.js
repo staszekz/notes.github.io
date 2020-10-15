@@ -30,7 +30,7 @@ export const StyledButton = styled(Link)`
   }
 
   :hover {
-    box-shadow: 0 10px 20px -15px red;
+    box-shadow: 0 10px 20px -15px ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.white};
     text-decoration: none;
@@ -40,16 +40,28 @@ export const StyledButton = styled(Link)`
     css`
       width: 40%;
     `}
-    ${({ homePage }) =>
+  ${({ homePage }) =>
     homePage &&
     css`
       height: 100px;
-      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-      background-color: ${({theme})  => theme.colors.dark};
-      border: 3px solid ${({theme})  => theme.colors.primary};
+      box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);
+      width: 40%;
+
+      background-color: ${({ theme }) => theme.colors.dark};
+      border: 3px solid ${({ theme }) => theme.colors.primary};
+      ${({ theme }) => theme.media.phone} {
+        background: ${({ theme }) => theme.colors.dark};
+        color: ${({ theme }) => theme.colors.primary};
+        font-size: ${({ theme }) => theme.fontSize.xs};
+        width: 40%;
+      }
     `}
 `;
 
-const ButtonLink = ({ children, to, homePage }) => <StyledButton homePage={homePage} to={to}>{children}</StyledButton>;
+const ButtonLink = ({ children, to, homePage }) => (
+  <StyledButton homePage={homePage} to={to}>
+    {children}
+  </StyledButton>
+);
 
 export default ButtonLink;

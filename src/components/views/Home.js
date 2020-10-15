@@ -19,7 +19,6 @@ const StyledWrapper = styled.div`
   padding: 2rem;
   transform: translate(-50%, -50%);
   background-color: ${({theme})  => theme.colors.dark};
-  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.25s ease-in-out;
   ${({ theme }) => theme.media.phone} {
     width: 90%;
@@ -46,8 +45,8 @@ const Home = () => {
         <StyledWrapper>
           <h1 style={{color: 'white'}}>In this app you can store your: </h1>
           <StyledButtonWrapper>
-             <ButtonLink homePage='true'>todos</ButtonLink>
-             <ButtonLink homePage='true'>notes</ButtonLink>
+             <ButtonLink homePage='true' to='/todos'>todos</ButtonLink>
+             <ButtonLink homePage='true' to='/notes'>notes</ButtonLink>
              </StyledButtonWrapper>
         </StyledWrapper>
        </HomePageLayout>
