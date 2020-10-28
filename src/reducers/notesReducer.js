@@ -1,4 +1,4 @@
-import { DATABASE_URL } from 'utils/database'
+import { DATABASE_URL } from 'utils/database';
 
 const initialState = {
   notes: [],
@@ -6,7 +6,6 @@ const initialState = {
   editID: null,
   error: null,
 };
-
 
 const SET_LOADING = 'SET_LOADING';
 const SET_NOTES = 'SET_NOTES';
@@ -52,7 +51,6 @@ const fetchNotesWithoutLoading = () => {
       });
   };
 };
-
 
 export const fetchNotes = () => {
   return dispatch => {
