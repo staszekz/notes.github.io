@@ -185,8 +185,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
               )}
             </tbody>
           </StyledTable>
-          {/* </>} */}
-        </StyledTodoList>
+       </StyledTodoList>
         {!isLoading && !todos.length && (
           <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
         )}

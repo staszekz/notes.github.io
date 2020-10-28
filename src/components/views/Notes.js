@@ -1,9 +1,10 @@
 import React from 'react';
 import MainLayout from 'Layout/MainLayout';
+import {StyledH2} from 'components/H1/H1'
 
 const Notes = () => (
   <MainLayout>
-    <h1 style={{ color: 'white' }}>my private notes</h1>;
+    <StyledH2>my private notes</StyledH2>;
   </MainLayout>
 );
 
