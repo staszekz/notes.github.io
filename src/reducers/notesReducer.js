@@ -40,12 +40,14 @@ const fetchNotesWithoutLoading = () => {
       .then(r => r.json())
       .then(notes => {
         const arrayNotes = notes
-          ? Object.keys(notes).map(key => {
-              return {
-                id: key,
-                ...notes[key],
-              };
-            })
+          ? Object.keys(notes)
+              .map(key => {
+                return {
+                  id: key,
+                  ...notes[key],
+                };
+              })
+              .reverse()
           : [];
         dispatch(setNotes(arrayNotes));
       });

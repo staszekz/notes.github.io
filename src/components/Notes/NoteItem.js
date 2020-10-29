@@ -1,68 +1,33 @@
-// TodoItem.js
 import React from 'react';
-import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
+import { StyledTdWithHover } from 'components/Todo/TodoItem';
+import { StyledButton } from 'components/Todo/TodoItem';
 
-export const StyledTdWithHover = styled.td`
-  width: 50%;
-  :hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-  ${({ deadline }) =>
-    deadline &&
-    css`
-      width: 10vw;
-    `}
-`;
-
-export const StyledTd = styled.td`
-  width: fit-content;
-`;
-
-export const StyledButton = styled.button`
-  color: black;
-  background: white;
-  height: 40px;
-  width: 40px;
-  border-radius: 10px;
-  ${({ theme }) => theme.media.phone} {
-    height: 30px;
-    width: 30px;
-  }
-`;
-
-const TodoItem = ({
-  content,
-  id,
-  deadline,
-  completed,
-  index,
-  onEdit,
-  onDelete,
-  onCompleteCheck,
-}) => {
+const NoteItem = ({ title, date, index, id }) => {
   const handleOnEdit = () => {
-    onEdit(id);
+    console.log('edited');
   };
-
   const handleOnDelete = () => {
-    onDelete(id);
+    console.log('deleted');
   };
-
-  const handleCompletedCheck = () => {
-    onCompleteCheck(id, content, deadline, completed);
-  };
-
   return (
     <tr key={id}>
       <td className="align-middle">{index + 1}</td>
-      <StyledTdWithHover className="align-middle">{content}</StyledTdWithHover>
+      <StyledTdWithHover className="align-middle">{title}</StyledTdWithHover>
       <StyledTdWithHover deadline className="align-middle">
-        {deadline}
+        {date}
       </StyledTdWithHover>
-      <StyledTd className="align-middle">
+      <td className="align-middle">
+        <StyledButton onClick={handleOnEdit}>
+          <FontAwesomeIcon icon={faEdit} />
+        </StyledButton>
+        <StyledButton onClick={handleOnDelete}>
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </StyledButton>
+      </td>
+      {/* <StyledTd className="align-middle">
         <StyledButton onClick={handleOnEdit}>
           <FontAwesomeIcon icon={faEdit} />
         </StyledButton>
@@ -76,9 +41,9 @@ const TodoItem = ({
             <FontAwesomeIcon icon={faTimes} color="red" />
           )}
         </StyledButton>
-      </StyledTd>
+      </StyledTd> */}
     </tr>
   );
 };
 
-export default TodoItem;
+export default NoteItem;
