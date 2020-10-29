@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from 'Layout/MainLayout';
 import { StyledH2 } from 'components/H1/H1';
 import { connect } from 'react-redux';
@@ -34,6 +34,11 @@ const Notes = ({ fetchNotes, notes, isLoading }) => {
   useEffect(() => {
     fetchNotes();
   }, []);
+
+  // const handleShow = () => {
+  //   setDetailsVisible(!detailsVisible);
+  // };
+
   return (
     <>
       <GlobalStyle />
@@ -58,13 +63,17 @@ const Notes = ({ fetchNotes, notes, isLoading }) => {
                 </tr>
               ) : (
                 notes.map((note, index) => (
-                  <NoteItem
-                    key={note.id}
-                    title={note.title}
-                    date={note.date}
-                    id={note.id}
-                    index={index}
-                  />
+                  <>
+                    <NoteItem
+                      key={note.id}
+                      title={note.title}
+                      date={note.date}
+                      id={note.id}
+                      index={index}
+                      content={note.content}
+                      // isVisible={handleShow}
+                    />
+                  </>
                 ))
               )}
             </tbody>
