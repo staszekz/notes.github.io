@@ -27,11 +27,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const NoteDetails = ({ isVisible, content }) => {
+const StyledWrapper = styled.div`
+  background-color: ${({ theme }) => theme.colors.dark};
+  filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
+`;
+
+const NoteDetails = ({ isVisible, content, children }) => {
   return (
-    <Wrapper isVisible={isVisible}>
-      <p>{content}</p>
-    </Wrapper>
+    <>
+      <Wrapper isVisible={isVisible}>
+        <p>{content}</p>
+      </Wrapper>
+      <StyledWrapper isModalOpen={isVisible}>{children}</StyledWrapper>
+    </>
   );
 };
 

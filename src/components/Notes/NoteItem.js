@@ -10,7 +10,7 @@ const NoteItem = ({ title, date, index, id, content }) => {
   const [detailsVisible, setDetailsVisible] = useState('false');
 
   const handleOnEdit = () => {
-    setDetailsVisible(!detailsVisible);
+    setDetailsVisible(state => !state);
   };
   const handleOnDelete = () => {
     console.log('deleted');
