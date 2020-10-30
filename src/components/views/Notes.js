@@ -35,10 +35,6 @@ const Notes = ({ fetchNotes, notes, isLoading }) => {
     fetchNotes();
   }, []);
 
-  // const handleShow = () => {
-  //   setDetailsVisible(!detailsVisible);
-  // };
-
   return (
     <>
       <GlobalStyle />
@@ -71,7 +67,6 @@ const Notes = ({ fetchNotes, notes, isLoading }) => {
                       id={note.id}
                       index={index}
                       content={note.content}
-                      // isVisible={handleShow}
                     />
                   </>
                 ))

@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { toggleModalOpen } from 'reducers/modalReducer';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -11,7 +13,7 @@ const Wrapper = styled.div`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   padding: 2rem;
   flex-direction: column;
-  height: 50%;
+  height: 50vh;
   width: 50%;
   background-color: ${({ theme }) => theme.colors.dark};
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
@@ -27,20 +29,23 @@ const Wrapper = styled.div`
   }
 `;
 
-const StyledWrapper = styled.div`
-  background-color: ${({ theme }) => theme.colors.dark};
-  filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
-`;
+const NoteDetails = ({ isVisible, content, toggleModalOpen, onClose }) => {
+  const handleOnclick = () => {
+    toggleModalOpen();
+  };
 
-const NoteDetails = ({ isVisible, content, children }) => {
   return (
     <>
       <Wrapper isVisible={isVisible}>
         <p>{content}</p>
+        <button onClick={onClose}>Close</button>
       </Wrapper>
-      <StyledWrapper isModalOpen={isVisible}>{children}</StyledWrapper>
     </>
   );
 };
 
-export default NoteDetails;
+const mapDispatchToProps = {
+  toggleModalOpen,
+};
+
+export default connect(null, mapDispatchToProps)(NoteDetails);

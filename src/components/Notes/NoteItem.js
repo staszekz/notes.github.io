@@ -31,7 +31,7 @@ const NoteItem = ({ title, date, index, id, content }) => {
             <FontAwesomeIcon icon={faTrashAlt} />
           </StyledButton>
         </td>
-        <NoteDetails isVisible={detailsVisible} content={content} />
+        <NoteDetails isVisible={detailsVisible} onClose={handleOnEdit} content={content} />
       </tr>
     </>
   );
