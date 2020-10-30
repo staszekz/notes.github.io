@@ -31,7 +31,13 @@ const NoteItem = ({ title, date, index, id, content }) => {
             <FontAwesomeIcon icon={faTrashAlt} />
           </StyledButton>
         </td>
-        <NoteDetails isVisible={detailsVisible} onClose={handleToggleShow} content={content} />
+        <NoteDetails
+          isVisible={detailsVisible}
+          onClose={handleToggleShow}
+          content={content}
+          title={title}
+          date={date}
+        />
       </tr>
     </>
   );

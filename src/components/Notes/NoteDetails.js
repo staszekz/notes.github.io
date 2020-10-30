@@ -27,11 +27,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const NoteDetails = ({ isVisible, content, onClose }) => {
+const NoteDetails = ({ isVisible, content, onClose, title, date }) => {
   return (
     <>
       <Wrapper isVisible={isVisible}>
+        <h1>{title}</h1>
         <p>{content}</p>
+        <p>{date}</p>
         <button onClick={onClose}>Close</button>
       </Wrapper>
     </>
