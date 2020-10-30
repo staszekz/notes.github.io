@@ -7,10 +7,10 @@ import { StyledButton } from 'components/Todo/TodoItem';
 import NoteDetails from 'components/Notes/NoteDetails';
 
 const NoteItem = ({ title, date, index, id, content }) => {
-  const [detailsVisible, setDetailsVisible] = useState('false');
+  const [detailsVisible, setDetailsVisible] = useState(false);
 
-  const handleOnEdit = () => {
-    setDetailsVisible(state => !state);
+  const handleToggleShow = () => {
+    setDetailsVisible(!detailsVisible);
   };
   const handleOnDelete = () => {
     console.log('deleted');
@@ -24,14 +24,14 @@ const NoteItem = ({ title, date, index, id, content }) => {
           {date}
         </StyledTdWithHover>
         <td className="align-middle">
-          <StyledButton onClick={handleOnEdit}>
+          <StyledButton onClick={handleToggleShow}>
             <FontAwesomeIcon icon={faEdit} />
           </StyledButton>
           <StyledButton onClick={handleOnDelete}>
             <FontAwesomeIcon icon={faTrashAlt} />
           </StyledButton>
         </td>
-        <NoteDetails isVisible={detailsVisible} onClose={handleOnEdit} content={content} />
+        <NoteDetails isVisible={detailsVisible} onClose={handleToggleShow} content={content} />
       </tr>
     </>
   );

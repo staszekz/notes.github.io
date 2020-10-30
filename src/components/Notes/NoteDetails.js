@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { toggleModalOpen } from 'reducers/modalReducer';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -29,11 +27,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const NoteDetails = ({ isVisible, content, toggleModalOpen, onClose }) => {
-  const handleOnclick = () => {
-    toggleModalOpen();
-  };
-
+const NoteDetails = ({ isVisible, content, onClose }) => {
   return (
     <>
       <Wrapper isVisible={isVisible}>
@@ -44,8 +38,4 @@ const NoteDetails = ({ isVisible, content, toggleModalOpen, onClose }) => {
   );
 };
 
-const mapDispatchToProps = {
-  toggleModalOpen,
-};
-
-export default connect(null, mapDispatchToProps)(NoteDetails);
+export default NoteDetails;
