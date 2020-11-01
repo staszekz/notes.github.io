@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+import PageContext from 'components/context';
 import styled, { ThemeProvider } from 'styled-components';
 import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
@@ -20,11 +22,26 @@ const StyledAddItemButton = styled(StyledButton)`
 `;
 
 const StyledWrapper = styled.div`
-background-color: ${({ theme }) => theme.colors.dark};
+  background-color: ${({ theme }) => theme.colors.dark};
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
-const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button }) => {
+const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button, ...props }) => {
+  const [pageType, setPageType] = useState('notes');
+
+  const {
+    location: { pathname },
+  } = props;
+
+  useEffect(() => {
+    const pageTypes = ['todos', 'notes'];
+
+    const [currentPage] = pageTypes.filter(page => pathname.includes(page));
+
+    console.log(currentPage);
+    setPageType(currentPage);
+  }, [pathname]);
+
   const handleIsVisible = () => {
     toggleModalOpen();
   };
@@ -36,12 +53,12 @@ const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button
 
   return (
     <ThemeProvider theme={theme} isModalOpen={isModalOpen}>
-        <StyledAddItemButton onClick={handleIsVisible} button={button}>
-          <FontAwesomeIcon icon={faPlus} />
-        </StyledAddItemButton>
-        <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
-        <NavBar />
-        <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
+      <StyledAddItemButton onClick={handleIsVisible} button={button}>
+        <FontAwesomeIcon icon={faPlus} />
+      </StyledAddItemButton>
+      <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
+      <NavBar />
+      <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
     </ThemeProvider>
   );
 };
@@ -52,4 +69,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   toggleModalOpen,
 };
-export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainLayout));
