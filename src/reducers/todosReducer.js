@@ -53,12 +53,12 @@ const fetchWithoutLoading = () => {
   };
 };
 
-export const setCompleted = (completedId, content, deadline, completed) => {
+export const setCompleted = (completedId, title, deadline, completed) => {
   return dispatch => {
     fetch(`${DATABASE_URL}/todos/${completedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({
-        content,
+        title,
         deadline,
         completed: !completed,
       }),

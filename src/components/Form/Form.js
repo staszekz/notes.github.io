@@ -23,6 +23,26 @@ const StyledModalInput = styled(StyledInput)`
   }
 `;
 
+const StyledTextarea = styled.textarea`
+  background-color: lightgray;
+  border: none;
+  border-radius: 20px;
+  width: 70%;
+  height: 50%;
+  margin: 1rem auto;
+  float: left;
+  text-align: center;
+
+  ::placeholder {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+  }
+  ${({ theme }) => theme.media.phone} {
+    width: 100%;
+  }
+`;
+
 const StyledForm = styled.form`
   display: flex;
   height: 100%;
@@ -40,8 +60,10 @@ const StyledButtonWrapper = styled.div`
 
 class AddTask extends Component {
   state = {
+    title: '',
     content: '',
     deadline: '',
+    created: '',
     completed: false,
   };
 
@@ -58,14 +80,14 @@ class AddTask extends Component {
     }
     toggleModalOpen();
     this.setState({
-      content: '',
+      title: '',
       deadline: '',
     });
   };
 
   handleOnAddClick = e => {
     e.preventDefault();
-    if (!this.state.content) {
+    if (!this.state.title) {
       return alert('Please add new task or quit!');
     }
     this.putDataInDatabase();
@@ -88,24 +110,41 @@ class AddTask extends Component {
   };
 
   render() {
+    const { pageContext } = this.props;
     return (
       <StyledForm>
-        <StyledLabel htmlFor="newTask">Add new task:</StyledLabel>
+        {pageContext === 'todos' && <StyledLabel htmlFor="newTask">Add new task:</StyledLabel>}
+        {pageContext === 'notes' && <StyledLabel htmlFor="newNote">Add new note:</StyledLabel>}
+
         <StyledModalInput
-          name="content"
-          placeholder="new task"
-          value={this.state.content}
+          name="title"
+          placeholder={pageContext === 'todos' ? 'new task' : 'note title'}
+          value={this.state.title}
           onChange={this.handleOnChange}
           onKeyDown={this.onEnterSave}
         ></StyledModalInput>
-        <StyledModalInput
-          deadline
-          name="deadline"
-          placeholder="new deadline"
-          value={this.state.deadline}
-          onChange={this.handleOnChange}
-          onKeyDown={this.onEnterSave}
-        ></StyledModalInput>
+
+        {pageContext === 'notes' && (
+          <StyledTextarea
+            name="content"
+            placeholder="note content"
+            value={this.state.content}
+            onChange={this.handleOnChange}
+            onKeyDown={this.onEnterSave}
+          ></StyledTextarea>
+        )}
+
+        {pageContext === 'todos' && (
+          <StyledModalInput
+            // deadline
+            name="deadline"
+            placeholder="new deadline"
+            value={this.state.deadline}
+            onChange={this.handleOnChange}
+            onKeyDown={this.onEnterSave}
+          ></StyledModalInput>
+        )}
+
         <StyledButtonWrapper>
           <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>
             <FontAwesomeIcon icon={faPlus} />

@@ -110,8 +110,6 @@ const Todos = ({
       <GlobalStyle />
       <MainLayout onAddFetch={fetchTodos} button="true">
         <StyledTodoList>
-          {/* {console.log('pageContext w todos', pageContext)} */}
-          {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
           <StyledFiltersWrapper>
             <StyledInput
@@ -130,7 +128,7 @@ const Todos = ({
             <thead>
               <tr>
                 <th>#</th>
-                <th>Content</th>
+                <th>To Do</th>
                 <th>Deadline</th>
                 <th>Edition</th>
               </tr>
@@ -144,7 +142,7 @@ const Todos = ({
                 </tr>
               ) : (
                 todos
-                  .filter(todo => todo.content.toLowerCase().includes(filterContent.toLowerCase()))
+                  .filter(todo => todo.title.toLowerCase().includes(filterContent.toLowerCase()))
                   .filter(todo =>
                     todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase()),
                   )
@@ -165,7 +163,7 @@ const Todos = ({
                         key={todo.id}
                         id={todo.id}
                         index={index}
-                        content={todo.content}
+                        title={todo.title}
                         completed={todo.completed}
                         deadline={todo.deadline}
                         onSave={handleOnSave}
@@ -177,7 +175,7 @@ const Todos = ({
                         key={todo.id}
                         id={todo.id}
                         index={index}
-                        content={todo.content}
+                        title={todo.title}
                         completed={todo.completed}
                         deadline={todo.deadline}
                         onEdit={handleEdit}
