@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from 'Layout/MainLayout';
 import { StyledH2 } from 'components/H1/H1';
 import { connect } from 'react-redux';
+import withContext from 'components/context/withContext';
 import styled from 'styled-components';
 import GlobalStyle from 'Theme/GlobalStyle';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import { StyledButton } from 'components/Todo/TodoItem';
 import { fetchNotes } from 'reducers/notesReducer';
 import NoteItem from 'components/Notes/NoteItem';
 
@@ -30,9 +30,10 @@ const StyledNotesList = styled.div`
   }
 `;
 
-const Notes = ({ fetchNotes, notes, isLoading }) => {
+const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
   useEffect(() => {
     fetchNotes();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -42,6 +43,7 @@ const Notes = ({ fetchNotes, notes, isLoading }) => {
         <StyledH2>my private notes</StyledH2>;
         <StyledNotesList>
           <StyledTable striped responsive>
+            {console.log('pageContext w notes ', pageContext)}
             <thead>
               <tr>
                 <th>#</th>
@@ -88,4 +90,4 @@ const mapDispatchToProps = {
   fetchNotes,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notes);
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(Notes));

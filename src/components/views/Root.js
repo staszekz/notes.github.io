@@ -8,21 +8,24 @@ import Todos from 'components/views/Todos';
 import Home from 'components/views/Home';
 import Notes from 'components/views/Notes';
 import SignIn from 'components/views/SignIn';
+import ContextLayout from 'components/context/contextLayout';
 
 const Root = () => {
   return (
     <Provider store={store}>
       <GlobalStyle />
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Switch>
-          <Route exact path="/" component={SignIn}>
-          {/* {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />} */}
-          <Redirect to="/home"/>
-          </Route>
-          <Route path="/todos" component={Todos} />
-          <Route path="/notes" component={Notes} />
-          <Route path="/home" component={Home} />
-        </Switch>
+        <ContextLayout>
+          <Switch>
+            <Route exact path="/" component={SignIn}>
+              {/* {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />} */}
+              <Redirect to="/home" />
+            </Route>
+            <Route path="/todos" component={Todos} />
+            <Route path="/notes" component={Notes} />
+            <Route path="/home" component={Home} />
+          </Switch>
+        </ContextLayout>
       </BrowserRouter>
     </Provider>
   );

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import PageContext from 'components/context';
 import styled, { ThemeProvider } from 'styled-components';
 import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
@@ -26,22 +25,15 @@ const StyledWrapper = styled.div`
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
-const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button, ...props }) => {
-  const [pageType, setPageType] = useState('notes');
-
-  const {
-    location: { pathname },
-  } = props;
-
-  useEffect(() => {
-    const pageTypes = ['todos', 'notes'];
-
-    const [currentPage] = pageTypes.filter(page => pathname.includes(page));
-
-    console.log(currentPage);
-    setPageType(currentPage);
-  }, [pathname]);
-
+const MainLayout = ({
+  children,
+  onAddFetch,
+  isModalOpen,
+  toggleModalOpen,
+  button,
+  pageType,
+  ...props
+}) => {
   const handleIsVisible = () => {
     toggleModalOpen();
   };
@@ -59,6 +51,7 @@ const MainLayout = ({ children, onAddFetch, isModalOpen, toggleModalOpen, button
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
       <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
+      {/* {console.log('pageType', pageType)} */}
     </ThemeProvider>
   );
 };

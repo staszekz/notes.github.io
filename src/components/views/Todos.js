@@ -9,7 +9,7 @@ import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import TodoInput from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Todo/TodoItem';
-
+import withContext from 'components/context/withContext';
 
 import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
 
@@ -34,43 +34,48 @@ const StyledTable = styled(Table)`
 `;
 
 const StyledInput = styled.input`
-width: 40%;
-height: 40px;
-border: 2px solid ${({ theme }) => theme.colors.primary};
-border-radius: 5px;
-color: white;
-background-color:${({ theme }) => theme.colors.dark}; 
-margin-bottom: 0.5rem;
-margin-right: 0.5rem;
-${({theme})=> theme.media.tablet}{
-  ::placeholder{
-  font-size: 1.5rem;
-}
-}
-
-
+  width: 40%;
+  height: 40px;
+  border: 2px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 5px;
+  color: white;
+  background-color: ${({ theme }) => theme.colors.dark};
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  ${({ theme }) => theme.media.tablet} {
+    ::placeholder {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 const StyledButtonClear = styled(StyledButton)`
-width: 20%;
-margin-bottom: 0.5rem;
+  width: 20%;
+  margin-bottom: 0.5rem;
 `;
 
 const StyledFiltersWrapper = styled.div`
-width: 50%;
-display: flex;
-align-items: center;
-justify-content: space-between;
-${({theme})=> theme.media.tablet}{
-  width: 100%;
-}
-${({theme})=> theme.media.landscape}{
-  width: 100%;
-}
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  ${({ theme }) => theme.media.tablet} {
+    width: 100%;
+  }
+  ${({ theme }) => theme.media.landscape} {
+    width: 100%;
+  }
 `;
 
-
-const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
+const Todos = ({
+  isLoading,
+  fetchTodos,
+  todos,
+  deleteTask,
+  setCompleted,
+  editTask,
+  pageContext,
+}) => {
   const [editID, setEditedID] = useState(null);
   const [filterContent, setFilterContent] = useState('');
   const [filterDeadline, setFilterDeadline] = useState('');
@@ -105,21 +110,21 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
       <GlobalStyle />
       <MainLayout onAddFetch={fetchTodos} button="true">
         <StyledTodoList>
+          {console.log('pageContext w todos', pageContext)}
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
           <StyledFiltersWrapper>
-
-          <StyledInput
-            placeholder="🔎 by content"
-            value={filterContent}
-            onChange={handleFilterContentChange}
-          ></StyledInput>
-          <StyledInput
-            placeholder="🔎 by deadline"
-            value={filterDeadline}
-            onChange={handleFilterDeadlineChange}
-          ></StyledInput>
-          <StyledButtonClear onClick={clearFilter}>Clear</StyledButtonClear>
+            <StyledInput
+              placeholder="🔎 by content"
+              value={filterContent}
+              onChange={handleFilterContentChange}
+            ></StyledInput>
+            <StyledInput
+              placeholder="🔎 by deadline"
+              value={filterDeadline}
+              onChange={handleFilterDeadlineChange}
+            ></StyledInput>
+            <StyledButtonClear onClick={clearFilter}>Clear</StyledButtonClear>
           </StyledFiltersWrapper>
           <StyledTable striped responsive>
             <thead>
@@ -139,11 +144,10 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
                 </tr>
               ) : (
                 todos
-                  .filter(todo => (todo.content.toLowerCase().includes(filterContent.toLowerCase())
-                  
-                  ))
-                  .filter(todo => (todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase())
-                  ))
+                  .filter(todo => todo.content.toLowerCase().includes(filterContent.toLowerCase()))
+                  .filter(todo =>
+                    todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase()),
+                  )
 
                   //   if (this.state.showCompleted && this.state.showInCompleted) {
                   //     return textFilter;
@@ -185,7 +189,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
               )}
             </tbody>
           </StyledTable>
-       </StyledTodoList>
+        </StyledTodoList>
         {!isLoading && !todos.length && (
           <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
         )}
@@ -207,4 +211,4 @@ const mapDispatchToProps = {
   editTask,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todos);
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(Todos));
