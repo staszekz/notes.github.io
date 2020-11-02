@@ -5,6 +5,8 @@ import { StyledInput } from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Button/Button';
 import { addNewTask } from 'reducers/todosReducer';
 import { toggleModalOpen } from 'reducers/modalReducer';
+import { addNewNote } from 'reducers/notesReducer';
+import withContext from 'components/context/withContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 
@@ -44,8 +46,17 @@ class AddTask extends Component {
   };
 
   putDataInDatabase = () => {
-    this.props.addNewTask(this.state);
-    this.props.toggleModalOpen();
+    const { addNewNote, addNewTask, toggleModalOpen, pageContext } = this.props;
+
+    if (pageContext === 'todos') {
+      addNewTask(this.state);
+      console.log('z form TODOS', pageContext);
+    }
+    if (pageContext === 'notes') {
+      addNewNote(this.state);
+      console.log('z form NOTES', pageContext);
+    }
+    toggleModalOpen();
     this.setState({
       content: '',
       deadline: '',
@@ -96,11 +107,7 @@ class AddTask extends Component {
           onKeyDown={this.onEnterSave}
         ></StyledModalInput>
         <StyledButtonWrapper>
-          <StyledButton
-            modal="true"
-            type="submit"
-            onClick={this.handleOnAddClick}
-                     >
+          <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>
             <FontAwesomeIcon icon={faPlus} />
           </StyledButton>
           <StyledButton onClick={this.onQuit}>
@@ -115,5 +122,6 @@ class AddTask extends Component {
 const mapDispatchToProps = {
   addNewTask,
   toggleModalOpen,
+  addNewNote,
 };
-export default connect(null, mapDispatchToProps)(AddTask);
+export default withContext(connect(null, mapDispatchToProps)(AddTask));

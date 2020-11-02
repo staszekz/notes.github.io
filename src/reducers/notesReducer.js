@@ -60,3 +60,24 @@ export const fetchNotes = () => {
     dispatch(fetchNotesWithoutLoading());
   };
 };
+
+export const addNewNote = noteData => {
+  return dispatch => {
+    fetch(`${DATABASE_URL}/notes/.json`, {
+      method: 'POST',
+      body: JSON.stringify(noteData),
+    }).then(() => {
+      dispatch(fetchNotesWithoutLoading());
+    });
+  };
+};
+
+export const deleteNote = deletedId => {
+  return dispatch => {
+    fetch(`${DATABASE_URL}/notes/${deletedId}.json`, {
+      method: 'DELETE',
+    }).then(() => {
+      dispatch(fetchNotesWithoutLoading());
+    });
+  };
+};

@@ -43,7 +43,7 @@ const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
         <StyledH2>my private notes</StyledH2>;
         <StyledNotesList>
           <StyledTable striped responsive>
-            {console.log('pageContext w notes ', pageContext)}
+            {/* {console.log('pageContext w notes ', pageContext)} */}
             <thead>
               <tr>
                 <th>#</th>

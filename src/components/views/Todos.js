@@ -110,7 +110,7 @@ const Todos = ({
       <GlobalStyle />
       <MainLayout onAddFetch={fetchTodos} button="true">
         <StyledTodoList>
-          {console.log('pageContext w todos', pageContext)}
+          {/* {console.log('pageContext w todos', pageContext)} */}
           {/* tutaj wrzucić LI LOADING  */}
           <StyledH1>Todos List</StyledH1>
           <StyledFiltersWrapper>

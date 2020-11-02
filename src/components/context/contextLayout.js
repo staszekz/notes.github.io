@@ -10,7 +10,7 @@ const ContextLayout = ({ children, ...props }) => {
   } = props;
 
   useEffect(() => {
-    const pageTypes = ['todos', 'notes'];
+    const pageTypes = ['todos', 'notes', 'home'];
 
     const [currentPage] = pageTypes.filter(page => pathname.includes(page));
 
