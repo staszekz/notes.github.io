@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import styled, { ThemeProvider } from 'styled-components';
+import withContext from 'components/context/withContext';
 import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
 import { StyledButton } from 'components/Button/Button';
@@ -31,8 +31,7 @@ const MainLayout = ({
   isModalOpen,
   toggleModalOpen,
   button,
-  pageType,
-  ...props
+  pageContext,
 }) => {
   const handleIsVisible = () => {
     toggleModalOpen();
@@ -51,7 +50,7 @@ const MainLayout = ({
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
       <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
-      {/* {console.log('pageType', pageType)} */}
+      {console.log('w main layout', pageContext)}
     </ThemeProvider>
   );
 };
@@ -62,4 +61,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   toggleModalOpen,
 };
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MainLayout));
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(MainLayout));
