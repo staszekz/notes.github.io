@@ -33,12 +33,15 @@ const MainLayout = ({
   button,
   pageContext,
 }) => {
+  // const setCreationDate = () => (`Created: ${new Date().toLocaleString()}`)
+
   const handleIsVisible = () => {
     toggleModalOpen();
   };
 
   const handleAddTask = () => {
     toggleModalOpen();
+    // setCreationDate();
     onAddFetch();
   };
 

@@ -58,6 +58,10 @@ const StyledButtonWrapper = styled.div`
   margin-top: auto;
 `;
 
+const StyledDate = styled.h3`
+  color: ${({ theme }) => theme.colors.primary};
+`;
+
 class AddTask extends Component {
   state = {
     title: '',
@@ -65,6 +69,12 @@ class AddTask extends Component {
     deadline: '',
     created: '',
     completed: false,
+  };
+
+  componentDidMount = () => {
+    this.setState({
+      created: `${new Date().toLocaleString()}`,
+    });
   };
 
   putDataInDatabase = () => {
@@ -76,8 +86,9 @@ class AddTask extends Component {
       console.log('z form TODOS', pageContext);
     }
     if (pageContext === 'notes') {
+      // this.setCreationDate();
       addNewNote({ title, content, created });
-      console.log('z form NOTES', pageContext);
+      console.log('z form NOTES', pageContext, created);
     }
     toggleModalOpen();
     this.setState({
@@ -111,9 +122,6 @@ class AddTask extends Component {
   onQuit = () => {
     this.props.toggleModalOpen();
   };
-
-  getCreationDate = () =>
-    `Created: ${new Date().getDate()} . ${new Date().getMonth() + 1} . ${new Date().getFullYear()}`;
 
   render() {
     const { pageContext } = this.props;
@@ -150,7 +158,7 @@ class AddTask extends Component {
             onKeyDown={this.onEnterSave}
           ></StyledModalInput>
         )}
-        {pageContext === 'notes' && <h2>{this.getCreationDate()}</h2>}
+        {pageContext === 'notes' && <StyledDate>{this.state.created}</StyledDate>}
 
         <StyledButtonWrapper>
           <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>

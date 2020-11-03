@@ -5,7 +5,7 @@ import { StyledTdWithHover } from 'components/Todo/TodoItem';
 import { StyledButton } from 'components/Todo/TodoItem';
 import NoteDetails from 'components/Notes/NoteDetails';
 
-const NoteItem = ({ title, date, index, id, content }) => {
+const NoteItem = ({ title, date, index, id, content, created }) => {
   const [detailsVisible, setDetailsVisible] = useState(false);
 
   const handleToggleShow = () => {
@@ -19,8 +19,8 @@ const NoteItem = ({ title, date, index, id, content }) => {
       <tr key={id}>
         <td className="align-middle">{index + 1}</td>
         <StyledTdWithHover className="align-middle">{title}</StyledTdWithHover>
-        <StyledTdWithHover deadline className="align-middle">
-          {date}
+        <StyledTdWithHover created className="align-middle">
+          {created}
         </StyledTdWithHover>
         <td className="align-middle">
           <StyledButton onClick={handleToggleShow}>

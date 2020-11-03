@@ -15,6 +15,11 @@ export const StyledTdWithHover = styled.td`
     css`
       width: 10vw;
     `}
+  ${({ created }) =>
+    created &&
+    css`
+      width: 15vw;
+    `}
 `;
 
 export const StyledTd = styled.td`

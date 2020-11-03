@@ -43,7 +43,6 @@ const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
         <StyledH2>my private notes</StyledH2>;
         <StyledNotesList>
           <StyledTable striped responsive>
-            {/* {console.log('pageContext w notes ', pageContext)} */}
             <thead>
               <tr>
                 <th>#</th>
@@ -65,7 +64,7 @@ const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
                     <NoteItem
                       key={note.id}
                       title={note.title}
-                      date={note.date}
+                      created={note.created}
                       id={note.id}
                       index={index}
                       content={note.content}
@@ -76,6 +75,9 @@ const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
             </tbody>
           </StyledTable>
         </StyledNotesList>
+        {!isLoading && !notes.length && (
+          <StyledH2>Your note list is empty! Enter a new note! </StyledH2>
+        )}
       </MainLayout>
     </>
   );
