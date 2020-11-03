@@ -1,5 +1,6 @@
 const initialState = {
   isModalOpen: false,
+  createdDate: '',
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -7,6 +8,7 @@ export const modalReducer = (state = initialState, action) => {
     case 'TOGGLE_MODAL':
       return {
         isModalOpen: !state.isModalOpen,
+        createdDate: `${new Date().toLocaleString()}`,
       };
 
     default:

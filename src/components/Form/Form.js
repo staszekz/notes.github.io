@@ -67,19 +67,19 @@ class AddTask extends Component {
     title: '',
     content: '',
     deadline: '',
-    created: '',
+    // created: '',
     completed: false,
   };
 
-  componentDidMount = () => {
-    this.setState({
-      created: `${new Date().toLocaleString()}`,
-    });
-  };
+  // componentDidMount = () => {
+  //   this.setState({
+  //     created: `${new Date().toLocaleString()}`,
+  //   });
+  // };
 
   putDataInDatabase = () => {
-    const { addNewNote, addNewTask, toggleModalOpen, pageContext } = this.props;
-    const { title, content, deadline, created, completed } = this.state;
+    const { addNewNote, addNewTask, toggleModalOpen, pageContext, created } = this.props;
+    const { title, content, deadline, completed } = this.state;
 
     if (pageContext === 'todos') {
       addNewTask({ title, deadline, completed });
@@ -155,7 +155,7 @@ class AddTask extends Component {
             onKeyDown={this.onEnterSave}
           ></StyledModalInput>
         )}
-        {pageContext === 'notes' && <StyledDate>{this.state.created}</StyledDate>}
+        {pageContext === 'notes' && <StyledDate>{this.props.created}</StyledDate>}
         <StyledButtonWrapper>
           <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>
             <FontAwesomeIcon icon={faPlus} />
@@ -169,9 +169,13 @@ class AddTask extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  created: state.modalReducer.createdDate,
+});
+
 const mapDispatchToProps = {
   addNewTask,
   toggleModalOpen,
   addNewNote,
 };
-export default withContext(connect(null, mapDispatchToProps)(AddTask));
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(AddTask));

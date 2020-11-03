@@ -33,8 +33,6 @@ const MainLayout = ({
   button,
   pageContext,
 }) => {
-  // const setCreationDate = () => (`Created: ${new Date().toLocaleString()}`)
-
   const handleIsVisible = () => {
     toggleModalOpen();
   };
