@@ -32,7 +32,7 @@ export const StyledInput = styled.input`
 
 class TodoInput extends React.Component {
   state = {
-    content: this.props.title,
+    title: this.props.title,
     deadline: this.props.deadline,
     completed: this.props.completed,
   };
@@ -56,7 +56,7 @@ class TodoInput extends React.Component {
   handleCompletedCheck = () => {
     this.props.onCompleteCheck(
       this.props.id,
-      this.state.content,
+      this.state.title,
       this.state.deadline,
       this.state.completed,
     );
@@ -64,15 +64,15 @@ class TodoInput extends React.Component {
 
   render() {
     const { index, id } = this.props;
-    const { content, deadline, completed } = this.state;
+    const { title, deadline, completed } = this.state;
     return (
       <>
         <tr key={id}>
           <td className="align-middle">{index + 1}</td>
           <td className="align-middle">
             <StyledInput
-              name="content"
-              value={content}
+              name="title"
+              value={title}
               onChange={this.handleInputChange}
               onKeyDown={this.onEnterSave}
             />

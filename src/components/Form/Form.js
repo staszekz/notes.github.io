@@ -69,19 +69,22 @@ class AddTask extends Component {
 
   putDataInDatabase = () => {
     const { addNewNote, addNewTask, toggleModalOpen, pageContext } = this.props;
+    const { title, content, deadline, created, completed } = this.state;
 
     if (pageContext === 'todos') {
-      addNewTask(this.state);
+      addNewTask({ title, deadline, completed });
       console.log('z form TODOS', pageContext);
     }
     if (pageContext === 'notes') {
-      addNewNote(this.state);
+      addNewNote({ title, content, created });
       console.log('z form NOTES', pageContext);
     }
     toggleModalOpen();
     this.setState({
       title: '',
+      content: '',
       deadline: '',
+      created: '',
     });
   };
 

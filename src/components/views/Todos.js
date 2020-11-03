@@ -76,8 +76,8 @@ const Todos = ({
   editTask,
   pageContext,
 }) => {
-  const [editID, setEditedID] = useState(null);
-  const [filterContent, setFilterContent] = useState('');
+  const [editID, setEditedID] = useState('');
+  const [filterTitle, setFilterTitle] = useState('');
   const [filterDeadline, setFilterDeadline] = useState('');
 
   useEffect(() => {
@@ -93,15 +93,15 @@ const Todos = ({
     setEditedID(editedID);
   };
 
-  const handleFilterContentChange = e => {
-    setFilterContent(e.target.value);
+  const handleFilterTitleChange = e => {
+    setFilterTitle(e.target.value);
   };
   const handleFilterDeadlineChange = e => {
     setFilterDeadline(e.target.value);
   };
 
   const clearFilter = () => {
-    setFilterContent('');
+    setFilterTitle('');
     setFilterDeadline('');
   };
 
@@ -113,9 +113,9 @@ const Todos = ({
           <StyledH1>Todos List</StyledH1>
           <StyledFiltersWrapper>
             <StyledInput
-              placeholder="🔎 by content"
-              value={filterContent}
-              onChange={handleFilterContentChange}
+              placeholder="🔎 by title"
+              value={filterTitle}
+              onChange={handleFilterTitleChange}
             ></StyledInput>
             <StyledInput
               placeholder="🔎 by deadline"
@@ -142,7 +142,7 @@ const Todos = ({
                 </tr>
               ) : (
                 todos
-                  .filter(todo => todo.title.toLowerCase().includes(filterContent.toLowerCase()))
+                  .filter(todo => todo.title.toLowerCase().includes(filterTitle.toLowerCase()))
                   .filter(todo =>
                     todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase()),
                   )
