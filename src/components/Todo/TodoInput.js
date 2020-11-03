@@ -23,11 +23,6 @@ export const StyledInput = styled.input`
     letter-spacing: 1px;
     font-size: 1.2rem;
   }
-  /* ${({ deadline }) =>
-    deadline &&
-    css`
-      width: inherit;
-    `} */
 `;
 
 class TodoInput extends React.Component {

@@ -112,6 +112,9 @@ class AddTask extends Component {
     this.props.toggleModalOpen();
   };
 
+  getCreationDate = () =>
+    `Created: ${new Date().getDate()} . ${new Date().getMonth() + 1} . ${new Date().getFullYear()}`;
+
   render() {
     const { pageContext } = this.props;
     return (
@@ -147,6 +150,7 @@ class AddTask extends Component {
             onKeyDown={this.onEnterSave}
           ></StyledModalInput>
         )}
+        {pageContext === 'notes' && <h2>{this.getCreationDate()}</h2>}
 
         <StyledButtonWrapper>
           <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>
