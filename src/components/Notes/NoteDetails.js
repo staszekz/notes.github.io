@@ -2,17 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+  flex-direction: column;
+
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
   transform: translate(-50%, -50%);
   border: 5px solid ${({ theme }) => theme.colors.primary};
   z-index: 1;
-  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   padding: 2rem;
-  flex-direction: column;
-  height: 50vh;
-  width: 50%;
+  height: 60vh;
+  width: min(60vw, 80vw);
   background-color: ${({ theme }) => theme.colors.dark};
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.25s ease-in-out;
@@ -27,7 +28,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const NoteDetails = ({ isVisible, content, onClose, title, created }) => {
+const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id }) => {
+  const handleOnDelete = () => {
+    onDelete(id);
+  };
+
   return (
     <>
       <Wrapper isVisible={isVisible}>
@@ -35,6 +40,7 @@ const NoteDetails = ({ isVisible, content, onClose, title, created }) => {
         <p>{content}</p>
         <p>{created}</p>
         <button onClick={onClose}>Close</button>
+        <button onClick={handleOnDelete}>Delete</button>
       </Wrapper>
     </>
   );

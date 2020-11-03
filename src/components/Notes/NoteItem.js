@@ -3,16 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 import { StyledTdWithHover } from 'components/Todo/TodoItem';
 import { StyledButton } from 'components/Todo/TodoItem';
-import NoteDetails from 'components/Notes/NoteDetails';
 
-const NoteItem = ({ title, date, index, id, content, created }) => {
-  const [detailsVisible, setDetailsVisible] = useState(false);
-
+const NoteItem = ({ title, index, id, content, created, showDetails, onDelete }) => {
   const handleToggleShow = () => {
-    setDetailsVisible(!detailsVisible);
+    showDetails(id);
   };
   const handleOnDelete = () => {
-    console.log('deleted');
+    onDelete(id);
   };
   return (
     <>
@@ -30,13 +27,6 @@ const NoteItem = ({ title, date, index, id, content, created }) => {
             <FontAwesomeIcon icon={faTrashAlt} />
           </StyledButton>
         </td>
-        <NoteDetails
-          isVisible={detailsVisible}
-          onClose={handleToggleShow}
-          content={content}
-          title={title}
-          date={date}
-        />
       </tr>
     </>
   );

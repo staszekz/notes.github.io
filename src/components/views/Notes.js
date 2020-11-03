@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainLayout from 'Layout/MainLayout';
 import { StyledH2 } from 'components/H1/H1';
 import { connect } from 'react-redux';
@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import GlobalStyle from 'Theme/GlobalStyle';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import { fetchNotes } from 'reducers/notesReducer';
+import { fetchNotes, deleteNote } from 'reducers/notesReducer';
 import NoteItem from 'components/Notes/NoteItem';
+import NoteDetails from 'components/Notes/NoteDetails';
 
 const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
@@ -30,11 +31,26 @@ const StyledNotesList = styled.div`
   }
 `;
 
-const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
+const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
   useEffect(() => {
     fetchNotes();
     // eslint-disable-next-line
   }, []);
+
+  const [showID, setShowID] = useState('');
+
+  const [detailsVisible, setDetailsVisible] = useState(false);
+
+  const handleShowDetails = id => {
+    setDetailsVisible(!detailsVisible);
+    setShowID(id);
+    console.log('z notes gowny', id);
+  };
+
+  const handleCloseDetails = () => {
+    setDetailsVisible(!detailsVisible);
+    setShowID('');
+  };
 
   return (
     <>
@@ -68,7 +84,20 @@ const Notes = ({ fetchNotes, notes, isLoading, pageContext }) => {
                       id={note.id}
                       index={index}
                       content={note.content}
+                      showDetails={handleShowDetails}
+                      onDelete={deleteNote}
                     />
+                    {showID === note.id && (
+                      <NoteDetails
+                        isVisible={detailsVisible}
+                        onClose={handleCloseDetails}
+                        content={note.content}
+                        id={note.id}
+                        title={note.title}
+                        created={note.created}
+                        onDelete={deleteNote}
+                      />
+                    )}
                   </>
                 ))
               )}
@@ -90,6 +119,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = {
   fetchNotes,
+  deleteNote,
 };
 
 export default withContext(connect(mapStateToProps, mapDispatchToProps)(Notes));

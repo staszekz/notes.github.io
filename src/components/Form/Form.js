@@ -83,12 +83,9 @@ class AddTask extends Component {
 
     if (pageContext === 'todos') {
       addNewTask({ title, deadline, completed });
-      console.log('z form TODOS', pageContext);
     }
     if (pageContext === 'notes') {
-      // this.setCreationDate();
       addNewNote({ title, content, created });
-      console.log('z form NOTES', pageContext, created);
     }
     toggleModalOpen();
     this.setState({
@@ -102,7 +99,9 @@ class AddTask extends Component {
   handleOnAddClick = e => {
     e.preventDefault();
     if (!this.state.title) {
-      return alert('Please add new task or quit!');
+      return alert(
+        `Please add new ${this.props.pageContext === 'todos' ? 'task' : 'note'} or quit!`,
+      );
     }
     this.putDataInDatabase();
   };
@@ -127,9 +126,9 @@ class AddTask extends Component {
     const { pageContext } = this.props;
     return (
       <StyledForm>
-        {pageContext === 'todos' && <StyledLabel htmlFor="newTask">Add new task:</StyledLabel>}
-        {pageContext === 'notes' && <StyledLabel htmlFor="newNote">Add new note:</StyledLabel>}
-
+        <StyledLabel htmlFor="title">
+          {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
+        </StyledLabel>
         <StyledModalInput
           name="title"
           placeholder={pageContext === 'todos' ? 'new task' : 'note title'}
@@ -137,7 +136,6 @@ class AddTask extends Component {
           onChange={this.handleOnChange}
           onKeyDown={this.onEnterSave}
         ></StyledModalInput>
-
         {pageContext === 'notes' && (
           <StyledTextarea
             name="content"
@@ -147,7 +145,6 @@ class AddTask extends Component {
             onKeyDown={this.onEnterSave}
           ></StyledTextarea>
         )}
-
         {pageContext === 'todos' && (
           <StyledModalInput
             // deadline
@@ -159,7 +156,6 @@ class AddTask extends Component {
           ></StyledModalInput>
         )}
         {pageContext === 'notes' && <StyledDate>{this.state.created}</StyledDate>}
-
         <StyledButtonWrapper>
           <StyledButton modal="true" type="submit" onClick={this.handleOnAddClick}>
             <FontAwesomeIcon icon={faPlus} />
