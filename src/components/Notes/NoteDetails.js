@@ -38,7 +38,7 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
       <Wrapper isVisible={isVisible}>
         <h1>{title}</h1>
         <p>{content}</p>
-        <p>{created}</p>
+        <p>Created: {created}</p>
         <button onClick={onClose}>Close</button>
         <button onClick={handleOnDelete}>Delete</button>
       </Wrapper>

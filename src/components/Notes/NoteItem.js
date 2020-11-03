@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faTrashAlt, faEye } from '@fortawesome/free-regular-svg-icons';
 import { StyledTdWithHover } from 'components/Todo/TodoItem';
 import { StyledButton } from 'components/Todo/TodoItem';
 
@@ -21,7 +21,7 @@ const NoteItem = ({ title, index, id, content, created, showDetails, onDelete })
         </StyledTdWithHover>
         <td className="align-middle">
           <StyledButton onClick={handleToggleShow}>
-            <FontAwesomeIcon icon={faEdit} />
+            <FontAwesomeIcon icon={faEye} />
           </StyledButton>
           <StyledButton onClick={handleOnDelete}>
             <FontAwesomeIcon icon={faTrashAlt} />
