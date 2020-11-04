@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { StyledInput } from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Button/Button';
 import { addNewTask } from 'reducers/todosReducer';
@@ -15,15 +15,20 @@ const StyledLabel = styled.label`
   display: block;
 `;
 
-const StyledModalInput = styled(StyledInput)`
+export const StyledModalInput = styled(StyledInput)`
   width: 70%;
   margin: 1rem auto;
   ${({ theme }) => theme.media.phone} {
     width: 100%;
   }
+  ${({ notes }) =>
+    notes &&
+    css`
+      width: 90%;
+    `}
 `;
 
-const StyledTextarea = styled.textarea`
+export const StyledTextarea = styled.textarea`
   background-color: lightgray;
   border: none;
   border-radius: 20px;
@@ -41,6 +46,12 @@ const StyledTextarea = styled.textarea`
   ${({ theme }) => theme.media.phone} {
     width: 100%;
   }
+  ${({ notes }) =>
+    notes &&
+    css`
+      width: 90%;
+      height: 70%;
+    `}
 `;
 
 const StyledForm = styled.form`

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { StyledButton } from 'components/Button/Button';
 import { StyledButtonWrapper } from 'components/Form/Form';
 import { StyledH1 } from 'components/H1/H1';
+import { StyledModalInput, StyledTextarea } from 'components/Form/Form';
 
 const Wrapper = styled.div`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
@@ -50,15 +51,35 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
     onDelete(id);
   };
 
+  const [edited, setEdited] = useState(false);
+  const handleEdit = () => {
+    setEdited(!edited);
+    console.log('edited', id);
+  };
+
   return (
     <>
       <Wrapper isVisible={isVisible}>
-        <StyledH1>{title}</StyledH1>
-        <StyledContent>{content}</StyledContent>
+        {edited ? (
+          <>
+            <StyledModalInput notes value={title}></StyledModalInput>
+            <StyledTextarea notes value={content} />
+          </>
+        ) : (
+          <>
+            <StyledH1>{title}</StyledH1>
+            <StyledContent>{content}</StyledContent>
+          </>
+        )}
+
         <StyledDate>Created: {created}</StyledDate>
         <StyledButtonWrapper>
           <StyledButton onClick={onClose}>Close</StyledButton>
-          <StyledButton onClick>Edit</StyledButton>
+          {edited ? (
+            <StyledButton onClick={handleEdit}>Save</StyledButton>
+          ) : (
+            <StyledButton onClick={handleEdit}>Edit</StyledButton>
+          )}
           <StyledButton onClick={handleOnDelete}>Delete</StyledButton>
         </StyledButtonWrapper>
       </Wrapper>
