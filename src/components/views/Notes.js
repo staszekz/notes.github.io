@@ -10,6 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { fetchNotes, deleteNote } from 'reducers/notesReducer';
 import NoteItem from 'components/Notes/NoteItem';
 import NoteDetails from 'components/Notes/NoteDetails';
+import Filters from 'components/filters/Filters';
 
 const StyledTable = styled(Table)`
   color: ${({ theme }) => theme.colors.white};
@@ -38,18 +39,30 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
   }, []);
 
   const [showID, setShowID] = useState('');
-
   const [detailsVisible, setDetailsVisible] = useState(false);
+  const [filterTitle, setFilterTitle] = useState('');
+  const [filterContent, setFilterContent] = useState('');
 
   const handleShowDetails = id => {
     setDetailsVisible(!detailsVisible);
     setShowID(id);
-    console.log('z notes gowny', id);
   };
 
   const handleCloseDetails = () => {
     setDetailsVisible(!detailsVisible);
     setShowID('');
+  };
+
+  const handleFilterTitleChange = e => {
+    setFilterTitle(e.target.value);
+  };
+  const handleFilterContentChange = e => {
+    setFilterContent(e.target.value);
+  };
+
+  const clearFilter = () => {
+    setFilterTitle('');
+    setFilterContent('');
   };
 
   return (
@@ -58,6 +71,13 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
       <MainLayout onAddFetch={fetchNotes} button="true">
         <StyledNotesList>
           <StyledH1>My Private Notes</StyledH1>;
+          <Filters
+            onTitleFilter={handleFilterTitleChange}
+            onContentFilter={handleFilterContentChange}
+            titleText={filterTitle}
+            contentText={filterContent}
+            onClear={clearFilter}
+          />
           <StyledTable striped responsive>
             <thead>
               <tr>
@@ -75,31 +95,34 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                   </td>
                 </tr>
               ) : (
-                notes.map((note, index) => (
-                  <>
-                    <NoteItem
-                      key={note.id}
-                      title={note.title}
-                      created={note.created}
-                      id={note.id}
-                      index={index}
-                      content={note.content}
-                      showDetails={handleShowDetails}
-                      onDelete={deleteNote}
-                    />
-                    {showID === note.id && (
-                      <NoteDetails
-                        isVisible={detailsVisible}
-                        onClose={handleCloseDetails}
-                        content={note.content}
-                        id={note.id}
+                notes
+                  .filter(note => note.title.toLowerCase().includes(filterTitle.toLowerCase()))
+                  .filter(note => note.content.toLowerCase().includes(filterContent.toLowerCase()))
+                  .map((note, index) => (
+                    <>
+                      <NoteItem
+                        key={note.id}
                         title={note.title}
                         created={note.created}
+                        id={note.id}
+                        index={index}
+                        content={note.content}
+                        showDetails={handleShowDetails}
                         onDelete={deleteNote}
                       />
-                    )}
-                  </>
-                ))
+                      {showID === note.id && (
+                        <NoteDetails
+                          isVisible={detailsVisible}
+                          onClose={handleCloseDetails}
+                          content={note.content}
+                          id={note.id}
+                          title={note.title}
+                          created={note.created}
+                          onDelete={deleteNote}
+                        />
+                      )}
+                    </>
+                  ))
               )}
             </tbody>
           </StyledTable>

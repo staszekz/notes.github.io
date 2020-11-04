@@ -54,7 +54,6 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
   };
 
   const [edited, setEdited] = useState(false);
-
   const [editedContent, setEditedContent] = useState(content);
   const [editedTitle, setEditedTitle] = useState(title);
 

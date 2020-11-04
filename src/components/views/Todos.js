@@ -10,6 +10,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import TodoInput from 'components/Todo/TodoInput';
 import { StyledButton } from 'components/Todo/TodoItem';
 import withContext from 'components/context/withContext';
+import Filters from 'components/filters/Filters';
 
 import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
 
@@ -67,15 +68,7 @@ const StyledFiltersWrapper = styled.div`
   }
 `;
 
-const Todos = ({
-  isLoading,
-  fetchTodos,
-  todos,
-  deleteTask,
-  setCompleted,
-  editTask,
-  pageContext,
-}) => {
+const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
   const [editID, setEditedID] = useState('');
   const [filterTitle, setFilterTitle] = useState('');
   const [filterDeadline, setFilterDeadline] = useState('');
@@ -111,19 +104,13 @@ const Todos = ({
       <MainLayout onAddFetch={fetchTodos} button="true">
         <StyledTodoList>
           <StyledH1>Todos List</StyledH1>
-          <StyledFiltersWrapper>
-            <StyledInput
-              placeholder="🔎 by title"
-              value={filterTitle}
-              onChange={handleFilterTitleChange}
-            ></StyledInput>
-            <StyledInput
-              placeholder="🔎 by deadline"
-              value={filterDeadline}
-              onChange={handleFilterDeadlineChange}
-            ></StyledInput>
-            <StyledButtonClear onClick={clearFilter}>Clear</StyledButtonClear>
-          </StyledFiltersWrapper>
+          <Filters
+            onTitleFilter={handleFilterTitleChange}
+            onDeadlineFilter={handleFilterDeadlineChange}
+            titleText={filterTitle}
+            deadlineText={filterDeadline}
+            onClear={clearFilter}
+          />
           <StyledTable striped responsive>
             <thead>
               <tr>
