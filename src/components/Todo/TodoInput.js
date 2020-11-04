@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { StyledButton } from 'components/Todo/TodoItem';
@@ -25,86 +25,73 @@ export const StyledInput = styled.input`
   }
 `;
 
-class TodoInput extends React.Component {
-  state = {
-    title: this.props.title,
-    deadline: this.props.deadline,
-    completed: this.props.completed,
+const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCheck }) => {
+  const [editedInput, setEditedInput] = useState({ title, deadline, completed });
+
+  const handleOnSave = () => {
+    onSave(editedInput, id);
   };
 
-  handleOnSave = () => {
-    this.props.onSave(this.state, this.props.id);
-  };
-
-  onEnterSave = e => {
+  const onEnterSave = e => {
     if (e.key === 'Enter') {
-      this.handleOnSave();
+      handleOnSave();
     }
   };
 
-  handleInputChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
+  const handleInputChange = e => {
+    setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
 
-  handleCompletedCheck = () => {
-    this.props.onCompleteCheck(
-      this.props.id,
-      this.state.title,
-      this.state.deadline,
-      this.state.completed,
-    );
+  const handleCompletedCheck = () => {
+    onCompleteCheck(id, { ...editedInput });
   };
 
-  render() {
-    const { index, id } = this.props;
-    const { title, deadline, completed } = this.state;
-    return (
-      <>
-        <tr key={id}>
-          <td className="align-middle">{index + 1}</td>
-          <td className="align-middle">
-            <StyledInput
-              name="title"
-              value={title}
-              onChange={this.handleInputChange}
-              onKeyDown={this.onEnterSave}
-            />
-          </td>
+  const handleOnDelete = () => {
+    console.log('deleted', id);
+  };
+  return (
+    <>
+      <tr key={id}>
+        <td className="align-middle">{index + 1}</td>
+        <td className="align-middle">
+          <StyledInput
+            name="title"
+            value={editedInput.title}
+            onChange={handleInputChange}
+            onKeyDown={onEnterSave}
+          />
+        </td>
 
-          <td className="align-middle">
-            <StyledInput
-              name="deadline"
-              deadline
-              value={deadline}
-              onChange={this.handleInputChange}
-              onKeyDown={this.onEnterSave}
-            />
-          </td>
-          <StyledTd className="align-middle">
-            <StyledButton onClick={this.handleOnSave}>
-              <FontAwesomeIcon icon={faSave} />
-            </StyledButton>
+        <td className="align-middle">
+          <StyledInput
+            name="deadline"
+            deadline
+            value={editedInput.deadline}
+            onChange={handleInputChange}
+            onKeyDown={onEnterSave}
+          />
+        </td>
+        <StyledTd className="align-middle">
+          <StyledButton onClick={handleOnSave}>
+            <FontAwesomeIcon icon={faSave} />
+          </StyledButton>
 
-            <StyledButton onClick={this.handleOnDelete}>
-              <FontAwesomeIcon icon={faTrashAlt} />
-            </StyledButton>
+          <StyledButton onClick={handleOnDelete}>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </StyledButton>
 
-            <StyledButton onClick={this.handleCompletedCheck}>
-              {completed ? (
-                <FontAwesomeIcon icon={faCheck} color="green" />
-              ) : (
-                <FontAwesomeIcon icon={faTimes} color="red" />
-              )}
-            </StyledButton>
-          </StyledTd>
-        </tr>
-      </>
-    );
-  }
-}
-
+          <StyledButton onClick={handleCompletedCheck}>
+            {completed ? (
+              <FontAwesomeIcon icon={faCheck} color="green" />
+            ) : (
+              <FontAwesomeIcon icon={faTimes} color="red" />
+            )}
+          </StyledButton>
+        </StyledTd>
+      </tr>
+    </>
+  );
+};
 const mapDispatchToProps = {
   editTask,
 };

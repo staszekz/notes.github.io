@@ -51,7 +51,6 @@ const MainLayout = ({
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
       <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
-      {console.log('w main layout', pageContext)}
     </ThemeProvider>
   );
 };
