@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { editNote } from 'reducers/notesReducer';
 import { StyledButton } from 'components/Button/Button';
 import { StyledButtonWrapper } from 'components/Form/Form';
 import { StyledH1 } from 'components/H1/H1';
@@ -46,15 +48,37 @@ const StyledDate = styled.div`
   margin-right: 5%;
 `;
 
-const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id }) => {
+const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id, editNote }) => {
   const handleOnDelete = () => {
     onDelete(id);
   };
 
   const [edited, setEdited] = useState(false);
+
+  const [editedContent, setEditedContent] = useState(content);
+  const [editedTitle, setEditedTitle] = useState(title);
+
   const handleEdit = () => {
     setEdited(!edited);
     console.log('edited', id);
+  };
+
+  const handleTitleChange = e => {
+    setEditedTitle(e.target.value);
+  };
+  const handleContentChange = e => {
+    setEditedContent(e.target.value);
+  };
+
+  const note = {
+    title: editedTitle,
+    content: editedContent,
+    created,
+  };
+
+  const onSave = () => {
+    editNote(note, id);
+    setEdited(!edited);
   };
 
   return (
@@ -62,13 +86,17 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
       <Wrapper isVisible={isVisible}>
         {edited ? (
           <>
-            <StyledModalInput notes value={title}></StyledModalInput>
-            <StyledTextarea notes value={content} />
+            <StyledModalInput
+              onChange={handleTitleChange}
+              notes
+              value={editedTitle}
+            ></StyledModalInput>
+            <StyledTextarea onChange={handleContentChange} notes value={editedContent} />
           </>
         ) : (
           <>
-            <StyledH1>{title}</StyledH1>
-            <StyledContent>{content}</StyledContent>
+            <StyledH1>{editedTitle}</StyledH1>
+            <StyledContent>{editedContent}</StyledContent>
           </>
         )}
 
@@ -76,7 +104,7 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
         <StyledButtonWrapper>
           <StyledButton onClick={onClose}>Close</StyledButton>
           {edited ? (
-            <StyledButton onClick={handleEdit}>Save</StyledButton>
+            <StyledButton onClick={onSave}>Save</StyledButton>
           ) : (
             <StyledButton onClick={handleEdit}>Edit</StyledButton>
           )}
@@ -87,4 +115,8 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
   );
 };
 
-export default NoteDetails;
+const mapDispatchToProps = {
+  editNote,
+};
+
+export default connect(null, mapDispatchToProps)(NoteDetails);

@@ -81,3 +81,14 @@ export const deleteNote = deletedId => {
     });
   };
 };
+
+export const editNote = (note, editedId) => {
+  return dispatch => {
+    fetch(`${DATABASE_URL}/notes/${editedId}.json`, {
+      method: 'PUT',
+      body: JSON.stringify({ ...note }),
+    }).then(() => {
+      dispatch(fetchNotesWithoutLoading());
+    });
+  };
+};
