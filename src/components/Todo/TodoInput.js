@@ -50,46 +50,44 @@ const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCh
     console.log('deleted', id);
   };
   return (
-    <>
-      <tr key={id}>
-        <td className="align-middle">{index + 1}</td>
-        <td className="align-middle">
-          <StyledInput
-            name="title"
-            value={editedInput.title}
-            onChange={handleInputChange}
-            onKeyDown={onEnterSave}
-          />
-        </td>
+    <tr key={id}>
+      <td className="align-middle">{index + 1}</td>
+      <td className="align-middle">
+        <StyledInput
+          name="title"
+          value={editedInput.title}
+          onChange={handleInputChange}
+          onKeyDown={onEnterSave}
+        />
+      </td>
 
-        <td className="align-middle">
-          <StyledInput
-            name="deadline"
-            deadline
-            value={editedInput.deadline}
-            onChange={handleInputChange}
-            onKeyDown={onEnterSave}
-          />
-        </td>
-        <StyledTd className="align-middle">
-          <StyledButton onClick={handleOnSave}>
-            <FontAwesomeIcon icon={faSave} />
-          </StyledButton>
+      <td className="align-middle">
+        <StyledInput
+          name="deadline"
+          deadline
+          value={editedInput.deadline}
+          onChange={handleInputChange}
+          onKeyDown={onEnterSave}
+        />
+      </td>
+      <StyledTd className="align-middle">
+        <StyledButton onClick={handleOnSave}>
+          <FontAwesomeIcon icon={faSave} />
+        </StyledButton>
 
-          <StyledButton onClick={handleOnDelete}>
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </StyledButton>
+        <StyledButton onClick={handleOnDelete}>
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </StyledButton>
 
-          <StyledButton onClick={handleCompletedCheck}>
-            {completed ? (
-              <FontAwesomeIcon icon={faCheck} color="green" />
-            ) : (
-              <FontAwesomeIcon icon={faTimes} color="red" />
-            )}
-          </StyledButton>
-        </StyledTd>
-      </tr>
-    </>
+        <StyledButton onClick={handleCompletedCheck}>
+          {completed ? (
+            <FontAwesomeIcon icon={faCheck} color="green" />
+          ) : (
+            <FontAwesomeIcon icon={faTimes} color="red" />
+          )}
+        </StyledButton>
+      </StyledTd>
+    </tr>
   );
 };
 const mapDispatchToProps = {

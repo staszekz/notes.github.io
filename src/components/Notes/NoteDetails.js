@@ -7,7 +7,7 @@ import { StyledButtonWrapper } from 'components/Form/Form';
 import { StyledH1 } from 'components/H1/H1';
 import { StyledModalInput, StyledTextarea } from 'components/Form/Form';
 
-const Wrapper = styled.div`
+const Wrapper = styled.td`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   flex-direction: column;
   align-items: center;
@@ -42,7 +42,7 @@ const StyledContent = styled.p`
   text-align: center;
 `;
 
-const StyledDate = styled.div`
+const StyledDate = styled.p`
   align-self: flex-end;
   padding: 0.5rem;
   margin-right: 5%;
@@ -70,7 +70,7 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
   };
 
   return (
-    <>
+    <tr key={id}>
       <Wrapper isVisible={isVisible}>
         {edited ? (
           <>
@@ -105,7 +105,7 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
           <StyledButton onClick={handleOnDelete}>Delete</StyledButton>
         </StyledButtonWrapper>
       </Wrapper>
-    </>
+    </tr>
   );
 };
 

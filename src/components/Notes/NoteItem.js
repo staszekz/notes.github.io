@@ -4,7 +4,7 @@ import { faTrashAlt, faEye } from '@fortawesome/free-regular-svg-icons';
 import { StyledTdWithHover } from 'components/Todo/TodoItem';
 import { StyledButton } from 'components/Todo/TodoItem';
 
-const NoteItem = ({ title, index, id, content, created, showDetails, onDelete }) => {
+const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
   const handleToggleShow = () => {
     showDetails(id);
   };
@@ -12,23 +12,21 @@ const NoteItem = ({ title, index, id, content, created, showDetails, onDelete })
     onDelete(id);
   };
   return (
-    <>
-      <tr key={id}>
-        <td className="align-middle">{index + 1}</td>
-        <StyledTdWithHover className="align-middle">{title}</StyledTdWithHover>
-        <StyledTdWithHover created className="align-middle">
-          {created}
-        </StyledTdWithHover>
-        <td className="align-middle">
-          <StyledButton onClick={handleToggleShow}>
-            <FontAwesomeIcon icon={faEye} />
-          </StyledButton>
-          <StyledButton onClick={handleOnDelete}>
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </StyledButton>
-        </td>
-      </tr>
-    </>
+    <tr key={id}>
+      <td className="align-middle">{index + 1}</td>
+      <StyledTdWithHover className="align-middle">{title}</StyledTdWithHover>
+      <StyledTdWithHover created className="align-middle">
+        {created}
+      </StyledTdWithHover>
+      <td className="align-middle">
+        <StyledButton onClick={handleToggleShow}>
+          <FontAwesomeIcon icon={faEye} />
+        </StyledButton>
+        <StyledButton onClick={handleOnDelete}>
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </StyledButton>
+      </td>
+    </tr>
   );
 };
 

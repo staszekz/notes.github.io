@@ -80,7 +80,7 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
           />
           <StyledTable striped responsive>
             <thead>
-              <tr>
+              <tr key={1}>
                 <th>#</th>
                 <th>Title</th>
                 <th>Created</th>
@@ -106,12 +106,12 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                         created={note.created}
                         id={note.id}
                         index={index}
-                        content={note.content}
                         showDetails={handleShowDetails}
                         onDelete={deleteNote}
                       />
                       {showID === note.id && (
                         <NoteDetails
+                          key={note.created}
                           isVisible={detailsVisible}
                           onClose={handleCloseDetails}
                           content={note.content}
