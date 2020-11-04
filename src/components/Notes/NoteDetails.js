@@ -54,29 +54,18 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
   };
 
   const [edited, setEdited] = useState(false);
-  const [editedContent, setEditedContent] = useState(content);
-  const [editedTitle, setEditedTitle] = useState(title);
+  const [editedNote, setEditedNote] = useState({ content, title, created });
 
   const handleEdit = () => {
     setEdited(!edited);
-    console.log('edited', id);
   };
 
-  const handleTitleChange = e => {
-    setEditedTitle(e.target.value);
-  };
-  const handleContentChange = e => {
-    setEditedContent(e.target.value);
-  };
-
-  const note = {
-    title: editedTitle,
-    content: editedContent,
-    created,
+  const handleInputChange = e => {
+    setEditedNote({ ...editedNote, [e.target.name]: e.target.value });
   };
 
   const onSave = () => {
-    editNote(note, id);
+    editNote(editedNote, id);
     setEdited(!edited);
   };
 
@@ -86,16 +75,22 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
         {edited ? (
           <>
             <StyledModalInput
-              onChange={handleTitleChange}
               notes
-              value={editedTitle}
+              onChange={handleInputChange}
+              value={editedNote.title}
+              name="title"
             ></StyledModalInput>
-            <StyledTextarea onChange={handleContentChange} notes value={editedContent} />
+            <StyledTextarea
+              notes
+              onChange={handleInputChange}
+              name="content"
+              value={editedNote.content}
+            />
           </>
         ) : (
           <>
-            <StyledH1>{editedTitle}</StyledH1>
-            <StyledContent>{editedContent}</StyledContent>
+            <StyledH1>{editedNote.title}</StyledH1>
+            <StyledContent>{editedNote.content}</StyledContent>
           </>
         )}
 
