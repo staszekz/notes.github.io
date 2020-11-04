@@ -51,7 +51,7 @@ const StyledForm = styled.form`
   align-items: center;
 `;
 
-const StyledButtonWrapper = styled.div`
+export const StyledButtonWrapper = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 90%;
@@ -67,15 +67,8 @@ class AddTask extends Component {
     title: '',
     content: '',
     deadline: '',
-    // created: '',
     completed: false,
   };
-
-  // componentDidMount = () => {
-  //   this.setState({
-  //     created: `${new Date().toLocaleString()}`,
-  //   });
-  // };
 
   putDataInDatabase = () => {
     const { addNewNote, addNewTask, toggleModalOpen, pageContext, created } = this.props;

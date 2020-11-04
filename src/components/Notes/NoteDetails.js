@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledButton } from 'components/Button/Button';
+import { StyledButtonWrapper } from 'components/Form/Form';
+import { StyledH1 } from 'components/H1/H1';
 
 const Wrapper = styled.div`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
   flex-direction: column;
-
+  align-items: center;
   position: fixed;
   top: 50vh;
   left: 50vw;
@@ -19,13 +22,27 @@ const Wrapper = styled.div`
   transition: transform 0.25s ease-in-out;
 
   ${({ theme }) => theme.media.phone} {
-    height: 60%;
     width: 90%;
   }
   ${({ theme }) => theme.media.landscape} {
-    height: 60%;
     width: 80%;
   }
+`;
+
+const StyledContent = styled.p`
+  width: 90%;
+  height: 70%;
+  background-color: ${({ theme }) => theme.colors.lightDark};
+  border-radius: 5px;
+  padding: 1rem;
+  overflow: auto;
+  text-align: center;
+`;
+
+const StyledDate = styled.div`
+  align-self: flex-end;
+  padding: 0.5rem;
+  margin-right: 5%;
 `;
 
 const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id }) => {
@@ -36,11 +53,14 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
   return (
     <>
       <Wrapper isVisible={isVisible}>
-        <h1>{title}</h1>
-        <p>{content}</p>
-        <p>Created: {created}</p>
-        <button onClick={onClose}>Close</button>
-        <button onClick={handleOnDelete}>Delete</button>
+        <StyledH1>{title}</StyledH1>
+        <StyledContent>{content}</StyledContent>
+        <StyledDate>Created: {created}</StyledDate>
+        <StyledButtonWrapper>
+          <StyledButton onClick={onClose}>Close</StyledButton>
+          <StyledButton onClick>Edit</StyledButton>
+          <StyledButton onClick={handleOnDelete}>Delete</StyledButton>
+        </StyledButtonWrapper>
       </Wrapper>
     </>
   );

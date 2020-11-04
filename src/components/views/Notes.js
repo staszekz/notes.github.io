@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from 'Layout/MainLayout';
-import { StyledH2 } from 'components/H1/H1';
+import { StyledH1, StyledH2 } from 'components/H1/H1';
 import { connect } from 'react-redux';
 import withContext from 'components/context/withContext';
 import styled from 'styled-components';
@@ -56,8 +56,8 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
     <>
       <GlobalStyle />
       <MainLayout onAddFetch={fetchNotes} button="true">
-        <StyledH2>my private notes</StyledH2>;
         <StyledNotesList>
+          <StyledH1>My Private Notes</StyledH1>;
           <StyledTable striped responsive>
             <thead>
               <tr>
