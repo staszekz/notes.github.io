@@ -10,6 +10,7 @@ import Notes from 'components/views/Notes';
 import SignIn from 'components/views/SignIn';
 import ContextLayout from 'components/context/contextLayout';
 import PublicHomepage from './PublicHomepage';
+import SignUp from './SignUp';
 
 const Root = () => {
   return (
@@ -25,6 +26,8 @@ const Root = () => {
             <Route path="/todos" component={Todos} />
             <Route path="/notes" component={Notes} />
             <Route path="/home" component={Home} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
           </Switch>
         </ContextLayout>
       </BrowserRouter>
