@@ -40,8 +40,8 @@ export const StyledButton = styled(Link)`
     css`
       width: 40%;
     `}
-  ${({ homePage }) =>
-    homePage &&
+  ${({ homepage }) =>
+    homepage &&
     css`
       height: 100px;
       box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);
@@ -58,8 +58,8 @@ export const StyledButton = styled(Link)`
     `}
 `;
 
-const ButtonLink = ({ children, to, homePage }) => (
-  <StyledButton homePage={homePage} to={to}>
+const ButtonLink = ({ children, to, homepage }) => (
+  <StyledButton homepage={homepage} to={to}>
     {children}
   </StyledButton>
 );
