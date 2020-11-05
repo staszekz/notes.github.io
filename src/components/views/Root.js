@@ -10,7 +10,7 @@ import Notes from 'components/views/Notes';
 import SignIn from 'components/views/SignIn';
 import ContextLayout from 'components/context/contextLayout';
 import PublicHomepage from './PublicHomepage';
-import SignUp from './SignUp';
+import SignUp from 'components/views/SignUp';
 
 const Root = () => {
   return (
