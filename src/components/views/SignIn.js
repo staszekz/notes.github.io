@@ -18,7 +18,7 @@ const SignIn = () => {
         }, 400);
       }}
     >
-      <Form>
+      <Form style={{ display: 'flex', flexDirection: 'column', width: '50%', color: 'white' }}>
         <label htmlFor="firstName">First Name</label>
         <Field name="firstName" type="text" />
         <ErrorMessage name="firstName" />
