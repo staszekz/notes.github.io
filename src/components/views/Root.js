@@ -9,6 +9,8 @@ import Home from 'components/views/Home';
 import Notes from 'components/views/Notes';
 import SignIn from 'components/views/SignIn';
 import ContextLayout from 'components/context/contextLayout';
+import PublicHomepage from './PublicHomepage';
+import SignUp from './SignUp';
 
 const Root = () => {
   return (
@@ -17,13 +19,15 @@ const Root = () => {
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <ContextLayout>
           <Switch>
-            <Route exact path="/" component={SignIn}>
+            <Route exact path="/" component={PublicHomepage}>
               {/* {loggedIn ? <Redirect to="/dashboard" /> : <PublicHomePage />} */}
-              <Redirect to="/home" />
+              {/* <Redirect to="/home" /> */}
             </Route>
             <Route path="/todos" component={Todos} />
             <Route path="/notes" component={Notes} />
             <Route path="/home" component={Home} />
+            <Route path="/signin" component={SignIn} />
+            <Route path="/signup" component={SignUp} />
           </Switch>
         </ContextLayout>
       </BrowserRouter>
