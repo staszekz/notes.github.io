@@ -35,8 +35,10 @@ export const setLoading = () => ({ type: SET_LOADING });
 export const setNotes = notes => ({ type: SET_NOTES, payload: notes });
 
 const fetchNotesWithoutLoading = () => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/notes.json`)
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+    console.log('note', uid, getState());
+    fetch(`${DATABASE_URL}/users/${uid}/notes.json`)
       .then(r => r.json())
       .then(notes => {
         const arrayNotes = notes
@@ -62,8 +64,9 @@ export const fetchNotes = () => {
 };
 
 export const addNewNote = noteData => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/notes/.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+    fetch(`${DATABASE_URL}/users/${uid}/notes.json`, {
       method: 'POST',
       body: JSON.stringify(noteData),
     }).then(() => {
@@ -73,8 +76,9 @@ export const addNewNote = noteData => {
 };
 
 export const deleteNote = deletedId => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/notes/${deletedId}.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+    fetch(`${DATABASE_URL}/users/${uid}/notes/${deletedId}.json`, {
       method: 'DELETE',
     }).then(() => {
       dispatch(fetchNotesWithoutLoading());
@@ -83,8 +87,9 @@ export const deleteNote = deletedId => {
 };
 
 export const editNote = (note, editedId) => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/notes/${editedId}.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+    fetch(`${DATABASE_URL}/users/${uid}/notes/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({ ...note }),
     }).then(() => {
