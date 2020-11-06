@@ -1,9 +1,9 @@
 import React from 'react';
-import {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ButtonLink from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
-
+import firebase from 'firebase';
 
 const Bar = styled.div`
   width: 100%;
@@ -43,21 +43,52 @@ const ButtonIcon = styled(Link)`
   &.active {
     background-color: white;
   }
-  ${({theme})=> theme.media.landscape}{
-  width: 30px;
-  height: 30px;
+  ${({ theme }) => theme.media.landscape} {
+    width: 30px;
+    height: 30px;
   }
 `;
 
-const NavBar = () => (
-  <Bar>
-    <StyledButtonPlace>
-      <ButtonLink to="/home">home</ButtonLink>
-      <ButtonLink to="/todos">todos</ButtonLink>
-      <ButtonLink to="/notes">notes</ButtonLink>
-    </StyledButtonPlace>
-    <ButtonIcon to="/signin" icon={logoutIcon} />
-  </Bar>
-);
+class NavBar extends React.Component {
+  state = {
+    user: null,
+  };
+
+  handleSignOutClick = () => {
+    firebase.auth().signOut();
+  };
+
+  componentDidMount() {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      this.setState({
+        user,
+      });
+    });
+    this.setState({
+      unsubscribe,
+    });
+  }
+
+  componentWillUnmount() {
+    this.state.unsubscribe();
+  }
+
+  render() {
+    return (
+      <Bar>
+        <StyledButtonPlace>
+          <ButtonLink to="/home">home</ButtonLink>
+          {console.log(this.state.user)}
+          <ButtonLink to="/todos">todos</ButtonLink>
+          <ButtonLink to="/notes">notes</ButtonLink>
+        </StyledButtonPlace>
+        {this.state.user && (
+          <h2 style={{ color: 'white' }}>welcome {this.state.user.providerData[0].displayName} </h2>
+        )}
+        <ButtonIcon to="/signin" icon={logoutIcon} onClick={this.handleSignOutClick} />
+      </Bar>
+    );
+  }
+}
 
 export default NavBar;

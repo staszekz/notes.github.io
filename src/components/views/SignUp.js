@@ -1,94 +1,118 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { theme } from 'utils/theme';
-import { StyledButton } from 'components/Button/Button';
+// import { StyledButton } from 'components/Button/Button';
 import { StyledInput } from 'components/Todo/TodoInput';
-import { Formik, Form, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
+// import { Formik, Form, ErrorMessage } from 'formik';
+import firebase from 'firebase';
+// import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledH1 } from 'components/H1/H1';
+import { StyledForm, ChangedStyledButton } from 'components/atoms/forFormik';
 
-const StyledForm = styled(Form)`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  width: 25%;
-  color: white;
-  ${({ theme }) => theme.media.phone} {
-    width: 90%;
-  }
-  ${({ theme }) => theme.media.landscape} {
-    width: 70%;
-  }
-`;
+class SignUp extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    name: '',
+    redirect: false,
+  };
 
-const ChangedStyledButton = styled(StyledButton)`
-  align-self: flex-end;
-  margin-top: 2rem;
-  color: ${({ theme }) => theme.colors.dark};
-  ${({ theme }) => theme.media.landscape} {
-    margin-top: 1rem;
-  }
-`;
+  handleOnChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+    console.log('change', this.state.email, this.state.password);
+  };
+  handleOnSubmit = e => {
+    e.preventDefault();
+    if (!this.props.isSignUp) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(
+          userCredentials =>
+            userCredentials.user.updateProfile({
+              displayName: this.state.name,
+            }),
+          // console.log('credentials', userCredentials),
+        )
+        .then(() => {
+          // console.log(this.state.email, this.state.password);
+          this.setState({
+            redirect: true,
+          });
+        })
+        .catch(err => {
+          alert(err.message);
+        });
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then(userData => {
+          console.log('dane użytkownika', userData);
+          this.setState({
+            redirect: true,
+          });
+        })
+        .catch(err => {
+          alert(err.message);
+        });
+    }
+  };
 
-const SignUp = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <Formik
-        initialValues={{ name: '', password: '', email: '' }}
-        validationSchema={Yup.object({
-          name: Yup.string().max(25, 'Must be 25 characters or less').required('Required'),
-          password: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-          email: Yup.string().email('Invalid email address').required('Required'),
-        })}
-        onSubmit={(values, { setSubmitting }) => {
-          alert(JSON.stringify(values));
-          setSubmitting(false);
-          console.log('values', values);
-        }}
-      >
-        {({ values, isSubmitting, handleChange, handleBlur }) => (
-          <StyledForm>
-            <StyledH1>Please Sign Up</StyledH1>
-            <label htmlFor="name">Name</label>
-            <StyledInput
-              name="name"
-              type="text"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-            />
-            <ErrorMessage name="name" />
-            <label htmlFor="email">Email</label>
-            <StyledInput
-              name="email"
-              type="email"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-            />
-            <ErrorMessage name="email" />
-            <label htmlFor="password">Password</label>
-            <StyledInput
-              name="password"
-              type="password"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-            />
-            <ErrorMessage name="password" />
-            <ChangedStyledButton as="button" type="submit" disabled={isSubmitting}>
-              <FontAwesomeIcon icon={faSignInAlt} size="lg" />
-            </ChangedStyledButton>
-          </StyledForm>
-        )}
-      </Formik>
-    </ThemeProvider>
-  );
-};
+  render() {
+    const { email, password, name, redirect } = this.state;
+    const { isSignUp } = this.props;
+
+    if (redirect) {
+      return <Redirect to="/home" />;
+    }
+
+    return (
+      <ThemeProvider theme={theme}>
+        <StyledForm onSubmit={this.handleOnSubmit}>
+          <StyledH1>Please {isSignUp ? 'Sign In' : 'Sign Up'}</StyledH1>
+          {!isSignUp && (
+            <>
+              <label htmlFor="name">Name</label>
+              <StyledInput
+                name="name"
+                type="text"
+                onChange={this.handleOnChange}
+                // onBlur={handleBlur}
+                value={name}
+              />
+            </>
+          )}
+          <label htmlFor="email">Email</label>
+          <StyledInput
+            name="email"
+            type="email"
+            onChange={this.handleOnChange}
+            // onBlur={handleBlur}
+            value={email}
+          />
+
+          <label htmlFor="password">Password</label>
+          <StyledInput
+            name="password"
+            type="password"
+            onChange={this.handleOnChange}
+            // onBlur={handleBlur}
+            value={password}
+          />
+
+          <ChangedStyledButton as="button" type="submit">
+            <FontAwesomeIcon icon={faSignInAlt} size="lg" />
+          </ChangedStyledButton>
+        </StyledForm>
+      </ThemeProvider>
+    );
+  }
+}
 
 export default SignUp;
