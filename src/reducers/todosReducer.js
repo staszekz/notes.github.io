@@ -36,8 +36,10 @@ export const setLoading = () => ({ type: SET_LOADING });
 export const setTodos = todos => ({ type: SET_TODOS, payload: todos });
 
 const fetchWithoutLoading = () => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/todos.json`)
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+
+    fetch(`${DATABASE_URL}/users/${uid}/todos.json`)
       .then(r => r.json())
       .then(todos => {
         const arrayTodos = todos
@@ -54,8 +56,10 @@ const fetchWithoutLoading = () => {
 };
 
 export const setCompleted = (completedId, title, deadline, completed) => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/todos/${completedId}.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+
+    fetch(`${DATABASE_URL}/users/${uid}/todos/${completedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({
         title,
@@ -76,8 +80,10 @@ export const fetchTodos = () => {
 };
 
 export const addNewTask = taskData => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/todos/.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+
+    fetch(`${DATABASE_URL}/users/${uid}/todos/.json`, {
       method: 'POST',
       body: JSON.stringify(taskData),
     }).then(() => {
@@ -87,8 +93,10 @@ export const addNewTask = taskData => {
 };
 
 export const deleteTask = deletedId => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/todos/${deletedId}.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+
+    fetch(`${DATABASE_URL}/users/${uid}/todos/${deletedId}.json`, {
       method: 'DELETE',
     }).then(() => {
       dispatch(fetchWithoutLoading());
@@ -97,8 +105,10 @@ export const deleteTask = deletedId => {
 };
 
 export const editTask = (task, editedId) => {
-  return dispatch => {
-    fetch(`${DATABASE_URL}/todos/${editedId}.json`, {
+  return (dispatch, getState) => {
+    const uid = getState().firebaseReducer.auth.uid;
+
+    fetch(`${DATABASE_URL}/users/${uid}/todos/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify(task),
     }).then(() => {
