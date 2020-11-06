@@ -1,8 +1,7 @@
-import { Form } from 'formik';
 import styled from 'styled-components';
 import { StyledButton } from 'components/Button/Button';
 
-export const StyledForm = styled(Form)`
+export const StyledForm = styled.form`
   position: fixed;
   top: 50%;
   left: 50%;

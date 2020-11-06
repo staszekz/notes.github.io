@@ -7,7 +7,7 @@ import store from 'store';
 import Todos from 'components/views/Todos';
 import Home from 'components/views/Home';
 import Notes from 'components/views/Notes';
-import SignIn from 'components/views/SignIn';
+// import SignIn from 'components/views/SignIn';
 import ContextLayout from 'components/context/contextLayout';
 import PublicHomepage from './PublicHomepage';
 import SignUp from 'components/views/SignUp';
@@ -26,7 +26,7 @@ const Root = () => {
             <Route path="/todos" component={Todos} />
             <Route path="/notes" component={Notes} />
             <Route path="/home" component={Home} />
-            <Route path="/signin" component={SignIn} />
+            <Route path="/signin" component={() => <SignUp isSignUp />} />
             <Route path="/signup" component={SignUp} />
           </Switch>
         </ContextLayout>
