@@ -85,7 +85,7 @@ class NavBar extends React.Component {
         {this.state.user && (
           <h2 style={{ color: 'white' }}>welcome {this.state.user.providerData[0].displayName} </h2>
         )}
-        <ButtonIcon to="/signin" icon={logoutIcon} onClick={this.handleSignOutClick} />
+        <ButtonIcon to="/" icon={logoutIcon} onClick={this.handleSignOutClick} />
       </Bar>
     );
   }
