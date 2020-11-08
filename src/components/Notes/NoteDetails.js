@@ -29,8 +29,6 @@ const Wrapper = styled.td`
   }
   ${({ theme }) => theme.media.landscape} {
     width: 80%;
-    height: 90vh;
-    background-color: pink;
   }
 `;
 

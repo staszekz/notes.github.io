@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEye } from '@fortawesome/free-regular-svg-icons';
 import { StyledTdWithHover } from 'components/Todo/TodoItem';
 import { StyledButton } from 'components/Todo/TodoItem';
+import ReactTooltip from 'react-tooltip';
 
 const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
   const handleToggleShow = () => {
@@ -11,6 +12,7 @@ const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
   const handleOnDelete = () => {
     onDelete(id);
   };
+
   return (
     <tr key={id}>
       <td className="align-middle">{index + 1}</td>
@@ -19,12 +21,18 @@ const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
         {created}
       </StyledTdWithHover>
       <td className="align-middle">
-        <StyledButton onClick={handleToggleShow}>
+        <StyledButton onClick={handleToggleShow} data-tip data-for="more">
           <FontAwesomeIcon icon={faEye} />
         </StyledButton>
-        <StyledButton onClick={handleOnDelete}>
+        <StyledButton onClick={handleOnDelete} data-tip data-for="delete">
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
+        <ReactTooltip id="more" place="top">
+          Show more details
+        </ReactTooltip>
+        <ReactTooltip id="delete" place="top" effect="solid">
+          Delete note
+        </ReactTooltip>
       </td>
     </tr>
   );
