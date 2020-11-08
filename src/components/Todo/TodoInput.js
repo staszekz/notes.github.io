@@ -25,7 +25,16 @@ export const StyledInput = styled.input`
   }
 `;
 
-const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCheck }) => {
+const TodoInput = ({
+  title,
+  deadline,
+  completed,
+  index,
+  id,
+  onSave,
+  onCompleteCheck,
+  onDelete,
+}) => {
   const [editedInput, setEditedInput] = useState({ title, deadline, completed });
 
   const handleOnSave = () => {
@@ -47,7 +56,7 @@ const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCh
   };
 
   const handleOnDelete = () => {
-    console.log('deleted', id);
+    onDelete(id);
   };
   return (
     <tr key={id}>
@@ -87,6 +96,7 @@ const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCh
           )}
         </StyledButton>
       </StyledTd>
+
       <ReactTooltip id="save" place="top" effect="solid">
         Save changes
       </ReactTooltip>
