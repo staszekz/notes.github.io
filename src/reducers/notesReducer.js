@@ -37,7 +37,7 @@ export const setNotes = notes => ({ type: SET_NOTES, payload: notes });
 const fetchNotesWithoutLoading = () => {
   return (dispatch, getState) => {
     const uid = getState().firebaseReducer.auth.uid;
-    console.log('note', uid, getState());
+    // console.log('note', uid, getState());
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`)
       .then(r => r.json())
       .then(notes => {

@@ -9,6 +9,9 @@ export const StyledH1 = styled.h1`
   ${({ theme }) => theme.media.phone} {
     font-size: ${({ theme }) => theme.fontSize.s};
   }
+  ${({ theme }) => theme.media.landscape} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
 `;
 
 export const StyledH2 = styled.h2`

@@ -4,6 +4,7 @@ import ButtonLink from 'components/Button/Button';
 import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
 import firebase from 'firebase';
+import { StyledH1 } from 'components/H1/H1';
 
 const Bar = styled.div`
   width: 100%;
@@ -77,13 +78,18 @@ class NavBar extends React.Component {
     return (
       <Bar>
         <StyledButtonPlace>
+          {this.state.user && console.log('user navbar', this.state.user)}
           <ButtonLink to="/home">home</ButtonLink>
-          {console.log(this.state.user)}
           <ButtonLink to="/todos">todos</ButtonLink>
           <ButtonLink to="/notes">notes</ButtonLink>
         </StyledButtonPlace>
         {this.state.user && (
-          <h2 style={{ color: 'white' }}>welcome {this.state.user.providerData[0].displayName} </h2>
+          <>
+            <StyledH1>hello {this.state.user.providerData[0].displayName}</StyledH1>
+            {/* <h6 style={{ color: 'white' }}>
+              Last logged in: {this.state.user.metadata.lastSignInTime}{' '}
+            </h6> */}
+          </>
         )}
         <ButtonIcon to="/" icon={logoutIcon} onClick={this.handleSignOutClick} />
       </Bar>

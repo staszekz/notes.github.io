@@ -23,7 +23,7 @@ const StyledWrapper = styled.div`
     width: 90%;
   }
   ${({ theme }) => theme.media.landscape} {
-    height: 60%;
+    height: 75%;
     width: 80%;
   }
 `;

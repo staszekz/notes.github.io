@@ -7,11 +7,15 @@ import ButtonLink from 'components/Button/Button';
 import { StyledHomeButtonWrapper } from 'components/Button/HomeButtonWrapper';
 import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
 
+const StyledHeader = styled(StyledH1)`
+  margin-top: 3rem;
+`;
+
 const PublicHomepage = () => (
   <>
     <GlobalStyles />
     <ThemeProvider theme={theme}>
-      <StyledH1> The best app for todos an taking notes</StyledH1>
+      <StyledHeader> The best app for todos an taking notes</StyledHeader>
       <StyledH1> You are only one step away from using 'Notes & Todos'</StyledH1>
       <StyledHomepageWrapper>
         <StyledH1>Please sign in or sign up to use</StyledH1>
