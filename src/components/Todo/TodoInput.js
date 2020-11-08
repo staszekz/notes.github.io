@@ -6,7 +6,7 @@ import { editTask } from 'reducers/todosReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faSave, faTrashAlt } from '@fortawesome/free-regular-svg-icons';
-
+import ReactTooltip from 'react-tooltip';
 import { StyledTd } from 'components/Todo/TodoItem';
 
 export const StyledInput = styled.input`
@@ -71,15 +71,15 @@ const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCh
         />
       </td>
       <StyledTd className="align-middle">
-        <StyledButton onClick={handleOnSave}>
+        <StyledButton onClick={handleOnSave} data-tip data-for="save">
           <FontAwesomeIcon icon={faSave} />
         </StyledButton>
 
-        <StyledButton onClick={handleOnDelete}>
+        <StyledButton onClick={handleOnDelete} data-tip data-for="delete">
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
 
-        <StyledButton onClick={handleCompletedCheck}>
+        <StyledButton onClick={handleCompletedCheck} data-tip data-for="complete">
           {completed ? (
             <FontAwesomeIcon icon={faCheck} color="green" />
           ) : (
@@ -87,6 +87,15 @@ const TodoInput = ({ title, deadline, completed, index, id, onSave, onCompleteCh
           )}
         </StyledButton>
       </StyledTd>
+      <ReactTooltip id="save" place="top" effect="solid">
+        Save changes
+      </ReactTooltip>
+      <ReactTooltip id="delete" place="top" effect="solid">
+        Delete Task
+      </ReactTooltip>
+      <ReactTooltip id="complete" place="top" effect="solid">
+        {completed ? 'Is task completed? YES' : 'Is task completed? NO'}
+      </ReactTooltip>
     </tr>
   );
 };

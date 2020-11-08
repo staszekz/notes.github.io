@@ -9,6 +9,7 @@ import Modal from 'components/Modal/Modal';
 import { toggleModalOpen } from 'reducers/modalReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import ReactTooltip from 'react-tooltip';
 
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
@@ -45,9 +46,12 @@ const MainLayout = ({
 
   return (
     <ThemeProvider theme={theme} isModalOpen={isModalOpen}>
-      <StyledAddItemButton onClick={handleIsVisible} button={button}>
+      <StyledAddItemButton onClick={handleIsVisible} button={button} data-tip data-for="addItem">
         <FontAwesomeIcon icon={faPlus} />
       </StyledAddItemButton>
+      <ReactTooltip id="addItem" place="top" effect="solid">
+        {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
+      </ReactTooltip>
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
       <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>

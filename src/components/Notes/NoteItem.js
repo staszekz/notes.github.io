@@ -27,7 +27,7 @@ const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
         <StyledButton onClick={handleOnDelete} data-tip data-for="delete">
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
-        <ReactTooltip id="more" place="top">
+        <ReactTooltip id="more" place="top" effect="solid">
           Show more details
         </ReactTooltip>
         <ReactTooltip id="delete" place="top" effect="solid">

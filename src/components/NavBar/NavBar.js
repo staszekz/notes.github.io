@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import logoutIcon from 'assets/icons/logout.svg';
 import firebase from 'firebase';
 import { StyledH1 } from 'components/H1/H1';
+import ReactTooltip from 'react-tooltip';
 
 const Bar = styled.div`
   width: 100%;
@@ -91,7 +92,16 @@ class NavBar extends React.Component {
             </h6> */}
           </>
         )}
-        <ButtonIcon to="/" icon={logoutIcon} onClick={this.handleSignOutClick} />
+        <ButtonIcon
+          to="/"
+          icon={logoutIcon}
+          onClick={this.handleSignOutClick}
+          data-tip
+          data-for="logout"
+        />
+        <ReactTooltip id="logout" place="top" effect="solid">
+          Sign Out
+        </ReactTooltip>
       </Bar>
     );
   }

@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
+import ReactTooltip from 'react-tooltip';
 
 export const StyledTdWithHover = styled.td`
   width: 50%;
@@ -59,13 +60,13 @@ const TodoItem = ({ title, id, deadline, completed, index, onEdit, onDelete, onC
         {deadline}
       </StyledTdWithHover>
       <StyledTd className="align-middle">
-        <StyledButton onClick={handleOnEdit}>
+        <StyledButton onClick={handleOnEdit} data-tip data-for="edit">
           <FontAwesomeIcon icon={faEdit} />
         </StyledButton>
-        <StyledButton onClick={handleOnDelete}>
+        <StyledButton onClick={handleOnDelete} data-tip data-for="delete">
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledButton>
-        <StyledButton onClick={handleCompletedCheck}>
+        <StyledButton onClick={handleCompletedCheck} data-tip data-for="complete">
           {completed ? (
             <FontAwesomeIcon icon={faCheck} color="green" />
           ) : (
@@ -73,6 +74,15 @@ const TodoItem = ({ title, id, deadline, completed, index, onEdit, onDelete, onC
           )}
         </StyledButton>
       </StyledTd>
+      <ReactTooltip id="edit" place="top" effect="solid">
+        Edit task
+      </ReactTooltip>
+      <ReactTooltip id="delete" place="top" effect="solid">
+        Delete Task
+      </ReactTooltip>
+      <ReactTooltip id="complete" place="top" effect="solid">
+        {completed ? 'Is task completed? YES' : 'Is task completed? NO'}
+      </ReactTooltip>
     </tr>
   );
 };

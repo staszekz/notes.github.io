@@ -22,5 +22,4 @@ export const StyledH2 = styled.h2`
   margin-bottom: 4rem;
   position: relative;
   top: 13vh;
-  /* background-color: red; */
 `;
