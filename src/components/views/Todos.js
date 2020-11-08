@@ -63,6 +63,10 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
     setFilterDeadline('');
   };
 
+  const handleNoEdit = editedId => {
+    setEditedID(null);
+    console.log('eeeeeeeeee');
+  };
   return (
     <>
       <GlobalStyle />
@@ -121,6 +125,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
                         onSave={handleOnSave}
                         onDelete={deleteTask}
                         onCompleteCheck={setCompleted}
+                        onNoEdit={handleNoEdit}
                       />
                     ) : (
                       <TodoItem
