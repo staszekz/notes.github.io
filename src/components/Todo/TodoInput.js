@@ -52,8 +52,10 @@ const TodoInput = ({
     setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
 
-  const handleCompletedCheck = () => {
-    onCompleteCheck(id, { ...editedInput });
+  const handleCompletedCheck = state => {
+    setEditedInput({ ...editedInput, completed: !editedInput.completed });
+    console.log('completed', editedInput.completed);
+    // onCompleteCheck(id, editedInput.title, editedInput.deadline, editedInput.completed);
   };
 
   const handleOnDelete = () => {
@@ -99,7 +101,7 @@ const TodoInput = ({
         </StyledButton>
 
         <StyledButton onClick={handleCompletedCheck} data-tip data-for="complete">
-          {completed ? (
+          {editedInput.completed ? (
             <FontAwesomeIcon icon={faCheck} color="green" />
           ) : (
             <FontAwesomeIcon icon={faTimes} color="red" />
