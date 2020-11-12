@@ -79,7 +79,7 @@ class NavBar extends React.Component {
     return (
       <Bar>
         <StyledButtonPlace>
-          {this.state.user && console.log('user navbar', this.state.user)}
+          {/* {this.state.user && console.log('user navbar', this.state.user)} */}
           <ButtonLink to="/home">home</ButtonLink>
           <ButtonLink to="/todos">todos</ButtonLink>
           <ButtonLink to="/notes">notes</ButtonLink>

@@ -96,11 +96,15 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
 
         <StyledDate>Created: {created}</StyledDate>
         <StyledButtonWrapper>
-          <StyledButton onClick={onClose}>Close</StyledButton>
+          <StyledButton to="/#" onClick={onClose}>
+            Close
+          </StyledButton>
           {edited ? (
-            <StyledButton onClick={onSave}>Save</StyledButton>
+            <StyledButton to="/#" onClick={onSave}>
+              Save
+            </StyledButton>
           ) : (
-            <StyledButton onClick={handleEdit}>Edit</StyledButton>
+            <StyledButton to="/#" onClick={handleEdit}>Edit</StyledButton>
           )}
           <StyledButton onClick={handleOnDelete}>Delete</StyledButton>
         </StyledButtonWrapper>

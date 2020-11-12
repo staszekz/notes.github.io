@@ -1,8 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-export const StyledButton = styled(Link)`
+export const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,9 +60,15 @@ export const StyledButton = styled(Link)`
 `;
 
 const ButtonLink = ({ children, to, homepage }) => (
-  <StyledButton homepage={homepage} to={to}>
+  <StyledButton as={Link} homepage={homepage} to={to}>
     {children}
   </StyledButton>
 );
 
 export default ButtonLink;
+
+ButtonLink.propTypes = {
+  children: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  homepage: PropTypes.bool,
+};
