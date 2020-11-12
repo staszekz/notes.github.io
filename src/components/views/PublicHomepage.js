@@ -20,10 +20,10 @@ const PublicHomepage = () => (
       <StyledHomepageWrapper>
         <StyledH1>Please sign in or sign up to use</StyledH1>
         <StyledHomeButtonWrapper>
-          <ButtonLink homepage to="/signup">
+          <ButtonLink homepage="true" to="/signup">
             sign up
           </ButtonLink>
-          <ButtonLink homepage to="/signin">
+          <ButtonLink homepage="true" to="/signin">
             sign in
           </ButtonLink>
         </StyledHomeButtonWrapper>

@@ -49,12 +49,12 @@ const MainLayout = ({
       <StyledAddItemButton onClick={handleIsVisible} button={button} data-tip data-for="addItem">
         <FontAwesomeIcon icon={faPlus} />
       </StyledAddItemButton>
-      <ReactTooltip id="addItem" place="top" effect="solid">
-        {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
-      </ReactTooltip>
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
       <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
+      <ReactTooltip id="addItem" place="top" effect="solid">
+        {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
+      </ReactTooltip>
     </ThemeProvider>
   );
 };

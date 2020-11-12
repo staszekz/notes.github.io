@@ -70,5 +70,5 @@ export default ButtonLink;
 ButtonLink.propTypes = {
   children: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
-  homepage: PropTypes.bool,
+  homepage: PropTypes.string,
 };

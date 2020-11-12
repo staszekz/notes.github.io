@@ -73,16 +73,18 @@ const TodoItem = ({ title, id, deadline, completed, index, onEdit, onDelete, onC
             <FontAwesomeIcon icon={faTimes} color="red" />
           )}
         </StyledButton>
+        <>
+          <ReactTooltip id="edit" place="top" effect="solid">
+            Edit task
+          </ReactTooltip>
+          <ReactTooltip id="delete" place="top" effect="solid">
+            Delete Task
+          </ReactTooltip>
+          <ReactTooltip id="complete" place="top" effect="solid">
+            {completed ? 'Is task completed? YES' : 'Is task completed? NO'}
+          </ReactTooltip>
+        </>
       </StyledTd>
-      <ReactTooltip id="edit" place="top" effect="solid">
-        Edit task
-      </ReactTooltip>
-      <ReactTooltip id="delete" place="top" effect="solid">
-        Delete Task
-      </ReactTooltip>
-      <ReactTooltip id="complete" place="top" effect="solid">
-        {completed ? 'Is task completed? YES' : 'Is task completed? NO'}
-      </ReactTooltip>
     </tr>
   );
 };
