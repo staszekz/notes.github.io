@@ -99,7 +99,7 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                   .filter(note => note.title.toLowerCase().includes(filterTitle.toLowerCase()))
                   .filter(note => note.content.toLowerCase().includes(filterContent.toLowerCase()))
                   .map((note, index) => (
-                    <>
+                    <React.Fragment key={note.id}>
                       <NoteItem
                         key={note.id}
                         title={note.title}
@@ -121,7 +121,7 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                           onDelete={deleteNote}
                         />
                       )}
-                    </>
+                    </React.Fragment>
                   ))
               )}
             </tbody>
