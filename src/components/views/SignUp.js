@@ -1,12 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { theme } from 'utils/theme';
-// import { StyledButton } from 'components/Button/Button';
-import { StyledInput } from 'components/Todo/TodoInput';
-// import { Formik, Form, ErrorMessage } from 'formik';
+import { StyledInput } from 'components/atoms/StyledInputs';
 import firebase from 'firebase';
-// import * as Yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledH1 } from 'components/H1/H1';
@@ -32,15 +29,12 @@ class SignUp extends React.Component {
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(
-          userCredentials =>
-            userCredentials.user.updateProfile({
-              displayName: this.state.name,
-            }),
-          // console.log('credentials', userCredentials),
+        .then(userCredentials =>
+          userCredentials.user.updateProfile({
+            displayName: this.state.name,
+          }),
         )
         .then(() => {
-          // console.log(this.state.email, this.state.password);
           this.setState({
             redirect: true,
           });

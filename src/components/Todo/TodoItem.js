@@ -1,31 +1,11 @@
 // TodoItem.js
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip from 'react-tooltip';
-
-export const StyledTdWithHover = styled.td`
-  width: 50%;
-  :hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-  ${({ deadline }) =>
-    deadline &&
-    css`
-      width: 10vw;
-    `}
-  ${({ created }) =>
-    created &&
-    css`
-      width: 15vw;
-    `}
-`;
-
-export const StyledTd = styled.td`
-  width: fit-content;
-`;
+import { StyledTdWithHover, StyledTd } from 'components/atoms/StyledTds';
 
 export const StyledButton = styled.button`
   color: black;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEye } from '@fortawesome/free-regular-svg-icons';
-import { StyledTdWithHover } from 'components/Todo/TodoItem';
+import { StyledTdWithHover } from 'components/atoms/StyledTds';
 import { StyledButton } from 'components/Todo/TodoItem';
 import ReactTooltip from 'react-tooltip';
 

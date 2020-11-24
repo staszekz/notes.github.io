@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { editNote } from 'reducers/notesReducer';
 import { StyledButton } from 'components/Button/Button';
-import { StyledButtonWrapper } from 'components/Form/Form';
+import {
+  StyledModalInput,
+  StyledButtonWrapper,
+  StyledTextarea,
+} from 'components/atoms/StyledInputs';
 import { StyledH1 } from 'components/H1/H1';
-import { StyledModalInput, StyledTextarea } from 'components/Form/Form';
 
 const Wrapper = styled.td`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
@@ -104,7 +107,9 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
               Save
             </StyledButton>
           ) : (
-            <StyledButton to="/#" onClick={handleEdit}>Edit</StyledButton>
+            <StyledButton to="/#" onClick={handleEdit}>
+              Edit
+            </StyledButton>
           )}
           <StyledButton onClick={handleOnDelete}>Delete</StyledButton>
         </StyledButtonWrapper>

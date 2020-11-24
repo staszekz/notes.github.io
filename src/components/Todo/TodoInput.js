@@ -1,29 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
 import { StyledButton } from 'components/Todo/TodoItem';
 import { editTask } from 'reducers/todosReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faSave, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import { StyledTd } from 'components/Todo/TodoItem';
-
-export const StyledInput = styled.input`
-  background-color: lightgray;
-  border: none;
-  border-radius: 20px;
-  width: 100%;
-  padding: 0.5rem 0.5rem;
-  float: left;
-  text-align: center;
-
-  ::placeholder {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1.2rem;
-  }
-`;
+import { StyledTd } from 'components/atoms/StyledTds';
+import { StyledInput } from 'components/atoms/StyledInputs';
 
 const TodoInput = ({
   title,
@@ -55,7 +39,6 @@ const TodoInput = ({
   const handleCompletedCheck = state => {
     setEditedInput({ ...editedInput, completed: !editedInput.completed });
     console.log('completed', editedInput.completed);
-    // onCompleteCheck(id, editedInput.title, editedInput.deadline, editedInput.completed);
   };
 
   const handleOnDelete = () => {

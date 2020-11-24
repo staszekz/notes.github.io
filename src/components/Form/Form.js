@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled, { css } from 'styled-components';
-import { StyledInput } from 'components/Todo/TodoInput';
+import styled from 'styled-components';
 import { StyledButton } from 'components/Button/Button';
+import {
+  StyledModalInput,
+  StyledTextarea,
+  StyledButtonWrapper,
+} from 'components/atoms/StyledInputs';
 import { addNewTask } from 'reducers/todosReducer';
 import { toggleModalOpen } from 'reducers/modalReducer';
 import { addNewNote } from 'reducers/notesReducer';
@@ -15,59 +19,12 @@ const StyledLabel = styled.label`
   color: white;
   display: block;
 `;
-
-export const StyledModalInput = styled(StyledInput)`
-  width: 70%;
-  margin: 1rem auto;
-  ${({ theme }) => theme.media.phone} {
-    width: 100%;
-  }
-  ${({ notes }) =>
-    notes &&
-    css`
-      width: 90%;
-    `}
-`;
-
-export const StyledTextarea = styled.textarea`
-  background-color: lightgray;
-  border: none;
-  border-radius: 20px;
-  width: 70%;
-  height: 50%;
-  margin: 1rem auto;
-  float: left;
-  text-align: center;
-
-  ::placeholder {
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 1.2rem;
-  }
-  ${({ theme }) => theme.media.phone} {
-    width: 100%;
-  }
-  ${({ notes }) =>
-    notes &&
-    css`
-      width: 90%;
-      height: 70%;
-    `}
-`;
-
 const StyledForm = styled.form`
   display: flex;
   height: 100%;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`;
-
-export const StyledButtonWrapper = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  width: 90%;
-  margin-top: auto;
 `;
 
 const StyledDate = styled.h3`
