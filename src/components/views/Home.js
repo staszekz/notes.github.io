@@ -29,3 +29,9 @@ const Home = ({ firebase }) => {
 };
 
 export default Home;
+
+// TODO: Add reactQuery (or SWR) to fetching and sotring data
+// TODO: Add unit test for form
+// TODO: Add cypress test for the whole page
+
+// TODO: Finally add typescrip to the whole project.
