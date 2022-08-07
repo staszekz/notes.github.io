@@ -36,6 +36,6 @@ export default Home;
 // TODO: change withCOntext int hooks useCntext
 // TODO: zabezpiecznenie przed niezalogowanym uzyciem
 // TODO: add user profile edit
-
+// TODO: add user stored in cookies
 // TODO: Add reactQuery (or SWR) to fetching and sotring data ??
 // TODO: Finally add typescrip to the whole project.

@@ -1,6 +1,7 @@
 import React from 'react';
 import withContext from 'components/context/withContext';
 import { StyledInput, StyledButtonClear, StyledFiltersWrapper } from './styled';
+
 const Filters = ({
   onTitleFilter,
   onDeadlineFilter,
