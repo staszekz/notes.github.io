@@ -44,32 +44,3 @@ export const StyledButtonIcon = styled(Link)`
     height: 30px;
   }
 `;
-
-// const [unsubscribe, setUnsubscribe] = useState(null);
-
-// useEffect(() => {
-//   const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-//     // setUser({
-//     return user;
-//     // });
-//   });
-//   setUser({
-//     user: unsubscribe(),
-//   });
-//   return () => unsubscribe();
-// }, [user]);
-
-//   const [user, setUser] = useState(null);
-// // const [unsubscribe, setUnsubscribe] = useState(null);
-
-// const handleSignOutClick = () => {
-//   firebase.auth().signOut();
-// };
-
-// useEffect(() => {
-//   const unsubscribe = firebase.auth().onAuthStateChanged(user => setUser({ user }));
-//   // setUnsubscribe({
-//   // unsubscribe,
-//   // });
-//   return () => unsubscribe();
-// }, [user]);

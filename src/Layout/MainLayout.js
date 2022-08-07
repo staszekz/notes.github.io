@@ -4,7 +4,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import withContext from 'components/context/withContext';
 import NavBar from 'components/NavBar/NavBar.js';
 import { theme } from '../utils/theme';
-import { StyledButton } from 'components/Button/Button';
+import { StyledButton } from 'components/Button/styled';
 import Modal from 'components/Modal/Modal';
 import { toggleModalOpen } from 'reducers/modalReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

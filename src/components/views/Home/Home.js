@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePageLayout from 'Layout/HomePageLayout';
 import GlobalStyles from 'Theme/GlobalStyle';
 import ButtonLink from 'components/Button/Button';
-import { StyledHomeButtonWrapper } from 'components/Button/HomeButtonWrapper';
 import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
+import { StyledHomeButtonWrapper } from 'components/Button/styled';
 import { StyledH1 } from '../../H1/H1';
 
 const Home = ({ firebase }) => {

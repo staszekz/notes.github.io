@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
-import { StyledButton } from 'components/Button/Button';
+import { StyledButton } from 'components/Button/styled';
 import {
   StyledModalInput,
   StyledTextarea,
@@ -14,22 +13,7 @@ import withContext from 'components/context/withContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
-
-const StyledLabel = styled.label`
-  color: white;
-  display: block;
-`;
-const StyledForm = styled.form`
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledDate = styled.h3`
-  color: ${({ theme }) => theme.colors.primary};
-`;
+import { StyledLabel, StyledForm, StyledDate } from './styled';
 
 class AddTask extends Component {
   state = {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
-import { StyledButtonLink } from 'components/Button/Button';
+import { StyledButtonLink } from 'components/Button/styled';
 
 const StyledWrapper = styled.div`
   border-left: 10px solid ${({ theme, activecolor }) => theme[activecolor]};

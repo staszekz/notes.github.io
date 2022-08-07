@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { editNote } from 'reducers/notesReducer';
-import { StyledButton } from 'components/Button/Button';
+import { StyledButton } from 'components/Button/styled';
 import {
   StyledModalInput,
   StyledButtonWrapper,

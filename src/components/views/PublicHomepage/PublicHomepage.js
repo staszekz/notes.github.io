@@ -3,8 +3,8 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'Theme/GlobalStyle';
 import { theme } from 'utils/theme';
 import ButtonLink from 'components/Button/Button';
-import { StyledHomeButtonWrapper } from 'components/Button/HomeButtonWrapper';
 import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
+import { StyledHomeButtonWrapper } from 'components/Button/styled';
 import { StyledH1 } from 'components/H1/H1';
 import { StyledHeader } from './styled';
 
