@@ -3,34 +3,13 @@ import MainLayout from 'Layout/MainLayout';
 import { StyledH1, StyledH2 } from 'components/H1/H1';
 import { connect } from 'react-redux';
 import withContext from 'components/context/withContext';
-import styled from 'styled-components';
 import GlobalStyle from 'Theme/GlobalStyle';
-import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
 import { fetchNotes, deleteNote } from 'reducers/notesReducer';
 import NoteItem from 'components/Notes/NoteItem';
 import NoteDetails from 'components/Notes/NoteDetails';
 import Filters from 'components/filters/Filters';
-
-const StyledTable = styled(Table)`
-  color: ${({ theme }) => theme.colors.white};
-  table-layout: auto;
-`;
-
-const StyledNotesList = styled.div`
-  width: 70%;
-  height: 100%;
-  margin: 0 auto;
-  position: relative;
-  top: 13vh;
-
-  ${({ theme }) => theme.media.phone} {
-    width: 95%;
-  }
-  ${({ theme }) => theme.media.landscape} {
-    width: 95%;
-  }
-`;
+import { StyledNotesList, StyledTable } from './styled';
 
 const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
   useEffect(() => {

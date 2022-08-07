@@ -65,7 +65,6 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
 
   const handleNoEdit = editedId => {
     setEditedID(null);
-    console.log('eeeeeeeeee');
   };
   return (
     <>

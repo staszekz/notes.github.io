@@ -1,15 +1,12 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
-import { StyledH1 } from 'components/H1/H1';
+import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'Theme/GlobalStyle';
 import { theme } from 'utils/theme';
 import ButtonLink from 'components/Button/Button';
 import { StyledHomeButtonWrapper } from 'components/Button/HomeButtonWrapper';
 import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
-
-const StyledHeader = styled(StyledH1)`
-  margin-top: 3rem;
-`;
+import { StyledH1 } from 'components/H1/H1';
+import { StyledHeader } from './styled';
 
 const PublicHomepage = () => (
   <>
