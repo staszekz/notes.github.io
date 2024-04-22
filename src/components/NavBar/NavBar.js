@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ButtonLink from 'components/Button/Button';
 import logoutIcon from 'assets/icons/logout.svg';
-import firebase from 'firebase';
 import { StyledH1 } from 'components/H1/H1';
 import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
+import { app } from '../../utils/database';
+import { getAuth } from 'firebase/auth';
+
+const auth = getAuth(app);
 
 const NavBar = () => {
   const [user, setUser] = useState(null);
 
   const handleSignOutClick = () => {
-    firebase.auth().signOut();
+    auth.signOut();
   };
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
       setUser(user);
     });
     setUser(unsubscribe());

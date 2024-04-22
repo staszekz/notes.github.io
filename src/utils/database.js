@@ -1,5 +1,5 @@
-import firebase from 'firebase/app';
-
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -10,7 +10,15 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
+
+// Initialize Realtime Database
+const database = getDatabase(app);
+console.log('🚀 ~ database:', database);
+
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// firebase.initializeApp(firebaseConfig);
 export const DATABASE_URL = firebaseConfig.databaseURL;

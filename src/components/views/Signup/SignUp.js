@@ -3,11 +3,16 @@ import { Redirect } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from 'utils/theme';
 import { StyledInput } from 'components/atoms/StyledInputs';
-import firebase from 'firebase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledH1 } from 'components/H1/H1';
 import { StyledForm, ChangedStyledButton } from 'components/atoms/forFormik';
+import { app } from '../../../utils/database';
+import { getAuth } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+
+const auth = getAuth(app);
+console.log('🚀 ~ auth:', auth);
 
 const SignUp = ({ isSignUp }) => {
   const initialState = {
@@ -16,7 +21,7 @@ const SignUp = ({ isSignUp }) => {
     name: '',
     redirect: false,
   };
-
+  const navigate = useNavigate();
   const [state, setState] = useState(initialState);
   const { email, password, name, redirect } = state;
 
@@ -30,8 +35,7 @@ const SignUp = ({ isSignUp }) => {
   const handleOnSubmit = e => {
     e.preventDefault();
     if (!isSignUp) {
-      firebase
-        .auth()
+      auth
         .createUserWithEmailAndPassword(email, password)
         .then(userCredentials =>
           userCredentials.user.updateProfile({
@@ -39,24 +43,16 @@ const SignUp = ({ isSignUp }) => {
           }),
         )
         .then(() => {
-          setState({
-            ...state,
-            redirect: true,
-          });
+          navigate('/home');
         })
         .catch(err => {
           alert(err.message);
         });
     } else {
-      firebase
-        .auth()
+      auth
         .signInWithEmailAndPassword(email, password)
-        .then(userData => {
-          // console.log('dane użytkownika', userData);
-          setState({
-            ...state,
-            redirect: true,
-          });
+        .then(() => {
+          navigate('/signin');
         })
         .catch(err => {
           // TODO: handle error into popup window
@@ -64,10 +60,6 @@ const SignUp = ({ isSignUp }) => {
         });
     }
   };
-
-  if (redirect) {
-    return <Redirect to="/home" />;
-  }
 
   return (
     <ThemeProvider theme={theme}>

@@ -1,11 +1,5 @@
 {
-  "extends": [
-    "airbnb",
-    "prettier",
-    "prettier/react",
-    "plugin:import/errors",
-    "plugin:import/warnings"
-  ],
+  "extends": ["airbnb", "prettier", "plugin:import/errors", "plugin:import/warnings"],
   "env": {
     "jest": true
   },

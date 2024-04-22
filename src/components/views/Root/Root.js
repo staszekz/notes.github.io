@@ -1,8 +1,7 @@
 import React from 'react';
-import firebase from 'firebase/app';
 import GlobalStyle from 'Theme/GlobalStyle';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import store from 'store';
@@ -12,18 +11,18 @@ import Notes from 'components/views/Notes/Notes';
 import ContextLayout from 'components/context/contextLayout';
 import PublicHomepage from '../PublicHomepage/PublicHomepage';
 import SignUp from 'components/views/Signup/SignUp';
+import { app } from '../../../utils/database';
 
 const rrfConfig = {
   userProfile: 'users',
 };
 
 const rrfProps = {
-  firebase,
+  firebase: app,
   config: rrfConfig,
   dispatch: store.dispatch,
 };
 
-console.log('root:', rrfProps, rrfConfig);
 const Root = () => {
   return (
     <Provider store={store}>
@@ -31,14 +30,14 @@ const Root = () => {
         <GlobalStyle />
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <ContextLayout>
-            <Switch>
-              <Route exact path="/" component={PublicHomepage}></Route>
-              <Route path="/todos" component={Todos} />
-              <Route path="/notes" component={Notes} />
-              <Route path="/home" component={Home} />
-              <Route path="/signin" component={() => <SignUp isSignUp />} />
-              <Route path="/signup" component={SignUp} />
-            </Switch>
+            <Routes>
+              <Route exact path="/" element={PublicHomepage}></Route>
+              <Route path="/todos" element={Todos} />
+              <Route path="/notes" element={Notes} />
+              <Route path="/home" element={Home} />
+              <Route path="/signin" element={() => <SignUp isSignUp />} />
+              <Route path="/signup" element={SignUp} />
+            </Routes>
           </ContextLayout>
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
