@@ -40,7 +40,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
 
   useEffect(() => {
     fetchTodos();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnSave = (task, editedId) => {
     editTask(task, editedId);

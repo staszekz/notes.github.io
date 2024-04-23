@@ -16,6 +16,7 @@ import ReactTooltip from 'react-tooltip';
 import { StyledLabel, StyledForm, StyledDate } from './styled';
 
 const AddTask = ({ addNewNote, addNewTask, toggleModalOpen, pageContext, created }) => {
+  console.log('🚀 ~ pageContext:', pageContext);
   const initialState = {
     title: '',
     content: '',
@@ -30,6 +31,8 @@ const AddTask = ({ addNewNote, addNewTask, toggleModalOpen, pageContext, created
       addNewTask({ title, deadline, completed });
     }
     if (pageContext === 'notes') {
+      console.log('🚀 ~ title, content, created :', title, content, created);
+
       addNewNote({ title, content, created });
     }
     toggleModalOpen();
