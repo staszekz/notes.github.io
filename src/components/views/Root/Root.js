@@ -9,8 +9,8 @@ import Todos from 'components/views/Todos/Todos';
 import Home from 'components/views/Home/Home';
 import Notes from 'components/views/Notes/Notes';
 import ContextLayout from 'components/context/contextLayout';
-import PublicHomepage from '../PublicHomepage/PublicHomepage';
 import SignUp from 'components/views/Signup/SignUp';
+import PublicHomepage from '../PublicHomepage/PublicHomepage';
 import { app } from '../../../utils/database';
 
 const rrfConfig = {
@@ -23,7 +23,7 @@ const rrfProps = {
   dispatch: store.dispatch,
 };
 
-const Root = () => {
+function Root() {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
@@ -31,18 +31,17 @@ const Root = () => {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <ContextLayout>
             <Routes>
-              <Route exact path="/" element={PublicHomepage}></Route>
-              <Route path="/todos" element={Todos} />
-              <Route path="/notes" element={Notes} />
-              <Route path="/home" element={Home} />
-              <Route path="/signin" element={() => <SignUp isSignUp />} />
-              <Route path="/signup" element={SignUp} />
+              <Route exact path="/" element={<PublicHomepage />} />
+              <Route path="/todos" element={<Todos />} />
+              <Route path="/notes" element={<Notes />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/signin" element={<SignUp isSignUp />} />
+              <Route path="/signup" element={<SignUp />} />
             </Routes>
           </ContextLayout>
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
     </Provider>
   );
-};
-
+}
 export default Root;

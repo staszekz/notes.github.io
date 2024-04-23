@@ -1,0 +1,5 @@
+{
+  "eslint.enable": false,
+  "eslint.codeActionsOnSave.rules": null,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}
