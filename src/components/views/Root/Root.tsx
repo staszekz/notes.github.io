@@ -31,12 +31,12 @@ function Root() {
         <BrowserRouter basename={process.env.PUBLIC_URL}>
           <ContextLayout>
             <Routes>
-              <Route exact path="/" element={<PublicHomepage />} />
+              <Route path="/" element={<PublicHomepage />} />
               <Route path="/todos" element={<Todos />} />
               <Route path="/notes" element={<Notes />} />
               <Route path="/home" element={<Home />} />
               <Route path="/signin" element={<SignUp isSignUp />} />
-              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signup" element={<SignUp isSignUp={false} />} />
             </Routes>
           </ContextLayout>
         </BrowserRouter>

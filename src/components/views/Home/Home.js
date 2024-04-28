@@ -7,7 +7,7 @@ import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
 import { StyledHomeButtonWrapper } from 'components/Button/styled';
 import { StyledH1 } from '../../H1/H1';
 
-const Home = ({ firebase }) => {
+const Home = ({}) => {
   return (
     <>
       <GlobalStyles />
