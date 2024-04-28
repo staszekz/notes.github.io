@@ -4,7 +4,7 @@ import logoutIcon from 'assets/icons/logout.svg';
 import { StyledH1 } from 'components/H1/H1';
 import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
-import { app } from '../../utils/database';
+import { app } from '../../database/database';
 import { getAuth } from 'firebase/auth';
 
 const auth = getAuth(app);

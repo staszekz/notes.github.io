@@ -11,7 +11,7 @@ import Notes from 'components/views/Notes/Notes';
 import ContextLayout from 'components/context/contextLayout';
 import SignUp from 'components/views/Signup/SignUp';
 import PublicHomepage from '../PublicHomepage/PublicHomepage';
-import { app } from '../../../utils/database';
+import { app } from '../../../database/database';
 
 const rrfConfig = {
   userProfile: 'users',

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { StyledH1 } from 'components/H1/H1';
 import { StyledForm, ChangedStyledButton } from 'components/atoms/forFormik';
-import { app } from '../../../utils/database';
+import { app } from '../../../database/database';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 

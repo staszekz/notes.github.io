@@ -1,8 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { todosReducer } from 'reducers/todosReducer';
-import { modalReducer } from 'reducers/modalReducer';
-import { notesReducer } from 'reducers/notesReducer';
+import { todosReducer } from './reducers/todosReducer';
+import { modalReducer } from './reducers/modalReducer';
+import { notesReducer } from './reducers/notesReducer';
 import { firebaseReducer } from 'react-redux-firebase';
 
 const middleware = applyMiddleware(thunk);
