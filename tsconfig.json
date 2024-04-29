@@ -1,6 +1,7 @@
 {
   "target": "esnext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
   "module": "commonjs",
+      "types": ["vite/client", "vite-plugin-svgr/client"],
   "compilerOptions": {
     /* Base Options: */
     "esModuleInterop": true,
@@ -14,8 +15,8 @@
     // "verbatimModuleSyntax": true,
     /* Strictness */
     "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
+    // "noUncheckedIndexedAccess": true,
+    // "noImplicitOverride": true,
     /* If transpiling with TypeScript: */
     "module": "NodeNext",
     "outDir": "dist",
@@ -29,8 +30,20 @@
     // "module": "preserve",
     // "noEmit": true,
     /* If your code runs in the DOM: */
-    "lib": ["es2022", "dom", "dom.iterable"]
+    // "lib": ["es2022", "dom", "dom.iterable"]
     /* If your code doesn't run in the DOM: */
     // "lib": ["es2022"]
-  }
+  },
+    "paths": {
+      "@notes/components": ["src/components/index.ts"],
+      "@notes/rq": ["src/api/index.ts"],
+      "@notes/utils": ["src/utils/index.ts"],
+      "@notes/firebase": ["src/firebase/index.ts"],
+      "@notes/hooks": ["src/hooks/index.ts"],
+      "@notes/context": ["src/context/index.ts"],
+      "@notes/routes": ["src/routes/index.ts"],
+    },
+  "include": ["./src/**/*"],
+    "extends": "./tsconfig.base.json"
+
 }
