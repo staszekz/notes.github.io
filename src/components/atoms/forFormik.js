@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledButton } from 'components/Button/styled';
+import { StyledButton } from '@notes/components';
 
 export const StyledForm = styled.form`
   position: fixed;
