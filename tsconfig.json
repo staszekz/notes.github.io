@@ -29,8 +29,17 @@
     // "module": "preserve",
     // "noEmit": true,
     /* If your code runs in the DOM: */
-    "lib": ["es2022", "dom", "dom.iterable"]
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "baseUrl": "./",
     /* If your code doesn't run in the DOM: */
     // "lib": ["es2022"]
+    "paths": {
+      "@notes/components": ["src/components"],
+      "@notes/utils": ["src/utils"],
+      "@notes/types": ["src/types"],
+      "@notes/hooks": ["src/hooks"],
+      "@notes/context": ["src/context"],
+      "@notes/rq": ["src/queries"]
+    }
   }
 }

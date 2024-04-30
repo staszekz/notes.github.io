@@ -14,15 +14,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { StyledLabel, StyledForm, StyledDate } from './styled';
+import { usePageTypeContext } from '@notes/hooks';
 
-const AddTask = ({ addNewNote, addNewTask, toggleModalOpen, pageContext, created }) => {
-  console.log('🚀 ~ pageContext:', pageContext);
+const AddTaskComponent = ({ addNewNote, addNewTask, toggleModalOpen, created }) => {
   const initialState = {
     title: '',
     content: '',
     deadline: '',
     completed: false,
   };
+  const pageContext = usePageTypeContext();
+
   const [state, setState] = useState(initialState);
   const { title, content, deadline, completed } = state;
 
@@ -140,4 +142,4 @@ const mapDispatchToProps = {
   toggleModalOpen,
   addNewNote,
 };
-export default withContext(connect(mapStateToProps, mapDispatchToProps)(AddTask));
+export const AddTask = connect(mapStateToProps, mapDispatchToProps)(AddTaskComponent);

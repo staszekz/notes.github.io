@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { StyledButton } from './styled';
 
@@ -7,6 +6,3 @@ export const ButtonLink = ({ children, to, homepage }) => (
     {children}
   </StyledButton>
 );
-
-
-

@@ -28,12 +28,10 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const Modal = ({ isVisible, onAdd }) => {
+export const Modal = ({ isVisible, onAdd }) => {
   return (
     <StyledWrapper isVisible={isVisible}>
       <AddTask onAdd={onAdd}></AddTask>
     </StyledWrapper>
   );
 };
-
-export default Modal;
