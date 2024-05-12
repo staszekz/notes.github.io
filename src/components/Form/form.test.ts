@@ -6,27 +6,27 @@ import { render, fireEvent, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { StyledModalInput } from 'components/atoms/StyledInputs';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '../../utils/theme';
+import { theme } from '../../Theme/theme';
 import Todos from 'components/views/Todos/Todos';
 import AddTask from 'components/Form/Form';
 import { BrowserRouter } from 'react-router-dom';
 
 const setup = () => {
   const component = render(
-    <ThemeProvider theme={theme} isModalOpen={true}>
-      <StyledModalInput name="title" placeholder="new deadline" />
+    <ThemeProvider theme={ theme } isModalOpen = { true} >
+    <StyledModalInput name="title" placeholder = "new deadline" />
     </ThemeProvider>,
   );
   const styledInput = component.findByPlaceholderText('new deadline');
   const componentWithDashboard = render(
-    <Provider store={store}>
-      <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <ThemeProvider theme={theme} isModalOpen={true}>
-          <Todos />
-          <AddTask />
-        </ThemeProvider>
-      </BrowserRouter>
-    </Provider>,
+    <Provider store={ store } >
+  <BrowserRouter basename={ process.env.PUBLIC_URL } >
+  <ThemeProvider theme={ theme } isModalOpen = { true} >
+  <Todos />
+  < AddTask />
+  </ThemeProvider>
+  < /BrowserRouter>
+  < /Provider>,
   );
   return {
     styledInput,

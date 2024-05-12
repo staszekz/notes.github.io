@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 const auth = getAuth(app);
 console.log('🚀 ~ auth:', auth);
 
-const SignUp = ({ isSignUp }) => {
+export const SignUp = ({ isSignUp }) => {
   const initialState = {
     email: '',
     password: '',
@@ -99,5 +99,3 @@ const SignUp = ({ isSignUp }) => {
     </ThemeProvider>
   );
 };
-
-export default SignUp;

@@ -1,26 +1,16 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { StyledButton } from 'components/Todo/TodoItem';
-import { editTask } from 'reducers/todosReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faSave, faTrashAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import { StyledTd } from 'components/atoms/StyledTds';
-import { StyledInput } from 'components/atoms/StyledInputs';
+import { StyledTd, StyledInput } from '@notes/components';
+import { RootState } from '@notes/redux';
 
-const TodoInput = ({
-  title,
-  deadline,
-  completed,
-  index,
-  id,
-  onSave,
-  onCompleteCheck,
-  onDelete,
-  onNoEdit,
-}) => {
+const TodoInput = ({ title, deadline, completed, index, id, onSave, onDelete, onNoEdit }) => {
   const [editedInput, setEditedInput] = useState({ title, deadline, completed });
+  const dispatch = useDispatch();
 
   const handleOnSave = () => {
     onSave(editedInput, id);
@@ -36,9 +26,8 @@ const TodoInput = ({
     setEditedInput({ ...editedInput, [e.target.name]: e.target.value });
   };
 
-  const handleCompletedCheck = state => {
+  const handleCompletedCheck = () => {
     setEditedInput({ ...editedInput, completed: !editedInput.completed });
-    console.log('completed', editedInput.completed);
   };
 
   const handleOnDelete = () => {
@@ -107,8 +96,3 @@ const TodoInput = ({
     </tr>
   );
 };
-const mapDispatchToProps = {
-  editTask,
-};
-
-export default connect(null, mapDispatchToProps)(TodoInput);

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Root from './components/views/Root/Root';
+import { Root } from './Root';
 // import * as serviceWorker from './serviceWorker';
 
 const rootElement = document.getElementById('root')!;

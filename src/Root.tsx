@@ -1,16 +1,14 @@
-import { GlobalStyle } from '../';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import store from 'store';
-import Todos from 'components/views/Todos/Todos';
-import Home from 'components/views/Home/Home';
-import Notes from 'components/views/Notes/Notes';
-import ContextLayout from 'components/context/contextLayout';
-import SignUp from 'components/views/Signup/SignUp';
-import PublicHomepage from '../public-homepage/public-homepage';
-import { app } from '../../../database/database';
+import { store } from '@notes/redux';
+import { Todos, Home, Notes, SignUp } from '@notes/components';
+import { ContextLayout } from '@notes/context';
+import { PublicHomepage } from '@notes/components';
+import { app } from './database/database';
+import { GlobalStyle } from '@notes/theme';
 
 const rrfConfig = {
   userProfile: 'users',
@@ -22,7 +20,7 @@ const rrfProps = {
   dispatch: store.dispatch,
 };
 
-function Root() {
+export function Root() {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
@@ -43,4 +41,3 @@ function Root() {
     </Provider>
   );
 }
-export default Root;

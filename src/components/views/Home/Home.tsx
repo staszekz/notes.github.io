@@ -1,16 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HomePageLayout from 'Layout/HomePageLayout';
-import GlobalStyles from 'Theme/GlobalStyle';
-import ButtonLink from 'components/Button/Button';
-import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
-import { StyledHomeButtonWrapper } from 'components/Button/styled';
+import { HomePageLayout } from '@notes/layout';
+import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink } from '@notes/components';
 import { StyledH1 } from '../../H1/H1';
+import { GlobalStyle } from '@notes/theme';
 
-const Home = ({}) => {
+export const Home = ({}) => {
   return (
     <>
-      <GlobalStyles />
+      <GlobalStyle />
       <HomePageLayout>
         <StyledHomepageWrapper>
           <StyledH1>In this app you can store your: </StyledH1>
@@ -27,8 +25,6 @@ const Home = ({}) => {
     </>
   );
 };
-
-export default Home;
 
 // TODO: Add unit test for form
 // TODO: Add cypress test for the whole page

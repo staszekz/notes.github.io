@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { editNote } from 'reducers/notesReducer';
-import { StyledButton } from 'components/Button/styled';
+import { useDispatch } from 'react-redux';
+import { editNote } from '@notes/redux';
 import {
+  StyledButton,
   StyledModalInput,
   StyledButtonWrapper,
+  StyledH1,
   StyledTextarea,
-} from 'components/atoms/StyledInputs';
-import { StyledH1 } from 'components/H1/H1';
+} from '@notes/components';
 
 const Wrapper = styled.td`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
@@ -51,11 +51,11 @@ const StyledDate = styled.p`
   margin-right: 5%;
 `;
 
-const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id, editNote }) => {
+export const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id }) => {
   const handleOnDelete = () => {
     onDelete(id);
   };
-
+  const dispatch = useDispatch();
   const [edited, setEdited] = useState(false);
   const [editedNote, setEditedNote] = useState({ content, title, created });
 
@@ -117,9 +117,3 @@ const NoteDetails = ({ isVisible, content, onClose, title, created, onDelete, id
     </tr>
   );
 };
-
-const mapDispatchToProps = {
-  editNote,
-};
-
-export default connect(null, mapDispatchToProps)(NoteDetails);

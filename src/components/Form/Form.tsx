@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { StyledButton } from 'components/Button/styled';
 import {
+  StyledButton,
   StyledModalInput,
   StyledTextarea,
   StyledButtonWrapper,
-} from 'components/atoms/StyledInputs';
-import { addNewTask } from 'reducers/todosReducer';
-import { toggleModalOpen } from 'reducers/modalReducer';
-import { addNewNote } from 'reducers/notesReducer';
-import withContext from 'components/context/withContext';
+} from '@notes/components';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { StyledLabel, StyledForm, StyledDate } from './styled';
 import { usePageTypeContext } from '@notes/hooks';
+import { RootState, addNewTask, addNewNote, toggleModalOpen } from '@notes/redux';
 
-const AddTaskComponent = ({ addNewNote, addNewTask, toggleModalOpen, created }) => {
+type AddTaskComponentProps = {
+  addNewNote: any;
+  addNewTask: any;
+  toggleModalOpen: any;
+  created: string;
+  onAdd: any;
+};
+
+const AddTaskComponent = ({
+  addNewNote,
+  addNewTask,
+  toggleModalOpen,
+  created,
+  onAdd,
+}: AddTaskComponentProps) => {
   const initialState = {
     title: '',
     content: '',
@@ -33,8 +45,6 @@ const AddTaskComponent = ({ addNewNote, addNewTask, toggleModalOpen, created }) 
       addNewTask({ title, deadline, completed });
     }
     if (pageContext === 'notes') {
-      console.log('🚀 ~ title, content, created :', title, content, created);
-
       addNewNote({ title, content, created });
     }
     toggleModalOpen();
@@ -133,7 +143,7 @@ const AddTaskComponent = ({ addNewNote, addNewTask, toggleModalOpen, created }) 
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: RootState) => ({
   created: state.modalReducer.createdDate,
 });
 

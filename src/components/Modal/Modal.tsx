@@ -1,12 +1,12 @@
 import React from 'react';
+import { AddTask } from 'src/components/Form/Form';
 import styled from 'styled-components';
-import AddTask from 'components/Form/Form';
 
 const StyledWrapper = styled.div`
   border: 5px solid ${({ theme }) => theme.colors.primary};
   z-index: 1;
   position: fixed;
-  display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
+  display: ${({ isVisible }: { isVisible: boolean }) => (isVisible ? 'flex' : 'none')};
   padding: 2rem;
   flex-direction: column;
   top: 50%;
@@ -28,7 +28,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export const Modal = ({ isVisible, onAdd }) => {
+export const Modal = ({ isVisible, onAdd }: { isVisible: boolean; onAdd: any }) => {
   return (
     <StyledWrapper isVisible={isVisible}>
       <AddTask onAdd={onAdd}></AddTask>

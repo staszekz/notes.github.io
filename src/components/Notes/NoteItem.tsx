@@ -1,11 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt, faEye } from '@fortawesome/free-regular-svg-icons';
-import { StyledTdWithHover } from 'components/atoms/StyledTds';
-import { StyledButton } from 'components/Todo/TodoItem';
+import { StyledButton, StyledTdWithHover } from '@notes/components';
 import ReactTooltip from 'react-tooltip';
 
-const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
+export const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
   const handleToggleShow = () => {
     showDetails(id);
   };
@@ -37,5 +36,3 @@ const NoteItem = ({ title, index, id, created, showDetails, onDelete }) => {
     </tr>
   );
 };
-
-export default NoteItem;

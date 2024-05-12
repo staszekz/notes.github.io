@@ -1,8 +1,7 @@
 {
-  "target": "esnext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
+  "target": "esnext",
   "module": "commonjs",
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "jsx": "react",
     "skipLibCheck": true,
@@ -11,35 +10,28 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-    // "verbatimModuleSyntax": true,
-    /* Strictness */
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    /* If transpiling with TypeScript: */
+    "noImplicitOverride": false,
     "module": "NodeNext",
     "outDir": "dist",
     "sourceMap": true,
-    /* AND if you're building for a library: */
     "declaration": true,
-    /* AND if you're building for a library in a monorepo: */
     "composite": true,
     "declarationMap": true,
-    /* If NOT transpiling with TypeScript: */
-    // "module": "preserve",
-    // "noEmit": true,
-    /* If your code runs in the DOM: */
+    "noImplicitAny": false,
     "lib": ["es2022", "dom", "dom.iterable"],
     "baseUrl": "./",
-    /* If your code doesn't run in the DOM: */
-    // "lib": ["es2022"]
     "paths": {
-      "@notes/components": ["src/components"],
-      "@notes/utils": ["src/utils"],
-      "@notes/types": ["src/types"],
-      "@notes/hooks": ["src/hooks"],
-      "@notes/context": ["src/context"],
-      "@notes/rq": ["src/queries"]
+      "@notes/components": ["src/components/index.ts"],
+      "@notes/utils": ["src/utils/index.ts"],
+      "@notes/types": ["src/types/index.ts"],
+      "@notes/hooks": ["src/hooks/index.ts"],
+      "@notes/context": ["src/context/index.ts"],
+      "@notes/rq": ["src/queries"],
+      "@notes/redux": ["src/store/index.ts"],
+      "@notes/layout": ["src/Layout/index.ts"],
+      "@notes/theme": ["src/Theme"]
     }
   }
 }

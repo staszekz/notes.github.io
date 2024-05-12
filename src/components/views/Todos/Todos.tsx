@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import MainLayout from 'Layout/MainLayout';
+import { MainLayout } from '@notes/Layout';
 import GlobalStyle from 'Theme/GlobalStyle';
 import { StyledH1, StyledH2 } from 'components/H1/H1';
 import TodoItem from 'components/Todo/TodoItem';
@@ -12,6 +12,7 @@ import withContext from 'components/context/withContext';
 import Filters from 'components/filters/Filters';
 
 import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
+import { RootState } from '@notes/redux';
 
 const StyledTodoList = styled.div`
   width: 70%;
@@ -33,7 +34,7 @@ const StyledTable = styled(Table)`
   table-layout: auto;
 `;
 
-const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
+const TodosComponent = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTask }) => {
   const [editID, setEditedID] = useState('');
   const [filterTitle, setFilterTitle] = useState('');
   const [filterDeadline, setFilterDeadline] = useState('');
@@ -152,7 +153,7 @@ const Todos = ({ isLoading, fetchTodos, todos, deleteTask, setCompleted, editTas
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: RootState) => ({
   todos: state.todosReducer.todos,
   isLoading: state.todosReducer.isLoading,
   error: state.todosReducer.error,
@@ -165,4 +166,4 @@ const mapDispatchToProps = {
   editTask,
 };
 
-export default withContext(connect(mapStateToProps, mapDispatchToProps)(Todos));
+export const Todos = withContext(connect(mapStateToProps, mapDispatchToProps)(TodosComponent));

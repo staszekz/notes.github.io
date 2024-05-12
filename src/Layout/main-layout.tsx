@@ -1,15 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { ThemeProvider } from 'styled-components';
-import withContext from 'components/context/withContext';
-import NavBar from 'components/NavBar/NavBar.js';
-import { theme } from '../utils/theme';
-import { StyledButton } from 'components/Button/styled';
-import Modal from 'components/Modal/Modal';
-import { toggleModalOpen } from 'reducers/modalReducer';
+import { NavBar, Modal, StyledButton } from '@notes/components';
+import { toggleModalOpen } from '@notes/redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
+import { usePageTypeContext } from '@notes/hooks';
+import { RootState } from '@notes/redux';
+import { theme } from '@notes/theme';
 
 const StyledAddItemButton = styled(StyledButton)`
   position: fixed;
@@ -26,20 +25,18 @@ const StyledWrapper = styled.div`
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
 `;
 
-const MainLayout = ({
-  children,
-  onAddFetch,
-  isModalOpen,
-  toggleModalOpen,
-  button,
-  pageContext,
-}) => {
+export const MainLayout = ({ children, onAddFetch, button }) => {
+  const pageContext = usePageTypeContext();
+  const dispatch = useDispatch();
+  const { isModalOpen } = useSelector((state: RootState) => state.modalReducer);
+
   const handleIsVisible = () => {
-    toggleModalOpen();
+    dispatch(toggleModalOpen());
   };
 
   const handleAddTask = () => {
-    toggleModalOpen();
+    dispatch(toggleModalOpen());
+
     // setCreationDate();
     onAddFetch();
   };
@@ -58,11 +55,3 @@ const MainLayout = ({
     </ThemeProvider>
   );
 };
-
-const mapStateToProps = state => ({
-  isModalOpen: state.modalReducer.isModalOpen,
-});
-const mapDispatchToProps = {
-  toggleModalOpen,
-};
-export default withContext(connect(mapStateToProps, mapDispatchToProps)(MainLayout));

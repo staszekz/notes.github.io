@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ButtonLink from 'components/Button/Button';
 import logoutIcon from 'assets/icons/logout.svg';
-import { StyledH1 } from 'components/H1/H1';
+import { StyledH1, ButtonLink } from '@notes/components';
 import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from '../../database/database';
@@ -9,7 +8,7 @@ import { getAuth } from 'firebase/auth';
 
 const auth = getAuth(app);
 
-const NavBar = () => {
+export const NavBar = () => {
   const [user, setUser] = useState(null);
 
   const handleSignOutClick = () => {
@@ -20,7 +19,7 @@ const NavBar = () => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setUser(user);
     });
-    setUser(unsubscribe());
+    // setUser(unsubscribe());
     return () => unsubscribe();
   }, []);
 
@@ -52,5 +51,3 @@ const NavBar = () => {
     </StyledBar>
   );
 };
-
-export default NavBar;

@@ -1,11 +1,10 @@
-// TodoItem.js
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import { StyledTdWithHover, StyledTd } from 'components/atoms/StyledTds';
+import { StyledTdWithHover, StyledTd } from '@notes/components';
 
 export const StyledButton = styled.button`
   color: black;
@@ -19,7 +18,16 @@ export const StyledButton = styled.button`
   }
 `;
 
-const TodoItem = ({ title, id, deadline, completed, index, onEdit, onDelete, onCompleteCheck }) => {
+export const TodoItem = ({
+  title,
+  id,
+  deadline,
+  completed,
+  index,
+  onEdit,
+  onDelete,
+  onCompleteCheck,
+}) => {
   const handleOnEdit = () => {
     onEdit(id);
   };
@@ -68,5 +76,3 @@ const TodoItem = ({ title, id, deadline, completed, index, onEdit, onDelete, onC
     </tr>
   );
 };
-
-export default TodoItem;

@@ -30,7 +30,7 @@ const StyledInput = styled(input)`
   margin-top: 30px;
 `;
 
-const TodoForm = () => (
+export const TodoForm = () => (
   <StyledWrapper isVisible={isVisible} activecolor={pageContext}>
     <h1>Create new {pageContext}</h1>
     <StyledInput placeholder="title" />
@@ -41,5 +41,3 @@ const TodoForm = () => (
     <StyledButtonLink>Add Note</StyledButtonLink>
   </StyledWrapper>
 );
-
-export default TodoForm;
