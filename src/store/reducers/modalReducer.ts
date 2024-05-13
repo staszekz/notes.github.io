@@ -2,8 +2,11 @@ const initialState = {
   isModalOpen: false,
   createdDate: '',
 };
-
-export const modalReducer = (state = initialState, action) => {
+interface Action {
+  type: string;
+  payload?: any;
+}
+export const modalReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case 'TOGGLE_MODAL':
       return {

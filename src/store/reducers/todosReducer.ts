@@ -1,4 +1,4 @@
-import { DATABASE_URL } from 'utils/database';
+import { DATABASE_URL } from 'src/database/database';
 
 const initialState = {
   todos: [],
@@ -32,7 +32,7 @@ export const todosReducer = (state = initialState, action) => {
   }
 };
 
-export const setLoading = () => ({ type: SET_LOADING });
+const setLoading = () => ({ type: SET_LOADING });
 export const setTodos = todos => ({ type: SET_TODOS, payload: todos });
 
 const fetchWithoutLoading = () => {
@@ -44,11 +44,11 @@ const fetchWithoutLoading = () => {
       .then(todos => {
         const arrayTodos = todos
           ? Object.keys(todos).map(key => {
-              return {
-                id: key,
-                ...todos[key],
-              };
-            })
+            return {
+              id: key,
+              ...todos[key],
+            };
+          })
           : [];
         dispatch(setTodos(arrayTodos));
       });

@@ -1,49 +1,38 @@
 {
-  "target": "esnext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017','ES2018' or 'ESNEXT'. */,
-  "module": "commonjs",
-      "types": ["vite/client", "vite-plugin-svgr/client"],
   "compilerOptions": {
-    /* Base Options: */
     "esModuleInterop": true,
     "jsx": "react",
     "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
+    "target": "es6",
+    // "module": "esnext",
+    // "allowJs": true,
+    // "moduleDetection": "force",
     "isolatedModules": true,
-    // "verbatimModuleSyntax": true,
-    /* Strictness */
     "strict": true,
-    // "noUncheckedIndexedAccess": true,
-    // "noImplicitOverride": true,
-    /* If transpiling with TypeScript: */
-    "module": "NodeNext",
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": false,
     "outDir": "dist",
     "sourceMap": true,
-    /* AND if you're building for a library: */
+    "module": "CommonJS",
     "declaration": true,
-    /* AND if you're building for a library in a monorepo: */
     "composite": true,
     "declarationMap": true,
-    /* If NOT transpiling with TypeScript: */
-    // "module": "preserve",
-    // "noEmit": true,
-    /* If your code runs in the DOM: */
-    // "lib": ["es2022", "dom", "dom.iterable"]
-    /* If your code doesn't run in the DOM: */
-    // "lib": ["es2022"]
-  },
+    "noImplicitAny": false,
+    "types": ["vite/client", "vite-plugin-svgr/client"],
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "baseUrl": "./",
     "paths": {
       "@notes/components": ["src/components/index.ts"],
-      "@notes/rq": ["src/api/index.ts"],
       "@notes/utils": ["src/utils/index.ts"],
-      "@notes/firebase": ["src/firebase/index.ts"],
+      "@notes/types": ["src/types/index.ts"],
       "@notes/hooks": ["src/hooks/index.ts"],
       "@notes/context": ["src/context/index.ts"],
-      "@notes/routes": ["src/routes/index.ts"],
-    },
-  "include": ["./src/**/*"],
-    "extends": "./tsconfig.base.json"
-
+      "@notes/rq": ["src/queries/index.ts"],
+      "@notes/redux": ["src/store/index.ts"],
+      "@notes/layout": ["src/Layout/index.ts"],
+      "@notes/theme": ["src/Theme"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules/**/*"]
 }

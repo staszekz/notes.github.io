@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import MainLayout from 'Layout/MainLayout';
-import { StyledH1, StyledH2 } from 'components/H1/H1';
-import { connect } from 'react-redux';
-import withContext from 'components/context/withContext';
-import GlobalStyle from 'Theme/GlobalStyle';
+import { StyledH1, StyledH2, Filters, NoteDetails, NoteItem } from '@notes/components';
+import { useSelector } from 'react-redux';
 import Spinner from 'react-bootstrap/Spinner';
-import { fetchNotes, deleteNote } from 'reducers/notesReducer';
-import NoteItem from 'components/Notes/NoteItem';
-import NoteDetails from 'components/Notes/NoteDetails';
-import Filters from 'components/filters/Filters';
 import { StyledNotesList, StyledTable } from './styled';
+import { RootState, fetchNotes, deleteNote } from '@notes/redux';
+import { GlobalStyle } from '@notes/theme';
+import { MainLayout } from '@notes/layout';
 
-const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
+export const Notes = () => {
+  const { notes, isLoading, error } = useSelector((state: RootState) => ({
+    notes: state.notesReducer.notes,
+    isLoading: state.notesReducer.isLoading,
+    error: state.notesReducer.error,
+  }));
+
   useEffect(() => {
     fetchNotes();
     // eslint-disable-next-line
@@ -44,10 +46,12 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
     setFilterContent('');
   };
 
+  const handleFetchNotes = () => fetchNotes();
+  const handleDeleteNote = (id: string) => deleteNote(id);
   return (
     <>
       <GlobalStyle />
-      <MainLayout onAddFetch={fetchNotes} button="true">
+      <MainLayout onAddFetch={handleFetchNotes} button="true">
         <StyledNotesList>
           <StyledH1>My Private Notes</StyledH1>;
           <Filters
@@ -56,6 +60,8 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
             titleText={filterTitle}
             contentText={filterContent}
             onClear={clearFilter}
+            // onDeadlineFilter={undefined}
+            // deadlineText={undefined}
           />
           <StyledTable striped responsive>
             <thead>
@@ -86,7 +92,7 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                         id={note.id}
                         index={index}
                         showDetails={handleShowDetails}
-                        onDelete={deleteNote}
+                        onDelete={handleDeleteNote}
                       />
                       {showID === note.id && (
                         <NoteDetails
@@ -97,7 +103,7 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
                           id={note.id}
                           title={note.title}
                           created={note.created}
-                          onDelete={deleteNote}
+                          onDelete={handleDeleteNote}
                         />
                       )}
                     </React.Fragment>
@@ -113,15 +119,3 @@ const Notes = ({ fetchNotes, notes, isLoading, deleteNote }) => {
     </>
   );
 };
-
-const mapStateToProps = state => ({
-  notes: state.notesReducer.notes,
-  isLoading: state.notesReducer.isLoading,
-  error: state.notesReducer.error,
-});
-const mapDispatchToProps = {
-  fetchNotes,
-  deleteNote,
-};
-
-export default withContext(connect(mapStateToProps, mapDispatchToProps)(Notes));

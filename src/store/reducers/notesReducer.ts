@@ -1,5 +1,5 @@
+import { DATABASE_URL } from 'src/database/database';
 import { getAuth } from 'firebase/auth';
-import { DATABASE_URL } from 'utils/database';
 
 const initialState = {
   notes: [],
@@ -46,13 +46,13 @@ const fetchNotesWithoutLoading = () => {
       .then(notes => {
         const arrayNotes = notes
           ? Object.keys(notes)
-              .map(key => {
-                return {
-                  id: key,
-                  ...notes[key],
-                };
-              })
-              .reverse()
+            .map(key => {
+              return {
+                id: key,
+                ...notes[key],
+              };
+            })
+            .reverse()
           : [];
         dispatch(setNotes(arrayNotes));
       });
@@ -67,6 +67,7 @@ export const fetchNotes = () => {
 };
 
 export const addNewNote = noteData => {
+  const auth = getAuth();
   return (dispatch, getState) => {
     const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`, {
@@ -90,6 +91,8 @@ export const deleteNote = deletedId => {
 };
 
 export const editNote = (note, editedId) => {
+  const auth = getAuth();
+
   return (dispatch, getState) => {
     const uid = auth.currentUser?.uid;
 

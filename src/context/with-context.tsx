@@ -1,7 +1,7 @@
-import React from 'react';
-import {PageContext} from '@notes/context';
+import React, { ComponentType, JSXElementConstructor, ReactNode } from 'react';
+import { PageContext } from '@notes/context';
 
-export const withContext = Component => {
+export const withContext = (Component: ComponentType) => {
   return function contextComponent(props) {
     return (
       <PageContext.Consumer>
@@ -10,4 +10,3 @@ export const withContext = Component => {
     );
   };
 };
-

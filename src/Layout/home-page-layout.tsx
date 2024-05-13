@@ -1,9 +1,9 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import NavBar from 'components/NavBar/NavBar.js';
-import { theme } from '../utils/theme';
+import { NavBar } from '@notes/components';
+import { theme } from '@notes/theme';
 
-const HomePageLayout = ({ children }) => {
+export const HomePageLayout = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
@@ -11,5 +11,3 @@ const HomePageLayout = ({ children }) => {
     </ThemeProvider>
   );
 };
-
-export default HomePageLayout;

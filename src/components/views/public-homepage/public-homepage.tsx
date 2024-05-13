@@ -1,16 +1,17 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import GlobalStyles from 'Theme/GlobalStyle';
-import { theme } from 'utils/theme';
-import ButtonLink from 'components/Button/Button';
-import { StyledHomepageWrapper } from 'components/atoms/StyledHomePageWrapper';
-import { StyledHomeButtonWrapper } from 'components/Button/styled';
-import { StyledH1 } from 'components/H1/H1';
+import {
+  StyledH1,
+  StyledHomeButtonWrapper,
+  StyledHomepageWrapper,
+  ButtonLink,
+} from '@notes/components';
 import { StyledHeader } from './styled';
+import { GlobalStyle, theme } from '@notes/theme';
 
-const PublicHomepage = () => (
+export const PublicHomepage = () => (
   <>
-    <GlobalStyles />
+    <GlobalStyle />
     <ThemeProvider theme={theme}>
       <StyledHeader> The best app for todos an taking notes</StyledHeader>
       <StyledH1> You are only one step away from using 'Notes & Todos'</StyledH1>
@@ -28,5 +29,3 @@ const PublicHomepage = () => (
     </ThemeProvider>
   </>
 );
-
-export default PublicHomepage;
