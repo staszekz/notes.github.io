@@ -1,6 +1,11 @@
 import styled, { css } from 'styled-components';
 
-export const StyledButton = styled.button`
+type StyledButtonProps = {
+  homepage?: boolean;
+  modal?: boolean;
+};
+
+export const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;

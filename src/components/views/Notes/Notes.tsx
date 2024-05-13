@@ -49,8 +49,6 @@ export const Notes = () => {
   const handleFetchNotes = () => fetchNotes();
   const handleDeleteNote = (id: string) => deleteNote(id);
   return (
-    <>
-      <GlobalStyle />
       <MainLayout onAddFetch={handleFetchNotes} button="true">
         <StyledNotesList>
           <StyledH1>My Private Notes</StyledH1>;
@@ -116,6 +114,5 @@ export const Notes = () => {
           <StyledH2>Your note list is empty! Enter a new note! </StyledH2>
         )}
       </MainLayout>
-    </>
   );
 };

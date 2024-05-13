@@ -42,7 +42,7 @@ export const MainLayout = ({ children, onAddFetch, button }) => {
   };
 
   return (
-    <ThemeProvider theme={theme} isModalOpen={isModalOpen}>
+    <>
       <StyledAddItemButton onClick={handleIsVisible} button={button} data-tip data-for="addItem">
         <FontAwesomeIcon icon={faPlus} />
       </StyledAddItemButton>
@@ -52,6 +52,6 @@ export const MainLayout = ({ children, onAddFetch, button }) => {
       <ReactTooltip id="addItem" place="top" effect="solid">
         {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
       </ReactTooltip>
-    </ThemeProvider>
+    </>
   );
 };

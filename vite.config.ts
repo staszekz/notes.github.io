@@ -29,9 +29,6 @@ export default () => {
       globals: true,
       environment: "jsdom",
       //setupFiles: "./tests/setup.js",
-      deps: {
-        inline: ["material-ui-nested-menu-item"],
-      },
     },
   });
 };
