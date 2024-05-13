@@ -6,7 +6,7 @@ import { faTrashAlt, faEdit } from '@fortawesome/free-regular-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { StyledTdWithHover, StyledTd } from '@notes/components';
 
-export const StyledButton = styled.button`
+const StyledButton = styled.button`
   color: black;
   background: white;
   height: 40px;

@@ -3,12 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import { store } from '@notes/redux';
-import { Todos, Home, Notes, SignUp } from '@notes/components';
-import { ContextLayout } from '@notes/context';
-import { PublicHomepage } from '@notes/components';
+// import { store } from '@notes/redux';
+import { store } from './store/index';
+// import { Todos, Home, Notes, SignUp } from '@notes/components';
+import { ContextLayout } from './context';
+import { Home, Notes, PublicHomepage, SignUp, Todos } from './components';
 import { app } from './database/database';
-import { GlobalStyle } from '@notes/theme';
+import { GlobalStyle } from './Theme';
 
 const rrfConfig = {
   userProfile: 'users',
@@ -16,16 +17,18 @@ const rrfConfig = {
 
 const rrfProps = {
   firebase: app,
-  config: rrfConfig,
+  config: {
+  userProfile: 'users',
+},
   dispatch: store.dispatch,
 };
 
-export function Root() {
+export function App() {
   return (
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
         <GlobalStyle />
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
           <ContextLayout>
             <Routes>
               <Route path="/" element={<PublicHomepage />} />

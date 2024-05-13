@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import logoutIcon from 'assets/icons/logout.svg';
+// import LogoutIcon from '../../assets/icons/logout.svg';
 import { StyledH1, ButtonLink } from '@notes/components';
 import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
-import { app } from '../../database/database';
+import { app } from 'src/database/database';
 import { getAuth } from 'firebase/auth';
 
 const auth = getAuth(app);
@@ -40,7 +40,7 @@ export const NavBar = () => {
       )}
       <StyledButtonIcon
         to="/"
-        icon={logoutIcon}
+        // icon={LogoutIcon}
         onClick={handleSignOutClick}
         data-tip
         data-for="logout"

@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { MainLayout } from '@notes/Layout';
-import GlobalStyle from 'Theme/GlobalStyle';
-import { StyledH1, StyledH2 } from 'components/H1/H1';
-import TodoItem from 'components/Todo/TodoItem';
+import { MainLayout } from '@notes/layout';
+import { TodoItem, TodoInput, StyledH1, StyledH2, Filters } from '@notes/components';
 import Table from 'react-bootstrap/Table';
 import Spinner from 'react-bootstrap/Spinner';
-import TodoInput from 'components/Todo/TodoInput';
-import withContext from 'components/context/withContext';
-import Filters from 'components/filters/Filters';
+import { withContext } from '@notes/context';
 
-import { fetchTodos, addNewTask, setCompleted, deleteTask, editTask } from 'reducers/todosReducer';
-import { RootState } from '@notes/redux';
+import {
+  fetchTodos,
+  addNewTask,
+  setCompleted,
+  deleteTask,
+  editTask,
+  RootState,
+} from '@notes/redux';
 
 const StyledTodoList = styled.div`
   width: 70%;

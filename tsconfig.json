@@ -1,25 +1,24 @@
 {
-  "target": "esnext",
-  "module": "commonjs",
   "compilerOptions": {
     "esModuleInterop": true,
     "jsx": "react",
     "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
+    "target": "es6",
+    // "module": "esnext",
+    // "allowJs": true,
+    // "moduleDetection": "force",
     "isolatedModules": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": false,
-    "module": "NodeNext",
     "outDir": "dist",
     "sourceMap": true,
+    "module": "CommonJS",
     "declaration": true,
     "composite": true,
     "declarationMap": true,
     "noImplicitAny": false,
+    "types": ["vite/client", "vite-plugin-svgr/client"],
     "lib": ["es2022", "dom", "dom.iterable"],
     "baseUrl": "./",
     "paths": {
@@ -28,10 +27,12 @@
       "@notes/types": ["src/types/index.ts"],
       "@notes/hooks": ["src/hooks/index.ts"],
       "@notes/context": ["src/context/index.ts"],
-      "@notes/rq": ["src/queries"],
+      "@notes/rq": ["src/queries/index.ts"],
       "@notes/redux": ["src/store/index.ts"],
       "@notes/layout": ["src/Layout/index.ts"],
       "@notes/theme": ["src/Theme"]
     }
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules/**/*"]
 }

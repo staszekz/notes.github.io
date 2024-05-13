@@ -1,5 +1,5 @@
-import { getAuth } from 'firebase/auth';
 import { DATABASE_URL } from 'src/database/database';
+import { getAuth } from 'firebase/auth';
 
 const initialState = {
   notes: [],

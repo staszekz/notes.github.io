@@ -1,8 +1,12 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { HomePageLayout } from '@notes/layout';
-import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink } from '@notes/components';
-import { StyledH1 } from '../../H1/H1';
+import {
+  StyledHomeButtonWrapper,
+  StyledHomepageWrapper,
+  ButtonLink,
+  StyledH1,
+} from '@notes/components';
 import { GlobalStyle } from '@notes/theme';
 
 export const Home = ({}) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import {PageContext} from '@notes/context';
+import { PageContext } from 'src/context/context';
 
 const pageTypes = ['todos', 'notes', 'home'];
 

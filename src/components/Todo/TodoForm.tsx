@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Input from '../../atoms/Input/Input';
-import { StyledButtonLink } from 'components/Button/styled';
+import { ButtonLink } from '@notes/components';
+import { usePageTypeContext } from '@notes/hooks';
 
 const StyledWrapper = styled.div`
   border-left: 10px solid ${({ theme, activecolor }) => theme[activecolor]};
@@ -20,24 +20,27 @@ const StyledWrapper = styled.div`
   transition: transform 0.25s ease-in-out;
 `;
 
-const StyledTextArea = styled(input)`
+const StyledTextArea = styled('input')`
   margin: 30px 0 100px;
   border-radius: 20px;
   height: 30vh;
 `;
 
-const StyledInput = styled(input)`
+const StyledInput = styled('input')`
   margin-top: 30px;
 `;
 
-export const TodoForm = () => (
-  <StyledWrapper isVisible={isVisible} activecolor={pageContext}>
-    <h1>Create new {pageContext}</h1>
-    <StyledInput placeholder="title" />
-    {pageContext === 'twitters' && <StyledInput placeholder="link" />}
+export const TodoForm = () => {
+  const pageContext = usePageTypeContext();
+  return (
+    <StyledWrapper isVisible={isVisible} activecolor={pageContext}>
+      <h1>Create new {pageContext}</h1>
+      <StyledInput placeholder="title" />
+      {pageContext === 'twitters' && <StyledInput placeholder="link" />}
 
-    {pageContext === 'articles' && <StyledInput placeholder="link" />}
-    <StyledTextArea as="textarea" placeholder="title" />
-    <StyledButtonLink>Add Note</StyledButtonLink>
-  </StyledWrapper>
-);
+      {pageContext === 'articles' && <StyledInput placeholder="link" />}
+      <StyledTextArea as="textarea" placeholder="title" />
+      <ButtonLink>Add Note</ButtonLink>
+    </StyledWrapper>
+  );
+};

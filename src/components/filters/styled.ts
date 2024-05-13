@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { StyledButton } from 'components/Todo/TodoItem';
+import { StyledButton } from '@notes/components';
 
 export const StyledInput = styled.input`
   width: 40%;
