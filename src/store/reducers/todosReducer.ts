@@ -1,4 +1,7 @@
+import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 import { DATABASE_URL } from 'src/database/database';
+import { getAuth } from 'firebase/auth';
 
 const initialState = {
   todos: [],
@@ -34,11 +37,11 @@ export const todosReducer = (state = initialState, action) => {
 
 const setLoading = () => ({ type: SET_LOADING });
 export const setTodos = todos => ({ type: SET_TODOS, payload: todos });
+const auth = getAuth();
+const uid = auth.currentUser?.uid;
 
 const fetchWithoutLoading = () => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/todos.json`)
       .then(r => r.json())
       .then(todos => {
@@ -57,8 +60,6 @@ const fetchWithoutLoading = () => {
 
 export const setCompleted = (completedId, title, deadline, completed) => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/todos/${completedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({
@@ -72,7 +73,7 @@ export const setCompleted = (completedId, title, deadline, completed) => {
   };
 };
 
-export const fetchTodos = () => {
+export const fetchTodos = (): ThunkAction<void, {}, null, AnyAction> => {
   return dispatch => {
     dispatch(setLoading());
     dispatch(fetchWithoutLoading());
@@ -81,8 +82,6 @@ export const fetchTodos = () => {
 
 export const addNewTask = taskData => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/todos/.json`, {
       method: 'POST',
       body: JSON.stringify(taskData),
@@ -94,8 +93,6 @@ export const addNewTask = taskData => {
 
 export const deleteTask = deletedId => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/todos/${deletedId}.json`, {
       method: 'DELETE',
     }).then(() => {
@@ -106,8 +103,6 @@ export const deleteTask = deletedId => {
 
 export const editTask = (task, editedId) => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/todos/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify(task),

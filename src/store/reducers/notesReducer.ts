@@ -1,5 +1,7 @@
 import { DATABASE_URL } from 'src/database/database';
 import { getAuth } from 'firebase/auth';
+import { AnyAction } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 const initialState = {
   notes: [],
@@ -35,12 +37,11 @@ export const notesReducer = (state = initialState, action) => {
 export const setLoading = () => ({ type: SET_LOADING });
 export const setNotes = notes => ({ type: SET_NOTES, payload: notes });
 
+const auth = getAuth();
+const uid = auth.currentUser?.uid;
+
 const fetchNotesWithoutLoading = () => {
-  const auth = getAuth();
   return (dispatch, getState) => {
-    const uid = auth.currentUser?.uid;
-    console.log('🚀 ~ uid:', uid);
-    // console.log('note', uid, getState());
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`)
       .then(r => r.json())
       .then(notes => {
@@ -59,7 +60,7 @@ const fetchNotesWithoutLoading = () => {
   };
 };
 
-export const fetchNotes = () => {
+export const fetchNotes = (): ThunkAction<void, {}, {}, AnyAction> => {
   return dispatch => {
     dispatch(setLoading());
     dispatch(fetchNotesWithoutLoading());
@@ -67,9 +68,7 @@ export const fetchNotes = () => {
 };
 
 export const addNewNote = noteData => {
-  const auth = getAuth();
   return (dispatch, getState) => {
-    const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`, {
       method: 'POST',
       body: JSON.stringify(noteData),
@@ -79,9 +78,8 @@ export const addNewNote = noteData => {
   };
 };
 
-export const deleteNote = deletedId => {
+export const deleteNote = (deletedId: string) => {
   return (dispatch, getState) => {
-    const uid = getState().firebaseReducer.auth.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes/${deletedId}.json`, {
       method: 'DELETE',
     }).then(() => {
@@ -91,11 +89,7 @@ export const deleteNote = deletedId => {
 };
 
 export const editNote = (note, editedId) => {
-  const auth = getAuth();
-
   return (dispatch, getState) => {
-    const uid = auth.currentUser?.uid;
-
     fetch(`${DATABASE_URL}/users/${uid}/notes/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({ ...note }),

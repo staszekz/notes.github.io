@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled, { ThemeProvider } from 'styled-components';
+import styled  from 'styled-components';
 import { NavBar, Modal, StyledButton } from '@notes/components';
 import { toggleModalOpen } from '@notes/redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,9 +8,13 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { usePageTypeContext } from '@notes/hooks';
 import { RootState } from '@notes/redux';
-import { theme } from '@notes/theme';
 
-const StyledAddItemButton = styled(StyledButton)`
+type Props = {
+  isModalOpen?: boolean;
+  button?: boolean;
+};
+
+const StyledAddItemButton = styled(StyledButton)<Props>`
   position: fixed;
   top: 85vh;
   left: 85vw;
@@ -20,9 +24,10 @@ const StyledAddItemButton = styled(StyledButton)`
   display: ${({ button }) => (button ? 'flex' : 'none')};
 `;
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.dark};
   filter: blur(${({ isModalOpen }) => isModalOpen && '5px'});
+  width: 100vw;
 `;
 
 export const MainLayout = ({ children, onAddFetch, button }) => {
@@ -48,7 +53,9 @@ export const MainLayout = ({ children, onAddFetch, button }) => {
       </StyledAddItemButton>
       <Modal onAdd={handleAddTask} isVisible={isModalOpen} />
       <NavBar />
-      <StyledWrapper isModalOpen={isModalOpen}>{children}</StyledWrapper>
+      <StyledWrapper isModalOpen={isModalOpen}>
+      {children}
+      </StyledWrapper>
       <ReactTooltip id="addItem" place="top" effect="solid">
         {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
       </ReactTooltip>

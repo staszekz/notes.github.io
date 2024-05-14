@@ -1,10 +1,8 @@
+import { Table } from '@mantine/core';
 import styled from 'styled-components';
-import Table from 'react-bootstrap/Table';
+// import Table from 'react-bootstrap/Table';
 
-export const StyledTable = styled(Table)`
-  color: ${({ theme }) => theme.colors.white};
-  table-layout: auto;
-`;
+
 
 export const StyledNotesList = styled.div`
   width: 70%;

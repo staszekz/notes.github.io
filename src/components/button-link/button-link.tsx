@@ -11,5 +11,5 @@ export const ButtonLink = ({ children, to, homepage = false }: Props) => (
 type Props = {
   children: React.ReactNode;
   to: string;
-  homepage: boolean;
+  homepage?: boolean;
 };

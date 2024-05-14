@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MainLayout } from '@notes/layout';
 import { TodoItem, TodoInput, StyledH1, StyledH2, Filters } from '@notes/components';
-import Table from 'react-bootstrap/Table';
-import Spinner from 'react-bootstrap/Spinner';
+// import Table from 'react-bootstrap/Table';
+// import Spinner from 'react-bootstrap/Spinner';
+import { Table } from '@mantine/core';
 import { withContext } from '@notes/context';
 
 import {
@@ -15,6 +16,7 @@ import {
   editTask,
   RootState,
 } from '@notes/redux';
+import { usePageTypeContext } from '@notes/hooks';
 
 const StyledTodoList = styled.div`
   width: 70%;
@@ -45,9 +47,12 @@ const todos = useSelector((state: RootState) => state.todosReducer.todos);
 const isLoading = useSelector((state: RootState) => state.todosReducer.isLoading);
 const error = useSelector((state: RootState) => state.todosReducer.error);
 
+const pageContext = usePageTypeContext();
+console.log('🚀 ~ pageContext:', pageContext)
 
+const dispatch = useDispatch();
   useEffect(() => {
-    fetchTodos();
+    dispatch(fetchTodos());
   }, []);
 
   const handleOnSave = (task, editedId) => {
@@ -99,7 +104,7 @@ const error = useSelector((state: RootState) => state.todosReducer.error);
               {isLoading ? (
                 <tr>
                   <td colSpan={12}>
-                    <Spinner animation="border" />
+                    {/* <Spinner animation="border" /> */}
                   </td>
                 </tr>
               ) : (

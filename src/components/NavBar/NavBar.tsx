@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
-// import LogoutIcon from '../../assets/icons/logout.svg';
+import { IconLogout } from '@tabler/icons-react';
 import { StyledH1, ButtonLink } from '@notes/components';
 import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from 'src/database/database';
-import { getAuth } from 'firebase/auth';
+import { getAuth, User , getAdditionalUserInfo} from 'firebase/auth';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { ActionIcon } from '@mantine/core';
+import { useNavigate } from 'react-router';
 
 const auth = getAuth(app);
 
 export const NavBar = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
+const navigate = useNavigate()
+
 
   const handleSignOutClick = () => {
     auth.signOut();
+    navigate('/')
   };
 
   useEffect(() => {
@@ -32,19 +38,20 @@ export const NavBar = () => {
       </StyledButtonPlace>
       {user && (
         <>
-          <StyledH1>hello {user.providerData[0].displayName}</StyledH1>
+          <StyledH1>hello {user?.providerData?.[0]?.email}</StyledH1>
           {/* <h6 style={{ color: 'white' }}>
               Last logged in: {this.state.user.metadata.lastSignInTime}{' '}
             </h6> */}
         </>
       )}
-      <StyledButtonIcon
-        to="/"
-        // icon={LogoutIcon}
+   <ActionIcon variant="filled" aria-label="logout" onClick={handleSignOutClick}>
+   <IconLogout/>
+        {/* to="/"
+        icon={} 
         onClick={handleSignOutClick}
         data-tip
-        data-for="logout"
-      />
+        data-for="logout" */}
+    </ActionIcon>
       <ReactTooltip id="logout" place="top" effect="solid">
         Sign Out
       </ReactTooltip>

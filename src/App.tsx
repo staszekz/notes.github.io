@@ -1,5 +1,4 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
@@ -9,6 +8,10 @@ import { Home, Notes, PublicHomepage, SignUp, Todos } from '@notes/components';
 import { app } from './database/database';
 import { GlobalStyle, theme } from './Theme';
 import { ThemeProvider } from 'styled-components';
+import { MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css'; 
+import '@mantine/dates/styles.css'; 
+import 'mantine-react-table/styles.css'; 
 
 const rrfConfig = {
   userProfile: 'users',
@@ -27,6 +30,7 @@ export function App() {
 
         <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
           <ContextLayout>
+          <MantineProvider>
         <ThemeProvider theme={theme}>
         <GlobalStyle />
             <Routes>
@@ -38,6 +42,7 @@ export function App() {
               <Route path="/signup" element={<SignUp isSignUp={false} />} />
             </Routes>
         </ThemeProvider>
+          </MantineProvider>
           </ContextLayout>
         </BrowserRouter>
       </ReactReduxFirebaseProvider>

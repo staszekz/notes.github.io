@@ -13,7 +13,7 @@ export function ContextLayout({ children }) {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const [currentPage] = pageTypes.find(page => pathname === page) || ['notes']; ;
+    const [currentPage] = pageTypes.find(page => pathname === `/${page}`) || ['/notes']; ;
     setPageType(currentPage as TPageTypes);
   }, [pathname]);
 
