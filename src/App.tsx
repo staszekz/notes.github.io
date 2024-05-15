@@ -12,6 +12,13 @@ import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css'; 
 import '@mantine/dates/styles.css'; 
 import 'mantine-react-table/styles.css'; 
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+const queryClient = new QueryClient()
 
 const rrfConfig = {
   userProfile: 'users',
@@ -25,6 +32,8 @@ const rrfProps = {
 
 export function App() {
   return (
+      <QueryClientProvider client={queryClient}>
+       <ReactQueryDevtools initialIsOpen={false} />
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
 
@@ -47,5 +56,6 @@ export function App() {
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
     </Provider>
+      </QueryClientProvider>
   );
 }

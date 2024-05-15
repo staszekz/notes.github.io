@@ -6,17 +6,15 @@ import { TodoItem, TodoInput, StyledH1, StyledH2, Filters } from '@notes/compone
 // import Table from 'react-bootstrap/Table';
 // import Spinner from 'react-bootstrap/Spinner';
 import { Table } from '@mantine/core';
-import { withContext } from '@notes/context';
 
 import {
   fetchTodos,
-  addNewTask,
   setCompleted,
   deleteTask,
   editTask,
   RootState,
 } from '@notes/redux';
-import { usePageTypeContext } from '@notes/hooks';
+import { usePageTypeContext, useTodos } from '@notes/hooks';
 
 const StyledTodoList = styled.div`
   width: 70%;
@@ -45,15 +43,20 @@ export const Todos = () => {
   
 const todos = useSelector((state: RootState) => state.todosReducer.todos);
 const isLoading = useSelector((state: RootState) => state.todosReducer.isLoading);
-const error = useSelector((state: RootState) => state.todosReducer.error);
+// const error = useSelector((state: RootState) => state.todosReducer.error);
 
 const pageContext = usePageTypeContext();
 console.log('🚀 ~ pageContext:', pageContext)
+// użyć useParms do tego żeby wiedzieć na jakiej stronie jesteśmy => wywalić pageContext
+
+const { isPending, error, data, isFetching } = useTodos();
+
+
 
 const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchTodos());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchTodos());
+  // }, []);
 
   const handleOnSave = (task, editedId) => {
     editTask(task, editedId);

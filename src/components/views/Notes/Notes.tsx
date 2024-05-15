@@ -14,20 +14,22 @@ import {
 } from 'mantine-react-table';
 import { ActionIcon, Flex, Stack, Title, Tooltip } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { useNotes } from '@notes/hooks';
 
 
 export const Notes = () => {
-  const { notes, isLoading, error } = useSelector((state: RootState) => ({
-    notes: state.notesReducer.notes,
-    isLoading: state.notesReducer.isLoading,
-    error: state.notesReducer.error,
-  }));
+  // const { notes, isLoading, error } = useSelector((state: RootState) => ({
+  //   notes: state.notesReducer.notes,
+  //   isLoading: state.notesReducer.isLoading,
+  //   error: state.notesReducer.error,
+  // }));
 
 const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchNotes());
-    // eslint-disable-next-line
-  }, []);
+
+  // useEffect(() => {
+  //   dispatch(fetchNotes());
+  //   // eslint-disable-next-line
+  // }, []);
 
   const [showID, setShowID] = useState('');
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -70,7 +72,10 @@ const columns = useMemo<MRT_ColumnDef<Note>[]>(() => [
 ], []);
 
   const { isModalOpen } = useSelector((state: RootState) => state.modalReducer);
+const {isPending,isLoading, data: notes} = useNotes()
+  console.log('🚀 ~ data:', notes)
 
+  
   const table = useMantineReactTable({
     columns,
     data: notes,

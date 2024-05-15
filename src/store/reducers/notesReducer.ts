@@ -41,7 +41,9 @@ const auth = getAuth();
 const uid = auth.currentUser?.uid;
 
 const fetchNotesWithoutLoading = () => {
+
   return (dispatch, getState) => {
+    const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`)
       .then(r => r.json())
       .then(notes => {
@@ -69,6 +71,7 @@ export const fetchNotes = (): ThunkAction<void, {}, {}, AnyAction> => {
 
 export const addNewNote = noteData => {
   return (dispatch, getState) => {
+    const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes.json`, {
       method: 'POST',
       body: JSON.stringify(noteData),
@@ -80,6 +83,7 @@ export const addNewNote = noteData => {
 
 export const deleteNote = (deletedId: string) => {
   return (dispatch, getState) => {
+    const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes/${deletedId}.json`, {
       method: 'DELETE',
     }).then(() => {
@@ -90,6 +94,7 @@ export const deleteNote = (deletedId: string) => {
 
 export const editNote = (note, editedId) => {
   return (dispatch, getState) => {
+    const uid = auth.currentUser?.uid;
     fetch(`${DATABASE_URL}/users/${uid}/notes/${editedId}.json`, {
       method: 'PUT',
       body: JSON.stringify({ ...note }),

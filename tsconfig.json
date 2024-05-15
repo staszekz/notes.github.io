@@ -25,7 +25,7 @@
       "@notes/types": ["src/types/index.ts"],
       "@notes/hooks": ["src/hooks/index.ts"],
       "@notes/context": ["src/context/index.ts"],
-      "@notes/rq": ["src/queries/index.ts"],
+      "@notes/rq": ["src/rq/index.ts"],
       "@notes/redux": ["src/store/index.ts"],
       "@notes/layout": ["src/Layout/index.ts"],
       "@notes/theme": ["src/Theme"]
