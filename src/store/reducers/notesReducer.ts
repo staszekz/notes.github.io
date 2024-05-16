@@ -76,7 +76,7 @@ export const addNewNote = noteData => {
       method: 'POST',
       body: JSON.stringify(noteData),
     }).then(() => {
-      dispatch(fetchNotesWithoutLoading());
+    dispatch(fetchNotesWithoutLoading());
     });
   };
 };

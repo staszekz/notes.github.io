@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyledH1, StyledH2, Filters, NoteDetails, NoteItem, Modal } from '@notes/components';
+import { StyledH1, StyledH2, Filters, NoteDetails, NoteItem } from '@notes/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledNotesList } from './styled';
 import { RootState, fetchNotes, deleteNote, toggleModalOpen } from '@notes/redux';
@@ -15,21 +15,14 @@ import {
 import { ActionIcon, Flex, Stack, Title, Tooltip } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
-
+import { useDisclosure } from '@mantine/hooks';
+import { Modal, Button } from '@mantine/core';
 
 export const Notes = () => {
-  // const { notes, isLoading, error } = useSelector((state: RootState) => ({
-  //   notes: state.notesReducer.notes,
-  //   isLoading: state.notesReducer.isLoading,
-  //   error: state.notesReducer.error,
-  // }));
-
 const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchNotes());
-  //   // eslint-disable-next-line
-  // }, []);
+const {notes: {isPending,isLoading, data: notes}, addNewNote,editNote,deleteNote} = useNotes()
+
 
   const [showID, setShowID] = useState('');
   const [detailsVisible, setDetailsVisible] = useState(false);
@@ -58,27 +51,23 @@ const dispatch = useDispatch();
     setFilterContent('');
   };
 
-  const handleFetchNotes = () => dispatch(fetchNotes());
   const handleDeleteNote = (id: string) => {
-    console.log('🚀 ~ id:', id)
-    
-    dispatch(deleteNote(id))
+    deleteNote.mutate(id)
   };
 
-const columns = useMemo<MRT_ColumnDef<Note>[]>(() => [
+const columns = useMemo<MRT_ColumnDef<Note, unknown>[]>(() => [
   { accessorKey: 'title', header: 'Title' },
   { accessorKey: 'created', header: 'Created' },
   { accessorKey: 'content', header: 'Content' },
 ], []);
 
-  const { isModalOpen } = useSelector((state: RootState) => state.modalReducer);
-const {isPending,isLoading, data: notes} = useNotes()
+  // const { isModalOpen } = useSelector((state: RootState) => state.modalReducer);
   console.log('🚀 ~ data:', notes)
 
   
   const table = useMantineReactTable({
     columns,
-    data: notes,
+    data: notes || [],
     // createDisplayMode: 'modal', //default ('row', and 'custom' are also available)
     editDisplayMode: 'modal', //default ('row', 'cell', 'table', and 'custom' are also available)
     enableEditing: true,
@@ -108,7 +97,7 @@ const {isPending,isLoading, data: notes} = useNotes()
   });
   
   return (
-      <MainLayout onAddFetch={handleFetchNotes} button="true">
+      <MainLayout onAddFetch={()=> {}} button="true">
         <StyledNotesList>
           <StyledH1>My Private Notes</StyledH1>;
           <Filters
@@ -123,8 +112,8 @@ const {isPending,isLoading, data: notes} = useNotes()
           <MantineReactTable table={table}>
         
           </MantineReactTable>
-        </StyledNotesList>
-        {!isLoading && !notes.length && (
+        </StyledNotesList>)
+        {!isLoading && !notes?.length && (
           <StyledH2>Your note list is empty! Enter a new note! </StyledH2>
         )}
       </MainLayout>

@@ -84,7 +84,7 @@ const dispatch = useDispatch();
   };
   return (
     <>
-      <MainLayout onAddFetch={fetchTodos} button="true">
+      <MainLayout onAddFetch={()=> {}} button="true">
         <StyledTodoList>
           <StyledH1>Todos List</StyledH1>
           <Filters
