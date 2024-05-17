@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { StyledH1, StyledH2, Filters, NoteDetails, NoteItem } from '@notes/components';
+import { StyledH1, StyledH2, Filters, NoteDetails, NoteItem, Modal } from '@notes/components';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledNotesList } from './styled';
-import { RootState, fetchNotes, deleteNote, toggleModalOpen } from '@notes/redux';
-import { GlobalStyle } from '@notes/theme';
 import { MainLayout } from '@notes/layout';
 import { useMemo } from 'react';
 import {
@@ -16,7 +14,9 @@ import { ActionIcon, Flex, Stack, Title, Tooltip } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
 import { useDisclosure } from '@mantine/hooks';
-import { Modal, Button } from '@mantine/core';
+import {  Button } from '@mantine/core';
+import { AddNewButton, StyledAddItemButton } from 'src/components/button-link/add-new-button';
+import { AddTask } from 'src/components/Form/Form';
 
 export const Notes = () => {
 const dispatch = useDispatch();
@@ -68,9 +68,10 @@ const columns = useMemo<MRT_ColumnDef<Note, unknown>[]>(() => [
   const table = useMantineReactTable({
     columns,
     data: notes || [],
+  
     // createDisplayMode: 'modal', //default ('row', and 'custom' are also available)
-    editDisplayMode: 'modal', //default ('row', 'cell', 'table', and 'custom' are also available)
-    enableEditing: true,
+    // editDisplayMode: 'modal', //default ('row', 'cell', 'table', and 'custom' are also available)
+    // enableEditing: true,
     // renderEditRowModalContent: (row, close) => (  <Stack>
     //     <Title order={3}>Edit User</Title>
     //    <Modal onAdd={()=> {}} isVisible></Modal>
@@ -79,10 +80,12 @@ const columns = useMemo<MRT_ColumnDef<Note, unknown>[]>(() => [
     //     </Flex>
     //   </Stack>
     //    ),
+      paginationDisplayMode: 'pages',
+
      renderRowActions: ({ row, table }) => (
       <Flex gap="md">
         <Tooltip label="Edit">
-          <ActionIcon onClick={() => dispatch(toggleModalOpen())}>
+          <ActionIcon onClick={open}>
             <IconEdit />
           </ActionIcon>
         </Tooltip>
@@ -95,27 +98,26 @@ const columns = useMemo<MRT_ColumnDef<Note, unknown>[]>(() => [
     ),
     getRowId: (row) => row.id,
   });
+const [opened, { open, close }] = useDisclosure();
+  console.log('🚀 ~ opened:', opened)
+  
+
   
   return (
-      <MainLayout onAddFetch={()=> {}} button="true">
-        <StyledNotesList>
+    
+      <MainLayout>
+      <StyledNotesList>
           <StyledH1>My Private Notes</StyledH1>;
-          <Filters
-            onTitleFilter={handleFilterTitleChange}
-            onContentFilter={handleFilterContentChange}
-            titleText={filterTitle}
-            contentText={filterContent}
-            onClear={clearFilter}
-            // onDeadlineFilter={undefined}
-            // deadlineText={undefined}
-          />
+      <AddNewButton onClick={open} />
+
           <MantineReactTable table={table}>
-        
           </MantineReactTable>
-        </StyledNotesList>)
         {!isLoading && !notes?.length && (
           <StyledH2>Your note list is empty! Enter a new note! </StyledH2>
         )}
+      </StyledNotesList>
+        <Modal opened={opened} close={close} title="Modal title"/>
+
       </MainLayout>
   );
 };

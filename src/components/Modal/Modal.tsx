@@ -1,6 +1,8 @@
 import React from 'react';
 import { AddTask } from 'src/components/Form/Form';
 import styled from 'styled-components';
+import {Modal as MantineModal} from '@mantine/core'
+import { useLocation, useParams } from 'react-router';
 
 const StyledWrapper = styled.div`
   border: 5px solid ${({ theme }) => theme.colors.primary};
@@ -28,10 +30,21 @@ const StyledWrapper = styled.div`
   }
 `;
 
-export const Modal = ({ isVisible, onAdd }: { isVisible: boolean; onAdd: any }) => {
+// export const Modal = ({ isVisible, onAdd }: { isVisible: boolean; onAdd: any }) => {
+//   return (
+//     <StyledWrapper isVisible={isVisible}>
+//       <AddTask onAdd={onAdd}></AddTask>
+//     </StyledWrapper>
+//   );
+// };
+
+export const Modal = ({opened, close,title})=> {
+  const {pathname} = useLocation()
+  console.log('🚀 ~ params:', pathname)
+  
   return (
-    <StyledWrapper isVisible={isVisible}>
-      <AddTask onAdd={onAdd}></AddTask>
-    </StyledWrapper>
-  );
-};
+    <MantineModal  centered opened={opened} onClose={close} title={title}>
+  <AddTask pageContext={pathname}/>
+     </MantineModal>
+  )
+}

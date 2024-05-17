@@ -6,7 +6,7 @@ import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from 'src/database/database';
 import { getAuth, User , getAdditionalUserInfo} from 'firebase/auth';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { ActionIcon } from '@mantine/core';
+import { ActionIcon, Tooltip } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
 const auth = getAuth(app);
@@ -44,6 +44,7 @@ const navigate = useNavigate()
             </h6> */}
         </>
       )}
+      <Tooltip id="logout" label="log out">
    <ActionIcon variant="filled" aria-label="logout" onClick={handleSignOutClick}>
    <IconLogout/>
         {/* to="/"
@@ -52,9 +53,7 @@ const navigate = useNavigate()
         data-tip
         data-for="logout" */}
     </ActionIcon>
-      <ReactTooltip id="logout" place="top" effect="solid">
-        Sign Out
-      </ReactTooltip>
+      </Tooltip>
     </StyledBar>
   );
 };

@@ -38,7 +38,7 @@ export function App() {
       <ReactReduxFirebaseProvider {...rrfProps}>
 
         <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
-          <ContextLayout>
+          {/* <ContextLayout> */}
           <MantineProvider>
         <ThemeProvider theme={theme}>
         <GlobalStyle />
@@ -52,7 +52,7 @@ export function App() {
             </Routes>
         </ThemeProvider>
           </MantineProvider>
-          </ContextLayout>
+          {/* </ContextLayout> */}
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
     </Provider>

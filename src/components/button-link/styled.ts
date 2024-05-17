@@ -1,3 +1,4 @@
+import { Button } from '@mantine/core';
 import styled, { css } from 'styled-components';
 
 type StyledButtonProps = {
@@ -5,7 +6,7 @@ type StyledButtonProps = {
   modal?: boolean;
 };
 
-export const StyledButton = styled.button<StyledButtonProps>`
+export const StyledButton = styled(Button) <StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
