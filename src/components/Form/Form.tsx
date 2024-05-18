@@ -1,18 +1,14 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  StyledButton,
-  StyledModalInput,
-  StyledTextarea,
-  StyledButtonWrapper,
-} from '@notes/components';
+import { useForm } from '@tanstack/react-form';
+import dayjs from 'dayjs';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
-import { StyledLabel, StyledForm, StyledDate } from './styled';
-import { usePageTypeContext } from '@notes/hooks';
+import { useNotes, usePageTypeContext } from '@notes/hooks';
 import { RootState, addNewTask, addNewNote, toggleModalOpen } from '@notes/redux';
+import { Button, TextInput, Textarea, Title } from '@mantine/core';
 
 type AddTaskComponentProps = {
   addNewNote: any;
@@ -22,71 +18,75 @@ type AddTaskComponentProps = {
   onAdd: any;
 };
 
-const AddTaskComponent = ({
-  addNewNote,
-  addNewTask,
-  toggleModalOpen,
-  created,
-  onAdd,
-}: AddTaskComponentProps) => {
+const AddTaskComponent = ({ close }) => {
   const initialState = {
     title: '',
     content: '',
     deadline: '',
     completed: false,
   };
-  const pageContext = usePageTypeContext();
+  const { addNewNote } = useNotes();
 
-  const [state, setState] = useState(initialState);
-  const { title, content, deadline, completed } = state;
-
-  const putDataInDatabase = () => {
-    if (pageContext === 'todos') {
-      addNewTask({ title, deadline, completed });
-    }
-    if (pageContext === 'notes') {
-      addNewNote({ title, content, created });
-    }
-    toggleModalOpen();
-    setState({
-      ...initialState,
-    });
-  };
-
-  const handleOnAddClick = e => {
-    e.preventDefault();
-    if (!title) {
-      return alert(`Please add new ${pageContext === 'todos' ? 'task' : 'note'} or quit!`);
-    }
-    putDataInDatabase();
-  };
-
-  const onEnterSave = e => {
-    if (e.key === 'Enter') {
-      handleOnAddClick(e);
-    }
-  };
-
-  const handleOnChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const onQuit = () => {
-    toggleModalOpen();
-    setState({
-      ...initialState,
-    });
-  };
+  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
+    defaultValues: {
+      title: '',
+      content: '',
+      created: dayjs().format('YYYY-MM-DD-HH:mm'),
+    },
+    onSubmit: async ({ value }) => {
+      console.log('value: ', value);
+      addNewNote.mutate(value);
+      close();
+    },
+  });
 
   return (
-    <StyledForm>
-      <StyledLabel htmlFor="title">
-        {`Add new ${pageContext === 'todos' ? 'task' : 'note'}`}
-      </StyledLabel>
-      <StyledModalInput
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        e.stopPropagation();
+        handleSubmit();
+      }}
+    >
+      <Field
+        name="title"
+        children={({ state, handleChange, handleBlur }) => {
+          return (
+            <TextInput
+              size="xl"
+              defaultValue={state.value}
+              onChange={e => handleChange(e.target.value)}
+              onBlur={handleBlur}
+              placeholder="Enter note title"
+            />
+          );
+        }}
+      />
+      <Field
+        name="content"
+        children={({ state, handleChange, handleBlur }) => {
+          return (
+            <Textarea
+              size="xl"
+              defaultValue={state.value}
+              onChange={e => handleChange(e.target.value)}
+              onBlur={handleBlur}
+              placeholder="Enter note content"
+            />
+          );
+        }}
+      />
+      <Subscribe
+        selector={state => [state.canSubmit, state.isSubmitting]}
+        children={([canSubmit, isSubmitting]) => (
+          <>
+            <Button size="lg" type="submit" disabled={!canSubmit}>
+              {isSubmitting ? '...' : 'Submit'}
+            </Button>
+          </>
+        )}
+      />
+      {/* <StyledModalInput
         name="title"
         placeholder={pageContext === 'todos' ? 'new task' : 'note title'}
         value={title}
@@ -129,17 +129,15 @@ const AddTaskComponent = ({
         <StyledButton onClick={onQuit} data-tip data-for="quit">
           <FontAwesomeIcon icon={faUndo} color="red" />
         </StyledButton>
-      </StyledButtonWrapper>
-      <ReactTooltip id="addItem" place="top" effect="solid">
-        {`Add ${pageContext === 'todos' ? 'task' : 'note'}`}
-      </ReactTooltip>
+      </StyledButtonWrapper> */}
+
       <ReactTooltip id="quit" place="top" effect="solid">
         Quit without saving
       </ReactTooltip>
       <ReactTooltip id="created" place="top" effect="solid">
         Creation date
       </ReactTooltip>
-    </StyledForm>
+    </form>
   );
 };
 

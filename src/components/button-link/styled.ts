@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import styled, { css } from 'styled-components';
 
 type StyledButtonProps = {
-  homepage?: boolean;
+  large?: boolean;
   modal?: boolean;
 };
 
@@ -44,8 +44,8 @@ export const StyledButton = styled(Button) <StyledButtonProps>`
     css`
       width: 40%;
     `}
-  ${({ homepage }) =>
-    homepage &&
+  ${({ large }) =>
+    large &&
     css`
       height: 100px;
       box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { AddTask } from 'src/components/Form/Form';
 import styled from 'styled-components';
-import {Modal as MantineModal} from '@mantine/core'
+import { Modal as MantineModal, Title } from '@mantine/core';
 import { useLocation, useParams } from 'react-router';
 
 const StyledWrapper = styled.div`
@@ -38,13 +38,12 @@ const StyledWrapper = styled.div`
 //   );
 // };
 
-export const Modal = ({opened, close,title})=> {
-  const {pathname} = useLocation()
-  console.log('🚀 ~ params:', pathname)
-  
+export const Modal = ({ opened, close, title }) => {
+  const { pathname } = useLocation();
+
   return (
-    <MantineModal  centered opened={opened} onClose={close} title={title}>
-  <AddTask pageContext={pathname}/>
-     </MantineModal>
-  )
-}
+    <MantineModal size={'xl'} centered opened={opened} onClose={close} title={'Add new Note'}>
+      <AddTask close={close} />
+    </MantineModal>
+  );
+};

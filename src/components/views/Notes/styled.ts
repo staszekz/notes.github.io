@@ -1,15 +1,13 @@
-import { Table } from '@mantine/core';
 import styled from 'styled-components';
-// import Table from 'react-bootstrap/Table';
 
 
 
 export const StyledNotesList = styled.div`
-  width: 100%;
+  /* width: 100%; */
   height: 100%;
   margin: 0 auto;
   position: relative;
-  top: 13vh;
+  top: 12vh;
 
   ${({ theme }) => theme.media.phone} {
     width: 95%;

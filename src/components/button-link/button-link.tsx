@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { StyledButton } from './styled';
 
-export const ButtonLink = ({ children, to, homepage = false }: Props) => (
-  <StyledButton as={Link} homepage={homepage} to={to}>
+export const ButtonLink = ({ children, to, large = false }: Props) => (
+  <StyledButton as={Link} large={large} to={to}>
     {children}
   </StyledButton>
 );
@@ -11,5 +11,5 @@ export const ButtonLink = ({ children, to, homepage = false }: Props) => (
 type Props = {
   children: React.ReactNode;
   to: string;
-  homepage?: boolean;
+  large?: boolean;
 };

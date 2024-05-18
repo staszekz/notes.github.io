@@ -16,10 +16,10 @@ export const Home = ({}) => {
         <StyledHomepageWrapper>
           <StyledH1>In this app you can store your: </StyledH1>
           <StyledHomeButtonWrapper>
-            <ButtonLink to="/todos">
+            <ButtonLink large to="/todos">
               todos
             </ButtonLink>
-            <ButtonLink to="/notes">
+            <ButtonLink large to="/notes">
               notes
             </ButtonLink>
           </StyledHomeButtonWrapper>

@@ -12,8 +12,10 @@
     "@mantine/dates": "^7.9.1",
     "@mantine/hooks": "^7.9.1",
     "@tabler/icons-react": "^3.3.0",
+    "@tanstack/react-form": "^0.19.5",
     "@tanstack/react-query": "^5.36.0",
     "@tanstack/react-query-devtools": "^5.36.0",
+    "@tanstack/zod-form-adapter": "^0.19.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.4.2",
@@ -43,7 +45,8 @@
     "styled-components": "^5.3.5",
     "vite": "^5.2.11",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.3.2"
+    "vite-tsconfig-paths": "^4.3.2",
+    "zod": "^3.23.8"
   },
   "scripts": {
     "start": "vite",
