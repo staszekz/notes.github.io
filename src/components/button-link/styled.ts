@@ -18,7 +18,7 @@ export const StyledButton = styled(Button) <StyledButtonProps>`
   border-radius: 50px;
   border: none;
   color: ${({ theme }) => theme.colors.primary};
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   transition: box-shadow 0.3s ease;
 
@@ -48,9 +48,9 @@ export const StyledButton = styled(Button) <StyledButtonProps>`
     large &&
     css`
       height: 100px;
-      box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);
       width: 40%;
 
+      box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);
       background-color: ${({ theme }) => theme.colors.dark};
       border: 3px solid ${({ theme }) => theme.colors.primary};
       ${({ theme }) => theme.media.phone} {

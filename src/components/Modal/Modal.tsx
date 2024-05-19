@@ -42,8 +42,19 @@ export const Modal = ({ opened, close, title }) => {
   const { pathname } = useLocation();
 
   return (
-    <MantineModal size={'xl'} centered opened={opened} onClose={close} title={'Add new Note'}>
-      <AddTask close={close} />
-    </MantineModal>
+    <MantineModal.Root size={'xl'} centered opened={opened} onClose={close}>
+      <MantineModal.Overlay />
+      <MantineModal.Content>
+        <MantineModal.Header>
+          <MantineModal.Title>
+            <h2>Add new note</h2>
+          </MantineModal.Title>
+          <MantineModal.CloseButton />
+        </MantineModal.Header>
+        <MantineModal.Body>
+          <AddTask close={close} />
+        </MantineModal.Body>
+      </MantineModal.Content>
+    </MantineModal.Root>
   );
 };

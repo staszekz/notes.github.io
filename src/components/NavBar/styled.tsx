@@ -10,7 +10,7 @@ export const StyledBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: ${({ isBig }) => (isBig ? '3em' : '1.5em')};
+  /* font-size: ${({ isBig }) => (isBig ? '3em' : '1.5em')}; */
   border-bottom: 2px solid ${({ theme }) => theme.colors.primary};
   background: ${({ theme }) => theme.colors.dark};
   z-index: 2;

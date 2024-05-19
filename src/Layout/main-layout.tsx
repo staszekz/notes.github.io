@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styled  from 'styled-components';
+import styled from 'styled-components';
 import { NavBar, StyledButton } from '@notes/components';
 import { toggleModalOpen } from '@notes/redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,8 +11,6 @@ type Props = {
   button?: boolean;
 };
 
-
-
 const StyledWrapper = styled.div<Props>`
   background-color: ${({ theme }) => theme.colors.dark};
   display: flex
@@ -22,7 +20,7 @@ const StyledWrapper = styled.div<Props>`
   width: 100vw;
   height: 100%;
   marginTop: 12vh;
-  max-width: 1280px;
+  max-width: 1980px;
  margin: 0 auto;
 `;
 
@@ -30,9 +28,7 @@ export const MainLayout = ({ children }) => {
   return (
     <>
       <NavBar />
-    <StyledWrapper>
-      {children}
-    </StyledWrapper>
+      <StyledWrapper>{children}</StyledWrapper>
     </>
   );
 };

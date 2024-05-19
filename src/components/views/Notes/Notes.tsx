@@ -10,7 +10,7 @@ import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
 import { useDisclosure } from '@mantine/hooks';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
-import { AddTask } from 'src/components/Form/Form';
+import classes from './notes-table.module.css';
 
 export const Notes = () => {
   const dispatch = useDispatch();
@@ -44,19 +44,24 @@ export const Notes = () => {
       showLoadingOverlay: isFetching,
       showSkeletons: isLoading,
     },
-    // createDisplayMode: 'modal', //default ('row', and 'custom' are also available)
-    // editDisplayMode: 'modal', //default ('row', 'cell', 'table', and 'custom' are also available)
-    // enableEditing: true,
-    // renderEditRowModalContent: (row, close) => (  <Stack>
-    //     <Title order={3}>Edit User</Title>
-    //    <Modal onAdd={()=> {}} isVisible></Modal>
-    //     <Flex justify="flex-end" mt="xl">
-    //       <MRT_EditActionButtons variant="text" table={table} row={row} />
-    //     </Flex>
-    //   </Stack>
-    //    ),
+    enableRowSelection: true,
+    mantineTableProps: {
+      className: classes.table,
+      highlightOnHover: false,
+      striped: 'odd',
+      withColumnBorders: true,
+      withRowBorders: true,
+      withTableBorder: true,
+    },
+    mantinePaperProps: {
+      className: classes.table,
+    },
+    createDisplayMode: 'modal',
+    editDisplayMode: 'modal',
+    enableEditing: true,
+    getRowId: row => row.id,
+    renderTopToolbarCustomActions: () => <AddNewButton onClick={open} />,
     paginationDisplayMode: 'pages',
-
     renderRowActions: ({ row, table }) => (
       <Flex gap="md">
         <Tooltip label="Edit">
@@ -71,16 +76,14 @@ export const Notes = () => {
         </Tooltip>
       </Flex>
     ),
-    getRowId: row => row.id,
   });
   const [opened, { open, close }] = useDisclosure();
 
   return (
     <MainLayout>
       <StyledNotesList>
-        <StyledH1>My Private Notes</StyledH1>;
-        <AddNewButton onClick={open} />
-        <MantineReactTable table={table}></MantineReactTable>
+        <StyledH1>My Private Notes</StyledH1>;{/* <AddNewButton onClick={open} /> */}
+        <MantineReactTable table={table} />
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
       </StyledNotesList>
       <Modal opened={opened} close={close} title="Modal title" />

@@ -5,13 +5,7 @@ export const StyledH1 = styled.h1`
   font-weight: ${({ theme }) => theme.font.bold};
   text-align: center;
   padding: 1rem;
-  font-size: ${({ theme }) => theme.fontSize.xl};
-  ${({ theme }) => theme.media.phone} {
-    font-size: ${({ theme }) => theme.fontSize.s};
-  }
-  ${({ theme }) => theme.media.landscape} {
-    font-size: ${({ theme }) => theme.fontSize.s};
-  }
+  font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
 export const StyledH2 = styled.h2`

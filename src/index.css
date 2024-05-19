@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
   font-weight: 400;
 
@@ -10,6 +10,12 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --dark-bg-color: rgba(34, 51, 59, 1);
+  --light-dark: #142a33;
+
+  --primary: rgba(123, 175, 212, 1);
+  --white-text: #f5fffa;
+  --blur: grey;
 }
 
 a {
@@ -24,7 +30,8 @@ body,
 html {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  background-color: rgb(15, 28, 33);
+  background-color: rgba(34, 51, 59, 1);
+  font-smooth: always;
 }
 h1 {
   font-size: 3.2em;

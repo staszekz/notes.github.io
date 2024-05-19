@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useForm } from '@tanstack/react-form';
 import dayjs from 'dayjs';
+import { z } from 'zod';
+import { zodValidator } from '@tanstack/zod-form-adapter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +11,7 @@ import ReactTooltip from 'react-tooltip';
 import { useNotes, usePageTypeContext } from '@notes/hooks';
 import { RootState, addNewTask, addNewNote, toggleModalOpen } from '@notes/redux';
 import { Button, TextInput, Textarea, Title } from '@mantine/core';
+import { StyledForm } from 'src/components/atoms';
 
 type AddTaskComponentProps = {
   addNewNote: any;
@@ -18,13 +21,7 @@ type AddTaskComponentProps = {
   onAdd: any;
 };
 
-const AddTaskComponent = ({ close }) => {
-  const initialState = {
-    title: '',
-    content: '',
-    deadline: '',
-    completed: false,
-  };
+export const AddTask = ({ close }) => {
   const { addNewNote } = useNotes();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
@@ -33,15 +30,14 @@ const AddTaskComponent = ({ close }) => {
       content: '',
       created: dayjs().format('YYYY-MM-DD-HH:mm'),
     },
+    validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
-      console.log('value: ', value);
       addNewNote.mutate(value);
       close();
     },
   });
-
   return (
-    <form
+    <StyledForm
       onSubmit={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -50,20 +46,51 @@ const AddTaskComponent = ({ close }) => {
     >
       <Field
         name="title"
+        validators={{
+          onBlur: z.string({
+            required_error: 'Title is required',
+          }),
+          onChange: z
+            .string()
+            .trim()
+            .min(3, {
+              message: 'Title must be at least 3 characters',
+            })
+            .max(50, {
+              message: 'Title must be at most 50 characters',
+            }),
+        }}
         children={({ state, handleChange, handleBlur }) => {
           return (
             <TextInput
+              data-autofocus
               size="xl"
               defaultValue={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
               placeholder="Enter note title"
+              error={state.meta?.errors[0]}
             />
           );
         }}
       />
+
       <Field
         name="content"
+        validators={{
+          onBlur: z.string({
+            required_error: 'Content is required',
+          }),
+          onChange: z
+            .string()
+            .trim()
+            .min(10, {
+              message: 'Title must be at least 10 characters',
+            })
+            .max(255, {
+              message: 'Title must be at most 255 characters',
+            }),
+        }}
         children={({ state, handleChange, handleBlur }) => {
           return (
             <Textarea
@@ -72,6 +99,7 @@ const AddTaskComponent = ({ close }) => {
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
               placeholder="Enter note content"
+              error={state.meta?.errors[0]}
             />
           );
         }}
@@ -137,17 +165,6 @@ const AddTaskComponent = ({ close }) => {
       <ReactTooltip id="created" place="top" effect="solid">
         Creation date
       </ReactTooltip>
-    </form>
+    </StyledForm>
   );
 };
-
-const mapStateToProps = (state: RootState) => ({
-  created: state.modalReducer.createdDate,
-});
-
-const mapDispatchToProps = {
-  addNewTask,
-  toggleModalOpen,
-  addNewNote,
-};
-export const AddTask = connect(mapStateToProps, mapDispatchToProps)(AddTaskComponent);
