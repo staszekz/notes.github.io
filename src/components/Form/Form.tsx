@@ -21,15 +21,18 @@ type AddTaskComponentProps = {
   onAdd: any;
 };
 
-export const AddTask = ({ close }) => {
+export const AddTask = ({ close, row }) => {
+  console.log('🚀 ~ row:', row);
   const { addNewNote } = useNotes();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
-    defaultValues: {
-      title: '',
-      content: '',
-      created: dayjs().format('YYYY-MM-DD-HH:mm'),
-    },
+    defaultValues: row
+      ? row
+      : {
+          title: '',
+          content: '',
+          created: dayjs().format('YYYY-MM-DD-HH:mm'),
+        },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
       addNewNote.mutate(value);
@@ -50,7 +53,7 @@ export const AddTask = ({ close }) => {
           onBlur: z.string({
             required_error: 'Title is required',
           }),
-          onChange: z
+          onSubmit: z
             .string()
             .trim()
             .min(3, {
@@ -81,7 +84,7 @@ export const AddTask = ({ close }) => {
           onBlur: z.string({
             required_error: 'Content is required',
           }),
-          onChange: z
+          onSubmit: z
             .string()
             .trim()
             .min(10, {

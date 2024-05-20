@@ -30,15 +30,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-// export const Modal = ({ isVisible, onAdd }: { isVisible: boolean; onAdd: any }) => {
-//   return (
-//     <StyledWrapper isVisible={isVisible}>
-//       <AddTask onAdd={onAdd}></AddTask>
-//     </StyledWrapper>
-//   );
-// };
-
-export const Modal = ({ opened, close, title }) => {
+export const Modal = ({ opened, close, row, title }: Props) => {
   const { pathname } = useLocation();
 
   return (
@@ -47,14 +39,21 @@ export const Modal = ({ opened, close, title }) => {
       <MantineModal.Content>
         <MantineModal.Header>
           <MantineModal.Title>
-            <h2>Add new note</h2>
+            <h2>{title}</h2>
           </MantineModal.Title>
           <MantineModal.CloseButton />
         </MantineModal.Header>
         <MantineModal.Body>
-          <AddTask close={close} />
+          <AddTask close={close} row={row} />
         </MantineModal.Body>
       </MantineModal.Content>
     </MantineModal.Root>
   );
+};
+
+type Props = {
+  opened: boolean;
+  close: () => void;
+  row?: any;
+  title: string;
 };

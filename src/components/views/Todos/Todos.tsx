@@ -1,20 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MainLayout } from '@notes/layout';
-import { TodoItem, TodoInput, StyledH1, StyledH2, Filters } from '@notes/components';
+import { TodoItem, TodoInput, StyledH1, StyledH2, Filters, Modal, Table } from '@notes/components';
 // import Table from 'react-bootstrap/Table';
 // import Spinner from 'react-bootstrap/Spinner';
-import { Table } from '@mantine/core';
 
-import {
-  fetchTodos,
-  setCompleted,
-  deleteTask,
-  editTask,
-  RootState,
-} from '@notes/redux';
+import { fetchTodos, setCompleted, deleteTask, editTask, RootState } from '@notes/redux';
 import { usePageTypeContext, useTodos } from '@notes/hooks';
+import { useDisclosure } from '@mantine/hooks';
+import { MRT_ColumnDef, useMantineReactTable } from 'mantine-react-table';
+import { StyledNotesList } from 'src/components/views/Notes/styled';
 
 const StyledTodoList = styled.div`
   width: 70%;
@@ -40,20 +36,18 @@ export const Todos = () => {
   const [editID, setEditedID] = useState('');
   const [filterTitle, setFilterTitle] = useState('');
   const [filterDeadline, setFilterDeadline] = useState('');
-  
-const todos = useSelector((state: RootState) => state.todosReducer.todos);
-const isLoading = useSelector((state: RootState) => state.todosReducer.isLoading);
-// const error = useSelector((state: RootState) => state.todosReducer.error);
 
-const pageContext = usePageTypeContext();
-console.log('🚀 ~ pageContext:', pageContext)
-// użyć useParms do tego żeby wiedzieć na jakiej stronie jesteśmy => wywalić pageContext
+  // const todos = useSelector((state: RootState) => state.todosReducer.todos);
+  const isLoading = useSelector((state: RootState) => state.todosReducer.isLoading);
+  // const error = useSelector((state: RootState) => state.todosReducer.error);
 
-const { isPending, error, data, isFetching } = useTodos();
+  const pageContext = usePageTypeContext();
+  console.log('🚀 ~ pageContext:', pageContext);
+  // użyć useParms do tego żeby wiedzieć na jakiej stronie jesteśmy => wywalić pageContext
 
+  const { isPending, error, data, isFetching } = useTodos();
 
-
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // useEffect(() => {
   //   dispatch(fetchTodos());
   // }, []);
@@ -82,9 +76,37 @@ const dispatch = useDispatch();
   const handleNoEdit = editedId => {
     setEditedID(null);
   };
+
+  const { data: todos } = useTodos();
+  console.log('🚀 ~ todos:', todos);
+
+  const columns = useMemo<MRT_ColumnDef<any, unknown>[]>(
+    () => [
+      { accessorKey: 'title', header: 'Title' },
+      { accessorKey: 'deadline', header: 'Deadline' },
+    ],
+    [],
+  );
+
+  const table = useMantineReactTable({
+    columns,
+    data: todos || [],
+  });
+
+  const [opened, { open, close }] = useDisclosure();
+
   return (
     <>
-      <MainLayout onAddFetch={()=> {}} button="true">
+      <MainLayout>
+        <StyledNotesList>
+          <StyledH1>My Private Todo tasks</StyledH1>
+          <Table table={table} />
+
+          {!todos?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
+        </StyledNotesList>
+        <Modal opened={opened} close={close} title="Add new todo task" />
+      </MainLayout>
+      {/* <MainLayout onAddFetch={()=> {}} button="true">
         <StyledTodoList>
           <StyledH1>Todos List</StyledH1>
           <Filters
@@ -108,26 +130,25 @@ const dispatch = useDispatch();
                 <tr>
                   <td colSpan={12}>
                     {/* <Spinner animation="border" /> */}
-                  </td>
+      {/* </td>
                 </tr>
               ) : (
                 todos
                   .filter(todo => todo.title.toLowerCase().includes(filterTitle.toLowerCase()))
                   .filter(todo =>
                     todo.deadline.toLowerCase().includes(filterDeadline.toLowerCase()),
-                  )
-
-                  //   if (this.state.showCompleted && this.state.showInCompleted) {
-                  //     return textFilter;
-                  //   } else if (this.state.showCompleted) {
-                  //     return textFilter && todo.completed === true;
+                  ) */}
+      {/* //   if (this.state.showCompleted && this.state.showInCompleted) { */}
+      {/* //     return textFilter;
+                  //   } else if (this.state.showCompleted) { */}
+      {/* //     return textFilter && todo.completed === true;
                   //   } else if (this.state.showInCompleted) {
                   //     return textFilter && todo.completed === false;
                   //   } else {
                   //     return false;
                   //   }
-                  // })
-                  .map((todo, index) =>
+                  // }) */}
+      {/* .map((todo, index) =>
                     editID === todo.id ? (
                       <TodoInput
                         key={todo.id}
@@ -155,16 +176,14 @@ const dispatch = useDispatch();
                       />
                     ),
                   )
-              )}
-            </tbody>
+              )} */}
+      {/* </tbody>
           </StyledTable>
         </StyledTodoList>
-        {!isLoading && !todos.length && (
+        { !todos.length && (
           <StyledH2>Your todo list is empty! Enter new task! </StyledH2>
-        )}
-      </MainLayout>
+        )} */}
+      {/* </MainLayout> */} */
     </>
   );
 };
-
-
