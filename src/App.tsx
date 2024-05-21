@@ -17,6 +17,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ModalsProvider } from '@mantine/modals';
 
 const queryClient = new QueryClient()
 
@@ -35,11 +36,13 @@ export function App() {
       <QueryClientProvider client={queryClient}>
        <ReactQueryDevtools initialIsOpen={false} />
     <Provider store={store}>
+
       <ReactReduxFirebaseProvider {...rrfProps}>
 
         <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
-          {/* <ContextLayout> */}
           <MantineProvider>
+          <ModalsProvider>
+          
         <ThemeProvider theme={theme}>
         <GlobalStyle />
             <Routes>
@@ -51,8 +54,8 @@ export function App() {
               <Route path="/signup" element={<SignUp isSignUp={false} />} />
             </Routes>
         </ThemeProvider>
+          </ModalsProvider>
           </MantineProvider>
-          {/* </ContextLayout> */}
         </BrowserRouter>
       </ReactReduxFirebaseProvider>
     </Provider>

@@ -10,8 +10,10 @@ import { faPlus, faUndo } from '@fortawesome/free-solid-svg-icons';
 import ReactTooltip from 'react-tooltip';
 import { useNotes, usePageTypeContext } from '@notes/hooks';
 import { RootState, addNewTask, addNewNote, toggleModalOpen } from '@notes/redux';
-import { Button, TextInput, Textarea, Title } from '@mantine/core';
+import { Button, TextInput, Textarea} from '@mantine/core';
 import { StyledForm } from 'src/components/atoms';
+
+
 
 type AddTaskComponentProps = {
   addNewNote: any;
@@ -21,8 +23,7 @@ type AddTaskComponentProps = {
   onAdd: any;
 };
 
-export const AddTask = ({ close, row }) => {
-  console.log('🚀 ~ row:', row);
+export const AddTask = ({  row }) => {
   const { addNewNote } = useNotes();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
@@ -171,3 +172,5 @@ export const AddTask = ({ close, row }) => {
     </StyledForm>
   );
 };
+
+
