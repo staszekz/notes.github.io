@@ -1,0 +1,7 @@
+.tableBody {
+  background-color: aliceblue;
+}
+.tableHeaderCell {
+  background-color: yellow;
+  text-align: center !important;
+}

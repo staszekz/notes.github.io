@@ -11,7 +11,13 @@ import { AddNewButton } from 'src/components/button-link/add-new-button';
 import classes from './notes-table.module.css';
 import { modals } from '@mantine/modals';
 import { AddTask } from 'src/components/Form/Form';
-
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  PaginationState,
+  useReactTable,
+} from '@tanstack/react-table'
 
 const Title = () => <h2>Add new note</h2>
 
@@ -24,20 +30,23 @@ export const Notes = () => {
   } = useNotes();
 
   // dodać tez last modified on
-  const columns = useMemo<MRT_ColumnDef<Note, unknown>[]>(
-    () => [
+  const columns = [
+    {
+        header: 'Actions', 
+        cell: props => <div  >Actions</div>,
+      },
       { accessorKey: 'title', header: 'Title' },
       { accessorKey: 'created', header: 'Created' },
       { accessorKey: 'content', header: 'Content' },
-    ],
-    [],
-  );
+    ]
 
   const openModal = () => modals.open({
   title: <Title/>,
   centered: true,
   children: <AddTask/>,
 })
+
+
 
 const openDeleteModal = (id: number) => modals.openConfirmModal({
 title: 'Delete note',
@@ -51,52 +60,63 @@ labels: {
 onConfirm:()=>  deleteNote.mutate(id),
 })
 
-  const [row, setRow] = useState<Note | null>(null);
-
-  const table = useMantineReactTable({
+  
+  const [pagination, setPagination] = React.useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 3,
+  })
+  const table = useReactTable({
     columns,
     data: notes || [],
-    state: {
-      showLoadingOverlay: isFetching,
-      showSkeletons: isLoading,
-    },
-    enableRowSelection: true,
-    mantineTableProps: {
-      className: classes.table,
-      highlightOnHover: false,
-      striped: 'odd',
-      withColumnBorders: true,
-      withRowBorders: true,
-      withTableBorder: true,
-    },
-    mantinePaperProps: {
-      className: classes.table,
-    },
-    createDisplayMode: 'modal',
-    editDisplayMode: 'modal',
-    enableEditing: true,
-    renderTopToolbarCustomActions: () => <AddNewButton onClick={openModal} />,
-    paginationDisplayMode: 'pages',
-    renderRowActions: ({ row, table }) => (
-      <Flex gap="md">
-        <Tooltip label="Edit">
-          <ActionIcon
-            onClick={() => {
-              console.log(row)
-              openModal();
-            }}
-          >
-            <IconEdit />
-          </ActionIcon>
-        </Tooltip>
-        <Tooltip label="Delete">
-          <ActionIcon onClick={()=> openDeleteModal(row.original.id)} color="red">
-            <IconTrash />
-          </ActionIcon>
-        </Tooltip>
-      </Flex>
-    ),
-  });
+    getCoreRowModel: getCoreRowModel(),
+      debugTable: true,
+      state: {
+        pagination,
+      },
+        onPaginationChange: setPagination,
+        manualPagination: true
+  })
+  //   state: {
+  //     showLoadingOverlay: isFetching,
+  //     showSkeletons: isLoading,
+  //   },
+  //   enableRowSelection: true,
+  //   mantineTableProps: {
+  //     className: classes.table,
+  //     highlightOnHover: false,
+  //     striped: 'odd',
+  //     withColumnBorders: true,
+  //     withRowBorders: true,
+  //     withTableBorder: true,
+  //   },
+  //   mantinePaperProps: {
+  //     className: classes.table,
+  //   },
+  //   createDisplayMode: 'modal',
+  //   editDisplayMode: 'modal',
+  //   enableEditing: true,
+  //   renderTopToolbarCustomActions: () => <AddNewButton onClick={openModal} />,
+  //   paginationDisplayMode: 'pages',
+  //   renderRowActions: ({ row, table }) => (
+  //     <Flex gap="md">
+  //       <Tooltip label="Edit">
+  //         <ActionIcon
+  //           onClick={() => {
+  //             console.log(row)
+  //             openModal();
+  //           }}
+  //         >
+  //           <IconEdit />
+  //         </ActionIcon>
+  //       </Tooltip>
+  //       <Tooltip label="Delete">
+  //         <ActionIcon onClick={()=> openDeleteModal(row.original.id)} color="red">
+  //           <IconTrash />
+  //         </ActionIcon>
+  //       </Tooltip>
+  //     </Flex>
+  //   ),
+  // });
 
   return (
     <MainLayout>
