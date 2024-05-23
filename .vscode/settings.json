@@ -1,5 +1,6 @@
 {
   "eslint.enable": false,
   "eslint.codeActionsOnSave.rules": null,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": ".prettierrc.json"
 }

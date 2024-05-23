@@ -42,7 +42,6 @@ export const Todos = () => {
   // const error = useSelector((state: RootState) => state.todosReducer.error);
 
   const pageContext = usePageTypeContext();
-  console.log('🚀 ~ pageContext:', pageContext);
   // użyć useParms do tego żeby wiedzieć na jakiej stronie jesteśmy => wywalić pageContext
 
   const { isPending, error, data, isFetching } = useTodos();
@@ -83,14 +82,14 @@ export const Todos = () => {
   const columns = useMemo<MRT_ColumnDef<any, unknown>[]>(
     () => [
       { accessorKey: 'title', header: 'Title' },
-      { accessorKey: 'deadline', header: 'Deadline' },
+      { accessorKey: 'deadline', header: 'Deadline' }
     ],
-    [],
+    []
   );
 
   const table = useMantineReactTable({
     columns,
-    data: todos || [],
+    data: todos || []
   });
 
   const [opened, { open, close }] = useDisclosure();

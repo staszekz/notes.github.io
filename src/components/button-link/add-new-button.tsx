@@ -14,14 +14,11 @@ const StyledAddButton = styled(StyledButton)`
   border: 3px solid ${({ theme }) => theme.colors.primary};
 `;
 
-export const AddNewButton = ({ onClick }) => {
+export const AddNewButton = ({ openModal }) => {
+  const handleClick = () => openModal();
+
   return (
-    <StyledAddButton
-      leftSection={<IconPlus />}
-      variant="contained"
-      onClick={onClick}
-      aria-label="Add new "
-    >
+    <StyledAddButton leftSection={<IconPlus />} variant="contained" onClick={handleClick} aria-label="Add new ">
       Add
     </StyledAddButton>
   );

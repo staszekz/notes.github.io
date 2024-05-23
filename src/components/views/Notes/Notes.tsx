@@ -1,104 +1,90 @@
-import React, {  useState } from 'react';
-import { StyledH1, StyledH2, Table } from '@notes/components';
+import React, { useCallback, useState } from 'react';
+import { openDeleteModal, openDetailsModal, openModal, StyledH1, StyledH2, Table } from '@notes/components';
 import { StyledNotesList } from './styled';
 import { MainLayout } from '@notes/layout';
-import { useMemo } from 'react';
-import {  useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
-import { ActionIcon, Button, Flex, LoadingOverlay, Tooltip } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { ActionIcon, Button, Checkbox, Flex, LoadingOverlay, Text, Tooltip } from '@mantine/core';
+import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
 import classes from './notes-table.module.css';
-import { modals } from '@mantine/modals';
 import { AddTask } from 'src/components/Form/Form';
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  PaginationState,
-  useReactTable,
-} from '@tanstack/react-table'
+import { createColumnHelper, getCoreRowModel, PaginationState, useReactTable } from '@tanstack/react-table';
+import { Note } from '@notes/types';
 
-const Title = () => <h2>Add new note</h2>
+const TableIcons = ({ openDetailsModal, openDeleteModal, openEditModal }) => {
+  return (
+    <Flex gap="md" justify="center">
+      <Tooltip label="Edit">
+        <ActionIcon onClick={openEditModal}>
+          <IconEdit />
+        </ActionIcon>
+      </Tooltip>
+      <Tooltip label="Delete">
+        <ActionIcon color="red" onClick={openDeleteModal}>
+          <IconTrash />
+        </ActionIcon>
+      </Tooltip>
+      {/* <Tooltip label="Select as done">
+        <Checkbox />
+      </Tooltip> */}
+      <Tooltip label="Show more">
+        <ActionIcon color={'var(--primary)'} onClick={openDetailsModal}>
+          <IconBubbleText />
+        </ActionIcon>
+      </Tooltip>
+    </Flex>
+  );
+};
 
 export const Notes = () => {
   const {
     notes: { isPending, isFetching, isLoading, data: notes },
     addNewNote,
     editNote,
-    deleteNote,
+    deleteNote
   } = useNotes();
 
-const columnHelper = createColumnHelper<Note>()
+  const columnHelper = createColumnHelper<Note>();
+
   // dodać tez last modified on
   const columns = [
+    columnHelper.accessor('title', {
+      header: 'Title'
+    }),
+    columnHelper.accessor('created', {
+      header: 'Created'
+    }),
+    columnHelper.accessor('content', {
+      header: 'Content'
+    }),
     columnHelper.display({
-        header: 'Actions', 
-        cell: props => <div>Some action Icons</div>,
-      }),
-    columnHelper.accessor('title',
-    {
-      header: 'Title',
-    //   cell: ({column}) => {
-    //   return <div>{column.id}</div>
-    // }
-    }
-    ),
-      columnHelper.accessor('created',
-    {
-      header: 'Created',
-    //   cell: ({column}) => {
-    //     console.log('🚀 ~ created:', column)
-        
-    //   return <div>{column.id}</div>
-    // }
-    }
-    ),
-      columnHelper.accessor('content',
-    {
-      header: 'Content',
-    //   cell: ({getValue}) => {
-    //   return <div>{getValue()}</div>
-    // }
-    }
-    )
-    ]
+      header: 'Actions',
+      cell: props => {
+        return (
+          <TableIcons
+            openDetailsModal={() => openDetailsModal(props.row.original.content)}
+            openDeleteModal={() => openDeleteModal(props.row.original.id, deleteNote.mutate)}
+            openEditModal={() => openModal(props.row.original, editNote.mutate)}
+          />
+        );
+      }
+    })
+  ];
 
-  const openModal = () => modals.open({
-  title: <Title/>,
-  centered: true,
-  children: <AddTask/>,
-})
-
-
-
-const openDeleteModal = (id: number) => modals.openConfirmModal({
-title: 'Delete note',
-centered: true,
-children: 'Are you sure you want to delete this note?',
-labels: {
-  confirm: 'Delete',
-  cancel: 'Cancel',
-},
- confirmProps: { color: 'red' },
-onConfirm:()=>  deleteNote.mutate(id),
-})
-
-  
   const [pagination, setPagination] = React.useState<PaginationState>({
     pageIndex: 0,
-    pageSize: 3,
-  })
+    pageSize: 3
+  });
   const table = useReactTable({
     columns,
     data: notes || [],
     getCoreRowModel: getCoreRowModel(),
-      state: {
-        pagination,
-      },
-        onPaginationChange: setPagination,
-        manualPagination: true
-  })
+    state: {
+      pagination
+    },
+    onPaginationChange: setPagination,
+    manualPagination: true
+  });
   //   state: {
   //     showLoadingOverlay: isFetching,
   //     showSkeletons: isLoading,
@@ -145,20 +131,12 @@ onConfirm:()=>  deleteNote.mutate(id),
     <MainLayout>
       <StyledNotesList>
         <StyledH1>My Private Notes</StyledH1>
-    <AddNewButton onClick={openModal}/>
-    <br/>
+        <AddNewButton openModal={openModal} />
+        <br />
         <Table table={table} isLoading={isLoading} />
-        
+
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
       </StyledNotesList>
     </MainLayout>
   );
 };
-
-type Note = {
-  id: string;
-  title: string;
-  created: string;
-  content: string;
-};
-

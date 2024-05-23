@@ -1,5 +1,6 @@
 import { DATABASE_URL } from 'src/database/database';
 import { getAuth } from 'firebase/auth';
+import { Note } from '@notes/types';
 
 const auth = getAuth();
 
@@ -9,7 +10,7 @@ export const getNotes = async () => {
   return await res.json()
 }
 
-export const addNote = async (note) => {
+export const addNote = async (note: Note) => {
   const uid = auth.currentUser?.uid;
   const res = await fetch(`${DATABASE_URL}/users/${uid}/notes.json`, {
     method: 'POST',
@@ -21,9 +22,10 @@ export const addNote = async (note) => {
   return await res.json()
 }
 
-export const editSingleNote = async (note, id) => {
+export const editSingleNote = async (note: Note) => {
+
   const uid = auth.currentUser?.uid;
-  const res = await fetch(`${DATABASE_URL}/users/${uid}/notes/${id}.json`, {
+  const res = await fetch(`${DATABASE_URL}/users/${uid}/notes/${note.id}.json`, {
     method: 'PUT',
     body: JSON.stringify(note),
     headers: {
@@ -33,7 +35,7 @@ export const editSingleNote = async (note, id) => {
   return await res.json()
 }
 
-export const deleteSingleNote = async (id) => {
+export const deleteSingleNote = async (id: string) => {
   const uid = auth.currentUser?.uid;
   const res = await fetch(`${DATABASE_URL}/users/${uid}/notes/${id}.json`, {
     method: 'DELETE',
