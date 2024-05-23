@@ -4,7 +4,7 @@ import { StyledNotesList } from './styled';
 import { MainLayout } from '@notes/layout';
 import { useMemo } from 'react';
 import {  useMantineReactTable, type MRT_ColumnDef } from 'mantine-react-table';
-import { ActionIcon, Flex, Tooltip } from '@mantine/core';
+import { ActionIcon, Button, Flex, LoadingOverlay, Tooltip } from '@mantine/core';
 import { IconEdit, IconTrash } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
@@ -29,15 +29,39 @@ export const Notes = () => {
     deleteNote,
   } = useNotes();
 
+const columnHelper = createColumnHelper<Note>()
   // dodać tez last modified on
   const columns = [
-    {
+    columnHelper.display({
         header: 'Actions', 
-        cell: props => <div  >Actions</div>,
-      },
-      { accessorKey: 'title', header: 'Title' },
-      { accessorKey: 'created', header: 'Created' },
-      { accessorKey: 'content', header: 'Content' },
+        cell: props => <div>Some action Icons</div>,
+      }),
+    columnHelper.accessor('title',
+    {
+      header: 'Title',
+    //   cell: ({column}) => {
+    //   return <div>{column.id}</div>
+    // }
+    }
+    ),
+      columnHelper.accessor('created',
+    {
+      header: 'Created',
+    //   cell: ({column}) => {
+    //     console.log('🚀 ~ created:', column)
+        
+    //   return <div>{column.id}</div>
+    // }
+    }
+    ),
+      columnHelper.accessor('content',
+    {
+      header: 'Content',
+    //   cell: ({getValue}) => {
+    //   return <div>{getValue()}</div>
+    // }
+    }
+    )
     ]
 
   const openModal = () => modals.open({
@@ -69,7 +93,6 @@ onConfirm:()=>  deleteNote.mutate(id),
     columns,
     data: notes || [],
     getCoreRowModel: getCoreRowModel(),
-      debugTable: true,
       state: {
         pagination,
       },
@@ -122,7 +145,10 @@ onConfirm:()=>  deleteNote.mutate(id),
     <MainLayout>
       <StyledNotesList>
         <StyledH1>My Private Notes</StyledH1>
-        <Table table={table} />
+    <AddNewButton onClick={openModal}/>
+    <br/>
+        <Table table={table} isLoading={isLoading} />
+        
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
       </StyledNotesList>
     </MainLayout>

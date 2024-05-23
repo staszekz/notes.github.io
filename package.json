@@ -16,6 +16,7 @@
     "@tanstack/react-form": "^0.19.5",
     "@tanstack/react-query": "^5.36.0",
     "@tanstack/react-query-devtools": "^5.36.0",
+    "@tanstack/react-router": "^1.33.7",
     "@tanstack/react-table": "^8.17.3",
     "@tanstack/table-core": "^8.17.3",
     "@tanstack/zod-form-adapter": "^0.19.5",
@@ -75,6 +76,8 @@
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.35.6",
+    "@tanstack/router-devtools": "^1.33.7",
+    "@tanstack/router-vite-plugin": "^1.32.17",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@types/styled-components": "^5.1.34",

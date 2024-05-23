@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 // import { viteStaticCopy } from "vite-plugin-static-copy";
 import svgrPlugin from "vite-plugin-svgr";
 import viteTsconfigPaths from "vite-tsconfig-paths";
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 // https://vitejs.dev/config/
 export default () => {
@@ -15,6 +16,7 @@ export default () => {
       react(),
       viteTsconfigPaths(),
       svgrPlugin(),
+      TanStackRouterVite(),
       // viteStaticCopy({
       //   targets: [
       //     {
