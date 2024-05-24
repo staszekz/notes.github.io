@@ -7,8 +7,13 @@ import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 import { useNotes } from '@notes/hooks';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
 import classes from './notes-table.module.css';
-import { AddTask } from 'src/components/Form/Form';
-import { createColumnHelper, getCoreRowModel, PaginationState, useReactTable } from '@tanstack/react-table';
+import {
+  createColumnHelper,
+  getCoreRowModel,
+  getPaginationRowModel,
+  PaginationState,
+  useReactTable
+} from '@tanstack/react-table';
 import { Note } from '@notes/types';
 
 const TableIcons = ({ openDetailsModal, openDeleteModal, openEditModal }) => {
@@ -37,6 +42,10 @@ const TableIcons = ({ openDetailsModal, openDeleteModal, openEditModal }) => {
 };
 
 export const Notes = () => {
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 5
+  });
   const {
     notes: { isPending, isFetching, isLoading, data: notes },
     addNewNote,
@@ -71,10 +80,6 @@ export const Notes = () => {
     })
   ];
 
-  const [pagination, setPagination] = React.useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 3
-  });
   const table = useReactTable({
     columns,
     data: notes || [],
@@ -83,49 +88,8 @@ export const Notes = () => {
       pagination
     },
     onPaginationChange: setPagination,
-    manualPagination: true
+    getPaginationRowModel: getPaginationRowModel()
   });
-  //   state: {
-  //     showLoadingOverlay: isFetching,
-  //     showSkeletons: isLoading,
-  //   },
-  //   enableRowSelection: true,
-  //   mantineTableProps: {
-  //     className: classes.table,
-  //     highlightOnHover: false,
-  //     striped: 'odd',
-  //     withColumnBorders: true,
-  //     withRowBorders: true,
-  //     withTableBorder: true,
-  //   },
-  //   mantinePaperProps: {
-  //     className: classes.table,
-  //   },
-  //   createDisplayMode: 'modal',
-  //   editDisplayMode: 'modal',
-  //   enableEditing: true,
-  //   renderTopToolbarCustomActions: () => <AddNewButton onClick={openModal} />,
-  //   paginationDisplayMode: 'pages',
-  //   renderRowActions: ({ row, table }) => (
-  //     <Flex gap="md">
-  //       <Tooltip label="Edit">
-  //         <ActionIcon
-  //           onClick={() => {
-  //             console.log(row)
-  //             openModal();
-  //           }}
-  //         >
-  //           <IconEdit />
-  //         </ActionIcon>
-  //       </Tooltip>
-  //       <Tooltip label="Delete">
-  //         <ActionIcon onClick={()=> openDeleteModal(row.original.id)} color="red">
-  //           <IconTrash />
-  //         </ActionIcon>
-  //       </Tooltip>
-  //     </Flex>
-  //   ),
-  // });
 
   return (
     <MainLayout>

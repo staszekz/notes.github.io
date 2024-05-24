@@ -1,17 +1,10 @@
 import React from 'react';
 import { HomePageLayout } from '@notes/layout';
-import {
-  StyledHomeButtonWrapper,
-  StyledHomepageWrapper,
-  ButtonLink,
-  StyledH1,
-} from '@notes/components';
-import { GlobalStyle } from '@notes/theme';
+import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink, StyledH1 } from '@notes/components';
 
 export const Home = ({}) => {
   return (
     <>
-      <GlobalStyle />
       <HomePageLayout>
         <StyledHomepageWrapper>
           <StyledH1>In this app you can store your: </StyledH1>
