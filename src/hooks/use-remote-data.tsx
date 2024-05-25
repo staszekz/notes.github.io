@@ -1,6 +1,5 @@
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { addElementFn, editSingleElementFn, getCollection, deleteSingleElementFn } from '@notes/rq';
-import { Note } from '@notes/types';
 
 export function useRemoteData<T extends { id: string }>({ key }: { key: string }) {
   const collection = useQuery({

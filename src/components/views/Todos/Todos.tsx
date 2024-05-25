@@ -2,42 +2,77 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { MainLayout } from '@notes/layout';
-import { TodoItem, TodoInput, StyledH1, StyledH2, Filters, Modal, Table } from '@notes/components';
+import { openDeleteModal, openDetailsModal, openModal, StyledH1, StyledH2, Table, TableIcons } from '@notes/components';
 
-import { fetchTodos, setCompleted, deleteTask, editTask, RootState } from '@notes/redux';
-import { usePageTypeContext, useTodos } from '@notes/hooks';
-import { useDisclosure } from '@mantine/hooks';
-import { MRT_ColumnDef, useMantineReactTable } from 'mantine-react-table';
+import { useRemoteData } from '@notes/hooks';
 import { StyledNotesList } from 'src/components/views/Notes/styled';
+import {
+  createColumnHelper,
+  getCoreRowModel,
+  getPaginationRowModel,
+  PaginationState,
+  useReactTable
+} from '@tanstack/react-table';
+import { Todo } from '@notes/types';
 
 export const Todos = () => {
-  const { data: todos } = useTodos();
-
-  const columns = useMemo<MRT_ColumnDef<any, unknown>[]>(
-    () => [
-      { accessorKey: 'title', header: 'Title' },
-      { accessorKey: 'deadline', header: 'Deadline' }
-    ],
-    []
-  );
-
-  const table = useMantineReactTable({
-    columns,
-    data: todos || []
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: 10
   });
+  const {
+    collection: { isPending, isFetching, isLoading, data: todos },
+    addElement,
+    editElement,
+    deleteElement
+  } = useRemoteData({ key: 'todos' });
 
-  const [opened, { open, close }] = useDisclosure();
+  const columnHelper = createColumnHelper<Todo>();
+
+  // dodać tez last modified on
+  const columns = [
+    columnHelper.accessor('title', {
+      header: 'Title'
+    }),
+    columnHelper.accessor('created', {
+      header: 'Created'
+    }),
+    columnHelper.accessor('content', {
+      header: 'Content'
+    }),
+    columnHelper.display({
+      header: 'Actions',
+      cell: props => {
+        return (
+          <TableIcons
+            openDetailsModal={() => openDetailsModal(props.row.original.content)}
+            openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
+            openEditModal={() => openModal(props.row.original, editElement.mutate)}
+          />
+        );
+      }
+    })
+  ];
+
+  const table = useReactTable({
+    columns,
+    data: todos || [],
+    getCoreRowModel: getCoreRowModel(),
+    state: {
+      pagination
+    },
+    onPaginationChange: setPagination,
+    getPaginationRowModel: getPaginationRowModel()
+  });
 
   return (
     <>
       <MainLayout>
         <StyledNotesList>
           <StyledH1>My Private Todo tasks</StyledH1>
-          <Table table={table} />
-
-          {!todos?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
+          <Table table={table} isLoading={isLoading} />
+          {!todos?.length && <StyledH2>Your todo list is empty! Enter a new task! </StyledH2>}
         </StyledNotesList>
-        <Modal opened={opened} close={close} title="Add new todo task" />
       </MainLayout>
     </>
   );

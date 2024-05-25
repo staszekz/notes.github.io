@@ -1,2 +1,1 @@
-export * from './notes/get-notes'
-export * from './todos/get-todos'
+export * from './manage-collection'
