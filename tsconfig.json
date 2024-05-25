@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "esModuleInterop": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "skipLibCheck": true,
-      "rootDir": ".",
+    "rootDir": ".",
     "target": "esnext",
     "isolatedModules": true,
     "strict": true,

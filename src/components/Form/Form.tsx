@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
 import ReactTooltip from 'react-tooltip';
-import { useNotes } from '@notes/hooks';
+import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { StyledForm } from 'src/components/atoms';
 import { modals } from '@mantine/modals';
@@ -20,7 +20,7 @@ type AddTaskComponentProps = {
 };
 
 export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
-  const { addNewNote } = useNotes();
+  const { addElement } = useRemoteData<Note>({ key: 'notes' });
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: data
@@ -32,7 +32,7 @@ export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
-      data ? editNote(value, data.id) : addNewNote.mutate(value);
+      data ? editNote({ element: { ...value, id: data.id } }) : addElement.mutate({ element: value });
       modals.closeAll();
     }
   });

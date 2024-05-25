@@ -1,5 +1,4 @@
-import React from 'react';
-import { Box, LoadingOverlay, Table as MantineTable, Pagination, Skeleton } from '@mantine/core';
+import { LoadingOverlay, Table as MantineTable, Pagination, Text } from '@mantine/core';
 import { flexRender } from '@tanstack/react-table';
 import classes from './table.module.css';
 
@@ -26,7 +25,7 @@ export function Table({ table, isLoading }) {
           {table.getRowModel().rows.map(row => (
             <MantineTable.Tr key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <MantineTable.Td key={cell.id}>
+                <MantineTable.Td className={classes.tableCell} key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </MantineTable.Td>
               ))}

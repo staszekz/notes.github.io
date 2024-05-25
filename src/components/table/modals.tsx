@@ -4,14 +4,12 @@ import { modals } from '@mantine/modals';
 import { AddTask } from '../Form/Form';
 
 type Note = {
-  id: string;
   title: string;
   created: string;
   content: string;
 };
 
 export const openModal = (data: Note, editNote) => {
-  console.log('🚀 ~ data:', data);
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
@@ -29,7 +27,7 @@ export const openDeleteModal = (id: string, deleteFn) => {
       cancel: 'Cancel'
     },
     confirmProps: { color: 'red' },
-    onConfirm: () => deleteFn(id)
+    onConfirm: () => deleteFn({ id })
   });
 };
 

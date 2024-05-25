@@ -1,2 +1,2 @@
 export * from './contexts'
-export * from './note'
+export * from './collections'

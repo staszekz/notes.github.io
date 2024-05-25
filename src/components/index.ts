@@ -11,6 +11,5 @@ export * from './Todo/TodoForm'
 export * from './Todo/TodoInput'
 export * from './Todo/TodoItem'
 export * from './Modal/Modal'
-export * from './table/table'
-export * from './table/modals'
+export * from './table'
 
