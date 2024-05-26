@@ -69,7 +69,16 @@ export const Todos = () => {
       cell: props => {
         return (
           <Flex gap="md" justify="center">
-            <Checkbox color="lime" variant="outline" checked={props.cell.getValue()} />
+            <Checkbox
+              color={'var(--primary)'}
+              variant="outline"
+              onChange={e => {
+                console.log('🚀 ~ props.row.original:', props.row.original);
+
+                editElement.mutate({ element: { ...props.row.original, completed: e.target.checked } });
+              }}
+              checked={props.cell.getValue()}
+            />
           </Flex>
         );
       }
@@ -81,7 +90,7 @@ export const Todos = () => {
           <TableIcons
             openDetailsModal={() => openDetailsModal(props.row.original.extraContent)}
             openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-            openEditModal={() => openTodoModal(props.row.original, editElement.mutate)}
+            openEditModal={() => openModal(props.row.original, editElement.mutate)}
           />
         );
       }
@@ -106,7 +115,7 @@ export const Todos = () => {
           <StyledH1>My Private Todo tasks</StyledH1>
           <AddNewButton openModal={openTodoModal} />
           <br />
-          <Table table={table} isLoading={isLoading} />
+          <Table table={table} isLoading={isLoading || isFetching} />
           {!todos?.length && <StyledH2>Your todo list is empty! Enter a new task! </StyledH2>}
         </StyledNotesList>
       </MainLayout>

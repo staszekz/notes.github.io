@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { StyledInput ,StyledH1,StyledForm, ChangedStyledButton} from '@notes/components';
+import { StyledInput, StyledH1, StyledForm, ChangedStyledButton } from '@notes/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { app } from '../../../database/database';
@@ -9,14 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { theme } from '@notes/theme';
 
 const auth = getAuth(app);
-console.log('🚀 ~ auth:', auth);
 
 export const SignUp = ({ isSignUp }) => {
   const initialState = {
     email: '',
     password: '',
     name: '',
-    redirect: false,
+    redirect: false
   };
   const navigate = useNavigate();
   const [state, setState] = useState(initialState);
@@ -25,7 +24,7 @@ export const SignUp = ({ isSignUp }) => {
   const handleOnChange = e => {
     setState({
       ...state,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
@@ -35,8 +34,8 @@ export const SignUp = ({ isSignUp }) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then(userCredentials =>
           userCredentials.user.updateProfile({
-            displayName: name,
-          }),
+            displayName: name
+          })
         )
         .then(() => {
           navigate('/home');

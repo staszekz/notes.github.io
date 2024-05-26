@@ -10,8 +10,6 @@ import { modals } from '@mantine/modals';
 import { CollectionType, RemoteTodo, Todo } from '@notes/types';
 
 export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editNote }) => {
-  console.log('🚀 ~ data:', data);
-
   const { addElement } = useRemoteData<Todo, RemoteTodo>({ key: CollectionType.TODOS });
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm<RemoteTodo>({
@@ -20,7 +18,7 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
       : {
           title: '',
           extraContent: '',
-          deadline: '',
+          deadline: dayjs().format('YYYY-MM-DD'), // to jest wczorajsza data :D ??
           completed: false,
           created: dayjs().format('YYYY-MM-DD-HH:mm')
         },
@@ -76,19 +74,14 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
           onSubmit: z.string()
         }}
         children={({ state, handleChange, handleBlur }) => {
-          console.log('🚀 ~ state:', state);
-
           return (
             <DateInput
-              autosize
               size="xl"
-              minRows={4}
-              value={new Date(state.value)}
+              value={dayjs(state.value)}
               label="Todo deadline"
               minDate={new Date()}
               onBlur={handleBlur}
               onChange={e => {
-                console.log(e);
                 handleChange(dayjs(e).format('YYYY-MM-DD'));
               }}
               withAsterisk
@@ -101,7 +94,8 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
       <Field
         name="extraContent"
         validators={{
-          onSubmit: z
+          onSubmit: z.string().optional(),
+          onChange: z
             .string()
             .trim()
             .min(10, {
@@ -110,7 +104,6 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
             .max(255, {
               message: 'Title must be at most 255 characters'
             })
-            .optional()
         }}
         children={({ state, handleChange, handleBlur }) => {
           return (
@@ -122,7 +115,6 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
               value={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
-              withAsterisk
               placeholder="Enter todo content"
               error={state.meta?.errors[0]}
             />

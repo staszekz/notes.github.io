@@ -77,7 +77,7 @@ export const Notes = () => {
         <StyledH1>My Private Notes</StyledH1>
         <AddNewButton openModal={openModal} />
         <br />
-        <Table table={table} isLoading={isLoading} />
+        <Table table={table} isLoading={isLoading || isFetching} />
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
       </StyledNotesList>
     </MainLayout>
