@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import dayjs from 'dayjs';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-
-import ReactTooltip from 'react-tooltip';
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
 import { StyledForm } from 'src/components/atoms';
 import { modals } from '@mantine/modals';
-import { Note } from '@notes/types';
+import { CollectionType, RemoteTodo, Todo } from '@notes/types';
 
-type AddTaskComponentProps = {
-  addNewNote: any;
-  addNewTask: any;
-  toggleModalOpen: any;
-  created: string;
-  onAdd: any;
-};
+export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editNote }) => {
+  console.log('🚀 ~ data:', data);
 
-export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
-  const { addElement } = useRemoteData<Note>({ key: 'notes' });
+  const { addElement } = useRemoteData<Todo, RemoteTodo>({ key: CollectionType.TODOS });
 
-  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
+  const { Field, Subscribe, handleSubmit, state, useStore } = useForm<RemoteTodo>({
     defaultValues: data
       ? data
       : {
           title: '',
-          content: '',
+          extraContent: '',
+          deadline: '',
+          completed: false,
           created: dayjs().format('YYYY-MM-DD-HH:mm')
         },
     validatorAdapter: zodValidator,
@@ -65,24 +59,48 @@ export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
             <TextInput
               data-autofocus
               size="xl"
-              defaultValue={state.value}
+              value={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
               withAsterisk
-              label="Note title"
-              placeholder="Enter note title"
+              label="Todo title"
+              placeholder="Enter todo title"
               error={state.meta?.errors[0]}
             />
           );
         }}
       />
-
       <Field
-        name="content"
+        name="deadline"
         validators={{
-          onBlur: z.string({
-            required_error: 'Content is required'
-          }),
+          onSubmit: z.string()
+        }}
+        children={({ state, handleChange, handleBlur }) => {
+          console.log('🚀 ~ state:', state);
+
+          return (
+            <DateInput
+              autosize
+              size="xl"
+              minRows={4}
+              value={new Date(state.value)}
+              label="Todo deadline"
+              minDate={new Date()}
+              onBlur={handleBlur}
+              onChange={e => {
+                console.log(e);
+                handleChange(dayjs(e).format('YYYY-MM-DD'));
+              }}
+              withAsterisk
+              placeholder="Enter todo deadline date"
+              error={state.meta?.errors[0]}
+            />
+          );
+        }}
+      />
+      <Field
+        name="extraContent"
+        validators={{
           onSubmit: z
             .string()
             .trim()
@@ -92,6 +110,7 @@ export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
             .max(255, {
               message: 'Title must be at most 255 characters'
             })
+            .optional()
         }}
         children={({ state, handleChange, handleBlur }) => {
           return (
@@ -99,12 +118,12 @@ export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
               autosize
               size="xl"
               minRows={4}
-              label="Note details"
-              defaultValue={state.value}
+              label="Todo details"
+              value={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
               withAsterisk
-              placeholder="Enter note content"
+              placeholder="Enter todo content"
               error={state.meta?.errors[0]}
             />
           );
@@ -120,57 +139,6 @@ export const AddTask = ({ data, editNote }: { data: Note; editNote }) => {
           </>
         )}
       />
-      {/* <StyledModalInput
-        name="title"
-        placeholder={pageContext === 'todos' ? 'new task' : 'note title'}
-        value={title}
-        onChange={handleOnChange}
-        onKeyDown={onEnterSave}
-      ></StyledModalInput>
-      {pageContext === 'notes' && (
-        <StyledTextarea
-          name="content"
-          placeholder="note content"
-          value={state.content}
-          onChange={handleOnChange}
-          onKeyDown={onEnterSave}
-        ></StyledTextarea>
-      )}
-      {pageContext === 'todos' && (
-        <StyledModalInput
-          name="deadline"
-          placeholder="new deadline"
-          value={state.deadline}
-          onChange={handleOnChange}
-          onKeyDown={onEnterSave}
-        ></StyledModalInput>
-      )}
-      {pageContext === 'notes' && (
-        <StyledDate data-tip data-for="created">
-          {created}
-        </StyledDate>
-      )}
-      <StyledButtonWrapper>
-        <StyledButton
-          modal="true"
-          type="submit"
-          onClick={handleOnAddClick}
-          data-tip
-          data-for="addItem"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-        </StyledButton>
-        <StyledButton onClick={onQuit} data-tip data-for="quit">
-          <FontAwesomeIcon icon={faUndo} color="red" />
-        </StyledButton>
-      </StyledButtonWrapper> */}
-
-      <ReactTooltip id="quit" place="top" effect="solid">
-        Quit without saving
-      </ReactTooltip>
-      <ReactTooltip id="created" place="top" effect="solid">
-        Creation date
-      </ReactTooltip>
     </StyledForm>
   );
 };

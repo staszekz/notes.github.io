@@ -8,3 +8,7 @@
   max-width: 300px;
   overflow: hidden;
 }
+
+.tableWrapper {
+  min-width: 800px;
+}

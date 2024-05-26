@@ -1,13 +1,14 @@
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { addElementFn, editSingleElementFn, getCollection, deleteSingleElementFn } from '@notes/rq';
 
-export function useRemoteData<T extends { id: string }>({ key }: { key: string }) {
+// TODO: FIX types
+export function useRemoteData<T extends { id: string }, R>({ key }: { key: string }) {
   const collection = useQuery({
     queryKey: [key],
-    queryFn: async () => {
-      const data = await getCollection({ key });
+    queryFn: async (): Promise<T[]> => {
+      const data: R = await getCollection({ key });
       return Object.keys(data)
-        .map(key => ({ id: key, ...data[key] }))
+        .map((key): T => ({ id: key, ...data[key] }))
         .reverse();
     },
     staleTime: 30000,
@@ -15,21 +16,21 @@ export function useRemoteData<T extends { id: string }>({ key }: { key: string }
   });
 
   const addElement = useMutation({
-    mutationFn: async ({ element }: { element: T }) => addElementFn({ element, key }),
+    mutationFn: async ({ element }: { element: T }): Promise<void> => addElementFn({ element, key }),
     onSettled: () => {
       collection.refetch();
     }
   });
 
   const editElement = useMutation({
-    mutationFn: async ({ element }: { element: T }) => editSingleElementFn({ element, key }),
+    mutationFn: async ({ element }: { element: T }): Promise<void> => editSingleElementFn({ element, key }),
     onSettled: () => {
       collection.refetch();
     }
   });
 
   const deleteElement = useMutation({
-    mutationFn: async ({ id }: { id: string }) => deleteSingleElementFn({ id, key }),
+    mutationFn: async ({ id }: { id: string }): Promise<void> => deleteSingleElementFn({ id, key }),
     onSettled: () => {
       collection.refetch();
     }

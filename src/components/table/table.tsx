@@ -4,7 +4,7 @@ import classes from './table.module.css';
 
 export function Table({ table, isLoading }) {
   return (
-    <>
+    <div className={classes.tableWrapper}>
       <MantineTable stickyHeader striped highlightOnHover>
         <MantineTable.Thead bg={'var(--primary)'} c={'var(--white-text'}>
           {table.getHeaderGroups().map(headerGroup => (
@@ -46,6 +46,6 @@ export function Table({ table, isLoading }) {
         total={table.getPageCount()}
         siblings={1}
       />
-    </>
+    </div>
   );
 }
