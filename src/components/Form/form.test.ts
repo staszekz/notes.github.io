@@ -1,7 +1,5 @@
 import '@testing-library/jest-dom';
 import React from 'react';
-import { Provider } from 'react-redux';
-import store from 'store';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { StyledModalInput } from 'components/atoms/StyledInputs';

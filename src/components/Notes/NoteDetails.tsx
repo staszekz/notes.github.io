@@ -1,13 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { editNote } from '@notes/redux';
-import {
-  StyledButton,
-  StyledModalInput,
-  StyledButtonWrapper,
-  StyledH1,
-  StyledTextarea,
-} from '@notes/components';
+import { StyledButton, StyledModalInput, StyledButtonWrapper, StyledH1, StyledTextarea } from '@notes/components';
 
 const Wrapper = styled.td`
   display: ${({ isVisible }) => (isVisible ? 'flex' : 'none')};
@@ -81,12 +74,7 @@ export const NoteDetails = ({ isVisible, content, onClose, title, created, onDel
               value={editedNote.title}
               name="title"
             ></StyledModalInput>
-            <StyledTextarea
-              notes
-              onChange={handleInputChange}
-              name="content"
-              value={editedNote.content}
-            />
+            <StyledTextarea notes onChange={handleInputChange} name="content" value={editedNote.content} />
           </>
         ) : (
           <>

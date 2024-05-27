@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import { useState, useEffect, useMemo } from 'react';
 import { MainLayout } from '@notes/layout';
 import {
   openDeleteModal,

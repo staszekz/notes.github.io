@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { IconLogout } from '@tabler/icons-react';
 import { StyledH1, ButtonLink } from '@notes/components';
-import ReactTooltip from 'react-tooltip';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from 'src/database/database';
-import { getAuth, User , getAdditionalUserInfo} from 'firebase/auth';
-import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { getAuth, User, getAdditionalUserInfo } from 'firebase/auth';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
@@ -13,12 +11,11 @@ const auth = getAuth(app);
 
 export const NavBar = () => {
   const [user, setUser] = useState<User | null>(null);
-const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   const handleSignOutClick = () => {
     auth.signOut();
-    navigate('/')
+    navigate('/');
   };
 
   useEffect(() => {
@@ -45,14 +42,14 @@ const navigate = useNavigate()
         </>
       )}
       <Tooltip id="logout" label="log out">
-   <ActionIcon variant="filled" aria-label="logout" onClick={handleSignOutClick}>
-   <IconLogout/>
-        {/* to="/"
+        <ActionIcon variant="filled" aria-label="logout" onClick={handleSignOutClick}>
+          <IconLogout />
+          {/* to="/"
         icon={} 
         onClick={handleSignOutClick}
         data-tip
         data-for="logout" */}
-    </ActionIcon>
+        </ActionIcon>
       </Tooltip>
     </StyledBar>
   );
