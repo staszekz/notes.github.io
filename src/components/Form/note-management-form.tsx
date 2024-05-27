@@ -6,14 +6,13 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
-import { StyledForm } from 'src/components/atoms';
 import { modals } from '@mantine/modals';
 import { CollectionType, Note, RemoteNote } from '@notes/types';
 
 export const NoteManagementForm = ({ data, editNote }: { data: RemoteNote; editNote }) => {
   const { addElement } = useRemoteData<Note, RemoteNote>({ key: CollectionType.NOTES });
 
-  const { Field, Subscribe, handleSubmit, state, useStore } = useForm<RemoteNote>({
+  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: data
       ? data
       : {
@@ -28,7 +27,8 @@ export const NoteManagementForm = ({ data, editNote }: { data: RemoteNote; editN
     }
   });
   return (
-    <StyledForm
+    <form
+      className="form-wrapper"
       onSubmit={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -111,6 +111,6 @@ export const NoteManagementForm = ({ data, editNote }: { data: RemoteNote; editN
           </>
         )}
       />
-    </StyledForm>
+    </form>
   );
 };

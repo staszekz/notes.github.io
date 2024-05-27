@@ -5,14 +5,13 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { StyledForm } from 'src/components/atoms';
 import { modals } from '@mantine/modals';
 import { CollectionType, RemoteTodo, Todo } from '@notes/types';
 
 export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editNote }) => {
   const { addElement } = useRemoteData<Todo, RemoteTodo>({ key: CollectionType.TODOS });
 
-  const { Field, Subscribe, handleSubmit, state, useStore } = useForm<RemoteTodo>({
+  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: data
       ? data
       : {
@@ -29,7 +28,8 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
     }
   });
   return (
-    <StyledForm
+    <form
+      className="form-wrapper"
       onSubmit={e => {
         e.preventDefault();
         e.stopPropagation();
@@ -131,6 +131,6 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
           </>
         )}
       />
-    </StyledForm>
+    </form>
   );
 };

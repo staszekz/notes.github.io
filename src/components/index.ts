@@ -12,4 +12,5 @@ export * from './Modal/Modal'
 export * from './table'
 export * from './Form/note-management-form'
 export * from './Form/todo-management-form'
+export * from './views/login-page/sign-in'
 

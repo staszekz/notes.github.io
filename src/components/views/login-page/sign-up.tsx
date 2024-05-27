@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { StyledInput, StyledH1, StyledForm, ChangedStyledButton } from '@notes/components';
+import { StyledInput, StyledH1, ChangedStyledButton } from '@notes/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { app } from '../../../database/database';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { theme } from '@notes/theme';
+
+const addTokensToLocalStorage = (token, refreshToken) => {
+  localStorage.setItem('notes-token', token);
+  localStorage.setItem('notes-refresh-token', refreshToken);
+};
 
 const auth = getAuth(app);
 
@@ -45,7 +50,12 @@ export const SignUp = ({ isSignUp }) => {
         });
     } else {
       signInWithEmailAndPassword(auth, email, password)
-        .then(() => {
+        .then(credentials => {
+          console.log('🚀 ~ credentials:', credentials);
+          addTokensToLocalStorage(
+            credentials.user.stsTokenManager.accessToken,
+            credentials.user.stsTokenManager.refreshToken
+          );
           navigate('/home');
         })
         .catch(err => {
@@ -56,8 +66,8 @@ export const SignUp = ({ isSignUp }) => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <StyledForm onSubmit={handleOnSubmit}>
+    <>
+      <form onSubmit={handleOnSubmit}>
         <StyledH1>Please {isSignUp ? 'Sign In' : 'Sign Up'}</StyledH1>
         {!isSignUp && (
           <>
@@ -92,7 +102,7 @@ export const SignUp = ({ isSignUp }) => {
         <ChangedStyledButton as="button" type="submit">
           <FontAwesomeIcon icon={faSignInAlt} size="lg" />
         </ChangedStyledButton>
-      </StyledForm>
-    </ThemeProvider>
+      </form>
+    </>
   );
 };

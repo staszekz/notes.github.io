@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Home, Notes, PublicHomepage, SignUp, Todos } from '@notes/components';
-import { app } from './database/database';
+import { Home, Notes, PublicHomepage, SignIn, SignUp, Todos } from '@notes/components';
 import { theme } from './Theme';
 import { ThemeProvider } from 'styled-components';
 import { MantineProvider } from '@mantine/core';
@@ -11,10 +10,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalsProvider } from '@mantine/modals';
 
 const queryClient = new QueryClient();
-
-const rrfConfig = {
-  userProfile: 'users'
-};
 
 export function App() {
   return (
@@ -29,8 +24,8 @@ export function App() {
                 <Route path="/todos" element={<Todos />} />
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/signin" element={<SignUp isSignUp />} />
-                <Route path="/signup" element={<SignUp isSignUp={false} />} />
+                <Route path="/signin" element={<SignIn isSignUp />} />
+                {/* <Route path="/signup" element={<SignUp isSignUp={false} />} /> */}
               </Routes>
             </ThemeProvider>
           </ModalsProvider>

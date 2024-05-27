@@ -1,0 +1,17 @@
+.textInput label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.submitButton {
+  align-self: flex-end;
+  margin-top: 2rem;
+  background-color: var(--dark-bg-color);
+  border: 1px solid var(--primary);
+}
+
+@media (orientation: landscape) {
+  .submitButton {
+    margin-top: 1rem;
+  }
+}
