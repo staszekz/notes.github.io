@@ -16,6 +16,7 @@
   --primary: rgba(123, 175, 212, 1);
   --white-text: #f5fffa;
   --blur: grey;
+  --default-box-shadow: rgba(62, 194, 233, 0.3);
 }
 
 a {

@@ -4,11 +4,28 @@
 }
 
 .submitButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
   align-self: flex-end;
-  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: box-shadow 0.3s ease;
+  color: var(--primary) !important;
+  box-shadow: -5px 3px 15pxvar var(--default-box-shadow);
   background-color: var(--dark-bg-color);
-  border: 1px solid var(--primary);
+  border: 1px solid var(--primary) !important;
+  border-radius: 50px !important;
+  width: 20% !important;
 }
+
+/* .submitButton :hover {
+  box-shadow: 0 10px 20px -15px var(--primary);
+  background: var(--primary);
+  color: var(--white-text);
+  text-decoration: none;
+} */
 
 @media (orientation: landscape) {
   .submitButton {

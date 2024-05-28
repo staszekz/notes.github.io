@@ -6,9 +6,10 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button, TextInput } from '@mantine/core';
+import { ActionIcon, Box, Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import classes from './style.module.css';
+import { IconLogin2 } from '@tabler/icons-react';
 
 const addTokensToLocalStorage = (token, refreshToken) => {
   localStorage.setItem('notes-token', token);
@@ -106,8 +107,8 @@ export const SignIn = () => {
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
                 withAsterisk
-                label="User e-mail"
-                placeholder="Enter e-mail address"
+                label="User password"
+                placeholder="Enter password"
                 error={state.meta?.errors[0]}
               />
             );
@@ -118,15 +119,16 @@ export const SignIn = () => {
           children={([canSubmit, isSubmitting]) => {
             return (
               <Button
-                c={'var(--primary)'}
+                // c={'var(--primary)'}
+                // w={'20%'}
+                // radius={'lg'}
                 className={classes.submitButton}
                 loading={isSubmitting}
                 variant="outline"
                 type="submit"
                 disabled={!canSubmit}
               >
-                {/* hdjsgfjsgfjsh */}
-                <FontAwesomeIcon icon={faSignInAlt} size="lg" />
+                <IconLogin2 stroke={1.5} />
               </Button>
             );
           }}
