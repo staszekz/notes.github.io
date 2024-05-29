@@ -34,3 +34,5 @@ export function App() {
     </QueryClientProvider>
   );
 }
+
+// zrobic panel użytkownika z usuwaniem, zmiana Nazwy, zmiana hasła, zmiana emaila etc
