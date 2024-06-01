@@ -1,5 +1,6 @@
 .tableBody {
   background-color: aliceblue;
+  position: relative;
 }
 
 .tableCell {

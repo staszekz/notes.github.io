@@ -4,6 +4,16 @@ import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 export const TableIcons = ({ openDetailsModal, openDeleteModal, openEditModal }) => {
   return (
     <Flex gap="md" justify="center">
+    controls.map((control, index) => {
+      return (
+        <Tooltip key={index} label={control.label}>
+          <ActionIcon onClick={control.onClick}>
+            {control.icon}
+          </ActionIcon>
+        </Tooltip>
+      );
+    
+    })
       <Tooltip label="Edit">
         <ActionIcon onClick={openEditModal}>
           <IconEdit />

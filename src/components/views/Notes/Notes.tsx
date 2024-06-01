@@ -48,15 +48,26 @@ export const Notes = () => {
     }),
     columnHelper.display({
       header: 'Actions',
-      cell: props => {
-        return (
-          <TableIcons
-            openDetailsModal={() => openDetailsModal(props.row.original.content)}
-            openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-            openEditModal={() => openModal(props.row.original, editElement.mutate)}
-          />
-        );
+      cell: <TableControls controls = {  // createEditControl :) 
+        [{
+          onClick: openDetailsModal,
+          icons: <EditIcon/>,
+          tooltipMessage: 'gsdjgfkshd',
+
+          openDeleteModal: openDeleteModal,
+          openEditModal: openModal
+        }]
+      } />
       }
+      // cell: props => {
+      //   return (
+      //     <TableIcons
+      //       openDetailsModal={() => openDetailsModal(props.row.original.content)}
+      //       openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
+      //       openEditModal={() => openModal(props.row.original, editElement.mutate)}
+      //     />
+      //   );
+      // }
     })
   ];
 

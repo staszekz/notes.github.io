@@ -35,9 +35,10 @@ export function Table({ table, isLoading }) {
       </MantineTable>
       <Pagination
         p={4}
-        color={'var(--darg-bg-color)'}
+        color={'var(--dark-bg-color)'}
         bg={'var(--primary)'}
         withEdges
+        // ml="auto"
         onChange={pageIndex => table.setPageIndex(pageIndex - 1)}
         onFirstPage={() => table.firstPage()}
         onLastPage={() => table.lastPage()}
