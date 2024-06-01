@@ -1,5 +1,13 @@
 import { useState } from 'react';
-import { openDeleteModal, openDetailsModal, openModal, StyledH1, StyledH2, Table, TableIcons } from '@notes/components';
+import {
+  openDeleteModal,
+  openDetailsModal,
+  openModal,
+  StyledH1,
+  StyledH2,
+  Table,
+  TableControls
+} from '@notes/components';
 import { StyledNotesList } from './styled';
 import { MainLayout } from '@notes/layout';
 import { useRemoteData } from '@notes/hooks';
@@ -13,6 +21,7 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { CollectionType, Note, RemoteNote } from '@notes/types';
+import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 
 export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -48,27 +57,48 @@ export const Notes = () => {
     }),
     columnHelper.display({
       header: 'Actions',
-      cell: <TableControls controls = {  // createEditControl :) 
-        [{
-          onClick: openDetailsModal,
-          icons: <EditIcon/>,
-          tooltipMessage: 'gsdjgfkshd',
-
-          openDeleteModal: openDeleteModal,
-          openEditModal: openModal
-        }]
-      } />
-      }
-      // cell: props => {
-      //   return (
-      //     <TableIcons
-      //       openDetailsModal={() => openDetailsModal(props.row.original.content)}
-      //       openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-      //       openEditModal={() => openModal(props.row.original, editElement.mutate)}
-      //     />
-      //   );
-      // }
+      cell: props => (
+        <TableControls // controls = {   createEditControl :)
+          controls={[
+            {
+              onClick: () => openModal(props.row.original, editElement.mutate),
+              icon: {
+                Component: <IconEdit />,
+                color: 'var(--secondary)'
+              },
+              tooltipMessage: 'Edit this note'
+            },
+            {
+              onClick: () => openDeleteModal(props.row.original.id as string, deleteElement.mutate),
+              icon: {
+                Component: <IconTrash />,
+                color: 'var(--red)'
+              },
+              tooltipMessage: 'Delete this note'
+            },
+            {
+              onClick: () => openDetailsModal(props.row.original.content),
+              icon: {
+                Component: <IconBubbleText />,
+                color: 'var(--primary)'
+              },
+              tooltipMessage: 'See more details'
+            }
+          ]}
+        />
+      )
     })
+
+    //   }
+    // cell: props => {
+    //   return (
+    //     <TableIcons
+    //       openDetailsModal={() => openDetailsModal(props.row.original.content)}
+    //       openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
+    //       openEditModal={() => openModal(props.row.original, editElement.mutate)}
+    //     />
+    //   );
+    // }
   ];
 
   const table = useReactTable({

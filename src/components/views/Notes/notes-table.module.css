@@ -3,7 +3,7 @@
   --mrt-striped-row-background-color: lighten(var(--mrt-base-background-color), 0.04);
   --mrt-mantine-ActionIcon-icon: red;
   /* color: var(--primary); */
-  color: var(--white-text);
+  color: var(--white);
   &[data-with-border='true'] {
     border: none;
   }

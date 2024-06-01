@@ -22,7 +22,7 @@
   &:hover {
     box-shadow: 0 10px 20px -15px var(--primary);
     background: var(--primary);
-    color: var(--white-text);
+    color: var(--white);
     text-decoration: none;
   }
 }

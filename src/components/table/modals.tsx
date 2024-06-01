@@ -1,4 +1,3 @@
-import React from 'react';
 import { Title, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
@@ -34,7 +33,7 @@ export const openDeleteModal = (id: string, deleteFn) => {
       confirm: 'Delete',
       cancel: 'Cancel'
     },
-    confirmProps: { color: 'red' },
+    confirmProps: { color: 'var(--red)' },
     onConfirm: () => deleteFn({ id })
   });
 };

@@ -8,7 +8,7 @@ import {
   StyledH1,
   StyledH2,
   Table,
-  TableIcons
+  TableControls
 } from '@notes/components';
 
 import { useRemoteData } from '@notes/hooks';
@@ -80,19 +80,19 @@ export const Todos = () => {
           </Flex>
         );
       }
-    }),
-    columnHelper.display({
-      header: 'Actions',
-      cell: props => {
-        return (
-          <TableIcons
-            openDetailsModal={() => openDetailsModal(props.row.original.extraContent)}
-            openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-            openEditModal={() => openModal(props.row.original, editElement.mutate)}
-          />
-        );
-      }
     })
+    // columnHelper.display({
+    //   header: 'Actions',
+    //   cell: props => {
+    //     return (
+    //       <TableIcons
+    //         openDetailsModal={() => openDetailsModal(props.row.original.extraContent)}
+    //         openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
+    //         openEditModal={() => openModal(props.row.original, editElement.mutate)}
+    //       />
+    //     );
+    //   }
+    // })
   ];
 
   const table = useReactTable({
