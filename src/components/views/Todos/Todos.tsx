@@ -38,7 +38,6 @@ export const Todos = () => {
     deleteElement
   } = useRemoteData({ key: 'todos' });
 
-  console.log('🚀 ~ isPending:', isPending, isFetching, isLoading);
   const columnHelper = createColumnHelper<Todo>();
 
   const controlsConfig: ControlConfig<Todo> = {
