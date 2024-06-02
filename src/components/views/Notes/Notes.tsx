@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  getTableControls,
   openDeleteModal,
   openDetailsModal,
   openModal,
@@ -20,7 +21,7 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { CollectionType, Note, RemoteNote } from '@notes/types';
+import { CollectionType, ControlConfig, Note, RemoteNote } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 
 export const Notes = () => {
@@ -37,6 +38,27 @@ export const Notes = () => {
 
   const columnHelper = createColumnHelper<Note>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
+
+  const controlsConfig: ControlConfig<Note> = {
+    Edit: {
+      onClick: original => openModal(original, editElement.mutate),
+      icon: <IconEdit />,
+      color: 'var(--secondary)',
+      tooltipMessage: 'Edit this note'
+    },
+    Delete: {
+      onClick: original => openDeleteModal(original.id, deleteElement.mutate),
+      icon: <IconTrash />,
+      color: 'var(--red)',
+      tooltipMessage: 'Delete this note'
+    },
+    Details: {
+      onClick: original => openDetailsModal(original.content),
+      icon: <IconBubbleText />,
+      color: 'var(--primary)',
+      tooltipMessage: 'See more details'
+    }
+  };
 
   // dodać tez last modified on
   const columns = [
@@ -59,46 +81,10 @@ export const Notes = () => {
       header: 'Actions',
       cell: props => (
         <TableControls // controls = {   createEditControl :)
-          controls={[
-            {
-              onClick: () => openModal(props.row.original, editElement.mutate),
-              icon: {
-                Component: <IconEdit />,
-                color: 'var(--secondary)'
-              },
-              tooltipMessage: 'Edit this note'
-            },
-            {
-              onClick: () => openDeleteModal(props.row.original.id as string, deleteElement.mutate),
-              icon: {
-                Component: <IconTrash />,
-                color: 'var(--red)'
-              },
-              tooltipMessage: 'Delete this note'
-            },
-            {
-              onClick: () => openDetailsModal(props.row.original.content),
-              icon: {
-                Component: <IconBubbleText />,
-                color: 'var(--primary)'
-              },
-              tooltipMessage: 'See more details'
-            }
-          ]}
+          controls={getTableControls(props.row.original, controlsConfig)}
         />
       )
     })
-
-    //   }
-    // cell: props => {
-    //   return (
-    //     <TableIcons
-    //       openDetailsModal={() => openDetailsModal(props.row.original.content)}
-    //       openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-    //       openEditModal={() => openModal(props.row.original, editElement.mutate)}
-    //     />
-    //   );
-    // }
   ];
 
   const table = useReactTable({

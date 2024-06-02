@@ -1,4 +1,4 @@
-import { LoadingOverlay, Table as MantineTable, Pagination, Text } from '@mantine/core';
+import { LoadingOverlay, Table as MantineTable, Pagination } from '@mantine/core';
 import { flexRender } from '@tanstack/react-table';
 import classes from './table.module.css';
 
@@ -21,7 +21,13 @@ export function Table({ table, isLoading }) {
         </MantineTable.Thead>
 
         <MantineTable.Tbody className={classes.tableBody}>
-          <LoadingOverlay visible={isLoading} zIndex={1000} overlayProps={{ radius: 'sm', blur: 1 }} />
+          <LoadingOverlay
+            visible={isLoading}
+            zIndex={1000}
+            loaderProps={{ type: 'bars', color: 'var(--secondary)' }}
+            overlayProps={{ radius: 'sm', blur: 1 }}
+            style={{ height: '100%' }}
+          />
           {table.getRowModel().rows.map(row => (
             <MantineTable.Tr key={row.id}>
               {row.getVisibleCells().map(cell => (
@@ -35,10 +41,9 @@ export function Table({ table, isLoading }) {
       </MantineTable>
       <Pagination
         p={4}
-        color={'var(--dark-bg-color)'}
+        color={'var(--secondary)'}
         bg={'var(--primary)'}
         withEdges
-        // ml="auto"
         onChange={pageIndex => table.setPageIndex(pageIndex - 1)}
         onFirstPage={() => table.firstPage()}
         onLastPage={() => table.lastPage()}

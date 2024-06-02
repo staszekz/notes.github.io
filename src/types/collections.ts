@@ -21,3 +21,4 @@ export enum CollectionType {
   NOTES = 'notes',
   TODOS = 'todos'
 }
+

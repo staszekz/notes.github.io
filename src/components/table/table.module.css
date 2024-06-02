@@ -1,6 +1,5 @@
 .tableBody {
   background-color: aliceblue;
-  position: relative;
 }
 
 .tableCell {
@@ -12,4 +11,5 @@
 
 .tableWrapper {
   min-width: 800px;
+  position: relative;
 }

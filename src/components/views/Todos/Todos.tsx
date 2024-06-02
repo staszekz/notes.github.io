@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState } from 'react';
 import { MainLayout } from '@notes/layout';
 import {
+  getTableControls,
   openDeleteModal,
   openDetailsModal,
-  openModal,
   openTodoModal,
   StyledH1,
   StyledH2,
@@ -20,10 +20,11 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { Todo } from '@notes/types';
+import { ControlConfig, Todo } from '@notes/types';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
 import { Checkbox, Flex } from '@mantine/core';
 import dayjs from 'dayjs';
+import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 
 export const Todos = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -37,7 +38,29 @@ export const Todos = () => {
     deleteElement
   } = useRemoteData({ key: 'todos' });
 
+  console.log('🚀 ~ isPending:', isPending, isFetching, isLoading);
   const columnHelper = createColumnHelper<Todo>();
+
+  const controlsConfig: ControlConfig<Todo> = {
+    Edit: {
+      onClick: original => openTodoModal(original, editElement.mutate),
+      icon: <IconEdit />,
+      color: 'var(--secondary)',
+      tooltipMessage: 'Edit this note'
+    },
+    Delete: {
+      onClick: original => openDeleteModal(original.id, deleteElement.mutate),
+      icon: <IconTrash />,
+      color: 'var(--red)',
+      tooltipMessage: 'Delete this note'
+    },
+    Details: {
+      onClick: original => openDetailsModal(original.extraContent),
+      icon: <IconBubbleText />,
+      color: 'var(--primary)',
+      tooltipMessage: 'See more details'
+    }
+  };
 
   // dodać tez last modified on
   const columns = [
@@ -71,8 +94,6 @@ export const Todos = () => {
               color={'var(--primary)'}
               variant="outline"
               onChange={e => {
-                console.log('🚀 ~ props.row.original:', props.row.original);
-
                 editElement.mutate({ element: { ...props.row.original, completed: e.target.checked } });
               }}
               checked={props.cell.getValue()}
@@ -80,19 +101,15 @@ export const Todos = () => {
           </Flex>
         );
       }
+    }),
+    columnHelper.display({
+      header: 'Actions',
+      cell: props => (
+        <TableControls // controls = {   createEditControl :)
+          controls={getTableControls(props.row.original, controlsConfig)}
+        />
+      )
     })
-    // columnHelper.display({
-    //   header: 'Actions',
-    //   cell: props => {
-    //     return (
-    //       <TableIcons
-    //         openDetailsModal={() => openDetailsModal(props.row.original.extraContent)}
-    //         openDeleteModal={() => openDeleteModal(props.row.original.id as string, deleteElement.mutate)}
-    //         openEditModal={() => openModal(props.row.original, editElement.mutate)}
-    //       />
-    //     );
-    //   }
-    // })
   ];
 
   const table = useReactTable({
@@ -113,7 +130,7 @@ export const Todos = () => {
           <StyledH1>My Private Todo tasks</StyledH1>
           <AddNewButton openModal={openTodoModal} />
           <br />
-          <Table table={table} isLoading={isLoading || isFetching} />
+          <Table table={table} isLoading={isPending || isLoading || isFetching} />
           {!todos?.length && <StyledH2>Your todo list is empty! Enter a new task! </StyledH2>}
         </StyledNotesList>
       </MainLayout>
