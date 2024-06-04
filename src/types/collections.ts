@@ -1,7 +1,7 @@
 export type Note = {
   id: string;
   title: string;
-  created: string;
+  createdOn: string;
   content: string;
 };
 
@@ -10,7 +10,7 @@ export type RemoteNote = Omit<Note, 'id'>;
 export type Todo = {
   id: string;
   title: string;
-  created: string;
+  createdOn: string;
   extraContent: string;
   completed: boolean;
   deadline: string;

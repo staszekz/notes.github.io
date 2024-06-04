@@ -1,59 +1,56 @@
 import { DATABASE_URL } from 'src/database/database';
-import { getAuth, getIdToken } from 'firebase/auth';
+import { getIdToken } from 'firebase/auth';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { database, auth } from 'src/database/database';
 
-const auth = getAuth();
+
 
 export async function getCollection({ key }: { key: string }) {
   const uid = auth.currentUser?.uid;
-  const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`)
-  return await res.json()
+  const res = await getDocs(collection(database, key));
+  console.log(res.docs.map(doc => doc.data()))
+  return res.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
 
 
-async function getCollection2({ key }: { key: string }) {
+// async function getCollection2({ key }: { key: string }) {
+//   const uid = auth.currentUser?.uid;
+//   const idToken = await getIdToken(auth.currentUser);
+
+//   try {
+//     const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`, {
+//       headers: {
+//         'Authorization': `Bearer ${idToken}`
+//       }
+//     });
+
+//     if (!res.ok) {
+//       throw new Error(`HTTP error! status: ${res.status}`);
+//     }
+
+//     return await res.json();
+//   } catch (error) {
+//     // If the fetch failed, try refreshing the token and retrying the fetch
+//     const newToken = await getIdToken(auth.currentUser, true);
+//     const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`, {
+//       headers: {
+//         'Authorization': `Bearer ${newToken}`
+//       }
+//     });
+
+//     if (!res.ok) {
+//       throw new Error(`HTTP error! status: ${res.status}`);
+//     }
+
+//     return await res.json();
+//   }
+// }
+
+
+export async function addElementFn<T extends { [x: string]: any }>({ element, key }: { element: T, key: string }) {
   const uid = auth.currentUser?.uid;
-  const idToken = await getIdToken(auth.currentUser);
+  await addDoc(collection(database, key), element);
 
-  try {
-    const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`, {
-      headers: {
-        'Authorization': `Bearer ${idToken}`
-      }
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
-  } catch (error) {
-    // If the fetch failed, try refreshing the token and retrying the fetch
-    const newToken = await getIdToken(auth.currentUser, true);
-    const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`, {
-      headers: {
-        'Authorization': `Bearer ${newToken}`
-      }
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    return await res.json();
-  }
-}
-
-
-export async function addElementFn<T>({ element, key }: { element: T, key: string }) {
-  const uid = auth.currentUser?.uid;
-  const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}.json`, {
-    method: 'POST',
-    body: JSON.stringify(element),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  return await res.json()
 }
 // add option to edit many elements
 export async function editSingleElementFn<T extends { id: string }>({ element, key }: { element: T, key: string }) {
@@ -71,10 +68,8 @@ export async function editSingleElementFn<T extends { id: string }>({ element, k
 // add optipn to delete all / many elements
 export async function deleteSingleElementFn({ id, key }: { id: string, key: string }) {
   const uid = auth.currentUser?.uid;
-  const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}/${id}.json`, {
-    method: 'DELETE',
-  })
-  return await res.json()
+  const _doc = doc(database, key, id)
+  await deleteDoc(_doc);
 }
 // jak to działa ????
 // const fetchWithToken = ky.extend({
