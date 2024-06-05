@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
 import { useForm } from '@tanstack/react-form';
-import dayjs from 'dayjs';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
@@ -8,9 +6,10 @@ import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { CollectionType, Note, RemoteNote } from '@notes/types';
+import { Timestamp } from 'firebase/firestore';
 
 export const NoteManagementForm = ({ data, editNote }: { data: RemoteNote; editNote }) => {
-  const { addElement } = useRemoteData<Note, RemoteNote>({ key: CollectionType.NOTES });
+  const { addElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: data
@@ -18,7 +17,7 @@ export const NoteManagementForm = ({ data, editNote }: { data: RemoteNote; editN
       : {
           title: '',
           content: '',
-          created: dayjs().format('YYYY-MM-DD-HH:mm')
+          createdOn: Timestamp.now()
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {

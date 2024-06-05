@@ -23,7 +23,6 @@ import {
 import { ControlConfig, Todo } from '@notes/types';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
 import { Checkbox, Flex } from '@mantine/core';
-import dayjs from 'dayjs';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 
 export const Todos = () => {
@@ -72,8 +71,11 @@ export const Todos = () => {
     columnHelper.accessor('title', {
       header: 'Title'
     }),
-    columnHelper.accessor('created', {
-      header: 'Created'
+    columnHelper.accessor('createdOn', {
+      header: 'Created',
+      cell: props => {
+        return <span>{props.row.original.createdOn.toDate().toLocaleString()}</span>;
+      }
     }),
     columnHelper.accessor('extraContent', {
       header: 'Extra Content'
@@ -81,7 +83,9 @@ export const Todos = () => {
     columnHelper.accessor('deadline', {
       header: 'Deadline',
       cell: props => {
-        return <span>{dayjs(props.cell.getValue()).format('YYYY/MM/DD')}</span>;
+        console.log('🚀 ~ props:', props);
+
+        return <span>{props.cell.getValue().toDate().toLocaleString()}</span>;
       }
     }),
     columnHelper.accessor('completed', {

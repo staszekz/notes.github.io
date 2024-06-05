@@ -72,7 +72,10 @@ export const Notes = () => {
       header: 'Title'
     }),
     columnHelper.accessor('createdOn', {
-      header: 'Created'
+      header: 'Created',
+      cell: props => {
+        return <span>{props.row.original.createdOn.toDate().toLocaleString()}</span>;
+      }
     }),
     columnHelper.accessor('content', {
       header: 'Content'

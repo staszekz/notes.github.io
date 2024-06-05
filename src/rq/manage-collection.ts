@@ -1,14 +1,12 @@
-import { DATABASE_URL } from 'src/database/database';
 import { getIdToken } from 'firebase/auth';
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
-import { database, auth } from 'src/database/database';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { database, auth } from '@notes/database';
 
 
 
 export async function getCollection({ key }: { key: string }) {
   const uid = auth.currentUser?.uid;
   const res = await getDocs(collection(database, key));
-  console.log(res.docs.map(doc => doc.data()))
   return res.docs.map(doc => ({ ...doc.data(), id: doc.id }));
 }
 
@@ -55,14 +53,17 @@ export async function addElementFn<T extends { [x: string]: any }>({ element, ke
 // add option to edit many elements
 export async function editSingleElementFn<T extends { id: string }>({ element, key }: { element: T, key: string }) {
   const uid = auth.currentUser?.uid;
-  const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}/${element.id}.json`, {
-    method: 'PUT',
-    body: JSON.stringify(element),
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
-  return await res.json()
+  const _doc = doc(database, key, element.id)
+  await updateDoc(_doc, element);
+
+  // const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}/${element.id}.json`, {
+  //   method: 'PUT',
+  //   body: JSON.stringify(element),
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   }
+  // })
+  // return await res.json()
 }
 
 // add optipn to delete all / many elements

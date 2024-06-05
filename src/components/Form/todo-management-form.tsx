@@ -1,15 +1,15 @@
 import { useForm } from '@tanstack/react-form';
-import dayjs from 'dayjs';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
+import { DateInput, DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
 import { CollectionType, RemoteTodo, Todo } from '@notes/types';
+import { Timestamp } from 'firebase/firestore';
 
 export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editNote }) => {
-  const { addElement } = useRemoteData<Todo, RemoteTodo>({ key: CollectionType.TODOS });
+  const { addElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: data
@@ -17,9 +17,9 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
       : {
           title: '',
           extraContent: '',
-          deadline: dayjs().format('YYYY-MM-DD'), // to jest wczorajsza data :D ??
+          deadline: null,
           completed: false,
-          created: dayjs().format('YYYY-MM-DD-HH:mm')
+          createdOn: Timestamp.now()
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
@@ -71,18 +71,22 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
       <Field
         name="deadline"
         validators={{
-          onSubmit: z.string()
+          onSubmit: z.object({
+            seconds: z.number(),
+            nanoseconds: z.number()
+          })
         }}
         children={({ state, handleChange, handleBlur }) => {
           return (
-            <DateInput
+            <DateTimePicker
               size="xl"
-              value={dayjs(state.value)}
+              value={state.value?.toDate()}
               label="Todo deadline"
               minDate={new Date()}
               onBlur={handleBlur}
               onChange={e => {
-                handleChange(dayjs(e).format('YYYY-MM-DD'));
+                const timestamp = Timestamp.fromDate(e as Date);
+                handleChange(timestamp);
               }}
               withAsterisk
               placeholder="Enter todo deadline date"
