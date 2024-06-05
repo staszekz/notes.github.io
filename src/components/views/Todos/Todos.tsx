@@ -131,7 +131,7 @@ export const Todos = () => {
       <MainLayout>
         <StyledNotesList>
           <StyledH1>My Private Todo tasks</StyledH1>
-          <AddNewButton openModal={openTodoModal} />
+          <AddNewButton openNoteModal={openTodoModal} />
           <br />
           <Table table={table} isLoading={isPending || isLoading || isFetching} />
           {!todos?.length && <StyledH2>Your todo list is empty! Enter a new task! </StyledH2>}

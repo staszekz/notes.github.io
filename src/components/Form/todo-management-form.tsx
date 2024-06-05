@@ -3,12 +3,12 @@ import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
-import { DateInput, DateTimePicker } from '@mantine/dates';
+import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
-import { CollectionType, RemoteTodo, Todo } from '@notes/types';
+import { CollectionType, Todo } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 
-export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editNote }) => {
+export const TodoManagementForm = ({ data, editTodo }: { data: Todo; editTodo }) => {
   const { addElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
@@ -23,7 +23,7 @@ export const TodoManagementForm = ({ data, editNote }: { data: RemoteTodo; editN
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
-      data ? editNote({ element: { ...value, id: data.id } }) : addElement.mutate({ element: value });
+      data ? editTodo({ ...value, id: data.id }) : addElement.mutate(value);
       modals.closeAll();
     }
   });

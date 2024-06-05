@@ -3,7 +3,7 @@ import {
   getTableControls,
   openDeleteModal,
   openDetailsModal,
-  openModal,
+  openNoteModal,
   StyledH1,
   StyledH2,
   Table,
@@ -41,7 +41,7 @@ export const Notes = () => {
 
   const controlsConfig: ControlConfig<Note> = {
     Edit: {
-      onClick: original => openModal(original, editElement.mutate),
+      onClick: original => openNoteModal(original, editElement.mutate),
       icon: <IconEdit />,
       color: 'var(--secondary)',
       tooltipMessage: 'Edit this note'
@@ -105,7 +105,7 @@ export const Notes = () => {
     <MainLayout>
       <StyledNotesList>
         <StyledH1>My Private Notes</StyledH1>
-        <AddNewButton openModal={openModal} />
+        <AddNewButton openNoteModal={openNoteModal} />
         <br />
         <Table table={table} isLoading={isLoading || isFetching} />
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}

@@ -10,14 +10,14 @@ export function useRemoteData<T extends { id: string }>({ key }: { key: string }
   });
 
   const addElement = useMutation({
-    mutationFn: async ({ element }: { element: T }): Promise<void> => addElementFn({ element, key }),
+    mutationFn: async (element: T): Promise<void> => addElementFn({ element, key }),
     onSettled: () => {
       collection.refetch();
     }
   });
 
   const editElement = useMutation({
-    mutationFn: async ({ element }: { element: T }): Promise<void> => editSingleElementFn({ element, key }),
+    mutationFn: async (element: T): Promise<void> => editSingleElementFn({ element, key }),
     onSettled: () => {
       collection.refetch();
     }
