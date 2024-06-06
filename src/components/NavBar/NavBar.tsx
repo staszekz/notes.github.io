@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { IconLogout } from '@tabler/icons-react';
-import { ButtonLink } from '@notes/components';
+import { ButtonLink, Title } from '@notes/components';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from '@notes/database';
 import { getAuth, User, getAdditionalUserInfo } from 'firebase/auth';
-import { ActionIcon, Stack, Tooltip, Text, Title } from '@mantine/core';
+import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
 const auth = getAuth(app);
@@ -34,8 +34,8 @@ export const NavBar = () => {
       </StyledButtonPlace>
       {user && (
         <Stack>
-          <Title c={'var(--primary)'} size="h2">
-            hello {user?.providerData?.[0]?.email}
+          <Title ta="left" c={'var(--primary)'}>
+            hello {user?.providerData?.[0]?.displayName}
           </Title>
           <Text c={'var(--primary)'}>
             Last logged in: <br />

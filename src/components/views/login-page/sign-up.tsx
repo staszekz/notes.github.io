@@ -1,107 +1,153 @@
-import { useState } from 'react';
-import { ThemeProvider } from 'styled-components';
-import { StyledInput, StyledH1, ChangedStyledButton } from '@notes/components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-import { app } from '../../../database/database';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { Title } from '@notes/components';
+import { auth } from '@notes/database';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { theme } from '@notes/theme';
+import { useForm } from '@tanstack/react-form';
+import { zodValidator } from '@tanstack/zod-form-adapter';
+import { Button, TextInput } from '@mantine/core';
+import { IconLogin2 } from '@tabler/icons-react';
+import { z } from 'zod';
+import classes from './style.module.css';
 
 const addTokensToLocalStorage = (token, refreshToken) => {
   localStorage.setItem('notes-token', token);
   localStorage.setItem('notes-refresh-token', refreshToken);
 };
 
-const auth = getAuth(app);
-
-export const SignUp = ({ isSignUp }) => {
+export const SignUp = () => {
   const initialState = {
     email: '',
     password: '',
     name: '',
     redirect: false
   };
-  const navigate = useNavigate();
-  const [state, setState] = useState(initialState);
-  const { email, password, name, redirect } = state;
 
-  const handleOnChange = e => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleOnSubmit = async e => {
-    e.preventDefault();
-    if (!isSignUp) {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(userCredentials =>
-          userCredentials.user.updateProfile({
-            displayName: name
-          })
-        )
-        .then(() => {
-          navigate('/home');
-        })
-        .catch(err => {
-          alert(err.message);
-        });
-    } else {
-      signInWithEmailAndPassword(auth, email, password)
-        .then(credentials => {
-          console.log('🚀 ~ credentials:', credentials);
-          addTokensToLocalStorage(
-            credentials.user.stsTokenManager.accessToken,
-            credentials.user.stsTokenManager.refreshToken
-          );
-          navigate('/home');
-        })
-        .catch(err => {
-          // TODO: handle error into popup window
-          alert(err.message);
-        });
+  const { Field, Subscribe, handleSubmit, state } = useForm({
+    defaultValues: initialState,
+    validatorAdapter: zodValidator,
+    onSubmit: async () => {
+      handleOnSubmit();
     }
+  });
+  const navigate = useNavigate();
+
+  const handleOnSubmit = async () => {
+    createUserWithEmailAndPassword(auth, state.values.email, state.values.password)
+      .then(userCredentials => {
+        updateProfile(userCredentials.user, {
+          displayName: state.values.name
+        });
+      })
+      .then(() => {
+        navigate('/home');
+      })
+      .catch(err => {
+        alert(err.message);
+      });
   };
 
   return (
     <>
-      <form onSubmit={handleOnSubmit}>
-        <StyledH1>Please {isSignUp ? 'Sign In' : 'Sign Up'}</StyledH1>
-        {!isSignUp && (
-          <>
-            <label htmlFor="name">Name</label>
-            <StyledInput
-              name="name"
-              type="text"
-              onChange={handleOnChange}
-              // onBlur={handleBlur}
-              value={name}
-            />
-          </>
-        )}
-        <label htmlFor="email">Email</label>
-        <StyledInput
+      <form
+        className="form-wrapper"
+        onSubmit={e => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleSubmit();
+        }}
+      >
+        <Title pb={16} c={'var(--white'}>
+          {/* nie używa czcionki Nunito */}
+          Please sign-up
+        </Title>
+        <Field
+          name="name"
+          validators={{
+            onSubmit: z.string().trim(),
+            onBlur: z.string()
+          }}
+          children={({ state, handleChange, handleBlur }) => {
+            return (
+              <TextInput
+                className={classes.textInput}
+                data-autofocus
+                size="xl"
+                defaultValue={state.value}
+                onChange={e => handleChange(e.target.value)}
+                onBlur={handleBlur}
+                withAsterisk
+                label="Name"
+                placeholder="How should we call you "
+                error={state.meta?.errors[0]}
+              />
+            );
+          }}
+        />
+        <Field
           name="email"
-          type="email"
-          onChange={handleOnChange}
-          // onBlur={handleBlur}
-          value={email}
+          validators={{
+            onSubmit: z.string().email('Invalid e-mail').trim(),
+            onBlur: z.string().email('Invalid e-mail')
+          }}
+          children={({ state, handleChange, handleBlur }) => {
+            return (
+              <TextInput
+                className={classes.textInput}
+                data-autofocus
+                size="xl"
+                defaultValue={state.value}
+                onChange={e => handleChange(e.target.value)}
+                onBlur={handleBlur}
+                withAsterisk
+                label="E-mail"
+                placeholder="Enter e-mail address"
+                error={state.meta?.errors[0]}
+              />
+            );
+          }}
         />
-
-        <label htmlFor="password">Password</label>
-        <StyledInput
+        <Field
           name="password"
-          type="password"
-          onChange={handleOnChange}
-          // onBlur={handleBlur}
-          value={password}
+          validators={{
+            onSubmit: z.string().trim().min(8, 'Password must be at least 8 characters')
+          }}
+          children={({ state, handleChange, handleBlur }) => {
+            return (
+              <TextInput
+                className={classes.textInput}
+                data-autofocus
+                size="xl"
+                type="password"
+                defaultValue={state.value}
+                onChange={e => handleChange(e.target.value)}
+                onBlur={handleBlur}
+                withAsterisk
+                label="Password"
+                placeholder="Enter password"
+                error={state.meta?.errors[0]}
+              />
+            );
+          }}
         />
-
-        <ChangedStyledButton as="button" type="submit">
-          <FontAwesomeIcon icon={faSignInAlt} size="lg" />
-        </ChangedStyledButton>
+        <Subscribe
+          selector={state => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => {
+            return (
+              <Button
+                className={classes.submitButton}
+                loading={isSubmitting}
+                variant="outline"
+                type="submit"
+                disabled={!canSubmit}
+              >
+                <IconLogin2 stroke={1.5} />
+              </Button>
+            );
+          }}
+        />
+        <Button bd={'1px solid var(--primary)'} c={'var(--primary)'} variant="outline">
+          Go to log-in page
+        </Button>
       </form>
     </>
   );

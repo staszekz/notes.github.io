@@ -1,15 +1,13 @@
-import { StyledH1 } from '@notes/components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { app } from '../../../database/database';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { ActionIcon, Box, Button, TextInput } from '@mantine/core';
+import { Button, Text, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import classes from './style.module.css';
 import { IconLogin2 } from '@tabler/icons-react';
+import { Title } from '@notes/components';
 
 const addTokensToLocalStorage = (token, refreshToken) => {
   localStorage.setItem('notes-token', token);
@@ -26,11 +24,8 @@ export const SignIn = () => {
   const initialState: SignInValues = {
     email: '',
     password: ''
-    // redirect: false
   };
   const navigate = useNavigate();
-  // const [state, setState] = useState(initialState);
-  // const { email, password, redirect } = state;
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: initialState,
@@ -43,7 +38,6 @@ export const SignIn = () => {
   const handleOnSubmit = async (state: SignInValues) => {
     signInWithEmailAndPassword(auth, state.email, state.password)
       .then(credentials => {
-        console.log('🚀 ~ credentials:', credentials);
         addTokensToLocalStorage(
           credentials.user.stsTokenManager.accessToken,
           credentials.user.stsTokenManager.refreshToken
@@ -66,7 +60,10 @@ export const SignIn = () => {
           handleSubmit();
         }}
       >
-        <StyledH1>Please log in</StyledH1>
+        <Title pb={16} c={'var(--white'}>
+          {/* nie używa czcionki Nunito */}
+          Please log in
+        </Title>
 
         <Field
           name="email"
@@ -84,7 +81,7 @@ export const SignIn = () => {
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
                 withAsterisk
-                label="User e-mail"
+                label="E-mail"
                 placeholder="Enter e-mail address"
                 error={state.meta?.errors[0]}
               />
@@ -107,7 +104,7 @@ export const SignIn = () => {
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
                 withAsterisk
-                label="User password"
+                label="Password"
                 placeholder="Enter password"
                 error={state.meta?.errors[0]}
               />
@@ -130,6 +127,9 @@ export const SignIn = () => {
             );
           }}
         />
+        <Button bd={'1px solid var(--primary)'} c={'var(--primary)'} variant="outline">
+          Go back to sign-in page
+        </Button>
       </form>
     </>
   );

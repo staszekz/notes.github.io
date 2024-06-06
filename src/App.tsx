@@ -24,8 +24,8 @@ export function App() {
                 <Route path="/todos" element={<Todos />} />
                 <Route path="/notes" element={<Notes />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/signin" element={<SignIn isSignUp />} />
-                {/* <Route path="/signup" element={<SignUp isSignUp={false} />} /> */}
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
               </Routes>
             </ThemeProvider>
           </ModalsProvider>
@@ -35,4 +35,5 @@ export function App() {
   );
 }
 
-// zrobic panel użytkownika z usuwaniem, zmiana Nazwy, zmiana hasła, zmiana emaila etc
+// zrobic panel użytkownika z usuwaniem, zmiana Nazwy,
+//  zmiana hasła, zmiana emaila etc
