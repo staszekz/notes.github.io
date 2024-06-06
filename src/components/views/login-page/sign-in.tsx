@@ -119,9 +119,6 @@ export const SignIn = () => {
           children={([canSubmit, isSubmitting]) => {
             return (
               <Button
-                // c={'var(--primary)'}
-                // w={'20%'}
-                // radius={'lg'}
                 className={classes.submitButton}
                 loading={isSubmitting}
                 variant="outline"

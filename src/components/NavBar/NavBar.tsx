@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { IconLogout } from '@tabler/icons-react';
-import { StyledH1, ButtonLink } from '@notes/components';
+import { ButtonLink } from '@notes/components';
 import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
 import { app } from '@notes/database';
 import { getAuth, User, getAdditionalUserInfo } from 'firebase/auth';
-import { ActionIcon, Tooltip } from '@mantine/core';
+import { ActionIcon, Stack, Tooltip, Text, Title } from '@mantine/core';
 import { useNavigate } from 'react-router';
 
 const auth = getAuth(app);
@@ -22,7 +22,6 @@ export const NavBar = () => {
     const unsubscribe = auth.onAuthStateChanged(user => {
       setUser(user);
     });
-    // setUser(unsubscribe());
     return () => unsubscribe();
   }, []);
 
@@ -34,21 +33,19 @@ export const NavBar = () => {
         <ButtonLink to="/notes">notes</ButtonLink>
       </StyledButtonPlace>
       {user && (
-        <>
-          <StyledH1>hello {user?.providerData?.[0]?.email}</StyledH1>
-          {/* <h6 style={{ color: 'white' }}>
-              Last logged in: {this.state.user.metadata.lastSignInTime}{' '}
-            </h6> */}
-        </>
+        <Stack>
+          <Title c={'var(--primary)'} size="h2">
+            hello {user?.providerData?.[0]?.email}
+          </Title>
+          <Text c={'var(--primary)'}>
+            Last logged in: <br />
+            {user.metadata.lastSignInTime}{' '}
+          </Text>
+        </Stack>
       )}
       <Tooltip id="logout" label="log out">
-        <ActionIcon variant="filled" aria-label="logout" onClick={handleSignOutClick}>
-          <IconLogout />
-          {/* to="/"
-        icon={} 
-        onClick={handleSignOutClick}
-        data-tip
-        data-for="logout" */}
+        <ActionIcon mr={16} variant="outlined" aria-label="logout" bg={'transparent'} onClick={handleSignOutClick}>
+          <IconLogout stroke={1} />
         </ActionIcon>
       </Tooltip>
     </StyledBar>

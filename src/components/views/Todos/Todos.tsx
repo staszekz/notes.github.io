@@ -83,8 +83,6 @@ export const Todos = () => {
     columnHelper.accessor('deadline', {
       header: 'Deadline',
       cell: props => {
-        console.log('🚀 ~ props:', props);
-
         return <span>{props.cell.getValue().toDate().toLocaleString()}</span>;
       }
     }),
@@ -97,7 +95,7 @@ export const Todos = () => {
               color={'var(--primary)'}
               variant="outline"
               onChange={e => {
-                editElement.mutate({ element: { ...props.row.original, completed: e.target.checked } });
+                editElement.mutate({ ...props.row.original, completed: e.target.checked });
               }}
               checked={props.cell.getValue()}
             />
@@ -107,11 +105,7 @@ export const Todos = () => {
     }),
     columnHelper.display({
       header: 'Actions',
-      cell: props => (
-        <TableControls // controls = {   createEditControl :)
-          controls={getTableControls(props.row.original, controlsConfig)}
-        />
-      )
+      cell: props => <TableControls controls={getTableControls(props.row.original, controlsConfig)} />
     })
   ];
 

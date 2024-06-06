@@ -24,7 +24,7 @@ export function useRemoteData<T extends { id: string }>({ key }: { key: string }
   });
 
   const deleteElement = useMutation({
-    mutationFn: async ({ id }: { id: string }): Promise<void> => deleteSingleElementFn({ id, key }),
+    mutationFn: async (id: string): Promise<void> => deleteSingleElementFn({ id, key }),
     onSettled: () => {
       collection.refetch();
     }

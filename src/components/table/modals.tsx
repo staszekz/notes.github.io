@@ -29,7 +29,7 @@ export const openDeleteModal = (id: string, deleteFn) => {
       cancel: 'Cancel'
     },
     confirmProps: { color: 'var(--red)' },
-    onConfirm: () => deleteFn({ id })
+    onConfirm: () => deleteFn(id)
   });
 };
 
