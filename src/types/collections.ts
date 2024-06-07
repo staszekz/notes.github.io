@@ -1,7 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 
 export type Note = {
-  id?: string;
   title: string;
   createdOn: Timestamp;
   content: string;

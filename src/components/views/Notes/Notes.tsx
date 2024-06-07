@@ -41,7 +41,7 @@ export const Notes = () => {
 
   const controlsConfig: ControlConfig<Note> = {
     Edit: {
-      onClick: original => openNoteModal(original, editElement.mutate),
+      onClick: (original, id) => openNoteModal(original, editElement.mutate),
       icon: <IconEdit />,
       color: 'var(--secondary)',
       tooltipMessage: 'Edit this note'

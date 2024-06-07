@@ -1,7 +1,7 @@
 import { keepPreviousData, useMutation, useQuery } from '@tanstack/react-query';
 import { addElementFn, editSingleElementFn, getCollection, deleteSingleElementFn } from '@notes/rq';
 
-export function useRemoteData<T extends { id: string }>({ key }: { key: string }) {
+export function useRemoteData<T extends {}>({ key }: { key: string }) {
   const collection = useQuery({
     queryKey: [key],
     queryFn: async () => await getCollection({ key }),
@@ -17,7 +17,8 @@ export function useRemoteData<T extends { id: string }>({ key }: { key: string }
   });
 
   const editElement = useMutation({
-    mutationFn: async (element: T): Promise<void> => editSingleElementFn({ element, key }),
+    mutationFn: async ({ element, id }: { element: T; id: string }): Promise<void> =>
+      editSingleElementFn({ element, key, id }),
     onSettled: () => {
       collection.refetch();
     }

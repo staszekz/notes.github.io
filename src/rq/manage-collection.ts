@@ -4,10 +4,10 @@ import { database, auth } from '@notes/database';
 
 
 
-export async function getCollection({ key }: { key: string }) {
+export async function getCollection<T>({ key }: { key: string }): Promise<(T & { id: string })[]> {
   const uid = auth.currentUser?.uid;
   const res = await getDocs(collection(database, key));
-  return res.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  return res.docs.map((doc) => ({ ...doc.data() as T, id: doc.id }));
 }
 
 
@@ -51,9 +51,9 @@ export async function addElementFn<T extends { [x: string]: any }>({ element, ke
 
 }
 // add option to edit many elements
-export async function editSingleElementFn<T extends { id: string }>({ element, key }: { element: T, key: string }) {
+export async function editSingleElementFn<T extends {}>({ element, key, id }: { element: T, key: string, id: string }) {
   const uid = auth.currentUser?.uid;
-  const _doc = doc(database, key, element.id)
+  const _doc = doc(database, key, id)
   await updateDoc(_doc, element);
 
   // const res = await fetch(`${DATABASE_URL}/users/${uid}/${key}/${element.id}.json`, {
