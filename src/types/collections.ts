@@ -6,15 +6,17 @@ export type Note = {
   content: string;
 };
 
+export type NoteWithId = Note & { id: string }
 
 export type Todo = {
-  id?: string;
   title: string;
   createdOn: Timestamp;
   extraContent: string;
   completed: boolean;
-  deadline: Timestamp;
+  deadline: Timestamp | null;
 };
+
+export type TodoWithId = Todo & { id: string }
 
 export enum CollectionType {
   NOTES = 'notes',

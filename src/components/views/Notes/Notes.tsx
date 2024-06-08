@@ -21,7 +21,7 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { CollectionType, ControlConfig, Note } from '@notes/types';
+import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 
 export const Notes = () => {
@@ -31,17 +31,15 @@ export const Notes = () => {
   });
   const {
     collection: { isPending, isFetching, isLoading, data: notes },
-    addElement,
-    editElement,
     deleteElement
   } = useRemoteData<Note>({ key: CollectionType.NOTES });
 
-  const columnHelper = createColumnHelper<Note>();
+  const columnHelper = createColumnHelper<NoteWithId>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
-  const controlsConfig: ControlConfig<Note> = {
+  const controlsConfig: ControlConfig<NoteWithId> = {
     Edit: {
-      onClick: (original, id) => openNoteModal(original, editElement.mutate),
+      onClick: openNoteModal,
       icon: <IconEdit />,
       color: 'var(--secondary)',
       tooltipMessage: 'Edit this note'

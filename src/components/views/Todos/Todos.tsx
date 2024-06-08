@@ -20,7 +20,7 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { ControlConfig, Todo } from '@notes/types';
+import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
 import { AddNewButton } from 'src/components/button-link/add-new-button';
 import { Checkbox, Flex } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
@@ -32,16 +32,15 @@ export const Todos = () => {
   });
   const {
     collection: { isPending, isFetching, isLoading, data: todos },
-    addElement,
     editElement,
     deleteElement
-  } = useRemoteData({ key: 'todos' });
+  } = useRemoteData<Todo>({ key: CollectionType.TODOS });
 
-  const columnHelper = createColumnHelper<Todo>();
+  const columnHelper = createColumnHelper<TodoWithId>();
 
-  const controlsConfig: ControlConfig<Todo> = {
+  const controlsConfig: ControlConfig<TodoWithId> = {
     Edit: {
-      onClick: original => openTodoModal(original, editElement.mutate),
+      onClick: openTodoModal,
       icon: <IconEdit />,
       color: 'var(--secondary)',
       tooltipMessage: 'Edit this note'
@@ -83,7 +82,7 @@ export const Todos = () => {
     columnHelper.accessor('deadline', {
       header: 'Deadline',
       cell: props => {
-        return <span>{props.cell.getValue().toDate().toLocaleString()}</span>;
+        return <span>{props.cell.getValue()?.toDate().toLocaleString() || '---'}</span>;
       }
     }),
     columnHelper.accessor('completed', {
@@ -95,7 +94,10 @@ export const Todos = () => {
               color={'var(--primary)'}
               variant="outline"
               onChange={e => {
-                editElement.mutate({ ...props.row.original, completed: e.target.checked });
+                editElement.mutate({
+                  element: { ...props.row.original, completed: e.target.checked },
+                  id: props.row.original.id
+                });
               }}
               checked={props.cell.getValue()}
             />

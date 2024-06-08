@@ -1,21 +1,21 @@
 import { Title, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
-import { Note, Todo } from '@notes/types';
+import { Note, NoteWithId, Todo, TodoWithId } from '@notes/types';
 
-export function openNoteModal(data: Note, edit: (id: string, element: Note) => void) {
+export function openNoteModal(data?: NoteWithId) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
-    children: <NoteManagementForm data={data} editNote={data => edit(id, data)} />
+    children: <NoteManagementForm data={data} />
   });
 }
 
-export function openTodoModal(data: Todo, edit) {
+export function openTodoModal(data?: TodoWithId) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
-    children: <TodoManagementForm data={data} editTodo={edit} />
+    children: <TodoManagementForm data={data} />
   });
 }
 

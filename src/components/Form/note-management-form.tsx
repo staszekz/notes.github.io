@@ -5,21 +5,16 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { CollectionType, Note } from '@notes/types';
+import { CollectionType, Note, NoteWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
+import { removeId } from '@notes/utils';
 
-export const NoteManagementForm = ({
-  data,
-  editNote
-}: {
-  data: Note;
-  editNote: (element: Note, id: string) => void;
-}) => {
-  const { addElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
+export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
+  const { addElement, editElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
 
-  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
+  const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
-      ? data
+      ? removeId<NoteWithId>(data)
       : {
           title: '',
           content: '',
@@ -27,7 +22,7 @@ export const NoteManagementForm = ({
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
-      data ? editNote(value) : addElement.mutate(value); // TODO: id in types
+      data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
       modals.closeAll();
     }
   });

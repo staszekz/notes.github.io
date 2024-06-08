@@ -5,15 +5,16 @@ import { useRemoteData } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
-import { CollectionType, Todo } from '@notes/types';
+import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
+import { removeId } from '@notes/utils';
 
-export const TodoManagementForm = ({ data, editTodo }: { data: Todo; editTodo }) => {
-  const { addElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
+export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
+  const { addElement, editElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
 
-  const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
+  const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
-      ? data
+      ? removeId<TodoWithId>(data)
       : {
           title: '',
           extraContent: '',
@@ -23,7 +24,7 @@ export const TodoManagementForm = ({ data, editTodo }: { data: Todo; editTodo })
         },
     validatorAdapter: zodValidator,
     onSubmit: async ({ value }) => {
-      data ? editTodo({ ...value, id: data.id }) : addElement.mutate(value);
+      data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
       modals.closeAll();
     }
   });
@@ -71,10 +72,12 @@ export const TodoManagementForm = ({ data, editTodo }: { data: Todo; editTodo })
       <Field
         name="deadline"
         validators={{
-          onSubmit: z.object({
-            seconds: z.number(),
-            nanoseconds: z.number()
-          })
+          onSubmit: z
+            .object({
+              seconds: z.number().optional(),
+              nanoseconds: z.number().optional()
+            })
+            .optional()
         }}
         children={({ state, handleChange, handleBlur }) => {
           return (
@@ -88,7 +91,6 @@ export const TodoManagementForm = ({ data, editTodo }: { data: Todo; editTodo })
                 const timestamp = Timestamp.fromDate(e as Date);
                 handleChange(timestamp);
               }}
-              withAsterisk
               placeholder="Enter todo deadline date"
               error={state.meta?.errors[0]}
             />
