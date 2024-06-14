@@ -20,6 +20,7 @@ export type TodoWithId = Todo & { id: string }
 
 export enum CollectionType {
   NOTES = 'notes',
-  TODOS = 'todos'
+  TODOS = 'todos',
+  USERS = 'users'
 }
 

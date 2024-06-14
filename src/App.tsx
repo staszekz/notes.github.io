@@ -16,9 +16,9 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <AuthProvider>
-        <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
-          <MantineProvider>
+      <MantineProvider>
+        <AuthProvider>
+          <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
             <ModalsProvider>
               <ThemeProvider theme={theme}>
                 <Routes>
@@ -31,9 +31,9 @@ export function App() {
                 </Routes>
               </ThemeProvider>
             </ModalsProvider>
-          </MantineProvider>
-        </BrowserRouter>
-      </AuthProvider>
+          </BrowserRouter>
+        </AuthProvider>
+      </MantineProvider>
     </QueryClientProvider>
   );
 }

@@ -6,24 +6,17 @@ import { app } from '@notes/database';
 import { getAuth, User, getAdditionalUserInfo } from 'firebase/auth';
 import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
 import { useNavigate } from 'react-router';
+import { useAuthContext } from '@notes/hooks';
 
 const auth = getAuth(app);
 
 export const NavBar = () => {
-  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-
+  const { user } = useAuthContext();
   const handleSignOutClick = () => {
     auth.signOut();
     navigate('/');
   };
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   return (
     <StyledBar>

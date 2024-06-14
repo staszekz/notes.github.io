@@ -1,4 +1,3 @@
-import React from 'react';
 import { MainLayout } from '@notes/layout';
 import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink, StyledH1 } from '@notes/components';
 

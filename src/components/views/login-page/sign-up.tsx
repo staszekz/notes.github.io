@@ -28,18 +28,8 @@ export const SignUp = () => {
   const { signUp } = useAuthContext();
 
   const handleOnSubmit = async () => {
-    signUp(state.values.email, state.values.password)
-      .then(userCredentials => {
-        updateProfile(userCredentials.user, {
-          displayName: state.values.name
-        });
-      })
-      .then(() => {
-        navigate('/home');
-      })
-      .catch(err => {
-        alert(err.message);
-      });
+    await signUp(state.values.email, state.values.password, state.values.name);
+    navigate('/home');
   };
 
   return (
