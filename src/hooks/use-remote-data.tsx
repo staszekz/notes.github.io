@@ -33,3 +33,5 @@ export function useRemoteData<T extends {}>({ key }: { key: string }) {
 
   return { collection, addElement, editElement, deleteElement };
 }
+
+// transformData do daty, select

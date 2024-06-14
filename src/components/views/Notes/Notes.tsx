@@ -23,12 +23,17 @@ import {
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
+import { useAuthContext } from 'src/hooks/use-auth-context';
 
 export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   });
+
+  // const { user, loading } = useAuthContext();
+  // console.log('🚀 ~ user:', user, 'loading', loading);
+
   const {
     collection: { isPending, isFetching, isLoading, data: notes },
     deleteElement

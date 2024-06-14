@@ -1,24 +1,22 @@
 import React from 'react';
-import { HomePageLayout } from '@notes/layout';
+import { MainLayout } from '@notes/layout';
 import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink, StyledH1 } from '@notes/components';
 
 export const Home = ({}) => {
   return (
-    <>
-      <HomePageLayout>
-        <StyledHomepageWrapper>
-          <StyledH1>In this app you can store your: </StyledH1>
-          <StyledHomeButtonWrapper>
-            <ButtonLink large to="/todos">
-              todos
-            </ButtonLink>
-            <ButtonLink large to="/notes">
-              notes
-            </ButtonLink>
-          </StyledHomeButtonWrapper>
-        </StyledHomepageWrapper>
-      </HomePageLayout>
-    </>
+    <MainLayout>
+      <StyledHomepageWrapper>
+        <StyledH1>In this app you can store your: </StyledH1>
+        <StyledHomeButtonWrapper>
+          <ButtonLink large to="/todos">
+            todos
+          </ButtonLink>
+          <ButtonLink large to="/notes">
+            notes
+          </ButtonLink>
+        </StyledHomeButtonWrapper>
+      </StyledHomepageWrapper>
+    </MainLayout>
   );
 };
 

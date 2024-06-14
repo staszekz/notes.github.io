@@ -1,20 +1,12 @@
-import { app } from '../../../database/database';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button, Text, TextInput } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import classes from './style.module.css';
 import { IconLogin2 } from '@tabler/icons-react';
 import { Title } from '@notes/components';
-
-const addTokensToLocalStorage = (token, refreshToken) => {
-  localStorage.setItem('notes-token', token);
-  localStorage.setItem('notes-refresh-token', refreshToken);
-};
-
-const auth = getAuth(app);
+import { useAuthContext } from 'src/hooks/use-auth-context';
 
 type SignInValues = {
   email: string;
@@ -26,6 +18,7 @@ export const SignIn = () => {
     password: ''
   };
   const navigate = useNavigate();
+  const { signIn } = useAuthContext();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: initialState,
@@ -36,12 +29,8 @@ export const SignIn = () => {
   });
 
   const handleOnSubmit = async (state: SignInValues) => {
-    signInWithEmailAndPassword(auth, state.email, state.password)
-      .then(credentials => {
-        addTokensToLocalStorage(
-          credentials.user.stsTokenManager.accessToken,
-          credentials.user.stsTokenManager.refreshToken
-        );
+    signIn(state.email, state.password)
+      .then(() => {
         navigate('/home');
       })
       .catch(err => {
@@ -61,7 +50,6 @@ export const SignIn = () => {
         }}
       >
         <Title pb={16} c={'var(--white'}>
-          {/* nie używa czcionki Nunito */}
           Please log in
         </Title>
 

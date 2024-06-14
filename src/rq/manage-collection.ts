@@ -46,8 +46,10 @@ export async function getCollection<T>({ key }: { key: string }): Promise<(T & {
 
 
 export async function addElementFn<T extends { [x: string]: any }>({ element, key }: { element: T, key: string }) {
-  const uid = auth.currentUser?.uid;
-  await addDoc(collection(database, key), element);
+  const uid = auth.currentUser?.uid || 'sdgfdgdf';
+  console.log('🚀 ~ uid:', uid)
+
+  await addDoc(collection(database, key, uid), element);
 
 }
 // add option to edit many elements

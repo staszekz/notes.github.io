@@ -1,6 +1,5 @@
 import { Title } from '@notes/components';
-import { auth } from '@notes/database';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
@@ -8,11 +7,7 @@ import { Button, TextInput } from '@mantine/core';
 import { IconLogin2 } from '@tabler/icons-react';
 import { z } from 'zod';
 import classes from './style.module.css';
-
-const addTokensToLocalStorage = (token, refreshToken) => {
-  localStorage.setItem('notes-token', token);
-  localStorage.setItem('notes-refresh-token', refreshToken);
-};
+import { useAuthContext } from '@notes/hooks';
 
 export const SignUp = () => {
   const initialState = {
@@ -30,9 +25,10 @@ export const SignUp = () => {
     }
   });
   const navigate = useNavigate();
+  const { signUp } = useAuthContext();
 
   const handleOnSubmit = async () => {
-    createUserWithEmailAndPassword(auth, state.values.email, state.values.password)
+    signUp(state.values.email, state.values.password)
       .then(userCredentials => {
         updateProfile(userCredentials.user, {
           displayName: state.values.name
@@ -57,7 +53,6 @@ export const SignUp = () => {
         }}
       >
         <Title pb={16} c={'var(--white'}>
-          {/* nie używa czcionki Nunito */}
           Please sign-up
         </Title>
         <Field

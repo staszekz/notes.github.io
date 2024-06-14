@@ -2,10 +2,10 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './App.js';
 import './index.css';
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 // import { routeTree } from './routeTree.gen'
 
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 // const TanStackRouterDevtools =
 //   process.env.NODE_ENV === 'production'
@@ -20,17 +20,17 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools'
 //       )
 const router = createRouter({
   // routeTree,
-  defaultPreload: 'intent',
-})
+  defaultPreload: 'intent'
+});
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    router: typeof router;
   }
 }
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-  {/* <RouterProvider router={router} /> */}
-  {/* <TanStackRouterDevtools router={router}/> */}
+    {/* <RouterProvider router={router} /> */}
+    {/* <TanStackRouterDevtools router={router}/> */}
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
