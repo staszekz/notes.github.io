@@ -4,7 +4,7 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import classes from './style.module.css';
-import { IconLogin2 } from '@tabler/icons-react';
+import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 
@@ -18,7 +18,7 @@ export const SignIn = () => {
     password: ''
   };
   const navigate = useNavigate();
-  const { signIn } = useAuthContext();
+  const { signIn, setLoadingState } = useAuthContext();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: initialState,
@@ -29,13 +29,16 @@ export const SignIn = () => {
   });
 
   const handleOnSubmit = async (state: SignInValues) => {
+    setLoadingState(true);
     signIn(state.email, state.password)
       .then(() => {
         navigate('/home');
+        setLoadingState(false);
       })
       .catch(err => {
         // TODO: handle error into popup window
         alert(err.message);
+        navigate('/');
       });
   };
 
@@ -115,10 +118,12 @@ export const SignIn = () => {
             );
           }}
         />
-        <Button bd={'1px solid var(--primary)'} c={'var(--primary)'} variant="outline">
+        <Button bd={'1px solid var(--primary)'} leftSection={<IconLogin />} c={'var(--primary)'} variant="outline">
           Go back to sign-in page
         </Button>
       </form>
     </>
   );
 };
+
+// zrobić defaukltowy button zeby miał dwa rodzaje kolorów =>zeby brał tez wsztskie propsy takie same ...props

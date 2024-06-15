@@ -1,20 +1,15 @@
-import { useState, useEffect } from 'react';
 import { IconLogout } from '@tabler/icons-react';
 import { ButtonLink, Title } from '@notes/components';
-import { StyledBar, StyledButtonPlace, StyledButtonIcon } from './styled';
-import { app } from '@notes/database';
-import { getAuth, User, getAdditionalUserInfo } from 'firebase/auth';
+import { StyledBar, StyledButtonPlace } from './styled';
 import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
 import { useNavigate } from 'react-router';
 import { useAuthContext } from '@notes/hooks';
 
-const auth = getAuth(app);
-
 export const NavBar = () => {
   const navigate = useNavigate();
-  const { user } = useAuthContext();
+  const { user, signUserOut } = useAuthContext();
   const handleSignOutClick = () => {
-    auth.signOut();
+    signUserOut();
     navigate('/');
   };
 

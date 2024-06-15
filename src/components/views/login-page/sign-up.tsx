@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
-import { IconLogin2 } from '@tabler/icons-react';
+import { IconLogin2, IconLogin } from '@tabler/icons-react';
 import { z } from 'zod';
 import classes from './style.module.css';
 import { useAuthContext } from '@notes/hooks';
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { database } from '@notes/database';
+import { CollectionType } from '@notes/types';
+import { FirebaseError } from 'firebase/app';
 
 export const SignUp = () => {
   const initialState = {
@@ -25,11 +29,19 @@ export const SignUp = () => {
     }
   });
   const navigate = useNavigate();
-  const { signUp } = useAuthContext();
+  const { signUp, setLoadingState } = useAuthContext();
 
   const handleOnSubmit = async () => {
-    await signUp(state.values.email, state.values.password, state.values.name);
-    navigate('/home');
+    setLoadingState(true);
+    try {
+      const { user } = await signUp(state.values.email, state.values.password, state.values.name);
+      await setDoc(doc(collection(database, CollectionType.USERS), user.uid), {});
+      setLoadingState(false);
+      navigate('/home');
+    } catch (error) {
+      // navigate('/');
+      throw new FirebaseError(error.code, error?.message);
+    }
   };
 
   return (
@@ -130,7 +142,7 @@ export const SignUp = () => {
             );
           }}
         />
-        <Button bd={'1px solid var(--primary)'} c={'var(--primary)'} variant="outline">
+        <Button bd={'1px solid var(--primary)'} leftSection={<IconLogin />} c={'var(--primary)'} variant="outline">
           Go to log-in page
         </Button>
       </form>
