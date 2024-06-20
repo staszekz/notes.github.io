@@ -4,7 +4,7 @@ import { addElementFn, editSingleElementFn, getCollection, deleteSingleElementFn
 export function useRemoteData<T extends {}>({ key }: { key: string }) {
   const collection = useQuery({
     queryKey: [key],
-    queryFn: async () => await getCollection<T>({ key }),
+    queryFn: async (): Promise<(T & { id: string })[]> => await getCollection<T>({ key }),
     staleTime: 30000,
     placeholderData: keepPreviousData
   });

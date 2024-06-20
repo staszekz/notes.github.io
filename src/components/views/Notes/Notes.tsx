@@ -85,11 +85,7 @@ export const Notes = () => {
     }),
     columnHelper.display({
       header: 'Actions',
-      cell: props => (
-        <TableControls // controls = {   createEditControl :)
-          controls={getTableControls(props.row.original, controlsConfig)}
-        />
-      )
+      cell: props => <TableControls controls={getTableControls(props.row.original, controlsConfig)} />
     })
   ];
 
