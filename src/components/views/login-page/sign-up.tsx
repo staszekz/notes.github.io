@@ -1,5 +1,4 @@
 import { Title } from '@notes/components';
-import { updateProfile } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
