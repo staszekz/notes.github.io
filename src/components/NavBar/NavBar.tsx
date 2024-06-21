@@ -2,15 +2,14 @@ import { IconLogout } from '@tabler/icons-react';
 import { ButtonLink, Title } from '@notes/components';
 import { StyledBar, StyledButtonPlace } from './styled';
 import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
-import { useNavigate } from 'react-router';
 import { useAuthContext } from '@notes/hooks';
 
 export const NavBar = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { user, signUserOut } = useAuthContext();
   const handleSignOutClick = () => {
     signUserOut();
-    navigate('/');
+    // navigate('/');
   };
 
   return (

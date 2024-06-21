@@ -5,6 +5,7 @@ import { defineConfig } from "vite";
 import svgrPlugin from "vite-plugin-svgr";
 import viteTsconfigPaths from "vite-tsconfig-paths";
 import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
+import viteReact from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default () => {
@@ -13,10 +14,10 @@ export default () => {
     assetsInclude: ["**/*.pdf"],
 
     plugins: [
-      react(),
       viteTsconfigPaths(),
       svgrPlugin(),
       TanStackRouterVite(),
+      viteReact()
       // viteStaticCopy({
       //   targets: [
       //     {

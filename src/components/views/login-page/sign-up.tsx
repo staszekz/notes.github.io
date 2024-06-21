@@ -1,5 +1,5 @@
 import { Title } from '@notes/components';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
@@ -28,7 +28,7 @@ export const SignUp = () => {
       handleOnSubmit();
     }
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { signUp, setLoadingState } = useAuthContext();
 
   const handleOnSubmit = async () => {
@@ -37,7 +37,7 @@ export const SignUp = () => {
       const { user } = await signUp(state.values.email, state.values.password, state.values.name);
       await setDoc(doc(collection(database, CollectionType.USERS), user.uid), {});
       setLoadingState(false);
-      navigate('/home');
+      // navigate('/home');
     } catch (error) {
       // navigate('/');
       throw new FirebaseError(error.code, error?.message);

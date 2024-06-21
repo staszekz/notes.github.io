@@ -3,9 +3,8 @@ import { Button } from '@mantine/core';
 import { IconPlus } from '@tabler/icons-react';
 import { theme } from '@notes/theme';
 import styled from 'styled-components';
-import { StyledButton } from './styled';
 
-const StyledAddButton = styled(StyledButton)`
+const StyledAddButton = styled(Button)`
   width: fit-content;
   /* bottom: 10px; */
   padding: 10px 20px;

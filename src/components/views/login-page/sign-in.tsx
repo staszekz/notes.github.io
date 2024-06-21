@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
@@ -17,7 +17,7 @@ export const SignIn = () => {
     email: '',
     password: ''
   };
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { signIn, setLoadingState } = useAuthContext();
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
@@ -32,13 +32,13 @@ export const SignIn = () => {
     setLoadingState(true);
     signIn(state.email, state.password)
       .then(() => {
-        navigate('/home');
+        // navigate('/home');
         setLoadingState(false);
       })
       .catch(err => {
         // TODO: handle error into popup window
         alert(err.message);
-        navigate('/');
+        // navigate('/');
       });
   };
 
