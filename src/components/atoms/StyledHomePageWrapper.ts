@@ -14,11 +14,6 @@ export const StyledHomepageWrapper = styled.div`
 
   transform: translate(-50%, -50%);
   transition: transform 0.25s ease-in-out;
-  ${({ theme }) => theme.media.phone} {
-    width: 90%;
-  }
-  ${({ theme }) => theme.media.landscape} {
-    width: 80%;
-    padding-top: 4rem;
-  }
+
+
 `;

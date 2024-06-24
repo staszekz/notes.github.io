@@ -1,6 +1,5 @@
 import { Title } from '@notes/components';
-import { updateProfile } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
@@ -17,6 +16,7 @@ export const SignUp = () => {
   const initialState = {
     email: '',
     password: '',
+    password_confirm: '',
     name: '',
     redirect: false
   };
@@ -28,7 +28,7 @@ export const SignUp = () => {
       handleOnSubmit();
     }
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { signUp, setLoadingState } = useAuthContext();
 
   const handleOnSubmit = async () => {
@@ -37,7 +37,7 @@ export const SignUp = () => {
       const { user } = await signUp(state.values.email, state.values.password, state.values.name);
       await setDoc(doc(collection(database, CollectionType.USERS), user.uid), {});
       setLoadingState(false);
-      navigate('/home');
+      // navigate('/home');
     } catch (error) {
       // navigate('/');
       throw new FirebaseError(error.code, error?.message);
@@ -121,6 +121,34 @@ export const SignUp = () => {
                 withAsterisk
                 label="Password"
                 placeholder="Enter password"
+                error={state.meta?.errors[0]}
+              />
+            );
+          }}
+        />
+        <Field
+          name="password_confirm"
+          validators={{
+            onChangeListenTo: ['password'],
+            onChange: ({ value, fieldApi }) => {
+              if (value !== fieldApi.form.getFieldValue('password')) {
+                return 'Passwords do not match';
+              }
+              return undefined;
+            }
+          }}
+          children={({ state, handleChange, handleBlur }) => {
+            return (
+              <TextInput
+                className={classes.textInput}
+                data-autofocus
+                size="xl"
+                type="password"
+                onChange={e => handleChange(e.target.value)}
+                onBlur={handleBlur}
+                withAsterisk
+                label="Re-Type Password"
+                placeholder="Enter password again"
                 error={state.meta?.errors[0]}
               />
             );

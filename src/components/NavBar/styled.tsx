@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const StyledBar = styled.div`
   width: 100%;
@@ -24,7 +23,7 @@ export const StyledButtonPlace = styled.div`
   align-items: center;
 `;
 
-export const StyledButtonIcon = styled(Link)`
+export const StyledButtonIcon = styled('div')`
   width: 50px;
   height: 50px;
   border-radius: 20px;

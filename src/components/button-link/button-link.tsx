@@ -1,12 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { StyledButton } from './styled';
+import { Button } from '@mantine/core';
 
-export const ButtonLink = ({ children, to, large = false }: Props) => (
-  <StyledButton as={Link} large={large} to={to}>
-    {children}
-  </StyledButton>
-);
+export const ButtonLink = ({ children, to, large = false }: Props) => <Button>{children}</Button>;
 
 type Props = {
   children: React.ReactNode;
