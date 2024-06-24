@@ -127,3 +127,5 @@ export const SignIn = () => {
 };
 
 // zrobić defaukltowy button zeby miał dwa rodzaje kolorów =>zeby brał tez wsztskie propsy takie same ...props
+
+// Valibod do walidacji
