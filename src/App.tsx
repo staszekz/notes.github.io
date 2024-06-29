@@ -10,6 +10,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { Outlet } from '@tanstack/react-router';
 
 const queryClient = new QueryClient();
 

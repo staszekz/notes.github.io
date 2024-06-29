@@ -13,15 +13,15 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SignupImport } from './routes/signup'
+import { Route as SigninImport } from './routes/signin'
+import { Route as AuthImport } from './routes/auth'
+import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
 const TodosLazyImport = createFileRoute('/todos')()
-const SignupLazyImport = createFileRoute('/signup')()
-const SigninLazyImport = createFileRoute('/signin')()
 const NotesLazyImport = createFileRoute('/notes')()
-const HomeLazyImport = createFileRoute('/home')()
-const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -30,30 +30,30 @@ const TodosLazyRoute = TodosLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/todos.lazy').then((d) => d.Route))
 
-const SignupLazyRoute = SignupLazyImport.update({
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
-
-const SigninLazyRoute = SigninLazyImport.update({
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
-
 const NotesLazyRoute = NotesLazyImport.update({
   path: '/notes',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/notes.lazy').then((d) => d.Route))
 
-const HomeLazyRoute = HomeLazyImport.update({
-  path: '/home',
+const SignupRoute = SignupImport.update({
+  path: '/signup',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/home.lazy').then((d) => d.Route))
+} as any)
 
-const IndexLazyRoute = IndexLazyImport.update({
+const SigninRoute = SigninImport.update({
+  path: '/signin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AuthRoute = AuthImport.update({
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -63,14 +63,28 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/home': {
-      id: '/home'
-      path: '/home'
-      fullPath: '/home'
-      preLoaderRoute: typeof HomeLazyImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
     '/notes': {
@@ -78,20 +92,6 @@ declare module '@tanstack/react-router' {
       path: '/notes'
       fullPath: '/notes'
       preLoaderRoute: typeof NotesLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/signin': {
-      id: '/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof SigninLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupLazyImport
       parentRoute: typeof rootRoute
     }
     '/todos': {
@@ -107,11 +107,11 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  HomeLazyRoute,
+  IndexRoute,
+  AuthRoute,
+  SigninRoute,
+  SignupRoute,
   NotesLazyRoute,
-  SigninLazyRoute,
-  SignupLazyRoute,
   TodosLazyRoute,
 })
 
@@ -124,27 +124,27 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/home",
-        "/notes",
+        "/auth",
         "/signin",
         "/signup",
+        "/notes",
         "/todos"
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
     },
-    "/home": {
-      "filePath": "home.lazy.tsx"
+    "/auth": {
+      "filePath": "auth.tsx"
+    },
+    "/signin": {
+      "filePath": "signin.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.tsx"
     },
     "/notes": {
       "filePath": "notes.lazy.tsx"
-    },
-    "/signin": {
-      "filePath": "signin.lazy.tsx"
-    },
-    "/signup": {
-      "filePath": "signup.lazy.tsx"
     },
     "/todos": {
       "filePath": "todos.lazy.tsx"

@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyledH1, StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink } from '@notes/components';
 import { StyledHeader, StyledWrapper } from './styled';
-import { signupRoute } from 'src/routes/signup.lazy';
-import { signinRoute } from 'src/routes/signin.lazy';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Outlet } from '@tanstack/react-router';
 
-export const PublicHomepage = () => (
+export const PublicHomapage = () => (
   <>
     <StyledWrapper>
       <StyledHeader> The best app for todos an taking notes</StyledHeader>

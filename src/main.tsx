@@ -21,9 +21,9 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <StrictMode>
-      {/* <App> */}
-      <RouterProvider router={router} />
-      {/* </App> */}
+      <App>
+        <RouterProvider router={router} />
+      </App>
     </StrictMode>
   );
 }
