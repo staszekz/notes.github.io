@@ -13,27 +13,27 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
+import { Route as TodosImport } from './routes/todos.lazy'
+import { Route as SignupImport } from ./ routes / notes.lazyup'
 import { Route as SigninImport } from './routes/signin'
 import { Route as AuthImport } from './routes/auth'
 import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
-const TodosLazyImport = createFileRoute('/todos')()
 const NotesLazyImport = createFileRoute('/notes')()
 
 // Create/Update Routes
-
-const TodosLazyRoute = TodosLazyImport.update({
-  path: '/todos',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/todos.lazy').then((d) => d.Route))
 
 const NotesLazyRoute = NotesLazyImport.update({
   path: '/notes',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/notes.lazy').then((d) => d.Route))
+
+const TodosRoute = TodosImport.update({
+  path: '/todos',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const SignupRoute = SignupImport.update({
   path: '/signup',
@@ -87,18 +87,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupImport
       parentRoute: typeof rootRoute
     }
+    '/todos': {
+      id: '/todos'
+      path: '/todos'
+      fullPath: '/todos'
+      preLoaderRoute: typeof TodosImport
+      parentRoute: typeof rootRoute
+    }
     '/notes': {
       id: '/notes'
       path: '/notes'
       fullPath: '/notes'
       preLoaderRoute: typeof NotesLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/todos': {
-      id: '/todos'
-      path: '/todos'
-      fullPath: '/todos'
-      preLoaderRoute: typeof TodosLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -111,8 +111,8 @@ export const routeTree = rootRoute.addChildren({
   AuthRoute,
   SigninRoute,
   SignupRoute,
+  TodosRoute,
   NotesLazyRoute,
-  TodosLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -127,8 +127,8 @@ export const routeTree = rootRoute.addChildren({
         "/auth",
         "/signin",
         "/signup",
-        "/notes",
-        "/todos"
+        "/todos",
+        "/notes"
       ]
     },
     "/": {
@@ -143,11 +143,11 @@ export const routeTree = rootRoute.addChildren({
     "/signup": {
       "filePath": "signup.tsx"
     },
+    "/todos": {
+      "filePath": "todos.tsx"
+    },
     "/notes": {
       "filePath": "notes.lazy.tsx"
-    },
-    "/todos": {
-      "filePath": "todos.lazy.tsx"
     }
   }
 }
