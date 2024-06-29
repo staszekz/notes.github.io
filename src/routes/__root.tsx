@@ -4,13 +4,13 @@ import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { App } from 'src/App';
 
 export const Route = createRootRoute({
-  component: () => {
-    return (
-      <>
+  component: () => (
+    <>
+      <App>
         <PublicHomepage />
-        <Outlet />
-        <TanStackRouterDevtools />
-      </>
-    );
-  }
+      </App>
+      <Outlet />
+      <TanStackRouterDevtools />
+    </>
+  )
 });

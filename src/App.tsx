@@ -19,21 +19,9 @@ export function App({ children }) {
       <ReactQueryDevtools initialIsOpen={false} />
       <MantineProvider>
         <AuthProvider>
-          {/* <BrowserRouter basename={import.meta.env.PUBLIC_URL}> */}
           <ModalsProvider>
-            <ThemeProvider theme={theme}>
-              {/* <Routes> */}
-              {/* <Route path="/" element={<PublicHomepage />} /> */}
-              {/* <Route path="/todos" element={<Todos />} /> */}
-              {/* <Route path="/notes" element={<Notes />} />
-                  <Route path="/home" element={<Home />} />
-                  <Route path="/signin" element={<SignIn />} />
-                  <Route path="/signup" element={<SignUp />} /> */}
-              {/* </Routes> */}
-              {children}
-            </ThemeProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
           </ModalsProvider>
-          {/* </BrowserRouter> */}
         </AuthProvider>
       </MantineProvider>
     </QueryClientProvider>

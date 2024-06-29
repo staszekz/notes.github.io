@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
 import styled, { css } from 'styled-components';
 
 type StyledButtonProps = {
@@ -6,7 +7,7 @@ type StyledButtonProps = {
   modal?: boolean;
 };
 
-export const StyledButton = styled(Button) <StyledButtonProps>`
+export const StyledButton = styled(Link) <StyledButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;

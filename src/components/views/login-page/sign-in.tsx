@@ -22,7 +22,7 @@ export const SignIn = () => {
 
   const { Field, Subscribe, handleSubmit, state, useStore } = useForm({
     defaultValues: initialState,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmit: async () => {
       handleOnSubmit(state.values);
     }
