@@ -31,9 +31,6 @@ export const Notes = () => {
     pageSize: 10
   });
 
-  // const { user, loading } = useAuthContext();
-  // console.log('🚀 ~ user:', user, 'loading', loading);
-
   const {
     collection: { isPending, isFetching, isLoading, data: notes },
     deleteElement

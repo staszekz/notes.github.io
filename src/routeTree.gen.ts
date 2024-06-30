@@ -13,37 +13,37 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TodosImport } from './routes/todos.lazy'
-import { Route as SignupImport } from ./ routes / notes.lazyup'
-import { Route as SigninImport } from './routes/signin'
 import { Route as AuthImport } from './routes/auth'
 import { Route as IndexImport } from './routes/index'
 
 // Create Virtual Routes
 
+const TodosLazyImport = createFileRoute('/todos')()
+const SignupLazyImport = createFileRoute('/signup')()
+const SigninLazyImport = createFileRoute('/signin')()
 const NotesLazyImport = createFileRoute('/notes')()
 
 // Create/Update Routes
+
+const TodosLazyRoute = TodosLazyImport.update({
+  path: '/todos',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/todos.lazy').then((d) => d.Route))
+
+const SignupLazyRoute = SignupLazyImport.update({
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/signup.lazy').then((d) => d.Route))
+
+const SigninLazyRoute = SigninLazyImport.update({
+  path: '/signin',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
 
 const NotesLazyRoute = NotesLazyImport.update({
   path: '/notes',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/notes.lazy').then((d) => d.Route))
-
-const TodosRoute = TodosImport.update({
-  path: '/todos',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SignupRoute = SignupImport.update({
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SigninRoute = SigninImport.update({
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const AuthRoute = AuthImport.update({
   path: '/auth',
@@ -73,32 +73,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthImport
       parentRoute: typeof rootRoute
     }
+    '/notes': {
+      id: '/notes'
+      path: '/notes'
+      fullPath: '/notes'
+      preLoaderRoute: typeof NotesLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/signin': {
       id: '/signin'
       path: '/signin'
       fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
+      preLoaderRoute: typeof SigninLazyImport
       parentRoute: typeof rootRoute
     }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
+      preLoaderRoute: typeof SignupLazyImport
       parentRoute: typeof rootRoute
     }
     '/todos': {
       id: '/todos'
       path: '/todos'
       fullPath: '/todos'
-      preLoaderRoute: typeof TodosImport
-      parentRoute: typeof rootRoute
-    }
-    '/notes': {
-      id: '/notes'
-      path: '/notes'
-      fullPath: '/notes'
-      preLoaderRoute: typeof NotesLazyImport
+      preLoaderRoute: typeof TodosLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -109,10 +109,10 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   AuthRoute,
-  SigninRoute,
-  SignupRoute,
-  TodosRoute,
   NotesLazyRoute,
+  SigninLazyRoute,
+  SignupLazyRoute,
+  TodosLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -125,10 +125,10 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/auth",
+        "/notes",
         "/signin",
         "/signup",
-        "/todos",
-        "/notes"
+        "/todos"
       ]
     },
     "/": {
@@ -137,17 +137,17 @@ export const routeTree = rootRoute.addChildren({
     "/auth": {
       "filePath": "auth.tsx"
     },
-    "/signin": {
-      "filePath": "signin.tsx"
-    },
-    "/signup": {
-      "filePath": "signup.tsx"
-    },
-    "/todos": {
-      "filePath": "todos.tsx"
-    },
     "/notes": {
       "filePath": "notes.lazy.tsx"
+    },
+    "/signin": {
+      "filePath": "signin.lazy.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.lazy.tsx"
+    },
+    "/todos": {
+      "filePath": "todos.lazy.tsx"
     }
   }
 }

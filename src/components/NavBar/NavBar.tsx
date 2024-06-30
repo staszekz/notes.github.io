@@ -3,19 +3,19 @@ import { ButtonLink, Title } from '@notes/components';
 import { StyledBar, StyledButtonPlace } from './styled';
 import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
 import { useAuthContext } from '@notes/hooks';
+import { Link } from '@tanstack/react-router';
+import { RoutesDef } from '@notes/utils';
 
 export const NavBar = () => {
-  // const navigate = useNavigate();
   const { user, signUserOut } = useAuthContext();
   const handleSignOutClick = () => {
     signUserOut();
-    // navigate('/');
   };
 
   return (
     <StyledBar>
       <StyledButtonPlace>
-        <ButtonLink to="/home">home</ButtonLink>
+        <ButtonLink to="/">home</ButtonLink>
         <ButtonLink to="/todos">todos</ButtonLink>
         <ButtonLink to="/notes">notes</ButtonLink>
       </StyledButtonPlace>
@@ -32,7 +32,9 @@ export const NavBar = () => {
       )}
       <Tooltip id="logout" label="log out">
         <ActionIcon mr={16} variant="outlined" aria-label="logout" bg={'transparent'} onClick={handleSignOutClick}>
-          <IconLogout stroke={1} />
+          <Link to={RoutesDef.AUTH}>
+            <IconLogout stroke={1} />
+          </Link>
         </ActionIcon>
       </Tooltip>
     </StyledBar>

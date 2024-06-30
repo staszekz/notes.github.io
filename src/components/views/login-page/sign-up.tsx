@@ -11,6 +11,8 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { database } from '@notes/database';
 import { CollectionType } from '@notes/types';
 import { FirebaseError } from 'firebase/app';
+import { RoutesDef } from '@notes/utils';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 export const SignUp = () => {
   const initialState = {
@@ -23,12 +25,12 @@ export const SignUp = () => {
 
   const { Field, Subscribe, handleSubmit, state } = useForm({
     defaultValues: initialState,
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmit: async () => {
       handleOnSubmit();
     }
   });
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { signUp, setLoadingState } = useAuthContext();
 
   const handleOnSubmit = async () => {
@@ -37,9 +39,8 @@ export const SignUp = () => {
       const { user } = await signUp(state.values.email, state.values.password, state.values.name);
       await setDoc(doc(collection(database, CollectionType.USERS), user.uid), {});
       setLoadingState(false);
-      // navigate('/home');
+      navigate({ to: RoutesDef.HOME });
     } catch (error) {
-      // navigate('/');
       throw new FirebaseError(error.code, error?.message);
     }
   };
@@ -171,7 +172,7 @@ export const SignUp = () => {
           }}
         />
         <Button bd={'1px solid var(--primary)'} leftSection={<IconLogin />} c={'var(--primary)'} variant="outline">
-          Go to log-in page
+          <Link to={RoutesDef.SIGNIN}>Go back to sign-in page</Link>
         </Button>
       </form>
     </>

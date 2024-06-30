@@ -1,25 +1,17 @@
-// import { Index } from '@notes/components';
-import { NavBar } from '@notes/components';
-import { MainLayout } from '@notes/layout';
-import { createRootRoute, Outlet, Link } from '@tanstack/react-router';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { createRootRoute, Outlet, Link, redirect } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
-import { App } from 'src/App';
+import { getAuth } from 'firebase/auth';
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      {/* <App> */}
-      {/* <NavBar /> */}
       <Outlet />
-      {/* </App> */}
-      {/* <hr /> */}
-      {/* <Index /> */}
-      {/* <MainLayout> */}
-      {/* </MainLayout> */}
       <TanStackRouterDevtools />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   ),
   notFoundComponent: () => {
-    return <p>This is the notFoundComponent configured on root route</p>;
+    return <p>This is the notFoundComponent </p>;
   }
 });

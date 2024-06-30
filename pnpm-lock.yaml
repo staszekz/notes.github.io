@@ -160,7 +160,7 @@ importers:
         specifier: ^0.4.7
         version: 0.4.7(eslint@8.57.0)
       typescript:
-        specifier: '5'
+        specifier: 5.5.2
         version: 5.5.2
 
 packages:
@@ -4305,7 +4305,7 @@ snapshots:
 
   '@testing-library/dom@10.1.0':
     dependencies:
-      '@babel/code-frame': 7.24.2
+      '@babel/code-frame': 7.24.7
       '@babel/runtime': 7.24.5
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0

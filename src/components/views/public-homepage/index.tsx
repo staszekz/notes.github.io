@@ -4,7 +4,7 @@ import { StyledHeader, StyledWrapper } from './styled';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Outlet } from '@tanstack/react-router';
 
-export const PublicHomapage = () => (
+export const AuthView = () => (
   <>
     <StyledWrapper>
       <StyledHeader> The best app for todos an taking notes</StyledHeader>

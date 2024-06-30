@@ -9,23 +9,42 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Outlet } from '@tanstack/react-router';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import './index.css';
+
+import { routeTree } from './routeTree.gen';
 
 const queryClient = new QueryClient();
 
-export function App({ children }) {
+const router = createRouter({
+  routeTree,
+  context: {
+    queryClient
+  },
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0
+});
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+
+export function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <MantineProvider>
-        <AuthProvider>
-          <ModalsProvider>
-            <ThemeProvider theme={theme}>{children}</ThemeProvider>
-          </ModalsProvider>
-        </AuthProvider>
-      </MantineProvider>
-    </QueryClientProvider>
+    <MantineProvider>
+      <AuthProvider>
+        <ModalsProvider>
+          <ThemeProvider theme={theme}>
+            <QueryClientProvider client={queryClient}>
+              <RouterProvider router={router} />
+            </QueryClientProvider>
+          </ThemeProvider>
+        </ModalsProvider>
+      </AuthProvider>
+    </MantineProvider>
   );
 }
 
