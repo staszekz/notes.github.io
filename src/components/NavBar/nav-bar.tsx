@@ -32,7 +32,7 @@ export const NavBar = () => {
       )}
       <Tooltip id="logout" label="log out">
         <ActionIcon mr={16} variant="outlined" aria-label="logout" bg={'transparent'} onClick={handleSignOutClick}>
-          <Link to={RoutesDef.AUTH}>
+          <Link to={RoutesDef.LOGIN}>
             <IconLogout stroke={1} />
           </Link>
         </ActionIcon>

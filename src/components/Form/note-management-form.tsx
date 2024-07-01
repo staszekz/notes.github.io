@@ -20,7 +20,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
           content: '',
           createdOn: Timestamp.now()
         },
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
       data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
       modals.closeAll();

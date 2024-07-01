@@ -2,7 +2,7 @@ export enum RoutesDef {
   SIGNIN = '/signin',
   SIGNUP = '/signup',
   NOTES = '/notes',
-  AUTH = '/auth',
+  LOGIN = '/login',
   TODOS = '/todos',
   HOME = '/'
 }
