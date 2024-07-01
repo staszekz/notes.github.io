@@ -14,13 +14,15 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './index.css';
 
 import { routeTree } from './routeTree.gen';
+import { getAuth } from 'firebase/auth';
 
 const queryClient = new QueryClient();
 
 const router = createRouter({
   routeTree,
   context: {
-    queryClient
+    queryClient,
+    auth: getAuth()
   },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0

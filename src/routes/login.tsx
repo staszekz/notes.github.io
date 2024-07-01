@@ -1,6 +1,6 @@
 import { AuthView } from '@notes/components';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/auth')({
+export const Route = createFileRoute('/login')({
   component: AuthView
 });
