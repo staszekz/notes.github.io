@@ -25,16 +25,16 @@ import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 
-export const Notes = ({ notes }) => {
+export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   });
 
-  // const {
-  //   collection: { isPending, isFetching, isLoading, data: notes },
-  //   deleteElement
-  // } = useRemoteData<Note>({ key: CollectionType.NOTES });
+  const {
+    collection: { isPending, isFetching, isLoading, data: notes },
+    deleteElement
+  } = useRemoteData<Note>({ key: CollectionType.NOTES });
 
   const columnHelper = createColumnHelper<NoteWithId>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
@@ -103,7 +103,7 @@ export const Notes = ({ notes }) => {
         <StyledH1>My Private Notes</StyledH1>
         <AddNewButton openNoteModal={openNoteModal} />
         <br />
-        <Table table={table} />
+        <Table table={table} isLoading={isPending || isLoading || isFetching} />
         {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
       </StyledNotesList>
     </MainLayout>

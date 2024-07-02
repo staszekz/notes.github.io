@@ -36,17 +36,17 @@ declare module '@tanstack/react-router' {
 
 export function App() {
   return (
-    <MantineProvider>
-      <AuthProvider>
-        <ModalsProvider>
-          <ThemeProvider theme={theme}>
-            <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <MantineProvider>
+        <AuthProvider>
+          <ModalsProvider>
+            <ThemeProvider theme={theme}>
               <RouterProvider router={router} />
-            </QueryClientProvider>
-          </ThemeProvider>
-        </ModalsProvider>
-      </AuthProvider>
-    </MantineProvider>
+            </ThemeProvider>
+          </ModalsProvider>
+        </AuthProvider>
+      </MantineProvider>
+    </QueryClientProvider>
   );
 }
 
