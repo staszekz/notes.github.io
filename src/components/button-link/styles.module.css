@@ -1,0 +1,30 @@
+.addButton {
+  width: fit-content;
+  bottom: 16px;
+  padding: 10px 20px;
+  box-shadow: -2px 3px 5px var(--primary);
+  background-color: var(--dark);
+  border: 3px solid var(--primary);
+  border-radius: 10px;
+  &:hover {
+    box-shadow: 0 10px 20px -15px var(--primary);
+    background: var(--primary);
+    color: var(--white);
+    text-decoration: none;
+  }
+}
+
+.button {
+  /* background-color: brown; */
+  & :global(.base-button) {
+    color: red;
+  }
+}
+
+.buttonLarge {
+  height: 100px;
+  width: 40%;
+  box-shadow: -5px 3px 15px rgba(62, 194, 233, 0.3);
+  background-color: var(--dark);
+  border: 3px solid var(--primary);
+}

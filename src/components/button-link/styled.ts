@@ -7,6 +7,8 @@ type StyledButtonProps = {
   modal?: boolean;
 };
 
+
+
 export const StyledButton = styled(Link) <StyledButtonProps>`
   display: flex;
   justify-content: center;

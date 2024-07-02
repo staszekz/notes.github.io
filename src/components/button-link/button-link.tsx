@@ -1,10 +1,12 @@
 import { Button } from '@mantine/core';
-import { StyledButton } from 'src/components/button-link/styled';
+import classes from './styles.module.css';
+import { Link } from '@tanstack/react-router';
+import { cx } from 'classix';
 
 export const ButtonLink = ({ children, to, large = false }: Props) => (
-  <StyledButton to={to} large={large}>
-    {children}
-  </StyledButton>
+  <Button className={cx(classes.button, large && classes.buttonLarge)}>
+    <Link to={to}>{children}</Link>
+  </Button>
 );
 
 type Props = {

@@ -23,7 +23,6 @@ import {
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
-import { useAuthContext } from 'src/hooks/use-auth-context';
 
 export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({

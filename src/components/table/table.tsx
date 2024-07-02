@@ -21,13 +21,6 @@ export function Table({ table, isLoading }) {
         </MantineTable.Thead>
 
         <MantineTable.Tbody className={classes.tableBody}>
-          <LoadingOverlay
-            visible={isLoading}
-            zIndex={1000}
-            loaderProps={{ type: 'bars', color: 'var(--secondary)' }}
-            overlayProps={{ radius: 'sm', blur: 1 }}
-            style={{ height: '100%' }}
-          />
           {table.getRowModel().rows.map(row => (
             <MantineTable.Tr key={row.id}>
               {row.getVisibleCells().map(cell => (
@@ -39,6 +32,13 @@ export function Table({ table, isLoading }) {
           ))}
         </MantineTable.Tbody>
       </MantineTable>
+      <LoadingOverlay
+        visible={isLoading}
+        zIndex={1000}
+        loaderProps={{ type: 'bars', color: 'var(--secondary)' }}
+        overlayProps={{ radius: 'sm', blur: 1 }}
+        style={{ height: '100%' }}
+      />
       <Pagination
         p={4}
         color={'var(--secondary)'}
