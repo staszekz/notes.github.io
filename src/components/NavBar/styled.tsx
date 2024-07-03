@@ -15,7 +15,7 @@ export const StyledBar = styled.div`
   z-index: 2;
 `;
 
-export const StyledButtonPlace = styled.div`
+export const CustomButtonPlace = styled.div`
   width: 50%;
   height: inherit;
   display: inline-flex;
@@ -23,7 +23,7 @@ export const StyledButtonPlace = styled.div`
   align-items: center;
 `;
 
-export const StyledButtonIcon = styled('div')`
+export const CustomButtonIcon = styled('div')`
   width: 50px;
   height: 50px;
   border-radius: 20px;

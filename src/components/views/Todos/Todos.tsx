@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MainLayout } from '@notes/layout';
 import {
+  AddNewButton,
   getTableControls,
   openDeleteModal,
   openDetailsModal,
@@ -21,7 +22,6 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
-import { AddNewButton } from 'src/components/button-link/add-new-button';
 import { Checkbox, Flex } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 

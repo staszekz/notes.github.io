@@ -1,6 +1,6 @@
 import { IconLogout } from '@tabler/icons-react';
 import { ButtonLink, Title } from '@notes/components';
-import { StyledBar, StyledButtonPlace } from './styled';
+import { StyledBar, CustomButtonPlace } from './styled';
 import { ActionIcon, Stack, Tooltip, Text } from '@mantine/core';
 import { useAuthContext } from '@notes/hooks';
 import { Link } from '@tanstack/react-router';
@@ -14,11 +14,11 @@ export const NavBar = () => {
 
   return (
     <StyledBar>
-      <StyledButtonPlace>
+      <CustomButtonPlace>
         <ButtonLink to="/">home</ButtonLink>
         <ButtonLink to="/todos">todos</ButtonLink>
         <ButtonLink to="/notes">notes</ButtonLink>
-      </StyledButtonPlace>
+      </CustomButtonPlace>
       {user && (
         <Stack>
           <Title ta="left" c={'var(--primary)'}>

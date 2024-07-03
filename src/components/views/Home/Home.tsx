@@ -1,20 +1,21 @@
 import { MainLayout } from '@notes/layout';
-import { StyledHomeButtonWrapper, StyledHomepageWrapper, ButtonLink, StyledH1 } from '@notes/components';
+import { HomeWrapper, ButtonLink, StyledH1 } from '@notes/components';
+import classes from './styles.module.css';
 
 export const Home = () => {
   return (
     <MainLayout>
-      <StyledHomepageWrapper>
+      <HomeWrapper>
         <StyledH1>In this app you can store your: </StyledH1>
-        <StyledHomeButtonWrapper>
+        <div className={classes.wrapper}>
           <ButtonLink large to="/todos">
             todos
           </ButtonLink>
           <ButtonLink large to="/notes">
             notes
           </ButtonLink>
-        </StyledHomeButtonWrapper>
-      </StyledHomepageWrapper>
+        </div>
+      </HomeWrapper>
     </MainLayout>
   );
 };

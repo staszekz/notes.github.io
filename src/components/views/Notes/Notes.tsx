@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  AddNewButton,
   getTableControls,
   openDeleteModal,
   openDetailsModal,
@@ -12,7 +13,6 @@ import {
 import { StyledNotesList } from './styled';
 import { MainLayout } from '@notes/layout';
 import { useRemoteData } from '@notes/hooks';
-import { AddNewButton } from 'src/components/button-link/add-new-button';
 
 import {
   createColumnHelper,
@@ -108,3 +108,4 @@ export const Notes = () => {
     </MainLayout>
   );
 };
+// zrobić tak żeby można było edytować notatki z modalu details

@@ -4,9 +4,13 @@ import { Link } from '@tanstack/react-router';
 import { cx } from 'classix';
 
 export const ButtonLink = ({ children, to, large = false }: Props) => (
-  <Button className={cx(classes.button, large && classes.buttonLarge)}>
-    <Link to={to}>{children}</Link>
-  </Button>
+  <Link className={cx('base-button', large && classes.buttonLarge)} to={to}>
+    {children}
+  </Link>
+);
+
+export const CustomButton = ({ children, to, large = false }: Props) => (
+  <Button className={cx('base-button', large && classes.buttonLarge)}>{children}</Button>
 );
 
 type Props = {
