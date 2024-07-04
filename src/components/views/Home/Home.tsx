@@ -1,13 +1,13 @@
 import { MainLayout } from '@notes/layout';
-import { HomeWrapper, ButtonLink, StyledH1 } from '@notes/components';
+import { HomeWrapper, ButtonLink, NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
 
 export const Home = () => {
   return (
     <MainLayout>
       <HomeWrapper>
-        <StyledH1>In this app you can store your: </StyledH1>
-        <div className={classes.wrapper}>
+        <NotesHeader component="h1">In this app you can store your: </NotesHeader>
+        <div className={classes.buttonWrapper}>
           <ButtonLink large to="/todos">
             todos
           </ButtonLink>

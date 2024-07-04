@@ -2,11 +2,10 @@ import { useState } from 'react';
 import {
   AddNewButton,
   getTableControls,
+  NotesHeader,
   openDeleteModal,
   openDetailsModal,
   openNoteModal,
-  StyledH1,
-  StyledH2,
   Table,
   TableControls
 } from '@notes/components';
@@ -99,11 +98,11 @@ export const Notes = () => {
   return (
     <MainLayout>
       <StyledNotesList>
-        <StyledH1>My Private Notes</StyledH1>
+        <NotesHeader component="h1">My Private Notes</NotesHeader>
         <AddNewButton openNoteModal={openNoteModal} />
         <br />
         <Table table={table} isLoading={isPending || isLoading || isFetching} />
-        {!notes?.length && <StyledH2>Your note list is empty! Enter a new note! </StyledH2>}
+        {!notes?.length && <NotesHeader component="h2">Your note list is empty! Enter a new note! </NotesHeader>}
       </StyledNotesList>
     </MainLayout>
   );

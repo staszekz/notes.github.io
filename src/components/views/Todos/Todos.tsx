@@ -6,8 +6,7 @@ import {
   openDeleteModal,
   openDetailsModal,
   openTodoModal,
-  StyledH1,
-  StyledH2,
+  NotesHeader,
   Table,
   TableControls
 } from '@notes/components';
@@ -126,11 +125,11 @@ export const Todos = () => {
     <>
       <MainLayout>
         <StyledNotesList>
-          <StyledH1>My Private Todo tasks</StyledH1>
+          <NotesHeader component="h1">My Private Todo tasks</NotesHeader>
           <AddNewButton openNoteModal={openTodoModal} />
           <br />
           <Table table={table} isLoading={isPending || isLoading || isFetching} />
-          {!todos?.length && <StyledH2>Your todo list is empty! Enter a new task! </StyledH2>}
+          {!todos?.length && <NotesHeader component="h2">Your todo list is empty! Enter a new task! </NotesHeader>}
         </StyledNotesList>
       </MainLayout>
     </>

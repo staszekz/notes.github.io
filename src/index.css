@@ -10,15 +10,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  --dark-bg-color: rgba(34, 51, 59, 1);
-  --light-dark: #142a33;
 
-  --primary: rgba(123, 175, 212, 1); /* carolina Blue */
+  --dark-bg-color: rgba(34, 51, 59, 1);
+  --light-dark: rgba(20, 42, 51, 1) --primary: rgba(123, 175, 212, 1); /* carolina Blue */
   --secondary: rgba(0, 123, 167, 1); /* Darker Blue */
   --red: rgba(200, 50, 50, 1);
   --warning: rgba(255, 165, 0, 1); /* Orange */
   --white: rgba(245, 255, 250, 1);
-  --default-box-shadow: rgba(62, 194, 233, 0.3);
+  --default-box-shadow-color: rgba(62, 194, 233, 0.3);
+  --box-shadow-primary: 0 10px 20px -15px var(--primary);
+  --box-shadow-secondary: -5px 3px 15px var(--default-box-shadow-color);
 }
 /* TODO: Add dark mode */
 @media (prefers-color-scheme: dark) {
@@ -34,14 +35,14 @@
   }
 }
 
-a {
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
 a:hover {
   color: #535bf2;
-}
+} */
 body,
 html {
   padding: 0;

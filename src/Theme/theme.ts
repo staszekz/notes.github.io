@@ -2,9 +2,21 @@ import { colors } from '../utils/colors';
 
 export const theme = {
   colors,
-  fontFamily: 'Nunito, sans-serif', // 'Roboto, sans-serif
+  shadows: {
+    primary: `0 0 10px ${colors.primary}`,
+    secondary: `0 0 10px ${colors.boxShadow}`,
+  },
+  fontFamily: 'Nunito, sans-serif',
   headings: {
     fontFamily: 'Nunito, sans-serif',
+    sizes: {
+      h1: '3.5rem',
+      h2: '3.0rem',
+      h3: '2.4rem',
+      h4: '2rem',
+      h5: '1.8rem',
+      h6: '1.6rem',
+    },
   },
   font: {
     this: 300,
