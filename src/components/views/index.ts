@@ -1,6 +1,5 @@
-export * from './Home/home'
-export * from './Notes/Notes'
-export * from './auth-pages/sign-up'
-
-export * from './Todos/Todos'
-export * from './Home/login'
+export * from './home/home'
+export * from './pages/notes'
+export * from './auth/sign-up'
+export * from './pages/todos'
+export * from './home/login'

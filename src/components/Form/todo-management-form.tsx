@@ -22,7 +22,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
           completed: false,
           createdOn: Timestamp.now()
         },
-    validatorAdapter: zodValidator,
+    validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
       data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
       modals.closeAll();

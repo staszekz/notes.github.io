@@ -12,7 +12,6 @@ import {
 } from '@notes/components';
 
 import { useRemoteData } from '@notes/hooks';
-import { StyledNotesList } from 'src/components/views/Notes/styled';
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -21,8 +20,9 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
-import { Checkbox, Flex } from '@mantine/core';
+import { Box, Checkbox, Flex } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
+import classes from './styles.module.css';
 
 export const Todos = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -122,16 +122,14 @@ export const Todos = () => {
   });
 
   return (
-    <>
-      <MainLayout>
-        <StyledNotesList>
-          <NotesHeader component="h1">My Private Todo tasks</NotesHeader>
-          <AddNewButton openNoteModal={openTodoModal} />
-          <br />
-          <Table table={table} isLoading={isPending || isLoading || isFetching} />
-          {!todos?.length && <NotesHeader component="h2">Your todo list is empty! Enter a new task! </NotesHeader>}
-        </StyledNotesList>
-      </MainLayout>
-    </>
+    <MainLayout>
+      <Box className={classes.list}>
+        <NotesHeader component="h1">My Private Todo tasks</NotesHeader>
+        <AddNewButton openNoteModal={openTodoModal} />
+        <br />
+        <Table table={table} isLoading={isPending || isLoading || isFetching} />
+        {!todos?.length && <NotesHeader component="h2">Your todo list is empty! Enter a new task! </NotesHeader>}
+      </Box>
+    </MainLayout>
   );
 };

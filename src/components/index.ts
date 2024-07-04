@@ -6,5 +6,5 @@ export * from './views/index'
 export * from './table'
 export * from './Form/note-management-form'
 export * from './Form/todo-management-form'
-export * from './views/auth-pages/sign-in'
+export * from './views/auth/sign-in'
 

@@ -9,7 +9,6 @@ import {
   Table,
   TableControls
 } from '@notes/components';
-import { StyledNotesList } from './styled';
 import { MainLayout } from '@notes/layout';
 import { useRemoteData } from '@notes/hooks';
 
@@ -22,6 +21,8 @@ import {
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
+import { Box } from '@mantine/core';
+import classes from './styles.module.css';
 
 export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -97,13 +98,13 @@ export const Notes = () => {
 
   return (
     <MainLayout>
-      <StyledNotesList>
+      <Box className={classes.list}>
         <NotesHeader component="h1">My Private Notes</NotesHeader>
         <AddNewButton openNoteModal={openNoteModal} />
         <br />
         <Table table={table} isLoading={isPending || isLoading || isFetching} />
         {!notes?.length && <NotesHeader component="h2">Your note list is empty! Enter a new note! </NotesHeader>}
-      </StyledNotesList>
+      </Box>
     </MainLayout>
   );
 };
