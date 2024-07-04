@@ -87,18 +87,33 @@ button {
   align-items: center;
   text-decoration: none;
   width: 20%;
-  padding: 1rem;
-  height: 50px;
-  border-radius: 50px;
-  border: none;
-  color: var(--primary);
   font-size: 1.5rem;
   font-weight: 600;
-  transition: box - shadow 0.3s ease;
-  background-color: var(--white);
+  transition: box-shadow 0.3s ease;
+  color: var(--primary);
+  border-radius: 50px;
   &:hover {
     box-shadow: 0 10px 20px -15px var(--primary);
     background-color: var(--primary);
+    color: var(--white);
+  }
+}
+
+.white-button {
+  padding: 1rem;
+  height: 50px;
+  border: none;
+  background-color: var(--white);
+}
+
+.submit-button:not(#_) {
+  align-self: flex-end;
+  box-shadow: -5px 3px 15px var(--default-box-shadow);
+  background-color: var(--dark-bg-color);
+  border: 1px solid var(--primary);
+  &:hover {
+    box-shadow: 0 10px 20px -15px var(--primary);
+    background: var(--primary);
     color: var(--white);
     text-decoration: none;
   }

@@ -8,7 +8,7 @@ export const AddNewButton = ({ openNoteModal }) => {
 
   return (
     <Button
-      className={cx('base-button', classes.addButton)}
+      className={cx('base-button', 'white-button', classes.addButton)}
       leftSection={<IconPlus />}
       variant="contained"
       onClick={handleClick}

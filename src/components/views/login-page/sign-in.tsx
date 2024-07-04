@@ -2,12 +2,12 @@ import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
-import classes from './style.module.css';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
+import classes from './style.module.css';
 
 type SignInValues = {
   email: string;
@@ -106,7 +106,7 @@ export const SignIn = () => {
           children={([canSubmit, isSubmitting]) => {
             return (
               <Button
-                className={classes.submitButton}
+                className={'base-button submit-button'}
                 loading={isSubmitting}
                 variant="outline"
                 type="submit"
@@ -117,9 +117,17 @@ export const SignIn = () => {
             );
           }}
         />
-        <Button bd={'1px solid var(--primary)'} leftSection={<IconLogin />} c={'var(--primary)'} variant="outline">
-          <Link to={RoutesDef.SIGNUP}>Go back to sign-up page</Link>
-        </Button>
+        <Link to={RoutesDef.SIGNUP} className={classes.linkWrapper}>
+          <Button
+            w={'100%'}
+            bd={'1px solid var(--primary)'}
+            leftSection={<IconLogin />}
+            c={'var(--primary)'}
+            variant="outline"
+          >
+            Go back to sign-up page
+          </Button>
+        </Link>
       </form>
     </>
   );

@@ -1,5 +1,4 @@
 import { Title } from '@notes/components';
-// import { useNavigate } from 'react-router-dom';
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
@@ -160,7 +159,7 @@ export const SignUp = () => {
           children={([canSubmit, isSubmitting]) => {
             return (
               <Button
-                className={classes.submitButton}
+                className={'base-button submit-button'}
                 loading={isSubmitting}
                 variant="outline"
                 type="submit"
@@ -171,9 +170,17 @@ export const SignUp = () => {
             );
           }}
         />
-        <Button bd={'1px solid var(--primary)'} leftSection={<IconLogin />} c={'var(--primary)'} variant="outline">
-          <Link to={RoutesDef.SIGNIN}>Go back to sign-in page</Link>
-        </Button>
+        <Link to={RoutesDef.SIGNIN} className={classes.linkWrapper}>
+          <Button
+            w={'100%'}
+            bd={'1px solid var(--primary)'}
+            leftSection={<IconLogin />}
+            c={'var(--primary)'}
+            variant="outline"
+          >
+            Go back to sign-in page
+          </Button>
+        </Link>
       </form>
     </>
   );

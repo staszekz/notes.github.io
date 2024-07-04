@@ -1,5 +1,5 @@
 export * from './homeage-wrapper';
-export * from './StyledInputs';
+export * from './Inputs';
 export * from './title'
-export * from './button-link'
+export * from './buttons'
 export * from './add-new-button'

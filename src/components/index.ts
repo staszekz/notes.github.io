@@ -1,4 +1,4 @@
-export * from './atoms/button-link'
+export * from './atoms/buttons'
 export * from './atoms/index'
 export * from './headers/headers'
 export * from './NavBar/nav-bar'
