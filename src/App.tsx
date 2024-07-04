@@ -48,3 +48,7 @@ export function App() {
 
 // zrobic panel użytkownika z usuwaniem, zmiana Nazwy,
 //  zmiana hasła, zmiana emaila etc
+
+// dorobić baner co jest dziś do zrobienia
+// moze dodąc temp i date
+// moze połaczenie  z kalendarzem Google
