@@ -3,8 +3,8 @@ import { IconPlus } from '@tabler/icons-react';
 import cx from 'classix';
 import classes from './styles.module.css';
 
-export const AddNewButton = ({ openNoteModal }) => {
-  const handleClick = () => openNoteModal();
+export const AddNewButton = ({ openModal }) => {
+  const handleClick = () => openModal();
 
   return (
     <Button

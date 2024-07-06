@@ -1,4 +1,4 @@
-import { Box, Input, Textarea } from '@mantine/core';
+import { Input, Textarea } from '@mantine/core';
 import classes from './styles.module.css';
 
 export const NotesInput = () => {

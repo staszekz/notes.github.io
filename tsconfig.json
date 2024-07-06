@@ -28,7 +28,8 @@
       "@notes/rq": ["src/rq/index.ts"],
       "@notes/layout": ["src/Layout/index.ts"],
       "@notes/theme": ["src/Theme"],
-      "@notes/database": ["src/database/index.ts"]
+      "@notes/database": ["src/database/index.ts"],
+      "@notes/views": ["src/views/index.ts"]
     }
   },
   "include": ["src/**/*"],

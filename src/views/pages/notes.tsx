@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { MainLayout } from '@notes/layout';
 import {
   AddNewButton,
-  getTableControls,
+  NotesHeader,
   openDeleteModal,
   openDetailsModal,
-  openTodoModal,
-  NotesHeader,
+  openNoteModal,
   Table,
   TableControls
 } from '@notes/components';
-
+import { MainLayout } from '@notes/layout';
 import { useRemoteData } from '@notes/hooks';
+
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -19,27 +18,29 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
-import { Box, Checkbox, Flex } from '@mantine/core';
+import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
+import { Box } from '@mantine/core';
 import classes from './styles.module.css';
+import { getTableControls } from '@notes/utils';
 
-export const Todos = () => {
+export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   });
+
   const {
-    collection: { isPending, isFetching, isLoading, data: todos },
-    editElement,
+    collection: { isPending, isFetching, isLoading, data: notes },
     deleteElement
-  } = useRemoteData<Todo>({ key: CollectionType.TODOS });
+  } = useRemoteData<Note>({ key: CollectionType.NOTES });
 
-  const columnHelper = createColumnHelper<TodoWithId>();
+  const columnHelper = createColumnHelper<NoteWithId>();
+  // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
-  const controlsConfig: ControlConfig<TodoWithId> = {
+  const controlsConfig: ControlConfig<NoteWithId> = {
     Edit: {
-      onClick: openTodoModal,
+      onClick: openNoteModal,
       icon: <IconEdit />,
       color: 'var(--secondary)',
       tooltipMessage: 'Edit this note'
@@ -51,7 +52,7 @@ export const Todos = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: original => openDetailsModal(original.extraContent),
+      onClick: original => openDetailsModal(original.content),
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
@@ -75,34 +76,8 @@ export const Todos = () => {
         return <span>{props.row.original.createdOn.toDate().toLocaleString()}</span>;
       }
     }),
-    columnHelper.accessor('extraContent', {
-      header: 'Extra Content'
-    }),
-    columnHelper.accessor('deadline', {
-      header: 'Deadline',
-      cell: props => {
-        return <span>{props.cell.getValue()?.toDate().toLocaleString() || '---'}</span>;
-      }
-    }),
-    columnHelper.accessor('completed', {
-      header: 'Completed',
-      cell: props => {
-        return (
-          <Flex gap="md" justify="center">
-            <Checkbox
-              color={'var(--primary)'}
-              variant="outline"
-              onChange={e => {
-                editElement.mutate({
-                  element: { ...props.row.original, completed: e.target.checked },
-                  id: props.row.original.id
-                });
-              }}
-              checked={props.cell.getValue()}
-            />
-          </Flex>
-        );
-      }
+    columnHelper.accessor('content', {
+      header: 'Content'
     }),
     columnHelper.display({
       header: 'Actions',
@@ -111,8 +86,9 @@ export const Todos = () => {
   ];
 
   const table = useReactTable({
+    // TODO: get Table type
     columns,
-    data: todos || [],
+    data: notes || [],
     getCoreRowModel: getCoreRowModel(),
     state: {
       pagination
@@ -124,12 +100,13 @@ export const Todos = () => {
   return (
     <MainLayout>
       <Box className={classes.list}>
-        <NotesHeader component="h1">My Private Todo tasks</NotesHeader>
-        <AddNewButton openNoteModal={openTodoModal} />
+        <NotesHeader component="h1">My Private Notes</NotesHeader>
+        <AddNewButton openModal={openNoteModal} />
         <br />
-        <Table table={table} isLoading={isPending || isLoading || isFetching} />
-        {!todos?.length && <NotesHeader component="h2">Your todo list is empty! Enter a new task! </NotesHeader>}
+        <Table<NoteWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+        {!notes?.length && <NotesHeader component="h2">Your note list is empty! Enter a new note! </NotesHeader>}
       </Box>
     </MainLayout>
   );
 };
+// zrobić tak żeby można było edytować notatki z modalu details

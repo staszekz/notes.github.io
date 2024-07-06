@@ -1,7 +1,7 @@
 import { Title, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
-import { Note, NoteWithId, Todo, TodoWithId } from '@notes/types';
+import { NoteWithId, TodoWithId } from '@notes/types';
 
 export function openNoteModal(data?: NoteWithId) {
   return modals.open({

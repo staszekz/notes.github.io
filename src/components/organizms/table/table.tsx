@@ -1,8 +1,9 @@
-import { LoadingOverlay, Table as MantineTable, Pagination } from '@mantine/core';
-import { flexRender } from '@tanstack/react-table';
+import { LoadingOverlay, Table as MantineTable } from '@mantine/core';
+import { flexRender, Table as TTable } from '@tanstack/react-table';
+import { Pagination } from '@notes/components';
 import classes from './table.module.css';
 
-export function Table({ table, isLoading }) {
+export function Table<T>({ table, isLoading }: { table: TTable<T>; isLoading: boolean }) {
   return (
     <div className={classes.tableWrapper}>
       <MantineTable stickyHeader striped highlightOnHover>
@@ -39,19 +40,7 @@ export function Table({ table, isLoading }) {
         overlayProps={{ radius: 'sm', blur: 1 }}
         style={{ height: '100%' }}
       />
-      <Pagination
-        p={4}
-        color={'var(--secondary)'}
-        bg={'var(--primary)'}
-        withEdges
-        onChange={pageIndex => table.setPageIndex(pageIndex - 1)}
-        onFirstPage={() => table.firstPage()}
-        onLastPage={() => table.lastPage()}
-        onNextPage={() => table.nextPage()}
-        onPreviousPage={() => table.previousPage()}
-        total={table.getPageCount()}
-        siblings={1}
-      />
+      <Pagination<T> table={table} />
     </div>
   );
 }
