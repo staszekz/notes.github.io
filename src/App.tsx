@@ -1,5 +1,3 @@
-import { theme } from './Theme';
-import { ThemeProvider } from 'styled-components';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
@@ -36,9 +34,7 @@ export function App() {
       <MantineProvider>
         <AuthProvider>
           <ModalsProvider>
-            <ThemeProvider theme={theme}>
-              <RouterProvider router={router} />
-            </ThemeProvider>
+            <RouterProvider router={router} />
           </ModalsProvider>
         </AuthProvider>
       </MantineProvider>
