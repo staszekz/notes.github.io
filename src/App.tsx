@@ -43,8 +43,11 @@ export function App() {
 }
 
 // zrobic panel użytkownika z usuwaniem, zmiana Nazwy,
+// => czy panel powinien być tylko online z firebase,
+// czy poprzez useQuery i mutacje?
 //  zmiana hasła, zmiana emaila etc
 
 // dorobić baner co jest dziś do zrobienia
+// dorobić info które zadania się zbliżają dozrobienia
 // moze dodąc temp i date
 // moze połaczenie  z kalendarzem Google
