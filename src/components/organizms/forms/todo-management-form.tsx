@@ -2,12 +2,14 @@ import { useForm } from '@tanstack/react-form';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
-import { Button, TextInput, Textarea } from '@mantine/core';
+import { TextInput, Textarea } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
+import { CustomButton } from '@notes/components';
+import classes from './styles.module.css';
 
 export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
   const { addElement, editElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
@@ -131,9 +133,9 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
           <>
-            <Button size="lg" type="submit" disabled={!canSubmit}>
+            <CustomButton classNames={classes.button} type="submit" disabled={!canSubmit}>
               {isSubmitting ? '...' : 'Submit'}
-            </Button>
+            </CustomButton>
           </>
         )}
       />

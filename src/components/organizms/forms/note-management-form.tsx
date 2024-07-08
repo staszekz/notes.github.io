@@ -8,6 +8,8 @@ import { modals } from '@mantine/modals';
 import { CollectionType, Note, NoteWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
+import { CustomButton } from '@notes/components';
+import classes from './styles.module.css';
 
 export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
   const { addElement, editElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
@@ -104,11 +106,9 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <>
-            <Button size="lg" type="submit" disabled={!canSubmit}>
-              {isSubmitting ? '...' : 'Submit'}
-            </Button>
-          </>
+          <CustomButton classNames={classes.button} type="submit" disabled={!canSubmit}>
+            {isSubmitting ? '...' : 'Submit'}
+          </CustomButton>
         )}
       />
     </form>
