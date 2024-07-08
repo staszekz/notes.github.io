@@ -1,4 +1,4 @@
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -9,6 +9,7 @@ import './index.css';
 
 import { routeTree } from './routeTree.gen';
 import { getAuth } from 'firebase/auth';
+import { theme } from './Theme';
 
 const queryClient = new QueryClient();
 
@@ -27,11 +28,12 @@ declare module '@tanstack/react-router' {
     router: typeof router;
   }
 }
+const customTheme = createTheme(theme);
 
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MantineProvider>
+      <MantineProvider theme={customTheme}>
         <AuthProvider>
           <ModalsProvider>
             <RouterProvider router={router} />
