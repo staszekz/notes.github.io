@@ -9,6 +9,7 @@ export const Home = () => {
         <NotesHeader component="h1">In this app you can store your: </NotesHeader>
         <div className={classes.buttonWrapper}>
           <ButtonLink large to="/todos">
+            {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
             todos
           </ButtonLink>
           <ButtonLink large to="/notes">
@@ -29,3 +30,29 @@ export const Home = () => {
 // TODO: add user stored in cookies
 // TODO: Add reactQuery (or SWR) to fetching and sotring data ??
 // TODO: Finally add typescrip to the whole project.
+
+// import { queryOptions } from '@tanstack/react-query';
+
+// function getPostQueryOptions(path: string) {
+//   return queryOptions({
+//     queryKey: ['posts', path],
+//     queryFn: () => fetchPost(path),
+//     staletime: 5000
+//   });
+// }
+
+// ...
+
+// function usePost(path) {
+//   return useQuery(getPostQueryOptions(path))
+// }
+
+// ...
+
+// <a
+//   onClick={() => setPath(post.path)}
+//   href="#"
+//   onMouseEnter={() => {
+//     queryClient.prefetchQuery(getPostQueryOptions(post.path))
+//   }}
+// ></a>
