@@ -1,56 +1,55 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import { store } from './store/index';
-import { ContextLayout } from './context';
-import { Home, Notes, PublicHomepage, SignUp, Todos } from '@notes/components';
-import { app } from './database/database';
-import { theme } from './Theme';
-import { ThemeProvider } from 'styled-components';
-import { MantineProvider } from '@mantine/core';
+import { createTheme, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ModalsProvider } from '@mantine/modals';
+import { AuthProvider } from './context/auth-context';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import './index.css';
+
+import { routeTree } from './routeTree.gen';
+import { getAuth } from 'firebase/auth';
+import { theme } from './Theme';
 
 const queryClient = new QueryClient();
 
-const rrfConfig = {
-  userProfile: 'users'
-};
+const router = createRouter({
+  routeTree,
+  context: {
+    queryClient,
+    auth: getAuth()
+  },
+  defaultPreload: 'intent',
+  defaultPreloadStaleTime: 0
+});
 
-const rrfProps = {
-  firebase: app,
-  config: rrfConfig,
-  dispatch: store.dispatch
-};
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+const customTheme = createTheme(theme);
 
 export function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
-      <Provider store={store}>
-        <ReactReduxFirebaseProvider {...rrfProps}>
-          <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
-            <MantineProvider>
-              <ModalsProvider>
-                <ThemeProvider theme={theme}>
-                  <Routes>
-                    <Route path="/" element={<PublicHomepage />} />
-                    <Route path="/todos" element={<Todos />} />
-                    <Route path="/notes" element={<Notes />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/signin" element={<SignUp isSignUp />} />
-                    <Route path="/signup" element={<SignUp isSignUp={false} />} />
-                  </Routes>
-                </ThemeProvider>
-              </ModalsProvider>
-            </MantineProvider>
-          </BrowserRouter>
-        </ReactReduxFirebaseProvider>
-      </Provider>
+      <MantineProvider theme={customTheme}>
+        <AuthProvider>
+          <ModalsProvider>
+            <RouterProvider router={router} />
+          </ModalsProvider>
+        </AuthProvider>
+      </MantineProvider>
     </QueryClientProvider>
   );
 }
+
+// zrobic panel użytkownika z usuwaniem, zmiana Nazwy,
+// => czy panel powinien być tylko online z firebase,
+// czy poprzez useQuery i mutacje?
+//  zmiana hasła, zmiana emaila etc
+
+// dorobić baner co jest dziś do zrobienia
+// dorobić info które zadania się zbliżają dozrobienia
+// moze dodąc temp i date
+// moze połaczenie  z kalendarzem Google

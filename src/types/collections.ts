@@ -1,23 +1,26 @@
+import { Timestamp } from 'firebase/firestore';
+
 export type Note = {
-  id: string;
   title: string;
-  created: string;
+  createdOn: Timestamp;
   content: string;
 };
 
-export type RemoteNote = Omit<Note, 'id'>;
+export type NoteWithId = Note & { id: string }
 
 export type Todo = {
-  id: string;
   title: string;
-  created: string;
+  createdOn: Timestamp;
   extraContent: string;
   completed: boolean;
-  deadline: string;
+  deadline: Timestamp | null;
 };
-export type RemoteTodo = Omit<Todo, 'id'>;
+
+export type TodoWithId = Todo & { id: string }
 
 export enum CollectionType {
   NOTES = 'notes',
-  TODOS = 'todos'
+  TODOS = 'todos',
+  USERS = 'users'
 }
+
