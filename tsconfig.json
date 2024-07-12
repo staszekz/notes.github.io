@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "rootDir": ".",
+    "target": "esnext",
+    "module": "nodenext",
+    "isolatedModules": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": false,
+    "outDir": "dist",
+    "sourceMap": true,
+    // "module": "CommonJS",
+    "declaration": true,
+    "composite": true,
+    "declarationMap": true,
+    "noImplicitAny": false,
+    "types": ["vite/client", "vite-plugin-svgr/client"],
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "baseUrl": "./",
+    "paths": {
+      "@notes/components": ["src/components/index.ts"],
+      "@notes/utils": ["src/utils/index.ts"],
+      "@notes/types": ["src/types/index.ts"],
+      "@notes/hooks": ["src/hooks/index.ts"],
+      "@notes/context": ["src/context/index.ts"],
+      "@notes/rq": ["src/rq/index.ts"],
+      "@notes/layout": ["src/Layout/index.ts"],
+      "@notes/theme": ["src/Theme"],
+      "@notes/database": ["src/database/index.ts"],
+      "@notes/views": ["src/views/index.ts"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["./node_modules/**/*"]
+}

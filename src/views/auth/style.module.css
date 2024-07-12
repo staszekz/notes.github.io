@@ -1,0 +1,13 @@
+.textInput label {
+  color: var(--primary);
+  font-weight: 600;
+}
+.linkWrapper {
+  width: 100%;
+}
+
+@media (orientation: landscape) {
+  .submitButton {
+    margin-top: 1rem;
+  }
+}
