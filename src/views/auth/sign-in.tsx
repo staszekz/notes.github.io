@@ -31,15 +31,17 @@ export const SignIn = () => {
 
   const handleOnSubmit = async (state: SignInValues) => {
     setLoadingState(true);
-    signIn(state.email, state.password)
-      .then(() => {
-        setLoadingState(false);
-        navigate({ to: RoutesDef.HOME });
-      })
-      .catch(err => {
-        // TODO: handle error into popup window
-        alert(err.message);
-      });
+    try {
+      await signIn(state.email, state.password);
+      setLoadingState(false);
+      navigate({ to: RoutesDef.HOME });
+    } catch (err) {
+      // .catch(err => {
+      // TODO: handle error into popup window
+      alert(err.message);
+    }
+
+    // });
   };
   return (
     <>

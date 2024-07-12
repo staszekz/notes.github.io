@@ -40,7 +40,7 @@ export function Table<T>({ table, isLoading }: { table: TTable<T>; isLoading: bo
         overlayProps={{ radius: 'sm', blur: 1 }}
         style={{ height: '100%' }}
       />
-      <Pagination<T> table={table} />
+      <Pagination table={table} />
     </div>
   );
 }

@@ -67,7 +67,7 @@ export function AuthProvider({ children }) {
         <LoadingOverlay
           visible={loading}
           overlayProps={{ backgroundOpacity: 0 }}
-          loaderProps={{ color: 'var(--primary)', type: 'bars' }}
+          loaderProps={{ color: 'var(--primary)', type: 'bars' }} // przenieść loading do children, usunąc z contextu
         />
       ) : (
         children

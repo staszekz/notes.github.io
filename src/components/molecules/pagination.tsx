@@ -1,7 +1,8 @@
 import { Pagination as ManitinePagination } from '@mantine/core';
 import { Table } from '@tanstack/table-core';
-
-export function Pagination<T>({ table }: { table: Table<T> }) {
+// we can have any type of table props, do not care what data are passed
+export function Pagination({ table }: { table: Table<any> }) {
+  // moze dodać <T extaends any>
   return (
     <ManitinePagination
       p={4}
