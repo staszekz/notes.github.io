@@ -12,26 +12,23 @@ export const theme = {
     sizes: {
       h1: {
         fontSize: '2.5rem',
-        fontWeight: 700,
+        fontWeight: '700',
       },
       h2: {
         fontSize: '2.0rem',
-        fontWeight: 600,
+        fontWeight: '600',
       },
       h3: {
         fontSize: '1.6rem',
-        fontWeight: 500,
+        fontWeight: '500',
       },
-      h4: '2rem',
-      h5: '1.8rem',
-      h6: '1.6rem',
     },
   },
-  cursorType: 'pointer',
+  cursorType: 'pointer' as "pointer" | "default" | undefined,
   font: {
-    this: 300,
-    regular: 400,
-    bold: 600,
+    this: '300',
+    regular: '400',
+    bold: '600',
   },
   fontSize: {
     xxs: '1rem',

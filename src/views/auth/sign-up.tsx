@@ -9,7 +9,6 @@ import { useAuthContext } from '@notes/hooks';
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { database } from '@notes/database';
 import { CollectionType } from '@notes/types';
-import { FirebaseError } from 'firebase/app';
 import { RoutesDef } from '@notes/utils';
 import { Link, useNavigate } from '@tanstack/react-router';
 
@@ -40,7 +39,7 @@ export const SignUp = () => {
       setLoadingState(false);
       navigate({ to: RoutesDef.HOME });
     } catch (error) {
-      throw new FirebaseError(error.code, error?.message);
+      throw new Error((error as Error).message);
     }
   };
 

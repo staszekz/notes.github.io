@@ -36,12 +36,8 @@ export const SignIn = () => {
       setLoadingState(false);
       navigate({ to: RoutesDef.HOME });
     } catch (err) {
-      // .catch(err => {
-      // TODO: handle error into popup window
-      alert(err.message);
+      alert((err as Error).message);
     }
-
-    // });
   };
   return (
     <>
