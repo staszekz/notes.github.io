@@ -1,0 +1,36 @@
+.input {
+  background-color: lightgray;
+  border: none;
+  border-radius: 20px;
+  width: 100%;
+  padding: 0.5rem 0.5rem;
+  float: left;
+  text-align: center;
+
+  ::placeholder {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+  }
+}
+
+.textarea {
+  background-color: lightgray;
+  border: none;
+  border-radius: 20px;
+  width: 70%;
+  height: 50%;
+  margin: 1rem auto;
+  float: left;
+  text-align: center;
+
+  ::placeholder {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+  }
+  &[data-notes] {
+    width: 90%;
+    height: 70%;
+  }
+}
