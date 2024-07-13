@@ -1,11 +1,12 @@
 import { MainLayout } from '@notes/layout';
-import { HomeWrapper, ButtonLink, NotesHeader } from '@notes/components';
+import { ButtonLink, NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
+import { Box } from '@mantine/core';
 
 export const Home = () => {
   return (
     <MainLayout>
-      <HomeWrapper>
+      <Box className={classes.homeWrapper}>
         <NotesHeader component="h1">In this app you can store your: </NotesHeader>
         <div className={classes.buttonWrapper}>
           <ButtonLink large to="/todos">
@@ -16,7 +17,7 @@ export const Home = () => {
             notes
           </ButtonLink>
         </div>
-      </HomeWrapper>
+      </Box>
     </MainLayout>
   );
 };
