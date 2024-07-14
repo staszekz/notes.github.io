@@ -15,10 +15,6 @@ export const CustomButton = ({ type = 'button', children, large = false, disable
   </Button>
 );
 
-export const ButtonWrapper = ({ children }) => {
-  return <Box className={classes.buttonWrapper}>{children}</Box>;
-};
-
 type ButtonProps = {
   children: React.ReactNode;
   large?: boolean;

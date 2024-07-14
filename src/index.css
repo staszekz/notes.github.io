@@ -17,9 +17,19 @@
   --red: rgba(200, 50, 50, 1);
   --warning: rgba(255, 165, 0, 1); /* Orange */
   --white: rgba(245, 255, 250, 1);
+  --success: rgba(0, 128, 0, 1);
   --default-box-shadow-color: rgba(62, 194, 233, 0.3);
   --box-shadow-primary: 0 10px 20px -15px var(--primary);
   --box-shadow-secondary: -5px 3px 15px var(--default-box-shadow-color);
+  --size-height-large: 100px;
+  --size-height-medium: 75px;
+  --size-height-small: 50px;
+  --size-width-large: 40%;
+  --size-width-medium: 30%;
+  --size-width-small: 20%;
+  --border-large: 3px solid var(--primary);
+  --border-medium: 2px solid var(--primary);
+  --border-small: 1px solid var(--primary);
 }
 /* TODO: Add dark mode */
 @media (prefers-color-scheme: dark) {
@@ -80,24 +90,6 @@ button {
   gap: 1rem;
   max-width: 500px;
   margin: 0 auto;
-}
-
-.base-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  width: 20%;
-  font-size: 1.5rem;
-  font-weight: 600;
-  transition: box-shadow 0.3s ease;
-  color: var(--primary);
-  border-radius: 50px;
-  &:hover {
-    box-shadow: 0 10px 20px -15px var(--primary);
-    background-color: var(--primary);
-    color: var(--white);
-  }
 }
 
 .white-button {
