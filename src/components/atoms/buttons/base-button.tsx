@@ -9,7 +9,9 @@ export function BaseButton<T>({
   classNames,
   variant = 'primary',
   Component = Button,
-  componentProps
+  componentProps,
+  leftIcon,
+  rightIcon
 }: ButtonProps<T>) {
   return (
     <Component
@@ -17,7 +19,9 @@ export function BaseButton<T>({
       className={cx(classes.baseButton, classes[size], classes[variant], classNames)}
       {...componentProps}
     >
+      {leftIcon && <div className={classes.leftIcon}>{leftIcon}</div>}
       {children}
+      {rightIcon && <div className={classes.rightIcon}>{rightIcon}</div>}
     </Component>
   );
 }
@@ -30,4 +34,6 @@ type ButtonProps<T> = {
   children: React.ReactNode;
   variant?: 'transparent' | 'white' | 'primary' | 'danger' | 'success' | 'warning';
   componentProps?: T;
+  rightIcon?: React.ReactNode;
+  leftIcon?: React.ReactNode;
 };

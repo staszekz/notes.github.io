@@ -3,7 +3,7 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
-import { Title } from '@notes/components';
+import { BaseButton, Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
@@ -103,34 +103,31 @@ export const SignIn = () => {
           selector={state => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => {
             return (
-              <Button
-                className={'base-button submit-button'}
-                loading={isSubmitting}
-                variant="outline"
-                type="submit"
+              <BaseButton
+                classNames={'submit-button'}
+                variant="transparent"
+                size="small"
+                componentProps={{ type: 'submit', loading: isSubmitting }}
                 disabled={!canSubmit}
               >
                 <IconLogin2 stroke={1.5} />
-              </Button>
+              </BaseButton>
             );
           }}
         />
-        <Link to={RoutesDef.SIGNUP} className={classes.linkWrapper}>
-          <Button
-            w={'100%'}
-            bd={'1px solid var(--primary)'}
-            leftSection={<IconLogin />}
-            c={'var(--primary)'}
-            variant="outline"
-          >
-            Go back to sign-up page
-          </Button>
-        </Link>
+        <BaseButton
+          variant="transparent"
+          Component={Link}
+          size="small"
+          componentProps={{ to: RoutesDef.SIGNUP }}
+          classNames={classes.linkWrapper}
+          leftIcon={<IconLogin />}
+        >
+          Go back to sign-up page
+        </BaseButton>
       </form>
     </>
   );
 };
-
-// zrobić defaukltowy button zeby miał dwa rodzaje kolorów =>zeby brał tez wsztskie propsy takie same ...props
 
 // Valibod do walidacji

@@ -4,6 +4,8 @@
 }
 .linkWrapper {
   width: 100%;
+  font-size: 1rem;
+  margin-top: 2rem;
 }
 
 @media (orientation: landscape) {

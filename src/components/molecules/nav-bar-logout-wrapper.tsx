@@ -3,7 +3,6 @@ import { IconLogout } from '@tabler/icons-react';
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { RoutesDef } from '@notes/utils';
 import classes from './styles.module.css';
-import { BaseButton } from '@notes/components';
 import { Link } from '@tanstack/react-router';
 
 export const NavBarLogoutWrapper = ({ handleClick }: { handleClick: () => void }) => {
