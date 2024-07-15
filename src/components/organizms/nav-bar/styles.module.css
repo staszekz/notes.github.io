@@ -1,6 +1,7 @@
 .bar {
   width: 50%;
   /* right: 0%; */
+  margin-right: 2rem;
   display: flex;
   gap: 6rem;
   align-items: center;
@@ -24,6 +25,6 @@
   align-items: center;
   gap: 1rem;
   padding: 0 2rem;
-  font-size: 3rem;
+  font-size: 2rem;
   color: var(--primary);
 }

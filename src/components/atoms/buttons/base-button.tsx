@@ -1,6 +1,6 @@
 import cx from 'classix';
 import classes from './styles.module.css';
-import { Button } from '@mantine/core';
+import { UnstyledButton } from '@mantine/core';
 
 export function BaseButton<T>({
   children,
@@ -8,15 +8,22 @@ export function BaseButton<T>({
   disabled,
   classNames,
   variant = 'primary',
-  Component = Button,
+  Component = UnstyledButton,
   componentProps,
   leftIcon,
-  rightIcon
+  rightIcon,
+  noBorder
 }: ButtonProps<T>) {
   return (
     <Component
       disabled={disabled}
-      className={cx(classes.baseButton, classes[size], classes[variant], classNames)}
+      className={cx(
+        classes.baseButton,
+        classes[size],
+        !noBorder && classes[variant],
+        noBorder && classes['noBorder'],
+        classNames
+      )}
       {...componentProps}
     >
       {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}
@@ -36,4 +43,5 @@ type ButtonProps<T> = {
   componentProps?: T;
   rightIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
+  noBorder?: boolean;
 };
