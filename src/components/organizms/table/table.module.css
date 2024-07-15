@@ -1,0 +1,15 @@
+.tableBody {
+  background-color: aliceblue;
+}
+
+.tableCell {
+  white-space: nowrap;
+  text-overflow: ellipsis !important;
+  max-width: 300px;
+  overflow: hidden;
+}
+
+.tableWrapper {
+  min-width: 800px;
+  position: relative;
+}
