@@ -1,6 +1,8 @@
-import { ButtonLink, NotesHeader } from '@notes/components';
+import { BaseButton, ButtonLink, NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
 import { Box } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
+import { RoutesDef } from '@notes/utils';
 
 export const AuthView = () => (
   <Box className={classes.wrapper}>
@@ -11,12 +13,24 @@ export const AuthView = () => (
     <Box className={classes.homeWrapper}>
       <NotesHeader component="h1">Please sign in or sign up to use</NotesHeader>
       <div className={classes.buttonWrapper}>
-        <ButtonLink large to={'/signup'}>
+        <BaseButton
+          classNames={classes.button}
+          variant="transparent"
+          size="large"
+          Component={Link}
+          componentProps={{ to: RoutesDef.SIGNUP }}
+        >
           sign up
-        </ButtonLink>
-        <ButtonLink large to={'/signin'}>
+        </BaseButton>
+        <BaseButton
+          classNames={classes.button}
+          variant="transparent"
+          size="large"
+          Component={Link}
+          componentProps={{ to: RoutesDef.SIGNIN }}
+        >
           sign in
-        </ButtonLink>
+        </BaseButton>
       </div>
     </Box>
   </Box>

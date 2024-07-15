@@ -10,10 +10,13 @@ export const NavBar = () => {
   };
 
   return (
-    <Box className={classes.bar}>
-      <NavBarButtonWrapper />
-      {user && <NavBarUser user={user} />}
-      <NavBarLogoutWrapper handleClick={handleSignOutClick} />
+    <Box className={classes.wrapper}>
+      <Box className={classes.logo}>XXX_LOGO_XXX</Box>
+      <Box className={classes.bar}>
+        <NavBarButtonWrapper />
+        {user && <NavBarUser user={user} />}
+        <NavBarLogoutWrapper handleClick={handleSignOutClick} />
+      </Box>
     </Box>
   );
 };

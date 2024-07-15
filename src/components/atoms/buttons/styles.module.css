@@ -23,6 +23,8 @@
 .small {
   height: var(--size-height-small);
   width: var(--size-width-small);
+  min-width: fit-content;
+  padding: 1rem 2rem;
 }
 
 .white {
@@ -57,7 +59,7 @@
 .buttonWrapper {
   display: flex;
   justify-content: space-evenly;
-  width: 90%;
+  /* width: 90%; */
   margin-top: auto;
 }
 

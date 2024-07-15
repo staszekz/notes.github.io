@@ -19,9 +19,9 @@ export function BaseButton<T>({
       className={cx(classes.baseButton, classes[size], classes[variant], classNames)}
       {...componentProps}
     >
-      {leftIcon && <div className={classes.leftIcon}>{leftIcon}</div>}
+      {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}
       {children}
-      {rightIcon && <div className={classes.rightIcon}>{rightIcon}</div>}
+      {rightIcon && <span className={classes.rightIcon}>{rightIcon}</span>}
     </Component>
   );
 }

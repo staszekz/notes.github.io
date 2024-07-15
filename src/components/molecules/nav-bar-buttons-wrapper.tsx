@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
 import classes from './styles.module.css';
-import { BaseButton } from 'src/components/atoms/buttons/base-button';
+import { BaseButton } from '@notes/components';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 
