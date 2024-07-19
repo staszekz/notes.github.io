@@ -1,5 +1,6 @@
+import { Button } from '@mantine/core';
 import { colors } from '../utils/colors';
-
+import classes from './styles.module.css'
 export const theme = {
   // colors,
   shadows: {
@@ -43,4 +44,9 @@ export const theme = {
     tablet: '@media(max-width: 768px)',
     landscape: '@media(max-width: 736px) and (orientation: landscape) ',
   },
+  components: {
+    Button: Button.extend({
+      classNames: classes
+    })
+  }
 };

@@ -5,13 +5,14 @@ import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core';
 
 export const NotesButton = createPolymorphicComponent<'button', ButtonOwnProps>(
   forwardRef<HTMLButtonElement, ButtonOwnProps>(
-    ({ children, classNames, leftIcon, rightIcon, noBorder, ...rest }, ref) => {
+    ({ children, classNames, leftIcon, rightIcon, size, noBorder, ...rest }, ref) => {
       return (
         <Button
           ref={ref}
           leftSection={leftIcon}
           rightSection={rightIcon}
-          className={cx(classes.baseButton, classNames)}
+          size={size}
+          className={cx(classes.baseButton, classes[size], classNames)}
           {...rest}
         >
           {children}
@@ -27,4 +28,6 @@ type ButtonOwnProps = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   classNames?: string;
+  variant: string;
+  size: string;
 } & ButtonProps;

@@ -1,0 +1,5 @@
+[data-variant='white'] {
+  background-color: var(--white);
+  color: var(--secondary);
+  padding: 8px 24px;
+}
