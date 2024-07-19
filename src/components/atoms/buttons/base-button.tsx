@@ -1,47 +1,30 @@
 import cx from 'classix';
 import classes from './styles.module.css';
-import { UnstyledButton } from '@mantine/core';
+import { forwardRef } from 'react';
+import { Button, ButtonProps, createPolymorphicComponent } from '@mantine/core';
 
-export function BaseButton<T>({
-  children,
-  size = 'medium',
-  disabled,
-  classNames,
-  variant = 'primary',
-  Component = UnstyledButton,
-  componentProps,
-  leftIcon,
-  rightIcon,
-  noBorder
-}: ButtonProps<T>) {
-  return (
-    <Component
-      disabled={disabled}
-      className={cx(
-        classes.baseButton,
-        classes[size],
-        !noBorder && classes[variant],
-        noBorder && classes['noBorder'],
-        classNames
-      )}
-      {...componentProps}
-    >
-      {leftIcon && <span className={classes.leftIcon}>{leftIcon}</span>}
-      {children}
-      {rightIcon && <span className={classes.rightIcon}>{rightIcon}</span>}
-    </Component>
-  );
-}
+export const NotesButton = createPolymorphicComponent<'button', ButtonOwnProps>(
+  forwardRef<HTMLButtonElement, ButtonOwnProps>(
+    ({ children, classNames, leftIcon, rightIcon, noBorder, ...rest }, ref) => {
+      return (
+        <Button
+          ref={ref}
+          leftSection={leftIcon}
+          rightSection={rightIcon}
+          className={cx(classes.baseButton, classNames)}
+          {...rest}
+        >
+          {children}
+        </Button>
+      );
+    }
+  )
+);
 
-type ButtonProps<T> = {
-  Component?: React.ElementType;
-  classNames?: string;
-  disabled?: boolean;
-  size?: 'small' | 'medium' | 'large';
+type ButtonOwnProps = {
   children: React.ReactNode;
-  variant?: 'transparent' | 'white' | 'primary' | 'danger' | 'success' | 'warning';
-  componentProps?: T;
-  rightIcon?: React.ReactNode;
-  leftIcon?: React.ReactNode;
   noBorder?: boolean;
-};
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  classNames?: string;
+} & ButtonProps;

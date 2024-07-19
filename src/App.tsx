@@ -36,6 +36,7 @@ export function App() {
       <MantineProvider theme={customTheme}>
         <AuthProvider>
           <ModalsProvider>
+            {/* <Loder /> */}
             <RouterProvider router={router} />
           </ModalsProvider>
         </AuthProvider>

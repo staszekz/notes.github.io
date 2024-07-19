@@ -1,5 +1,5 @@
 import { MainLayout } from '@notes/layout';
-import { BaseButton, ButtonLink, NotesHeader } from '@notes/components';
+import { NotesButton, ButtonLink, NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
 import { Box } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
@@ -11,13 +11,13 @@ export const Home = () => {
       <Box className={classes.homeWrapper}>
         <NotesHeader component="h1">In this app you can store your: </NotesHeader>
         <div className={classes.buttonWrapper}>
-          <BaseButton variant="transparent" size="large" Component={Link} componentProps={{ to: RoutesDef.TODOS }}>
+          <NotesButton variant="transparent" size="large" component={Link} to={RoutesDef.TODOS}>
             {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
             todos
-          </BaseButton>
-          <BaseButton variant="transparent" size="large" Component={Link} componentProps={{ to: RoutesDef.NOTES }}>
+          </NotesButton>
+          <NotesButton variant="transparent" size="large" component={Link} to={RoutesDef.NOTES}>
             notes
-          </BaseButton>
+          </NotesButton>
         </div>
       </Box>
     </MainLayout>

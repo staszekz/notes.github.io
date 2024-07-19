@@ -3,7 +3,7 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
-import { BaseButton, Title } from '@notes/components';
+import { NotesButton, Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
@@ -103,31 +103,30 @@ export const SignIn = () => {
           selector={state => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => {
             return (
-              <BaseButton
+              <NotesButton
                 classNames={'submit-button'}
                 variant="transparent"
                 size="small"
-                componentProps={{ type: 'submit', loading: isSubmitting }}
+                type="submit"
+                loading={isSubmitting}
                 disabled={!canSubmit}
               >
                 <IconLogin2 stroke={1.5} />
-              </BaseButton>
+              </NotesButton>
             );
           }}
         />
-        <BaseButton
+        <NotesButton
           variant="transparent"
-          Component={Link}
+          component={Link}
           size="small"
-          componentProps={{ to: RoutesDef.SIGNUP }}
+          to={RoutesDef.SIGNUP}
           classNames={classes.linkWrapper}
           leftIcon={<IconLogin />}
         >
           Go back to sign-up page
-        </BaseButton>
+        </NotesButton>
       </form>
     </>
   );
 };
-
-// Valibod do walidacji

@@ -8,7 +8,7 @@ import { modals } from '@mantine/modals';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
-import { BaseButton, CustomButton } from '@notes/components';
+import { NotesButton, CustomButton } from '@notes/components';
 import classes from './styles.module.css';
 
 export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
@@ -132,9 +132,9 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <BaseButton classNames={classes.button} componentProps={{ type: 'submit' }} disabled={!canSubmit}>
+          <NotesButton classNames={classes.button} type="submit" disabled={!canSubmit}>
             {isSubmitting ? '...' : 'Submit'}
-          </BaseButton>
+          </NotesButton>
         )}
       />
     </form>
