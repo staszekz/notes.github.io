@@ -1,11 +1,14 @@
 import { Button } from '@mantine/core';
-import { colors } from '../utils/colors';
+import { primary, secondary, dark, grey, red, warning, boxShadow } from '../utils/colors';
 import classes from './styles.module.css'
+
 export const theme = {
-  // colors,
+  colors: {
+    primary, secondary, dark, grey, red, warning, boxShadow
+  },
   shadows: {
-    primary: `0 0 10px ${colors.primary}`,
-    secondary: `0 0 10px ${colors.boxShadow}`,
+    primary: `0 0 10px ${primary}`,
+    secondary: `0 0 10px ${boxShadow}`,
   },
   fontFamily: 'Nunito, sans-serif',
   headings: {
@@ -46,7 +49,27 @@ export const theme = {
   },
   components: {
     Button: Button.extend({
-      classNames: classes
+      classNames: classes,
+      styles: {
+
+        root: {
+          // display: 'flex',
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          // textDecoration: 'none',
+          // width: '30%',
+          // fontSize: '1.5rem',
+          // fontWeight: 600,
+          // transition: 'box-shadow 0.3s ease',
+          // color: 'var(--primary)',
+          // borderRadius: '50px',
+          // '&:hover': {
+          //   boxShadow: `0 10px 20px -15px var(--primary)`,
+          //   backgroundColor: 'var(--primary)',
+          //   color: 'var(--white)',
+          // },
+        },
+      }
     })
   }
 };

@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button, TextInput } from '@mantine/core';
+import { Box, Button, Flex, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { NotesButton, Title } from '@notes/components';
@@ -103,23 +103,24 @@ export const SignIn = () => {
           selector={state => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => {
             return (
-              <NotesButton
-                classNames={'submit-button'}
-                variant="transparent"
-                size="small"
-                type="submit"
-                loading={isSubmitting}
-                disabled={!canSubmit}
-              >
-                <IconLogin2 stroke={1.5} />
-              </NotesButton>
+              <Flex justify={'flex-end'}>
+                <NotesButton
+                  size="small"
+                  right={0}
+                  type="submit"
+                  variant="transparent-bordr"
+                  loading={isSubmitting}
+                  disabled={!canSubmit}
+                >
+                  <IconLogin2 stroke={1.5} />
+                </NotesButton>
+              </Flex>
             );
           }}
         />
         <NotesButton
-          variant="transparent"
+          variant="transparent-bordr"
           component={Link}
-          size="small"
           to={RoutesDef.SIGNUP}
           classNames={classes.linkWrapper}
           leftIcon={<IconLogin />}

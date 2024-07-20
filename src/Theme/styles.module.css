@@ -3,3 +3,55 @@
   color: var(--secondary);
   padding: 8px 24px;
 }
+[data-variant='primary'] {
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 8px 24px;
+}
+[data-variant='danger'] {
+  background-color: var(--red);
+  color: var(--white);
+}
+[data-variant='warning'] {
+  background-color: var(--warning);
+  color: var(--white);
+}
+
+[data-variant='success'] {
+  background-color: var(--success);
+  color: var(--white);
+}
+[data-variant='transparent'] {
+  background-color: transparent;
+  color: var(--primary);
+}
+[data-variant='transparent-bordr'] {
+  background-color: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  &:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    border: 1px solid var(--white);
+  }
+}
+
+[data-size='large'] {
+  height: var(--size-height-large);
+  width: var(--size-width-large);
+  box-shadow: var(--box-shadow-secondary);
+  background-color: var(--dark);
+  border: var(--border-large);
+}
+[data-size='medium'] {
+  box-shadow: var(--box-shadow-primary);
+  background-color: var(--white);
+  height: var(--size-height-medium);
+  width: var(--size-width-medium);
+  border: var(--border-medium);
+}
+[data-size='small'] {
+  height: var(--size-height-small);
+  width: var(--size-width-small);
+  min-width: fit-content;
+}

@@ -1,4 +1,4 @@
-.large,
+/* .large,
 .medium,
 .small {
   box-shadow: var(--box-shadow-primary);
@@ -54,7 +54,7 @@
 .transparent {
   background-color: transparent;
   color: var(--primary);
-}
+} */
 
 .buttonWrapper {
   display: flex;
@@ -64,7 +64,7 @@
 }
 
 .baseButton {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
@@ -78,14 +78,5 @@
     box-shadow: 0 10px 20px -15px var(--primary);
     background-color: var(--primary);
     color: var(--white);
-  }
-}
-
-.leftIcon {
-  margin-right: 0.5rem;
-  display: flex;
-}
-.rightIcon {
-  margin-left: 0.5rem;
-  display: flex;
+  } */
 }
