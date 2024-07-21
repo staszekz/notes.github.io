@@ -3,7 +3,7 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Box, Button, Flex, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
-import { NotesButton, Title } from '@notes/components';
+import { Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
@@ -104,29 +104,32 @@ export const SignIn = () => {
           children={([canSubmit, isSubmitting]) => {
             return (
               <Flex justify={'flex-end'}>
-                <NotesButton
-                  size="small"
+                <Button
+                  size="sm"
                   right={0}
                   type="submit"
-                  variant="transparent-bordr"
+                  variant="transparent-border"
                   loading={isSubmitting}
                   disabled={!canSubmit}
                 >
                   <IconLogin2 stroke={1.5} />
-                </NotesButton>
+                </Button>
               </Flex>
             );
           }}
         />
-        <NotesButton
-          variant="transparent-bordr"
+        <Button
+          // variant="notes-transparent-border"
+          variant="light"
           component={Link}
+          size="md"
+          fz={'md'}
           to={RoutesDef.SIGNUP}
-          classNames={classes.linkWrapper}
-          leftIcon={<IconLogin />}
+          className={classes.linkWrapper}
+          leftSection={<IconLogin />}
         >
           Go back to sign-up page
-        </NotesButton>
+        </Button>
       </form>
     </>
   );

@@ -8,7 +8,6 @@ import { modals } from '@mantine/modals';
 import { CollectionType, Note, NoteWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
-import { NotesButton, CustomButton } from '@notes/components';
 import classes from './styles.module.css';
 
 export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
@@ -106,9 +105,9 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <NotesButton classNames={classes.button} type="submit" disabled={!canSubmit}>
+          <Button className={classes.button} type="submit" disabled={!canSubmit}>
             {isSubmitting ? '...' : 'Submit'}
-          </NotesButton>
+          </Button>
         )}
       />
     </form>

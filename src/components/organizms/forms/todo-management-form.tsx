@@ -2,13 +2,12 @@ import { useForm } from '@tanstack/react-form';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useRemoteData } from '@notes/hooks';
-import { TextInput, Textarea } from '@mantine/core';
+import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
-import { NotesButton, CustomButton } from '@notes/components';
 import classes from './styles.module.css';
 
 export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
@@ -132,9 +131,9 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <NotesButton classNames={classes.button} type="submit" disabled={!canSubmit}>
+          <Button className={classes.button} type="submit" disabled={!canSubmit}>
             {isSubmitting ? '...' : 'Submit'}
-          </NotesButton>
+          </Button>
         )}
       />
     </form>

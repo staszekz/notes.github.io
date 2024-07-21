@@ -49,27 +49,13 @@ export const theme = {
   },
   components: {
     Button: Button.extend({
-      classNames: classes,
-      styles: {
+      classNames: {
+        ...classes,
+        root: classes.buttonRoot,
+      },
 
-        root: {
-          // display: 'flex',
-          // justifyContent: 'center',
-          // alignItems: 'center',
-          // textDecoration: 'none',
-          // width: '30%',
-          // fontSize: '1.5rem',
-          // fontWeight: 600,
-          // transition: 'box-shadow 0.3s ease',
-          // color: 'var(--primary)',
-          // borderRadius: '50px',
-          // '&:hover': {
-          //   boxShadow: `0 10px 20px -15px var(--primary)`,
-          //   backgroundColor: 'var(--primary)',
-          //   color: 'var(--white)',
-          // },
-        },
-      }
+
+
     })
   }
 };
