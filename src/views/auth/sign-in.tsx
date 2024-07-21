@@ -105,10 +105,10 @@ export const SignIn = () => {
             return (
               <Flex justify={'flex-end'}>
                 <Button
-                  size="sm"
+                  size="medium"
                   right={0}
                   type="submit"
-                  variant="transparent-border"
+                  variant="notes-transparent-border"
                   loading={isSubmitting}
                   disabled={!canSubmit}
                 >
