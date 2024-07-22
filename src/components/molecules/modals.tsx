@@ -2,6 +2,7 @@ import { Title, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
 import { NoteWithId, TodoWithId } from '@notes/types';
+// import { primary } from '@notes/utils';
 
 export function openNoteModal(data?: NoteWithId) {
   return modals.open({
@@ -28,7 +29,8 @@ export const openDeleteModal = (id: string, deleteFn) => {
       confirm: 'Delete',
       cancel: 'Cancel'
     },
-    confirmProps: { color: 'var(--red)' },
+    confirmProps: { bg: 'red', c: 'white', fz: 'md' },
+    cancelProps: { fz: 'md' },
     onConfirm: () => deleteFn(id)
   });
 };

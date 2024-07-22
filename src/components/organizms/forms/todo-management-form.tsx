@@ -131,7 +131,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <Button className={classes.button} type="submit" disabled={!canSubmit}>
+          <Button size="sm" type="submit" fz="1rem" variant="notes-transparent-border" disabled={!canSubmit}>
             {isSubmitting ? '...' : 'Submit'}
           </Button>
         )}

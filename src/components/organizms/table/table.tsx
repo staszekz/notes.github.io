@@ -12,7 +12,7 @@ export function Table<T>({ table, isLoading }: { table: TTable<T>; isLoading: bo
             <MantineTable.Tr key={headerGroup.id}>
               {headerGroup.headers.map(header => {
                 return (
-                  <MantineTable.Th ta={'center'} key={header.id} w="fit-content">
+                  <MantineTable.Th fz={'md'} ta={'center'} key={header.id} w="fit-content">
                     {flexRender(header.column.columnDef.header, header.getContext())}
                   </MantineTable.Th>
                 );
@@ -25,7 +25,7 @@ export function Table<T>({ table, isLoading }: { table: TTable<T>; isLoading: bo
           {table.getRowModel().rows.map(row => (
             <MantineTable.Tr key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <MantineTable.Td className={classes.tableCell} key={cell.id}>
+                <MantineTable.Td fz={'md'} className={classes.tableCell} key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </MantineTable.Td>
               ))}
