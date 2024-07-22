@@ -1,10 +1,14 @@
-import { colors } from '../utils/colors';
+import { Button } from '@mantine/core';
+import { primary, secondary, dark, grey, red, warning, boxShadow } from '../utils/colors';
+import classes from './styles.module.css'
 
 export const theme = {
-  // colors,
+  colors: {
+    primary, secondary, dark, grey, red, warning, boxShadow
+  },
   shadows: {
-    primary: `0 0 10px ${colors.primary}`,
-    secondary: `0 0 10px ${colors.boxShadow}`,
+    primary: `0 0 10px ${primary}`,
+    secondary: `0 0 10px ${boxShadow}`,
   },
   fontFamily: 'Nunito, sans-serif',
   headings: {
@@ -43,4 +47,15 @@ export const theme = {
     tablet: '@media(max-width: 768px)',
     landscape: '@media(max-width: 736px) and (orientation: landscape) ',
   },
+  components: {
+    Button: Button.extend({
+      classNames: {
+        ...classes,
+        root: classes.buttonRoot,
+      },
+
+
+
+    })
+  }
 };

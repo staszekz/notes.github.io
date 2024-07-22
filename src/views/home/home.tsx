@@ -1,22 +1,25 @@
 import { MainLayout } from '@notes/layout';
-import { HomeWrapper, ButtonLink, NotesHeader } from '@notes/components';
+import { NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
+import { Box, Button } from '@mantine/core';
+import { Link } from '@tanstack/react-router';
+import { RoutesDef } from '@notes/utils';
 
 export const Home = () => {
   return (
     <MainLayout>
-      <HomeWrapper>
+      <Box className={classes.homeWrapper}>
         <NotesHeader component="h1">In this app you can store your: </NotesHeader>
         <div className={classes.buttonWrapper}>
-          <ButtonLink large to="/todos">
+          <Button variant="transparent" size="large" component={Link} to={RoutesDef.TODOS}>
             {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
             todos
-          </ButtonLink>
-          <ButtonLink large to="/notes">
+          </Button>
+          <Button variant="transparent" size="large" component={Link} to={RoutesDef.NOTES}>
             notes
-          </ButtonLink>
+          </Button>
         </div>
-      </HomeWrapper>
+      </Box>
     </MainLayout>
   );
 };

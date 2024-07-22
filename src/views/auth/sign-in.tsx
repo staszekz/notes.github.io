@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button, TextInput } from '@mantine/core';
+import { Box, Button, Flex, TextInput } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { Title } from '@notes/components';
@@ -103,34 +103,34 @@ export const SignIn = () => {
           selector={state => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => {
             return (
-              <Button
-                className={'base-button submit-button'}
-                loading={isSubmitting}
-                variant="outline"
-                type="submit"
-                disabled={!canSubmit}
-              >
-                <IconLogin2 stroke={1.5} />
-              </Button>
+              <Flex justify={'flex-end'}>
+                <Button
+                  size="medium"
+                  right={0}
+                  type="submit"
+                  variant="notes-transparent-border"
+                  loading={isSubmitting}
+                  disabled={!canSubmit}
+                >
+                  <IconLogin2 stroke={1.5} />
+                </Button>
+              </Flex>
             );
           }}
         />
-        <Link to={RoutesDef.SIGNUP} className={classes.linkWrapper}>
-          <Button
-            w={'100%'}
-            bd={'1px solid var(--primary)'}
-            leftSection={<IconLogin />}
-            c={'var(--primary)'}
-            variant="outline"
-          >
-            Go back to sign-up page
-          </Button>
-        </Link>
+        <Button
+          // variant="notes-transparent-border"
+          variant="light"
+          component={Link}
+          size="md"
+          fz={'md'}
+          to={RoutesDef.SIGNUP}
+          className={classes.linkWrapper}
+          leftSection={<IconLogin />}
+        >
+          Go back to sign-up page
+        </Button>
       </form>
     </>
   );
 };
-
-// zrobić defaukltowy button zeby miał dwa rodzaje kolorów =>zeby brał tez wsztskie propsy takie same ...props
-
-// Valibod do walidacji

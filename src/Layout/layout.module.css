@@ -1,7 +1,4 @@
 .mainLayout {
-  height: 100%;
   max-width: 1980px;
-  width: 100vw;
   margin: 0 auto;
-  margin-top: 12vh;
 }
