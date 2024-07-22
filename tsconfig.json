@@ -13,7 +13,6 @@
     "noImplicitOverride": false,
     "outDir": "dist",
     "sourceMap": true,
-    // "module": "CommonJS",
     "declaration": true,
     "composite": true,
     "declarationMap": true,

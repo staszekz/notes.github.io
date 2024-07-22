@@ -1,4 +1,5 @@
-export * from './inputs/inputs';
+export * from './inputs/input'
+export * from './inputs/textarea'
 export * from './title/title'
 export * from './add-new-button/add-new-button'
 export * from './headers/headers'
