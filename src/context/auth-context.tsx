@@ -61,17 +61,5 @@ export function AuthProvider({ children }) {
 
   const value: ContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {loading ? (
-        <LoadingOverlay
-          visible={loading}
-          overlayProps={{ backgroundOpacity: 0 }}
-          loaderProps={{ color: 'var(--primary)', type: 'bars' }} // przenieść loading do children, usunąc z contextu
-        />
-      ) : (
-        children
-      )}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

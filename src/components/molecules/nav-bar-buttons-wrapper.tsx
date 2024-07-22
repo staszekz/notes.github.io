@@ -1,19 +1,20 @@
-import { Box } from '@mantine/core';
+import { Box, Button } from '@mantine/core';
 import classes from './styles.module.css';
-import { ButtonLink } from '@notes/components';
+import { Link } from '@tanstack/react-router';
+import { RoutesDef } from '@notes/utils';
 
 export const NavBarButtonWrapper = () => {
   return (
     <Box className={classes.buttonWrapper}>
-      <ButtonLink nav to="/">
+      <Button variant="white" size="small" component={Link} to={RoutesDef.HOME}>
         home
-      </ButtonLink>
-      <ButtonLink nav to="/todos">
+      </Button>
+      <Button variant="white" size="small" component={Link} to={RoutesDef.TODOS}>
         todos
-      </ButtonLink>
-      <ButtonLink nav to="/notes">
+      </Button>
+      <Button variant="white" size="small" component={Link} to={RoutesDef.NOTES}>
         notes
-      </ButtonLink>
+      </Button>
     </Box>
   );
 };

@@ -1,5 +1,4 @@
 export * from './nav-bar-buttons-wrapper'
-export * from './nav-bar-logout-wrapper'
 export * from './nav-bar-user'
 export * from './modals'
 export * from './table-controls'
