@@ -1,7 +1,6 @@
 import { MainLayout } from '@notes/layout';
-import { NotesHeader } from '@notes/components';
 import classes from './styles.module.css';
-import { Box, Button } from '@mantine/core';
+import { Box, Button, Flex, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 
@@ -9,16 +8,16 @@ export const Home = () => {
   return (
     <MainLayout>
       <Box className={classes.homeWrapper}>
-        <NotesHeader component="h1">In this app you can store your: </NotesHeader>
-        <div className={classes.buttonWrapper}>
-          <Button variant="transparent" size="large" component={Link} to={RoutesDef.TODOS}>
+        <Title order={2}>In this app you can store your: </Title>
+        <Flex gap={'lg'} mt="xl" justify={'center'}>
+          <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.TODOS}>
             {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
             todos
           </Button>
-          <Button variant="transparent" size="large" component={Link} to={RoutesDef.NOTES}>
+          <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.NOTES}>
             notes
           </Button>
-        </div>
+        </Flex>
       </Box>
     </MainLayout>
   );

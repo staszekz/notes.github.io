@@ -8,7 +8,7 @@ export const AddNewButton = ({ openModal }) => {
     <Button
       leftSection={<IconPlus />}
       size="small"
-      variant="transparent-border"
+      variant="notes-transparent-border"
       onClick={handleClick}
       aria-label="Add new"
     >

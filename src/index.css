@@ -2,7 +2,6 @@
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   font-family: 'Nunito', sans-serif;
@@ -52,6 +51,7 @@ html {
   padding: 0;
   margin: 0;
   font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
   box-sizing: border-box;
   scroll-behavior: smooth;
   background-color: var(--light-dark);
@@ -59,10 +59,6 @@ html {
   th,
   td {
     text-align: center;
-  }
-  h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
   }
 }
 

@@ -1,9 +1,8 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Box, Button, Flex, TextInput } from '@mantine/core';
+import { Button, Flex, TextInput, Title } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
-import { Title } from '@notes/components';
 import { useAuthContext } from 'src/hooks/use-auth-context';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
@@ -49,8 +48,8 @@ export const SignIn = () => {
           handleSubmit();
         }}
       >
-        <Title pb={16} c={'var(--white'}>
-          Please log in
+        <Title pb={16} mt="xl" order={2} c={'var(--white'}>
+          Please log in:
         </Title>
 
         <Field
@@ -119,9 +118,8 @@ export const SignIn = () => {
           }}
         />
         <Button
-          // variant="notes-transparent-border"
-          variant="light"
           component={Link}
+          variant="light"
           size="md"
           fz={'md'}
           to={RoutesDef.SIGNUP}

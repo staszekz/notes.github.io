@@ -56,7 +56,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
           return (
             <TextInput
               data-autofocus
-              size="xl"
+              size="md"
               defaultValue={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
@@ -89,7 +89,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
           return (
             <Textarea
               autosize
-              size="xl"
+              size="md"
               minRows={4}
               label="Note details"
               defaultValue={state.value}
@@ -105,7 +105,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <Button className={classes.button} type="submit" disabled={!canSubmit}>
+          <Button size="sm" type="submit" fz="1rem" variant="notes-transparent-border" disabled={!canSubmit}>
             {isSubmitting ? '...' : 'Submit'}
           </Button>
         )}
