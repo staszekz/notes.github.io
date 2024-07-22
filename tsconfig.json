@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "rootDir": ".",
     "target": "esnext",
-    "module": "nodenext",
+    "module": "esnext",
     "isolatedModules": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
