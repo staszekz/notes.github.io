@@ -36,7 +36,7 @@ export function Table<T>({ table, isLoading }: { table: TTable<T>; isLoading: bo
       <LoadingOverlay
         visible={isLoading}
         zIndex={1000}
-        loaderProps={{ type: 'bars', color: 'var(--secondary)' }}
+        loaderProps={{ type: 'dots', color: 'var(--secondary)' }}
         overlayProps={{ radius: 'sm', blur: 1 }}
         style={{ height: '100%' }}
       />
