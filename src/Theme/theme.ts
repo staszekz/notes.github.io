@@ -13,7 +13,7 @@ export const theme = {
   fontFamily: 'Nunito, sans-serif',
   headings: {
     fontFamily: 'Nunito, sans-serif',
-    textWrap: 'wrap',
+    textWrap: 'wrap' as "wrap" | "nowrap" | "balance" | "pretty" | "stable" | undefined,
     sizes: {
       h1: {
         fontSize: '2.5rem',
