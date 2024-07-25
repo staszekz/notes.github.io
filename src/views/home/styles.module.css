@@ -1,9 +1,3 @@
-.homeWrapper {
-  background-color: var(--dark-bg-color);
-  width: -webkit-fill-available;
-  width: -moz-available;
-  height: 100vh;
-}
 
 .loginWrapper {
   margin: 6rem auto;
