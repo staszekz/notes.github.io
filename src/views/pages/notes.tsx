@@ -31,9 +31,11 @@ export const Notes = () => {
 
   const {
     collection: { isPending, isFetching, isLoading, data: notes },
-    deleteElement
+    deleteElement,
+    addElement,
+    editElement
   } = useRemoteData<Note>({ key: CollectionType.NOTES });
-
+  console.log('addElement.isPending', addElement);
   const columnHelper = createColumnHelper<NoteWithId>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
@@ -104,7 +106,10 @@ export const Notes = () => {
         </Title>
         <AddNewButton openModal={openNoteModal} />
         <br />
-        <Table<NoteWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+        <Table<NoteWithId>
+          table={table}
+          isLoading={isPending || isLoading || isFetching || addElement.isPending || editElement.isPending}
+        />
         {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
       </Box>
     </MainLayout>

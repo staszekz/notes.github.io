@@ -5,14 +5,15 @@ import {
   User,
   createUserWithEmailAndPassword,
   updateProfile,
-  signOut
+  signOut,
+  getAuth
 } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [loading, setLoading] = useState(true);
 
   function setLoadingState(loading: boolean) {
@@ -38,6 +39,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     setLoading(true);
     const unsubscribe = auth.onAuthStateChanged(user => {
+      console.log('🚀 ~ user:', user);
+
       if (user) {
         setUser(user);
         setLoading(false);
