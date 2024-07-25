@@ -7,18 +7,18 @@ import { RoutesDef } from '@notes/utils';
 export const Home = () => {
   return (
     <MainLayout>
-      <Box className={classes.homeWrapper}>
-        <Title order={2}>In this app you can store your: </Title>
-        <Flex gap={'lg'} mt="xl" justify={'center'}>
-          <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.TODOS}>
-            {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
-            todos
-          </Button>
-          <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.NOTES}>
-            notes
-          </Button>
-        </Flex>
-      </Box>
+      <Title pt="xl" order={2}>
+        In this app you can store your:{' '}
+      </Title>
+      <Flex gap={'lg'} mt="xl" justify={'center'}>
+        <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.TODOS}>
+          {/* dodab prefech useQuery na onMouseEnter , albo w route jako before load*/}
+          todos
+        </Button>
+        <Button variant="notes-transparent-border" size="large" component={Link} to={RoutesDef.NOTES}>
+          notes
+        </Button>
+      </Flex>
     </MainLayout>
   );
 };
