@@ -1,15 +1,8 @@
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
-  max-width: 1440;
-  margin: 0 auto;
-}
-
 .homeWrapper {
-  height: 100%;
-  margin: 16rem auto;
+  background-color: var(--dark-bg-color);
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 100vh;
 }
 
 .loginWrapper {

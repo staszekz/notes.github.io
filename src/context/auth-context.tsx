@@ -1,3 +1,4 @@
+import { createContext, useEffect, useState } from 'react';
 import { auth } from '@notes/database';
 import { TContextAuth } from '@notes/types';
 import {
@@ -8,7 +9,6 @@ import {
   signOut,
   getAuth
 } from 'firebase/auth';
-import { createContext, useEffect, useState } from 'react';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
@@ -39,13 +39,11 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     setLoading(true);
     const unsubscribe = auth.onAuthStateChanged(user => {
-      console.log('🚀 ~ user:', user);
-
       if (user) {
         setUser(user);
         setLoading(false);
       } else {
-        setUser(undefined);
+        setUser(null);
         setLoading(false);
       }
     });

@@ -1,4 +1,12 @@
 .mainLayout {
-  max-width: 1980px;
-  margin: 0 auto;
+  margin-top: 12vh;
+  background: var(--dark-bg-color);
+  height: 100%;
+}
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }

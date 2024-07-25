@@ -33,12 +33,15 @@
 }
 
 body,
-html {
+html,
+#root {
   padding: 0;
-  margin: 0;
+  height: 100%;
+  margin: 0 auto;
   background-color: var(--light-dark);
   font-family: 'Nunito', sans-serif;
   font-size: 1rem;
+  max-width: 1980px;
   box-sizing: border-box;
   scroll-behavior: smooth;
   font-smooth: always;
@@ -46,14 +49,6 @@ html {
   td {
     text-align: center;
   }
-}
-
-.form-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  max-width: 500px;
-  margin: 0 auto;
 }
 
 @media (prefers-color-scheme: light) {
