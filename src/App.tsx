@@ -6,10 +6,11 @@ import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './index.css';
+import { LoadingOverlay } from '@mantine/core';
 
 import { routeTree } from './routeTree.gen';
-import { getAuth } from 'firebase/auth';
 import { theme } from './Theme';
+import { useAuthContext } from './hooks';
 
 const queryClient = new QueryClient();
 
@@ -17,7 +18,7 @@ const router = createRouter({
   routeTree,
   context: {
     queryClient,
-    auth: getAuth()
+    auth: undefined
   },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0
@@ -28,7 +29,22 @@ declare module '@tanstack/react-router' {
     router: typeof router;
   }
 }
+
 const customTheme = createTheme(theme);
+
+function AppWithRouter() {
+  const auth = useAuthContext();
+  if (auth.loading) {
+    return (
+      <LoadingOverlay
+        loaderProps={{ type: 'dots', color: 'var(--primary)', size: 'xl' }}
+        overlayProps={{ color: 'var(--dark-bg-color)' }}
+        visible
+      />
+    );
+  }
+  return <RouterProvider router={router} context={{ auth }} />;
+}
 
 export function App() {
   return (
@@ -36,8 +52,7 @@ export function App() {
       <MantineProvider theme={customTheme}>
         <AuthProvider>
           <ModalsProvider>
-            {/* <Loder /> */}
-            <RouterProvider router={router} />
+            <AppWithRouter />
           </ModalsProvider>
         </AuthProvider>
       </MantineProvider>

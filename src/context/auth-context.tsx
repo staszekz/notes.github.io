@@ -1,28 +1,19 @@
-import { LoadingOverlay } from '@mantine/core';
+import { createContext, useEffect, useState } from 'react';
 import { auth } from '@notes/database';
+import { TContextAuth } from '@notes/types';
 import {
   signInWithEmailAndPassword,
   User,
-  UserCredential,
   createUserWithEmailAndPassword,
   updateProfile,
-  signOut
+  signOut,
+  getAuth
 } from 'firebase/auth';
-import { createContext, useEffect, useState } from 'react';
 
-type ContextAuth = {
-  user: User | undefined;
-  signIn: (email: string, password: string) => Promise<UserCredential>;
-  signUp: (email: string, password: string, displayName: string) => Promise<UserCredential>;
-  loading: boolean;
-  setLoadingState: (loading: boolean) => void;
-  signUserOut: () => Promise<void>;
-};
-
-export const AuthContext = createContext<ContextAuth | undefined>(undefined);
+export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState<User>();
+  const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [loading, setLoading] = useState(true);
 
   function setLoadingState(loading: boolean) {
@@ -52,14 +43,14 @@ export function AuthProvider({ children }) {
         setUser(user);
         setLoading(false);
       } else {
-        setUser(undefined);
+        setUser(null);
         setLoading(false);
       }
     });
     return unsubscribe;
   }, []);
 
-  const value: ContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState };
+  const value: TContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   AddNewButton,
-  NotesHeader,
   openDeleteModal,
   openDetailsModal,
   openNoteModal,
@@ -20,7 +19,7 @@ import {
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
-import { Box } from '@mantine/core';
+import { Box, Title } from '@mantine/core';
 import classes from './styles.module.css';
 import { getTableControls } from '@notes/utils';
 
@@ -32,9 +31,11 @@ export const Notes = () => {
 
   const {
     collection: { isPending, isFetching, isLoading, data: notes },
-    deleteElement
+    deleteElement,
+    addElement,
+    editElement
   } = useRemoteData<Note>({ key: CollectionType.NOTES });
-
+  console.log('addElement.isPending', addElement);
   const columnHelper = createColumnHelper<NoteWithId>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
@@ -99,13 +100,16 @@ export const Notes = () => {
 
   return (
     <MainLayout>
-      <Box className={classes.list}>
-        <NotesHeader component="h1">My Private Notes</NotesHeader>
-        <AddNewButton openModal={openNoteModal} />
-        <br />
-        <Table<NoteWithId> table={table} isLoading={isPending || isLoading || isFetching} />
-        {!notes?.length && <NotesHeader component="h2">Your note list is empty! Enter a new note! </NotesHeader>}
-      </Box>
+      <Title pt="xl" order={2}>
+        My Private Notes
+      </Title>
+      <AddNewButton openModal={openNoteModal} />
+      <br />
+      <Table<NoteWithId>
+        table={table}
+        isLoading={isPending || isLoading || isFetching || addElement.isPending || editElement.isPending}
+      />
+      {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
     </MainLayout>
   );
 };

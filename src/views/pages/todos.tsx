@@ -5,7 +5,6 @@ import {
   openDeleteModal,
   openDetailsModal,
   openTodoModal,
-  NotesHeader,
   Table,
   TableControls
 } from '@notes/components';
@@ -19,7 +18,7 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
-import { Box, Checkbox, Flex } from '@mantine/core';
+import { Box, Checkbox, Flex, Title } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 import classes from './styles.module.css';
 import { getTableControls } from '@notes/utils';
@@ -123,13 +122,13 @@ export const Todos = () => {
 
   return (
     <MainLayout>
-      <Box className={classes.list}>
-        <NotesHeader component="h1">My Private Todo tasks</NotesHeader>
-        <AddNewButton openModal={openTodoModal} />
-        <br />
-        <Table<TodoWithId> table={table} isLoading={isPending || isLoading || isFetching} />
-        {!todos?.length && <NotesHeader component="h2">Your todo list is empty! Enter a new task! </NotesHeader>}
-      </Box>
+      <Title pt="xl" order={2}>
+        My Private Todo tasks
+      </Title>
+      <AddNewButton openModal={openTodoModal} />
+      <br />
+      <Table<TodoWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+      {!todos?.length && <Title order={3}>Your todo list is empty! Enter a new task! </Title>}
     </MainLayout>
   );
 };

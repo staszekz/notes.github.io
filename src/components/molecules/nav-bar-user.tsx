@@ -18,9 +18,7 @@ export const NavBarUser = () => {
             radius="xl"
           />
           <div>
-            <Title size={'h4'} c={'var(--primary)'}>
-              Hello, {user?.providerData?.[0]?.displayName}!
-            </Title>
+            <Title size={'h4'}>Hello, {user?.providerData?.[0]?.displayName}!</Title>
             <Text c="dimmed" size="xs">
               Nice to see you !
             </Text>

@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Button, Title } from '@mantine/core';
 import { primary, secondary, dark, grey, red, warning, boxShadow } from '../utils/colors';
 import classes from './styles.module.css'
 
@@ -13,6 +13,7 @@ export const theme = {
   fontFamily: 'Nunito, sans-serif',
   headings: {
     fontFamily: 'Nunito, sans-serif',
+    textWrap: 'wrap' as "wrap" | "nowrap" | "balance" | "pretty" | "stable" | undefined,
     sizes: {
       h1: {
         fontSize: '2.5rem',
@@ -34,14 +35,6 @@ export const theme = {
     regular: '400',
     bold: '600',
   },
-  fontSize: {
-    xxs: '1rem',
-    xs: '1.2rem',
-    s: '1.6rem',
-    m: '2.1rem',
-    l: '2.4rem',
-    xl: '4rem',
-  },
   media: {
     phone: '@media(max-width: 520px)',
     tablet: '@media(max-width: 768px)',
@@ -53,9 +46,11 @@ export const theme = {
         ...classes,
         root: classes.buttonRoot,
       },
-
-
-
+    }),
+    Title: Title.extend({
+      classNames: {
+        root: classes.title,
+      }
     })
   }
 };
