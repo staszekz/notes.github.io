@@ -122,15 +122,13 @@ export const Todos = () => {
 
   return (
     <MainLayout>
-      <Box className={classes.list}>
-        <Title mt="lg" order={2}>
-          My Private Todo tasks
-        </Title>
-        <AddNewButton openModal={openTodoModal} />
-        <br />
-        <Table<TodoWithId> table={table} isLoading={isPending || isLoading || isFetching} />
-        {!todos?.length && <Title order={3}>Your todo list is empty! Enter a new task! </Title>}
-      </Box>
+      <Title pt="xl" order={2}>
+        My Private Todo tasks
+      </Title>
+      <AddNewButton openModal={openTodoModal} />
+      <br />
+      <Table<TodoWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+      {!todos?.length && <Title order={3}>Your todo list is empty! Enter a new task! </Title>}
     </MainLayout>
   );
 };

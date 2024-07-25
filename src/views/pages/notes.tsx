@@ -100,18 +100,16 @@ export const Notes = () => {
 
   return (
     <MainLayout>
-      <Box className={classes.list}>
-        <Title mt="lg" order={2}>
-          My Private Notes
-        </Title>
-        <AddNewButton openModal={openNoteModal} />
-        <br />
-        <Table<NoteWithId>
-          table={table}
-          isLoading={isPending || isLoading || isFetching || addElement.isPending || editElement.isPending}
-        />
-        {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
-      </Box>
+      <Title pt="xl" order={2}>
+        My Private Notes
+      </Title>
+      <AddNewButton openModal={openNoteModal} />
+      <br />
+      <Table<NoteWithId>
+        table={table}
+        isLoading={isPending || isLoading || isFetching || addElement.isPending || editElement.isPending}
+      />
+      {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
     </MainLayout>
   );
 };

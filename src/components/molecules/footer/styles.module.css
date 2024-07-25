@@ -1,0 +1,7 @@
+.footerWrapper {
+  border-top: 2px solid var(--primary);
+  width: 100%;
+  color: var(--primary);
+  background-color: var(--dark-bg-color);
+  padding: 1rem;
+}
