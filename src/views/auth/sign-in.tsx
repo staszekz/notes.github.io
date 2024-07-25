@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Button, Flex, TextInput, Title } from '@mantine/core';
+import { Box, Button, Flex, TextInput, Title } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
@@ -41,7 +41,7 @@ export const SignIn = () => {
   return (
     <>
       <form
-        className="form-wrapper"
+        className={classes.formWrapper}
         onSubmit={e => {
           e.preventDefault();
           e.stopPropagation();

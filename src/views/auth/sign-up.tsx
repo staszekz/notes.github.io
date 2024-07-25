@@ -45,7 +45,7 @@ export const SignUp = () => {
   return (
     <>
       <form
-        className="form-wrapper"
+        className={classes.formWrapper}
         onSubmit={e => {
           e.preventDefault();
           e.stopPropagation();
