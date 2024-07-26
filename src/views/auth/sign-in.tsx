@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Box, Button, Flex, TextInput, Title } from '@mantine/core';
+import { Button, Checkbox, Flex, TextInput, Title, Text } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
@@ -17,7 +17,7 @@ export const SignIn = () => {
     email: '',
     password: ''
   };
-  const { signIn, setLoadingState } = useAuthContext();
+  const { signIn, setLoadingState, setRememberMe } = useAuthContext();
   const navigate = useNavigate();
 
   const { Field, Subscribe, handleSubmit, state } = useForm({
@@ -38,6 +38,7 @@ export const SignIn = () => {
       alert((err as Error).message);
     }
   };
+
   return (
     <>
       <form
@@ -98,11 +99,18 @@ export const SignIn = () => {
             );
           }}
         />
-        <Subscribe
-          selector={state => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => {
-            return (
-              <Flex justify={'flex-end'}>
+        <Flex justify={'space-between'} align={'center'}>
+          <Checkbox
+            ml="sm"
+            label={<Text c="var(--primary)">Remember me</Text>}
+            color="var(--primary"
+            variant="outline"
+            onChange={e => setRememberMe(e.target.checked)}
+          />
+          <Subscribe
+            selector={state => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => {
+              return (
                 <Button
                   size="medium"
                   right={0}
@@ -113,10 +121,10 @@ export const SignIn = () => {
                 >
                   <IconLogin2 stroke={1.5} />
                 </Button>
-              </Flex>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        </Flex>
         <Button
           component={Link}
           variant="light"

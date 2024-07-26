@@ -7,20 +7,35 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signOut,
-  getAuth
+  getAuth,
+  inMemoryPersistence,
+  setPersistence
 } from 'firebase/auth';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getAuth().currentUser);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(true);
-
   function setLoadingState(loading: boolean) {
     setLoading(loading);
   }
-  function signIn(email: string, password: string) {
-    return signInWithEmailAndPassword(auth, email, password);
+  async function signIn(email: string, password: string) {
+    if (!rememberMe) {
+      try {
+        await setPersistence(auth, inMemoryPersistence);
+        return signInWithEmailAndPassword(auth, email, password);
+      } catch (error) {
+        if (error instanceof Error) {
+          throw new Error(error.message);
+        } else {
+          throw new Error('An unknown error occurred');
+        }
+      }
+    } else {
+      return signInWithEmailAndPassword(auth, email, password);
+    }
   }
 
   async function signUp(email: string, password: string, displayName: string) {
@@ -50,7 +65,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const value: TContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState };
+  const value: TContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState, setRememberMe };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

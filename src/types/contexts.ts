@@ -7,4 +7,5 @@ export type TContextAuth = {
   loading: boolean;
   setLoadingState: (loading: boolean) => void;
   signUserOut: () => Promise<void>;
+  setRememberMe: React.Dispatch<React.SetStateAction<boolean>>
 };
