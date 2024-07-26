@@ -5,9 +5,6 @@ import { IconLogin2, IconLogin } from '@tabler/icons-react';
 import { z } from 'zod';
 import classes from './style.module.css';
 import { useAuthContext } from '@notes/hooks';
-import { collection, doc, setDoc } from 'firebase/firestore';
-import { database } from '@notes/database';
-import { CollectionType } from '@notes/types';
 import { RoutesDef } from '@notes/utils';
 import { Link, useNavigate } from '@tanstack/react-router';
 
@@ -33,10 +30,9 @@ export const SignUp = () => {
   const handleOnSubmit = async () => {
     setLoadingState(true);
     try {
-      const { user } = await signUp(state.values.email, state.values.password, state.values.name);
-      await setDoc(doc(collection(database, CollectionType.USERS), user.uid), {});
+      await signUp(state.values.email, state.values.password, state.values.name);
+      navigate({ to: RoutesDef.VERIFY_EMAIL });
       setLoadingState(false);
-      navigate({ to: RoutesDef.HOME });
     } catch (error) {
       throw new Error((error as Error).message);
     }

@@ -9,8 +9,13 @@ import {
   signOut,
   getAuth,
   inMemoryPersistence,
-  setPersistence
+  setPersistence,
+  sendEmailVerification
 } from 'firebase/auth';
+
+import { collection, doc, setDoc } from 'firebase/firestore';
+import { database } from '@notes/database';
+import { CollectionType } from '@notes/types';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
@@ -40,12 +45,25 @@ export function AuthProvider({ children }) {
 
   async function signUp(email: string, password: string, displayName: string) {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // dodac jak mail juz jest uzywany
+    await setDoc(doc(collection(database, CollectionType.USERS), userCredential.user.uid), {});
+    await sendEmailVerification(userCredential.user);
     await updateProfile(userCredential.user, {
       displayName
     });
     return userCredential;
   }
 
+  // sendPasswordResetEmail(auth, email)
+  //   .then(() => {
+  //     // Password reset email sent!
+  //     // ..
+  //   })
+  //   .catch(error => {
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //     // ..
+  //   });
   function signUserOut() {
     return signOut(auth);
   }

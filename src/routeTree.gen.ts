@@ -19,12 +19,18 @@ import { Route as AuthIndexImport } from './routes/_auth.index'
 
 // Create Virtual Routes
 
+const VerifyEmailLazyImport = createFileRoute('/verify-email')()
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
 const AuthTodosLazyImport = createFileRoute('/_auth/todos')()
 const AuthNotesLazyImport = createFileRoute('/_auth/notes')()
 
 // Create/Update Routes
+
+const VerifyEmailLazyRoute = VerifyEmailLazyImport.update({
+  path: '/verify-email',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/verify-email.lazy').then((d) => d.Route))
 
 const SignupLazyRoute = SignupLazyImport.update({
   path: '/signup',
@@ -93,6 +99,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupLazyImport
       parentRoute: typeof rootRoute
     }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/_auth/notes': {
       id: '/_auth/notes'
       path: '/notes'
@@ -128,6 +141,7 @@ export const routeTree = rootRoute.addChildren({
   LoginRoute,
   SigninLazyRoute,
   SignupLazyRoute,
+  VerifyEmailLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -141,7 +155,8 @@ export const routeTree = rootRoute.addChildren({
         "/_auth",
         "/login",
         "/signin",
-        "/signup"
+        "/signup",
+        "/verify-email"
       ]
     },
     "/_auth": {
@@ -160,6 +175,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/signup": {
       "filePath": "signup.lazy.tsx"
+    },
+    "/verify-email": {
+      "filePath": "verify-email.lazy.tsx"
     },
     "/_auth/notes": {
       "filePath": "_auth.notes.lazy.tsx",
