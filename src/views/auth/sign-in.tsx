@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { Box, Button, Flex, TextInput, Title } from '@mantine/core';
+import { Button, Checkbox, Flex, TextInput, Title, Text } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
@@ -38,6 +38,26 @@ export const SignIn = () => {
       alert((err as Error).message);
     }
   };
+
+  // TODO: Remember Me checkbox
+  // import { getAuth, setPersistence, signInWithEmailAndPassword, browserSessionPersistence } from 'firebase/auth';
+
+  // const auth = getAuth();
+  // setPersistence(auth, browserSessionPersistence)
+  //   .then(() => {
+  //     // Existing and future Auth states are now persisted in the current
+  //     // session only. Closing the window would clear any existing state even
+  //     // if a user forgets to sign out.
+  //     // ...
+  //     // New sign-in will be persisted with session persistence.
+  //     return signInWithEmailAndPassword(auth, email, password);
+  //   })
+  //   .catch(error => {
+  //     // Handle Errors here.
+  //     const errorCode = error.code;
+  //     const errorMessage = error.message;
+  //   });
+
   return (
     <>
       <form
@@ -98,11 +118,17 @@ export const SignIn = () => {
             );
           }}
         />
-        <Subscribe
-          selector={state => [state.canSubmit, state.isSubmitting]}
-          children={([canSubmit, isSubmitting]) => {
-            return (
-              <Flex justify={'flex-end'}>
+        <Flex justify={'space-between'} align={'center'}>
+          <Checkbox
+            ml="sm"
+            label={<Text c="var(--primary)">Remember me</Text>}
+            color="var(--primary"
+            variant="outline"
+          />
+          <Subscribe
+            selector={state => [state.canSubmit, state.isSubmitting]}
+            children={([canSubmit, isSubmitting]) => {
+              return (
                 <Button
                   size="medium"
                   right={0}
@@ -113,10 +139,10 @@ export const SignIn = () => {
                 >
                   <IconLogin2 stroke={1.5} />
                 </Button>
-              </Flex>
-            );
-          }}
-        />
+              );
+            }}
+          />
+        </Flex>
         <Button
           component={Link}
           variant="light"
