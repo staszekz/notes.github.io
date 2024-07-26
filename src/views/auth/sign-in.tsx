@@ -17,7 +17,7 @@ export const SignIn = () => {
     email: '',
     password: ''
   };
-  const { signIn, setLoadingState } = useAuthContext();
+  const { signIn, setLoadingState, setRememberMe } = useAuthContext();
   const navigate = useNavigate();
 
   const { Field, Subscribe, handleSubmit, state } = useForm({
@@ -124,6 +124,7 @@ export const SignIn = () => {
             label={<Text c="var(--primary)">Remember me</Text>}
             color="var(--primary"
             variant="outline"
+            onChange={e => setRememberMe(e.target.checked)}
           />
           <Subscribe
             selector={state => [state.canSubmit, state.isSubmitting]}
