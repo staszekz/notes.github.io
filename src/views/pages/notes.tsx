@@ -35,7 +35,6 @@ export const Notes = () => {
     addElement,
     editElement
   } = useRemoteData<Note>({ key: CollectionType.NOTES });
-  console.log('addElement.isPending', addElement);
   const columnHelper = createColumnHelper<NoteWithId>();
   // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
