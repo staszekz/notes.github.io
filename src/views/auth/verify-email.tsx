@@ -6,7 +6,7 @@ export function VerifyEmail() {
   return (
     <Flex direction={'column'} w={'fit-content'} m="0 auto">
       <Title order={1} c="white" mb={'xl'}>
-        Verify Email
+        Please check your e-mail to verify your account.
       </Title>
       <Button component={Link} variant="notes-transparent-border" size="md" fz={'md'} to={RoutesDef.SIGNIN}>
         Go to Sign In{' '}

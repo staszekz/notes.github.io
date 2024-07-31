@@ -124,7 +124,6 @@ export const SignIn = () => {
               );
             }}
           />
-          §
         </Flex>
         <Button
           component={Link}
