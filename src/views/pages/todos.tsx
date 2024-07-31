@@ -50,7 +50,7 @@ export const Todos = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: original => openDetailsModal(original.extraContent),
+      onClick: openDetailsModal,
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'

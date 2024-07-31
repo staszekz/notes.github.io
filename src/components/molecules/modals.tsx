@@ -1,8 +1,7 @@
-import { Title, Text } from '@mantine/core';
+import { Title, Text, Button, Flex, Divider } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
 import { NoteWithId, TodoWithId } from '@notes/types';
-// import { primary } from '@notes/utils';
 
 export function openNoteModal(data?: NoteWithId) {
   return modals.open({
@@ -35,7 +34,7 @@ export const openDeleteModal = (id: string, deleteFn) => {
   });
 };
 
-export const openDetailsModal = (content: string) => {
+export function openDetailsModal(data?: TodoWithId & NoteWithId) {
   modals.open({
     title: (
       <Text fw={700} size="lg">
@@ -44,9 +43,17 @@ export const openDetailsModal = (content: string) => {
     ),
     centered: true,
     children: (
-      <Text ta="center" size="xl">
-        {content}
-      </Text>
+      <>
+        <Text ta="center" size="xl">
+          {data?.extraContent}
+        </Text>
+        <Divider my="md" />
+        <Flex justify={'flex-end'}>
+          <Button onClick={() => openTodoModal(data)} variant="light" fz={'md'}>
+            Edit
+          </Button>
+        </Flex>
+      </>
     )
   });
-};
+}
