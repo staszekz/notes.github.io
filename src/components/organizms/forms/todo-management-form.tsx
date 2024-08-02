@@ -8,11 +8,9 @@ import { modals } from '@mantine/modals';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
-import classes from './styles.module.css';
 
 export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
   const { addElement, editElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
-
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
       ? removeId<TodoWithId>(data)
@@ -29,6 +27,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       modals.closeAll();
     }
   });
+
   return (
     <form
       className="form-wrapper"
@@ -58,7 +57,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
           return (
             <TextInput
               data-autofocus
-              size="xl"
+              size="md"
               value={state.value}
               onChange={e => handleChange(e.target.value)}
               onBlur={handleBlur}
@@ -83,10 +82,11 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
         children={({ state, handleChange, handleBlur }) => {
           return (
             <DateTimePicker
-              size="xl"
+              size="md"
               value={state.value?.toDate()}
               label="Todo deadline"
               minDate={new Date()}
+              mt="md"
               onBlur={handleBlur}
               onChange={e => {
                 const timestamp = Timestamp.fromDate(e as Date);
@@ -116,7 +116,8 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
           return (
             <Textarea
               autosize
-              size="xl"
+              mt="md"
+              size="md"
               minRows={4}
               label="Todo details"
               value={state.value}
@@ -131,7 +132,15 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <Button size="sm" type="submit" fz="1rem" variant="notes-transparent-border" disabled={!canSubmit}>
+          <Button
+            size="sm"
+            mt="md"
+            w="100%"
+            type="submit"
+            fz="1rem"
+            variant="notes-transparent-border"
+            disabled={!canSubmit}
+          >
             {isSubmitting ? '...' : 'Submit'}
           </Button>
         )}

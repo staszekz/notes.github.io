@@ -35,9 +35,7 @@ export const Notes = () => {
     addElement,
     editElement
   } = useRemoteData<Note>({ key: CollectionType.NOTES });
-  console.log('addElement.isPending', addElement);
   const columnHelper = createColumnHelper<NoteWithId>();
-  // TODO: zrobic tez zeby mozna było właczac edycja z modal od detailsów
 
   const controlsConfig: ControlConfig<NoteWithId> = {
     Edit: {
@@ -53,7 +51,7 @@ export const Notes = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: original => openDetailsModal(original.content),
+      onClick: openDetailsModal,
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
@@ -113,4 +111,3 @@ export const Notes = () => {
     </MainLayout>
   );
 };
-// zrobić tak żeby można było edytować notatki z modalu details
