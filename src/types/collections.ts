@@ -11,7 +11,7 @@ export type NoteWithId = Note & { id: string }
 export type Todo = {
   title: string;
   createdOn: Timestamp;
-  extraContent: string;
+  content: string;
   completed: boolean;
   deadline: Timestamp | null;
 };

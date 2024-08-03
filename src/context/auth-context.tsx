@@ -23,23 +23,23 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(true);
+
   function setLoadingState(loading: boolean) {
     setLoading(loading);
   }
   async function signIn(email: string, password: string) {
-    if (!rememberMe) {
-      try {
+    try {
+      if (!rememberMe) {
         await setPersistence(auth, inMemoryPersistence);
-        return signInWithEmailAndPassword(auth, email, password);
-      } catch (error) {
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        } else {
-          throw new Error('An unknown error occurred');
-        }
       }
-    } else {
+
       return signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error('An unknown error occurred');
+      }
     }
   }
 

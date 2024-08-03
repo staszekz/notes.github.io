@@ -18,9 +18,8 @@ import {
   useReactTable
 } from '@tanstack/react-table';
 import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
-import { Box, Checkbox, Flex, Title } from '@mantine/core';
+import { Checkbox, Flex, Title } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
-import classes from './styles.module.css';
 import { getTableControls } from '@notes/utils';
 
 export const Todos = () => {
@@ -50,7 +49,7 @@ export const Todos = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: openDetailsModal,
+      onClick: data => openDetailsModal(data, 'todo'),
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
@@ -74,7 +73,7 @@ export const Todos = () => {
         return <span>{props.row.original.createdOn.toDate().toLocaleString()}</span>;
       }
     }),
-    columnHelper.accessor('extraContent', {
+    columnHelper.accessor('content', {
       header: 'Extra Content'
     }),
     columnHelper.accessor('deadline', {
@@ -132,3 +131,4 @@ export const Todos = () => {
     </MainLayout>
   );
 };
+// uzyć useInView z useInfiniteQuery z kursu
