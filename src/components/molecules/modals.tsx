@@ -34,8 +34,8 @@ export const openDeleteModal = (id: string, deleteFn) => {
   });
 };
 
-export function openDetailsModal(data?: TodoWithId & NoteWithId) {
-  modals.open({
+export function openDetailsModal(data?: TodoWithId | NoteWithId, type: 'note' | 'todo') {
+  const modalId = modals.open({
     title: (
       <Text fw={700} size="lg">
         Details:
@@ -45,15 +45,47 @@ export function openDetailsModal(data?: TodoWithId & NoteWithId) {
     children: (
       <>
         <Text ta="center" size="xl">
-          {data?.extraContent}
+          {data?.content}
         </Text>
         <Divider my="md" />
         <Flex justify={'flex-end'}>
-          <Button onClick={() => openTodoModal(data)} variant="light" fz={'md'}>
+          <Button
+            onClick={() => {
+              modals.close(modalId);
+              type === 'todo' ? openTodoModal(data) : openNoteModal(data);
+            }}
+            variant="light"
+            fz={'md'}
+          >
             Edit
           </Button>
         </Flex>
       </>
     )
   });
+  console.log('🚀 ~ modalId:', modalId);
 }
+
+// export function openNoteDetailsModal(data?: NoteWithId) {
+//   modals.open({
+//     title: (
+//       <Text fw={700} size="lg">
+//         Details:
+//       </Text>
+//     ),
+//     centered: true,
+//     children: (
+//       <>
+//         <Text ta="center" size="xl">
+//           {data?.content}
+//         </Text>
+//         <Divider my="md" />
+//         <Flex justify={'flex-end'}>
+//           <Button onClick={() => openNoteModal(data)} variant="light" fz={'md'}>
+//             Edit
+//           </Button>
+//         </Flex>
+//       </>
+//     )
+//   });
+// }

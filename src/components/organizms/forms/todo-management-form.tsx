@@ -16,7 +16,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
       ? removeId<TodoWithId>(data)
       : {
           title: '',
-          extraContent: '',
+          content: '',
           deadline: null,
           completed: false,
           createdOn: Timestamp.now()
@@ -99,7 +99,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
         }}
       />
       <Field
-        name="extraContent"
+        name="content"
         validators={{
           onSubmit: z.string().optional(),
           onChange: z

@@ -51,7 +51,7 @@ export const Notes = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: openDetailsModal,
+      onClick: data => openDetailsModal(data, 'note'),
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
