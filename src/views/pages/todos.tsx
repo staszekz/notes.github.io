@@ -3,7 +3,7 @@ import { MainLayout } from '@notes/layout';
 import {
   AddNewButton,
   openDeleteModal,
-  openDetailsModal,
+  openTodoDetailsModal,
   openTodoModal,
   Table,
   TableControls
@@ -49,7 +49,7 @@ export const Todos = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: data => openDetailsModal(data, 'todo'),
+      onClick: openTodoDetailsModal,
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
