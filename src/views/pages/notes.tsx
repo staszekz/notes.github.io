@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {
   AddNewButton,
   openDeleteModal,
-  openDetailsModal,
+  openNoteDetailsModal,
   openNoteModal,
   Table,
   TableControls
@@ -51,7 +51,7 @@ export const Notes = () => {
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick: data => openDetailsModal(data, 'note'),
+      onClick:openNoteDetailsModal,
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'

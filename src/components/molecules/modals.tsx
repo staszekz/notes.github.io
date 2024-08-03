@@ -34,8 +34,8 @@ export const openDeleteModal = (id: string, deleteFn) => {
   });
 };
 
-export function openDetailsModal(data?: TodoWithId | NoteWithId, type: 'note' | 'todo') {
-  const modalId = modals.open({
+export function openTodoDetailsModal(data?: TodoWithId) {
+modals.open({
     title: (
       <Text fw={700} size="lg">
         Details:
@@ -50,42 +50,40 @@ export function openDetailsModal(data?: TodoWithId | NoteWithId, type: 'note' | 
         <Divider my="md" />
         <Flex justify={'flex-end'}>
           <Button
-            onClick={() => {
-              modals.close(modalId);
-              type === 'todo' ? openTodoModal(data) : openNoteModal(data);
-            }}
+            onClick={() => 
+              openTodoModal(data) 
+            }
             variant="light"
             fz={'md'}
           >
-            Edit
+            Edit Todo
           </Button>
         </Flex>
       </>
     )
   });
-  console.log('🚀 ~ modalId:', modalId);
 }
 
-// export function openNoteDetailsModal(data?: NoteWithId) {
-//   modals.open({
-//     title: (
-//       <Text fw={700} size="lg">
-//         Details:
-//       </Text>
-//     ),
-//     centered: true,
-//     children: (
-//       <>
-//         <Text ta="center" size="xl">
-//           {data?.content}
-//         </Text>
-//         <Divider my="md" />
-//         <Flex justify={'flex-end'}>
-//           <Button onClick={() => openNoteModal(data)} variant="light" fz={'md'}>
-//             Edit
-//           </Button>
-//         </Flex>
-//       </>
-//     )
-//   });
-// }
+export function openNoteDetailsModal(data?: NoteWithId) {
+  modals.open({
+    title: (
+      <Text fw={700} size="lg">
+        Details:
+      </Text>
+    ),
+    centered: true,
+    children: (
+      <>
+        <Text ta="center" size="xl">
+          {data?.content}
+        </Text>
+        <Divider my="md" />
+        <Flex justify={'flex-end'}>
+          <Button onClick={() => openNoteModal(data)} variant="light" fz={'md'}>
+            Edit Note
+          </Button>
+        </Flex>
+      </>
+    )
+  });
+}
