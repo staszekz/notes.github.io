@@ -54,8 +54,8 @@ export const SignUp = () => {
         <Field
           name="name"
           validators={{
-            onSubmit: z.string().trim(),
-            onBlur: z.string()
+             onSubmit: z.string().trim().min(1, "Field is required"),
+            onBlur: z.string().trim().min(1, "Field is required")
           }}
           children={({ state, handleChange, handleBlur }) => {
             return (
