@@ -16,26 +16,30 @@ import {
 import { collection, doc, setDoc } from 'firebase/firestore';
 import { database } from '@notes/database';
 import { CollectionType } from '@notes/types';
+import { FirebaseError } from 'firebase/app';
+import { useRouter } from '@tanstack/react-router';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const router = useRouter();
 
-  function setLoadingState(loading: boolean) {
-    setLoading(loading);
-  }
   async function signIn(email: string, password: string) {
     try {
       if (!rememberMe) {
         await setPersistence(auth, inMemoryPersistence);
       }
 
-      return signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+      setUser(userCredential.user);
+      return userCredential;
     } catch (error) {
-      if (error instanceof Error) {
+      if (error instanceof FirebaseError) {
+        throw new Error(error.code);
+      } else if (error instanceof Error) {
         throw new Error(error.message);
       } else {
         throw new Error('An unknown error occurred');
@@ -44,14 +48,22 @@ export function AuthProvider({ children }) {
   }
 
   async function signUp(email: string, password: string, displayName: string) {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    // dodac jak mail juz jest uzywany
-    await setDoc(doc(collection(database, CollectionType.USERS), userCredential.user.uid), {});
-    await sendEmailVerification(userCredential.user);
-    await updateProfile(userCredential.user, {
-      displayName
-    });
-    return userCredential;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      await setDoc(doc(collection(database, CollectionType.USERS), userCredential.user.uid), {});
+      await sendEmailVerification(userCredential.user);
+      await updateProfile(userCredential.user, {
+        displayName
+      });
+      return userCredential;
+    } catch (err) {
+      if (err instanceof FirebaseError) {
+        throw new Error(err.code);
+      } else {
+        throw new Error(String(err));
+      }
+    }
   }
 
   // sendPasswordResetEmail(auth, email)
@@ -68,22 +80,25 @@ export function AuthProvider({ children }) {
     return signOut(auth);
   }
   // add modal to display errors => maybe a global modal to be reused for every errors
-
   useEffect(() => {
-    setLoading(true);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         setUser(user);
-        setLoading(false);
+        // router.invalidate(); // this is outside the router,
       } else {
         setUser(null);
-        setLoading(false);
       }
     });
     return unsubscribe;
   }, []);
 
-  const value: TContextAuth = { user, signIn, signUp, signUserOut, loading, setLoadingState, setRememberMe };
+  const value: TContextAuth = {
+    user,
+    signIn,
+    signUp,
+    signUserOut,
+    setRememberMe
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

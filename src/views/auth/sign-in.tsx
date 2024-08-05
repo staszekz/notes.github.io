@@ -4,9 +4,10 @@ import { Button, Checkbox, Flex, TextInput, Title, Text } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, useRouter } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 import classes from './style.module.css';
+import { useState } from 'react';
 
 type SignInValues = {
   email: string;
@@ -17,7 +18,9 @@ export const SignIn = () => {
     email: '',
     password: ''
   };
-  const { signIn, setLoadingState, setRememberMe } = useAuthContext();
+  const { signIn, setRememberMe } = useAuthContext();
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const { Field, Subscribe, handleSubmit, state } = useForm({
@@ -27,14 +30,18 @@ export const SignIn = () => {
       handleOnSubmit(state.values);
     }
   });
-
+  const router = useRouter();
   const handleOnSubmit = async (state: SignInValues) => {
-    setLoadingState(true);
+    setLoading(true);
     try {
       await signIn(state.email, state.password);
-      setLoadingState(false);
-      navigate({ to: RoutesDef.HOME });
+      console.log('🚀 ~ router:', router);
+
+      // router.invalidate();
+      setLoading(false);
+      navigate({ to: RoutesDef.HOME, invalidate: true });
     } catch (err) {
+      setLoading(false);
       alert((err as Error).message);
     }
   };
@@ -116,8 +123,9 @@ export const SignIn = () => {
                   right={0}
                   type="submit"
                   variant="notes-transparent-border"
-                  loading={isSubmitting}
+                  loading={isSubmitting || loading}
                   disabled={!canSubmit}
+                  loaderProps={{ color: 'var(--white)', size: 20 }}
                 >
                   <IconLogin2 stroke={1.5} />
                 </Button>
