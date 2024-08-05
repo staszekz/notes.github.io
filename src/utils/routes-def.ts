@@ -5,5 +5,6 @@ export enum RoutesDef {
   LOGIN = '/login',
   TODOS = '/todos',
   VERIFY_EMAIL = '/verify-email',
+  TAKEN = '/taken-email',
   HOME = '/'
 }

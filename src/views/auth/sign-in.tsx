@@ -64,7 +64,7 @@ export const SignIn = () => {
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 defaultValue={state.value}
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
@@ -86,7 +86,7 @@ export const SignIn = () => {
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 type="password"
                 defaultValue={state.value}
                 onChange={e => handleChange(e.target.value)}
@@ -103,7 +103,7 @@ export const SignIn = () => {
           <Checkbox
             ml="sm"
             label={<Text c="var(--primary)">Remember me</Text>}
-            color="var(--primary"
+            color="var(--primary)"
             variant="outline"
             onChange={e => setRememberMe(e.target.checked)}
           />
