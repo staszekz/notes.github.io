@@ -24,6 +24,10 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
       data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
+      //   mutate({ id, newName }, {
+      //     onSuccess: () => event.currentTarget.reset()
+      //   })
+      // }}
       modals.closeAll();
     }
   });
@@ -139,7 +143,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
             type="submit"
             fz="1rem"
             variant="notes-transparent-border"
-            disabled={!canSubmit}
+            disabled={!canSubmit || addElement.isPending || editElement.isPending}
           >
             {isSubmitting ? '...' : 'Submit'}
           </Button>
