@@ -35,6 +35,7 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       setUser(userCredential.user);
+      // router.invalidate();
       return userCredential;
     } catch (error) {
       if (error instanceof FirebaseError) {

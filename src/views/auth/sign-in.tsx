@@ -9,6 +9,10 @@ import { RoutesDef } from '@notes/utils';
 import classes from './style.module.css';
 import { useState } from 'react';
 
+export async function sleep(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 type SignInValues = {
   email: string;
   password: string;
@@ -22,7 +26,6 @@ export const SignIn = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
   const { Field, Subscribe, handleSubmit, state } = useForm({
     defaultValues: initialState,
     validatorAdapter: zodValidator(),
@@ -35,11 +38,12 @@ export const SignIn = () => {
     setLoading(true);
     try {
       await signIn(state.email, state.password);
-      console.log('🚀 ~ router:', router);
-
-      // router.invalidate();
+      await router.invalidate();
+      // need to be here to wait for context to be updated -> do not remove
+      // https://github.com/TanStack/router/issues/1604
+      await sleep(1);
       setLoading(false);
-      navigate({ to: RoutesDef.HOME, invalidate: true });
+      navigate({ to: RoutesDef.HOME });
     } catch (err) {
       setLoading(false);
       alert((err as Error).message);
