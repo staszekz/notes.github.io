@@ -86,13 +86,6 @@ export const SignUp = () => {
           validators={{
             onSubmit: z.string().email('Invalid e-mail').trim(),
             onBlur: z.string().email('Invalid e-mail')
-            // onBlurAsync: async ({ value }) => {
-            //   console.log('auth:', auth);
-            //   await auth.getUserByEmail(value).then(data => {
-            //     console.log(data);
-            //     return 'sadgdfsg';
-            //   });
-            // }
           }}
           children={({ state, handleChange, handleBlur }) => {
             return (
