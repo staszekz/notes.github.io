@@ -3,8 +3,28 @@ import classes from './styles.module.css';
 import { Box, Button, Flex, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
+import { useEffect } from 'react';
 
 export const Home = () => {
+  const url = 'https://ciphersprint.pulley.com/staszek.zajaczkowski@gmail.com';
+  async function getData() {
+    try {
+      const response = await fetch(url);
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <MainLayout>
       <Title pt="xl" order={2}>
