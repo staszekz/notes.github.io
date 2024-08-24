@@ -4,7 +4,7 @@ import '@mantine/dates/styles.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { RouterProvider, createRouter, useRouter } from '@tanstack/react-router';
 import './index.css';
 import { LoadingOverlay } from '@mantine/core';
 
@@ -34,15 +34,6 @@ const customTheme = createTheme(theme);
 
 function AppWithRouter() {
   const auth = useAuthContext();
-  if (auth.loading) {
-    return (
-      <LoadingOverlay
-        loaderProps={{ type: 'dots', color: 'var(--primary)', size: 'xl' }}
-        overlayProps={{ color: 'var(--dark-bg-color)' }}
-        visible
-      />
-    );
-  }
   return <RouterProvider router={router} context={{ auth }} />;
 }
 

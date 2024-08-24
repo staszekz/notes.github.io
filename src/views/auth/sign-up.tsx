@@ -7,6 +7,7 @@ import classes from './style.module.css';
 import { useAuthContext } from '@notes/hooks';
 import { RoutesDef } from '@notes/utils';
 import { Link, useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
 
 export const SignUp = () => {
   const initialState = {
@@ -25,15 +26,21 @@ export const SignUp = () => {
     }
   });
   const navigate = useNavigate();
-  const { signUp, setLoadingState } = useAuthContext();
+  const { signUp } = useAuthContext();
+  const [emailError, setEmailError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleOnSubmit = async () => {
-    setLoadingState(true);
+    setLoading(true);
     try {
       await signUp(state.values.email, state.values.password, state.values.name);
       navigate({ to: RoutesDef.VERIFY_EMAIL });
-      setLoadingState(false);
+      setLoading(false);
     } catch (error) {
+      if ((error as Error).message === 'auth/email-already-in-use') {
+        setEmailError('E-mail already in use');
+      }
+      setLoading(false);
       throw new Error((error as Error).message);
     }
   };
@@ -54,15 +61,15 @@ export const SignUp = () => {
         <Field
           name="name"
           validators={{
-             onSubmit: z.string().trim().min(1, "Field is required"),
-            onBlur: z.string().trim().min(1, "Field is required")
+            onSubmit: z.string().trim().min(1, 'Field is required'),
+            onBlur: z.string().trim().min(1, 'Field is required')
           }}
           children={({ state, handleChange, handleBlur }) => {
             return (
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 defaultValue={state.value}
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
@@ -85,14 +92,14 @@ export const SignUp = () => {
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 defaultValue={state.value}
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
                 withAsterisk
                 label="E-mail"
                 placeholder="Enter e-mail address"
-                error={state.meta?.errors[0]}
+                error={state.meta?.errors[0] || emailError}
               />
             );
           }}
@@ -107,7 +114,7 @@ export const SignUp = () => {
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 type="password"
                 defaultValue={state.value}
                 onChange={e => handleChange(e.target.value)}
@@ -136,7 +143,7 @@ export const SignUp = () => {
               <TextInput
                 className={classes.textInput}
                 data-autofocus
-                size="xl"
+                size="md"
                 type="password"
                 onChange={e => handleChange(e.target.value)}
                 onBlur={handleBlur}
@@ -154,12 +161,13 @@ export const SignUp = () => {
             return (
               <Flex justify={'flex-end'}>
                 <Button
-                  loading={isSubmitting}
+                  loading={isSubmitting || loading}
                   variant="notes-transparent-border"
                   size="medium"
                   right={0}
                   type="submit"
                   disabled={!canSubmit}
+                  loaderProps={{ color: 'var(--white)', size: 20 }}
                 >
                   <IconLogin2 stroke={1.5} />
                 </Button>

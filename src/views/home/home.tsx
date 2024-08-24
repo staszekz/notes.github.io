@@ -1,10 +1,10 @@
 import { MainLayout } from '@notes/layout';
-import classes from './styles.module.css';
-import { Box, Button, Flex, Title } from '@mantine/core';
+import {  Button, Flex, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 
 export const Home = () => {
+
   return (
     <MainLayout>
       <Title pt="xl" order={2}>
