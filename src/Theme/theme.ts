@@ -43,7 +43,6 @@ export const theme = {
   components: {
     Button: Button.extend({
       classNames: {
-        ...classes,
         root: classes.buttonRoot,
       },
     }),

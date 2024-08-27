@@ -1,11 +1,16 @@
 import classes from './styles.module.css';
-import { Box, Button, Flex, Space, Title } from '@mantine/core';
+import { Box, Button, Flex, Space, Title,Image } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
+import logo from '../../assets/logo.svg';
 
 export const AuthView = () => (
   <Box className={classes.wrapper}>
+  <Flex justify={'center'} w="500px" m="0 auto" mt="xl" >
+  <Image w="100%" src={logo} />
+  </Flex>
     <Title order={2} c="var(--white)" mt="4rem">
+  
       The best app for todos an taking notes.
     </Title>
     <Space h="xl" />

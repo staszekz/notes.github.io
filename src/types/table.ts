@@ -1,7 +1,7 @@
 
 export type ControlConfig<T> = {
   [key: string]: {
-    onClick: (original: T) => void;
+    onClick: (data: T) => void;
     icon: JSX.Element;
     color: string;
     tooltipMessage: string;

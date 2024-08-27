@@ -8,7 +8,6 @@ import { modals } from '@mantine/modals';
 import { CollectionType, Note, NoteWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
-import classes from './styles.module.css';
 
 export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
   const { addElement, editElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
@@ -89,6 +88,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
           return (
             <Textarea
               autosize
+              mt="md"
               size="md"
               minRows={4}
               label="Note details"
@@ -105,7 +105,15 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
       <Subscribe
         selector={state => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => (
-          <Button size="sm" type="submit" fz="1rem" variant="notes-transparent-border" disabled={!canSubmit}>
+          <Button
+            size="sm"
+            mt="md"
+            w="100%"
+            type="submit"
+            fz="1rem"
+            variant="notes-transparent-border"
+            disabled={!canSubmit}
+          >
             {isSubmitting ? '...' : 'Submit'}
           </Button>
         )}

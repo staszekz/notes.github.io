@@ -1,8 +1,7 @@
-import { Title, Text } from '@mantine/core';
+import { Title, Text, Button, Flex, Divider } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
 import { NoteWithId, TodoWithId } from '@notes/types';
-// import { primary } from '@notes/utils';
 
 export function openNoteModal(data?: NoteWithId) {
   return modals.open({
@@ -11,7 +10,28 @@ export function openNoteModal(data?: NoteWithId) {
     children: <NoteManagementForm data={data} />
   });
 }
+// TODO: dodać jakis SnackBAr z info co się dzije i można to z mutacji wziac. Globalny state context lub useQUery ?
+// onSuccess: (newUser) => {
+//     alert(`name updated to ${newUser.name}`)
+//   }
+// })
+//  onSuccess: newUser => {
+//    queryClient.setQueryData(['user', newUser.id], newUser);
+//  };
+// We saw that when React Query invokes onSuccess, the first argument it'll pass to it is whatever the mutationFn returns. That's nice, but in this case, it's the second argument that is more valuable to us.
 
+// It'll be the object that was passed to mutate, in our example, { id, newName }.
+
+// function useUpdateUser() {
+//   const queryClient = useQueryClient()
+
+//   return useMutation({
+//     mutationFn: updateUser,
+//     onSuccess: (data, { id, newName }) => {
+
+//     }
+//   })
+// }
 export function openTodoModal(data?: TodoWithId) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
@@ -29,13 +49,13 @@ export const openDeleteModal = (id: string, deleteFn) => {
       confirm: 'Delete',
       cancel: 'Cancel'
     },
-    confirmProps: { bg: 'red', c: 'white', fz: 'md' },
+    confirmProps: { fz: 'md', variant: 'notes-danger' },
     cancelProps: { fz: 'md' },
     onConfirm: () => deleteFn(id)
   });
 };
 
-export const openDetailsModal = (content: string) => {
+export function openTodoDetailsModal(data?: TodoWithId) {
   modals.open({
     title: (
       <Text fw={700} size="lg">
@@ -44,9 +64,41 @@ export const openDetailsModal = (content: string) => {
     ),
     centered: true,
     children: (
-      <Text ta="center" size="xl">
-        {content}
-      </Text>
+      <>
+        <Text ta="center" size="xl">
+          {data?.content}
+        </Text>
+        <Divider my="md" />
+        <Flex justify={'flex-end'}>
+          <Button onClick={() => openTodoModal(data)} variant="light" fz={'md'}>
+            Edit Todo
+          </Button>
+        </Flex>
+      </>
     )
   });
-};
+}
+
+export function openNoteDetailsModal(data?: NoteWithId) {
+  modals.open({
+    title: (
+      <Text fw={700} size="lg">
+        Details:
+      </Text>
+    ),
+    centered: true,
+    children: (
+      <>
+        <Text ta="center" size="xl">
+          {data?.content}
+        </Text>
+        <Divider my="md" />
+        <Flex justify={'flex-end'}>
+          <Button onClick={() => openNoteModal(data)} variant="light" fz={'md'}>
+            Edit Note
+          </Button>
+        </Flex>
+      </>
+    )
+  });
+}
