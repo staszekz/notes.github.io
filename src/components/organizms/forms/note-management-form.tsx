@@ -2,15 +2,16 @@ import { useForm } from '@tanstack/react-form';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
-import { useRemoteData } from '@notes/hooks';
+import { useAddNote, useUpdateNote } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { CollectionType, Note, NoteWithId } from '@notes/types';
+import { NoteWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
 
 export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
-  const { addElement, editElement } = useRemoteData<Note>({ key: CollectionType.NOTES });
+  const { addNote, isNoteAdding } = useAddNote();
+  const { updateNote, isNoteUpdating } = useUpdateNote();
 
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
@@ -22,7 +23,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
         },
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
-      data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
+      data ? updateNote({ element: value, id: data.id }) : addNote(value);
       modals.closeAll();
     }
   });
@@ -112,7 +113,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
             type="submit"
             fz="1rem"
             variant="notes-transparent-border"
-            disabled={!canSubmit}
+            disabled={!canSubmit || isNoteAdding || isNoteUpdating}
           >
             {isSubmitting ? '...' : 'Submit'}
           </Button>

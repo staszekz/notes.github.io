@@ -7,12 +7,19 @@ const key = CollectionType.TODOS
 export const useRemoveTodo = () => {
   const queryClient = useQueryClient()
 
-  return useMutation({
+  const mutation = useMutation({
     mutationFn: async (id: string): Promise<void> => deleteSingleElementFn({ id, key }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [key] })
     }
   });
+
+  return {
+    ...mutation,
+    removeTodo: mutation.mutate,
+    isTodoRemoving: mutation.isPending,
+    isTodoRemoveError: mutation.isError
+  }
 };
 
 

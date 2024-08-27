@@ -1,16 +1,18 @@
 import { useForm } from '@tanstack/react-form';
 import { z } from 'zod';
 import { zodValidator } from '@tanstack/zod-form-adapter';
-import { useRemoteData } from '@notes/hooks';
+import { useAddTodo, useUpdateTodo } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
-import { CollectionType, Todo, TodoWithId } from '@notes/types';
+import { TodoWithId } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
 
 export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
-  const { addElement, editElement } = useRemoteData<Todo>({ key: CollectionType.TODOS });
+  const { addTodo, isTodoAdding } = useAddTodo();
+  const { updateTodo, isTodoUpdating } = useUpdateTodo();
+
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
       ? removeId<TodoWithId>(data)
@@ -23,11 +25,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
         },
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
-      data ? editElement.mutate({ element: value, id: data.id }) : addElement.mutate(value);
-      //   mutate({ id, newName }, {
-      //     onSuccess: () => event.currentTarget.reset()
-      //   })
-      // }}
+      data ? updateTodo({ element: value, id: data.id }) : addTodo(value);
       modals.closeAll();
     }
   });
@@ -143,7 +141,7 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
             type="submit"
             fz="1rem"
             variant="notes-transparent-border"
-            disabled={!canSubmit || addElement.isPending || editElement.isPending}
+            disabled={!canSubmit || isTodoAdding || isTodoUpdating}
           >
             {isSubmitting ? '...' : 'Submit'}
           </Button>
