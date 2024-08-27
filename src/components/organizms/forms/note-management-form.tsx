@@ -23,8 +23,20 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
         },
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
-      data ? updateNote({ element: value, id: data.id }) : addNote(value);
-      modals.closeAll();
+      data
+        ? updateNote(
+            { element: value, id: data.id },
+            {
+              onSuccess: () => {
+                modals.closeAll();
+              }
+            }
+          )
+        : addNote(value, {
+            onSuccess: () => {
+              modals.closeAll();
+            }
+          });
     }
   });
   return (
