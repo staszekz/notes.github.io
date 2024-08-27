@@ -17,14 +17,12 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { database } from '@notes/database';
 import { CollectionType } from '@notes/types';
 import { FirebaseError } from 'firebase/app';
-import { useRouter } from '@tanstack/react-router';
 
 export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [rememberMe, setRememberMe] = useState(false);
-  // const router = useRouter();
 
   async function signIn(email: string, password: string) {
     try {
@@ -35,7 +33,6 @@ export function AuthProvider({ children }) {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
       setUser(userCredential.user);
-      // router.invalidate();
       return userCredential;
     } catch (error) {
       if (error instanceof FirebaseError) {
@@ -85,7 +82,6 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         setUser(user);
-        // router.invalidate(); // this is outside the router,
       } else {
         setUser(null);
       }
