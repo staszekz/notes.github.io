@@ -11,6 +11,7 @@ import { LoadingOverlay } from '@mantine/core';
 import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
 import { useAuthContext } from './hooks';
+import { Spinner } from './components/atoms/spinner/spinner';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,16 @@ const customTheme = createTheme(theme);
 
 function AppWithRouter() {
   const auth = useAuthContext();
+
+  if (auth.loading) {
+    return (
+      <LoadingOverlay
+        overlayProps={{ color: 'var(--dark-bg-color)' }}
+        loaderProps={{ children: <Spinner /> }}
+        visible
+      />
+    );
+  }
   return <RouterProvider router={router} context={{ auth }} />;
 }
 

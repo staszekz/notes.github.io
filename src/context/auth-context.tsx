@@ -8,7 +8,7 @@ import {
   updateProfile,
   signOut,
   getAuth,
-  inMemoryPersistence,
+  browserLocalPersistence,
   setPersistence,
   sendEmailVerification
 } from 'firebase/auth';
@@ -23,11 +23,12 @@ export const AuthContext = createContext<TContextAuth | undefined>(undefined);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState<User | null>(getAuth().currentUser);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function signIn(email: string, password: string) {
     try {
-      if (!rememberMe) {
-        await setPersistence(auth, inMemoryPersistence);
+      if (rememberMe) {
+        await setPersistence(auth, browserLocalPersistence);
       }
 
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -79,11 +80,14 @@ export function AuthProvider({ children }) {
   }
   // add modal to display errors => maybe a global modal to be reused for every errors
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         setUser(user);
+        setLoading(false);
       } else {
         setUser(null);
+        setLoading(false);
       }
     });
     return unsubscribe;
@@ -94,7 +98,8 @@ export function AuthProvider({ children }) {
     signIn,
     signUp,
     signUserOut,
-    setRememberMe
+    setRememberMe,
+    loading
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
