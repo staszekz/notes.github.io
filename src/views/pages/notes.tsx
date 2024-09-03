@@ -8,7 +8,7 @@ import {
   TableControls
 } from '@notes/components';
 import { MainLayout } from '@notes/layout';
-import { useRemoteData } from '@notes/hooks';
+import { useRemoveNote } from '@notes/hooks';
 
 import {
   createColumnHelper,
@@ -17,11 +17,12 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { CollectionType, ControlConfig, Note, NoteWithId } from '@notes/types';
+import { ControlConfig, NoteWithId } from '@notes/types';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
-import { Box, Title } from '@mantine/core';
-import classes from './styles.module.css';
+import { Title } from '@mantine/core';
 import { getTableControls } from '@notes/utils';
+import { useQuery } from '@tanstack/react-query';
+import { getNotesQueryOptions } from '@notes/rq';
 
 export const Notes = () => {
   const [pagination, setPagination] = useState<PaginationState>({
@@ -29,12 +30,9 @@ export const Notes = () => {
     pageSize: 10
   });
 
-  const {
-    collection: { isPending, isFetching, isLoading, data: notes },
-    deleteElement,
-    addElement,
-    editElement
-  } = useRemoteData<Note>({ key: CollectionType.NOTES });
+  const { data: notes, isPending, isFetching, isLoading } = useQuery(getNotesQueryOptions());
+  const { removeNote } = useRemoveNote();
+
   const columnHelper = createColumnHelper<NoteWithId>();
 
   const controlsConfig: ControlConfig<NoteWithId> = {
@@ -45,13 +43,13 @@ export const Notes = () => {
       tooltipMessage: 'Edit this note'
     },
     Delete: {
-      onClick: original => openDeleteModal(original.id, deleteElement.mutate),
+      onClick: original => openDeleteModal(original.id, removeNote),
       icon: <IconTrash />,
       color: 'var(--red)',
       tooltipMessage: 'Delete this note'
     },
     Details: {
-      onClick:openNoteDetailsModal,
+      onClick: openNoteDetailsModal,
       icon: <IconBubbleText />,
       color: 'var(--primary)',
       tooltipMessage: 'See more details'
@@ -103,10 +101,7 @@ export const Notes = () => {
       </Title>
       <AddNewButton openModal={openNoteModal} />
       <br />
-      <Table<NoteWithId>
-        table={table}
-        isLoading={isPending || isLoading || isFetching || addElement.isPending || editElement.isPending}
-      />
+      <Table<NoteWithId> table={table} isLoading={isPending || isLoading || isFetching} />
       {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
     </MainLayout>
   );

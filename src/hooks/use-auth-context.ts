@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '@notes/context';
 
-
 export const useAuthContext = () => {
   const context = useContext(AuthContext)
   if (context === undefined) {

@@ -1,12 +1,16 @@
 import { NavBarButtonWrapper, NavBarUser } from '@notes/components';
 import classes from './styles.module.css';
-import { Box, Image } from '@mantine/core';
+import { Box, Button, Image } from '@mantine/core';
 import logo from '../../../assets/logo.svg';
+import { Link } from '@tanstack/react-router';
+import { RoutesDef } from '@notes/utils';
 
 export const NavBar = () => {
   return (
     <Box className={classes.wrapper}>
-      <Box className={classes.logo}><Image w="200px" src={logo} /></Box>
+      <Link className={classes.logo} to={RoutesDef.HOME}>
+        <Image w="200px" src={logo} />
+      </Link>
       <Box className={classes.bar}>
         <NavBarButtonWrapper />
         <NavBarUser />

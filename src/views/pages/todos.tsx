@@ -9,7 +9,7 @@ import {
   TableControls
 } from '@notes/components';
 
-import { useRemoteData } from '@notes/hooks';
+import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -17,22 +17,21 @@ import {
   PaginationState,
   useReactTable
 } from '@tanstack/react-table';
-import { CollectionType, ControlConfig, Todo, TodoWithId } from '@notes/types';
+import { ControlConfig, TodoWithId } from '@notes/types';
 import { Checkbox, Flex, Title } from '@mantine/core';
 import { IconBubbleText, IconEdit, IconTrash } from '@tabler/icons-react';
 import { getTableControls } from '@notes/utils';
+import { useQuery } from '@tanstack/react-query';
+import { getTodosQueryOptions } from '@notes/rq';
 
 export const Todos = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   });
-  const {
-    collection: { isPending, isFetching, isLoading, data: todos },
-    editElement,
-    deleteElement
-  } = useRemoteData<Todo>({ key: CollectionType.TODOS });
-
+  const { data: todos, isPending, isFetching, isLoading } = useQuery(getTodosQueryOptions());
+  const { removeTodo } = useRemoveTodo();
+  const { updateTodo } = useUpdateTodo();
   const columnHelper = createColumnHelper<TodoWithId>();
 
   const controlsConfig: ControlConfig<TodoWithId> = {
@@ -43,7 +42,7 @@ export const Todos = () => {
       tooltipMessage: 'Edit this note'
     },
     Delete: {
-      onClick: original => openDeleteModal(original.id, deleteElement.mutate),
+      onClick: original => openDeleteModal(original.id, removeTodo),
       icon: <IconTrash />,
       color: 'var(--red)',
       tooltipMessage: 'Delete this note'
@@ -91,7 +90,7 @@ export const Todos = () => {
               color={'var(--primary)'}
               variant="outline"
               onChange={e => {
-                editElement.mutate({
+                updateTodo({
                   element: { ...props.row.original, completed: e.target.checked },
                   id: props.row.original.id
                 });

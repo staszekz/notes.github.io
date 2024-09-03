@@ -1,10 +1,9 @@
 import { MainLayout } from '@notes/layout';
-import {  Button, Flex, Title } from '@mantine/core';
+import { Button, Flex, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 
 export const Home = () => {
-
   return (
     <MainLayout>
       <Title pt="xl" order={2}>
@@ -30,8 +29,6 @@ export const Home = () => {
 // TODO: zabezpiecznenie przed niezalogowanym uzyciem
 // TODO: add user profile edit
 // TODO: add user stored in cookies
-// TODO: Add reactQuery (or SWR) to fetching and sotring data ??
-// TODO: Finally add typescrip to the whole project.
 
 // import { queryOptions } from '@tanstack/react-query';
 
