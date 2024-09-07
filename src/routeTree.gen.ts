@@ -22,6 +22,7 @@ import { Route as AuthIndexImport } from './routes/_auth.index'
 const VerifyEmailLazyImport = createFileRoute('/verify-email')()
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
+const ResetPasswordLazyImport = createFileRoute('/reset-password')()
 const AuthTodosLazyImport = createFileRoute('/_auth/todos')()
 const AuthNotesLazyImport = createFileRoute('/_auth/notes')()
 
@@ -41,6 +42,13 @@ const SigninLazyRoute = SigninLazyImport.update({
   path: '/signin',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
+
+const ResetPasswordLazyRoute = ResetPasswordLazyImport.update({
+  path: '/reset-password',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/reset-password.lazy').then((d) => d.Route),
+)
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -83,6 +91,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordLazyImport
       parentRoute: typeof rootRoute
     }
     '/signin': {
@@ -139,6 +154,7 @@ export const routeTree = rootRoute.addChildren({
     AuthIndexRoute,
   }),
   LoginRoute,
+  ResetPasswordLazyRoute,
   SigninLazyRoute,
   SignupLazyRoute,
   VerifyEmailLazyRoute,
@@ -154,6 +170,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_auth",
         "/login",
+        "/reset-password",
         "/signin",
         "/signup",
         "/verify-email"
@@ -169,6 +186,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/login": {
       "filePath": "login.tsx"
+    },
+    "/reset-password": {
+      "filePath": "reset-password.lazy.tsx"
     },
     "/signin": {
       "filePath": "signin.lazy.tsx"

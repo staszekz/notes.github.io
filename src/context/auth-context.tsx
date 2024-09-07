@@ -10,7 +10,8 @@ import {
   getAuth,
   browserLocalPersistence,
   setPersistence,
-  sendEmailVerification
+  sendEmailVerification,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 
 import { collection, doc, setDoc } from 'firebase/firestore';
@@ -64,17 +65,13 @@ export function AuthProvider({ children }) {
       }
     }
   }
-
-  // sendPasswordResetEmail(auth, email)
-  //   .then(() => {
-  //     // Password reset email sent!
-  //     // ..
-  //   })
-  //   .catch(error => {
-  //     const errorCode = error.code;
-  //     const errorMessage = error.message;
-  //     // ..
-  //   });
+  function resetPassword(email: string) {
+    sendPasswordResetEmail(auth, email).catch(error => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode, errorMessage);
+    });
+  }
   function signUserOut() {
     return signOut(auth);
   }
@@ -99,7 +96,8 @@ export function AuthProvider({ children }) {
     signUp,
     signUserOut,
     setRememberMe,
-    loading
+    loading,
+    resetPassword
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

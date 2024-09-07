@@ -148,6 +148,11 @@ export const SignIn = () => {
         >
           Go back to sign-up page
         </Button>
+        <Flex justify={'center'}>
+          <Button component={Link} size="xs" fz={'md'} variant="transparent" to={RoutesDef.RESET_PASSWORD}>
+            Forgot password?
+          </Button>
+        </Flex>
       </form>
     </>
   );
