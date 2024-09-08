@@ -25,18 +25,20 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
     onSubmit: async ({ value }) => {
       data
         ? updateNote(
-            { element: value, id: data.id },
-            {
-              onSuccess: () => {
-                modals.closeAll();
-              }
-            }
+            { element: value, id: data.id }
+
+            // {
+            //   onSuccess: () => {
+            //     modals.closeAll();
+            //   }
+            // }
           )
         : addNote(value, {
             onSuccess: () => {
               modals.closeAll();
             }
           });
+      modals.closeAll();
     }
   });
   return (
