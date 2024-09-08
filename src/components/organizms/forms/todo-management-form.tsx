@@ -26,19 +26,13 @@ export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
       data
-        ? updateTodo(
-            { element: value, id: data.id },
-            {
-              onSuccess: () => {
-                modals.closeAll();
-              }
-            }
-          )
+        ? updateTodo({ element: value, id: data.id })
         : addTodo(value, {
             onSuccess: () => {
               modals.closeAll();
             }
           });
+      modals.closeAll();
     }
   });
 
