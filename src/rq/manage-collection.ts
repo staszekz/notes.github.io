@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, orderBy, query } from 'firebase/firestore';
 import { database, auth } from '@notes/database';
 
 
@@ -6,7 +6,8 @@ import { database, auth } from '@notes/database';
 export async function getCollection<T>({ key }: { key: string }): Promise<(T & { id: string })[]> {
   const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('User not authenticated');
-  const res = await getDocs(collection(database, 'users', uid, key));
+  const q = query(collection(database, 'users', uid, key), orderBy('createdOn', 'desc'))
+  const res = await getDocs(q);
   return res.docs.map((doc) => ({ ...doc.data() as T, id: doc.id }));
 }
 
