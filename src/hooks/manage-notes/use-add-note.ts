@@ -8,8 +8,20 @@ export const useAddNote = () => {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: async (element: Note): Promise<void> => addElementFn({ element, key }),
-    onSuccess: () => {
+    mutationFn: async ({ element }: { element: Note }): Promise<void> => addElementFn({ element, key }),
+    onMutate: async ({ element }: { element: Note }) => {
+      await queryClient.cancelQueries({ queryKey: [key] })
+      const previousNotes = queryClient.getQueryData([key]) as Note[]
+      const newNotes = [element, ...previousNotes]
+      queryClient.setQueryData([key], newNotes)
+      return () => {
+        queryClient.setQueryData([key], previousNotes)
+      }
+    },
+    onError: (error, variables, rollback) => {
+      rollback?.()
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [key] })
     }
   });

@@ -8,8 +8,20 @@ export const useAddTodo = () => {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: async (element: Todo): Promise<void> => addElementFn({ element, key }),
-    onSuccess: () => {
+    mutationFn: async ({ element }: { element: Todo }): Promise<void> => addElementFn({ element, key }),
+    onMutate: async ({ element }: { element: Todo }) => {
+      await queryClient.cancelQueries({ queryKey: [key] })
+      const previousNotes = queryClient.getQueryData([key]) as Todo[]
+      const newNotes = [element, ...previousNotes]
+      queryClient.setQueryData([key], newNotes)
+      return () => {
+        queryClient.setQueryData([key], previousNotes)
+      }
+    },
+    onError: (error, variables, rollback) => {
+      rollback?.()
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [key] })
     }
   });
