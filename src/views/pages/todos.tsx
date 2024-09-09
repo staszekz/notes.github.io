@@ -29,7 +29,7 @@ export const Todos = () => {
     pageIndex: 0,
     pageSize: 10
   });
-  const { data: todos, isPending, isFetching, isLoading } = useQuery(getTodosQueryOptions());
+  const { data: todos } = useQuery(getTodosQueryOptions());
   const { removeTodo } = useRemoveTodo();
   const { updateTodo } = useUpdateTodo();
   const columnHelper = createColumnHelper<TodoWithId>();
@@ -125,7 +125,7 @@ export const Todos = () => {
       </Title>
       <AddNewButton openModal={openTodoModal} />
       <br />
-      <Table<TodoWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+      <Table<TodoWithId> table={table} isLoading={!todos?.length} />
       {!todos?.length && <Title order={3}>Your todo list is empty! Enter a new task! </Title>}
     </MainLayout>
   );

@@ -7,6 +7,7 @@
     "@mantine/dates": "^7.12.1",
     "@mantine/hooks": "^7.12.1",
     "@mantine/modals": "^7.12.1",
+    "@mantine/notifications": "^7.12.2",
     "@tabler/icons-react": "^3.12.0",
     "@tanstack/react-form": "^0.29.2",
     "@tanstack/react-query": "^5.52.1",

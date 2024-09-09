@@ -1,4 +1,3 @@
-export * from './use-remote-data'
 export * from './use-auth-context'
 export * from './manage-notes/use-add-note'
 export * from './manage-notes/use-update-note'
