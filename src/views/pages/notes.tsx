@@ -30,7 +30,7 @@ export const Notes = () => {
     pageSize: 10
   });
 
-  const { data: notes, isPending, isFetching, isLoading } = useQuery(getNotesQueryOptions());
+  const { data: notes } = useQuery(getNotesQueryOptions());
   const { removeNote } = useRemoveNote();
 
   const columnHelper = createColumnHelper<NoteWithId>();
@@ -101,7 +101,7 @@ export const Notes = () => {
       </Title>
       <AddNewButton openModal={openNoteModal} />
       <br />
-      <Table<NoteWithId> table={table} isLoading={isPending || isLoading || isFetching} />
+      <Table<NoteWithId> table={table} isLoading={!notes?.length} />
       {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
     </MainLayout>
   );
