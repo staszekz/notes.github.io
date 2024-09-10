@@ -1,3 +1,8 @@
+import '@mantine/notifications/styles.css';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import './index.css';
+
 import { createTheme, MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ModalsProvider } from '@mantine/modals';
@@ -10,11 +15,6 @@ import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
 import { useAuthContext } from './hooks';
 import { Spinner } from './components/atoms/spinner/spinner';
-
-import '@mantine/notifications/styles.css';
-import '@mantine/core/styles.css';
-import '@mantine/dates/styles.css';
-import './index.css';
 
 const queryClient = new QueryClient();
 
