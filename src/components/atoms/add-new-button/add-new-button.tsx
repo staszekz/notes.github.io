@@ -11,6 +11,7 @@ export const AddNewButton = ({ openModal }) => {
       variant="notes-transparent-border"
       onClick={handleClick}
       aria-label="Add new"
+      style={{ marginBottom: '1rem' }}
     >
       Add
     </Button>

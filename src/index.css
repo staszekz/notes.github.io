@@ -17,7 +17,7 @@
   --white: rgba(255, 255, 255, 1);
   --success: rgba(0, 128, 0, 1);
   --default-box-shadow-color: rgba(62, 194, 233, 0.3);
---grey: rgba(192, 192, 192, 1);
+  --grey: rgba(192, 192, 192, 1);
   --box-shadow-primary: 0 10px 20px -15px var(--primary);
   --box-shadow-secondary: -5px 3px 15px var(--default-box-shadow-color);
   --size-height-xlarge: 100px;

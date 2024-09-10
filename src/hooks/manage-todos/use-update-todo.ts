@@ -1,6 +1,7 @@
 import { editSingleElementFn } from '@notes/rq';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { errorNotification } from 'src/hooks/notifications/error-notification';
 
 const key = CollectionType.TODOS
 
@@ -20,10 +21,12 @@ export const useUpdateTodo = () => {
       }
     },
     onError: (error, variables, rollback) => {
+      errorNotification()
       rollback?.()
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [key] })
+
     }
 
   });
