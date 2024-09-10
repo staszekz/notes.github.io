@@ -1,8 +1,7 @@
-import { notifications } from '@mantine/notifications';
 import { editSingleElementFn } from '@notes/rq';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { customNotification } from 'src/hooks/notifications/notification';
+import { errorNotification } from 'src/hooks/notifications/error-notification';
 
 const key = CollectionType.TODOS
 
@@ -22,16 +21,7 @@ export const useUpdateTodo = () => {
       }
     },
     onError: (error, variables, rollback) => {
-      notifications.show({
-        title: 'An error occured',
-        message: 'There has been an error while updating the todo, please try again later or contact the administrator',
-        color: 'red',
-        position: 'top-right',
-        autoClose: 5000,
-        radius: "md",
-        // classNames: classes,
-        withCloseButton: true,
-      })
+      errorNotification()
       rollback?.()
     },
     onSettled: () => {

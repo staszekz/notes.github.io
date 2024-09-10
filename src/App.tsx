@@ -55,9 +55,9 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={customTheme}>
-        <Notifications />
         <AuthProvider>
           <ModalsProvider>
+            <Notifications />
             <AppWithRouter />
           </ModalsProvider>
         </AuthProvider>
