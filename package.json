@@ -3,10 +3,10 @@
   "version": "1.1.0",
   "private": true,
   "dependencies": {
-    "@mantine/core": "^7.12.1",
-    "@mantine/dates": "^7.12.1",
-    "@mantine/hooks": "^7.12.1",
-    "@mantine/modals": "^7.12.1",
+    "@mantine/core": "^7.12.2",
+    "@mantine/dates": "^7.12.2",
+    "@mantine/hooks": "^7.12.2",
+    "@mantine/modals": "^7.12.2",
     "@mantine/notifications": "^7.12.2",
     "@tabler/icons-react": "^3.12.0",
     "@tanstack/react-form": "^0.29.2",
@@ -40,7 +40,6 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "serve": "vite preview"
   },
   "browserslist": {
