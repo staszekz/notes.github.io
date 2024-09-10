@@ -20,7 +20,7 @@ export async function addElementFn<T extends { [x: string]: any }>({ element, ke
 export async function editSingleElementFn<T extends {}>({ element, key, id }: { element: T, key: string, id: string }) {
   const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('User not authenticated');
-  const _doc = doc(database, 'userss', uid, key, id)
+  const _doc = doc(database, 'users', uid, key, id)
   await updateDoc(_doc, element);
 }
 
