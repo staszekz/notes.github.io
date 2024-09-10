@@ -1,12 +1,15 @@
-import { createTheme, MantineProvider } from '@mantine/core';
+import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import './index.css';
+
+import { createTheme, MantineProvider } from '@mantine/core';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
-import { RouterProvider, createRouter, useRouter } from '@tanstack/react-router';
-import './index.css';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { LoadingOverlay } from '@mantine/core';
+import { Notifications } from '@mantine/notifications';
 
 import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
@@ -52,6 +55,7 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={customTheme}>
+        <Notifications />
         <AuthProvider>
           <ModalsProvider>
             <AppWithRouter />

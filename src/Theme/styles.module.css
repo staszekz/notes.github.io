@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1.5rem ;
   font-weight: 600;
   transition: box-shadow 0.3s ease;
   color: var(--primary);
-  border-radius: 50px;
+  border-radius: 50px !important;
 
   &:not(:disabled):hover{
     box-shadow: 0 10px 20px -15px var(--primary);
@@ -71,6 +71,7 @@
     width: var(--size-width-large);
     box-shadow: var(--box-shadow-secondary);
     border: var(--border-large);
+      font-size: 1.5rem;
   }
 
   &[data-size='large'] {
@@ -78,6 +79,7 @@
     height: var(--size-height-medium);
     width: var(--size-width-medium);
     border: var(--border-medium);
+    font-size: 1.5rem;
   }
 
   &[data-size='medium'] {
