@@ -11,9 +11,9 @@ import { theme } from './Theme';
 import { useAuthContext } from './hooks';
 import { Spinner } from './components/atoms/spinner/spinner';
 
+import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
-import '@mantine/notifications/styles.css';
 import './index.css';
 
 const queryClient = new QueryClient();

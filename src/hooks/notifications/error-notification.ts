@@ -7,7 +7,6 @@ export const errorNotification = () => {
     color: 'red',
     position: 'top-center',
     autoClose: 5000,
-    radius: "md",
     withCloseButton: true,
   })
 }
