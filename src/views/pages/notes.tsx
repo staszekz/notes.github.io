@@ -1,22 +1,19 @@
-import { AddNewButton, openNoteModal, NotesTable } from '@notes/components';
-import { MainLayout } from '@notes/layout';
-
-import { Title } from '@mantine/core';
+import { NotesTable } from '@notes/components';
 import { useQuery } from '@tanstack/react-query';
 import { getNotesQueryOptions } from '@notes/rq';
+import { DataDisplay } from 'src/components/templates/data-display';
+import { Box } from '@mantine/core';
 
 export const Notes = () => {
   const { data: notes } = useQuery(getNotesQueryOptions());
 
   return (
-    <MainLayout>
-      <Title pt="xl" order={2}>
-        My Private Notes
-      </Title>
-      <AddNewButton openModal={openNoteModal} />
-      <br />
-      <NotesTable isLoading={!notes?.length} />
-      {!notes?.length && <Title order={3}>Your note list is empty! Enter a new note! </Title>}
-    </MainLayout>
+    <DataDisplay
+      isData={Boolean(notes?.length)}
+      title="My Private Notes"
+      Table={NotesTable}
+      Stickers={() => <Box style={{ color: 'white' }}>strckers</Box>}
+      Tiles={() => <Box style={{ color: 'white' }}>Tiles</Box>}
+    />
   );
 };
