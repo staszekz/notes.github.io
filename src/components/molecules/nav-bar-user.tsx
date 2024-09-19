@@ -1,4 +1,4 @@
-import { Avatar, Group, Menu, Title, Text, Anchor } from '@mantine/core';
+import { Avatar, Group, Menu, Title, Text, Anchor, Button } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 import { IconLogout } from '@tabler/icons-react';
@@ -10,7 +10,7 @@ export const NavBarUser = () => {
     signUserOut();
   };
   return (
-    <Menu trigger="click-hover" openDelay={100} closeDelay={400}>
+    <Button variant="invisible" component={Menu} withinPortal={false} openDelay={100} closeDelay={400}>
       <Menu.Target>
         <Group>
           <Avatar
@@ -39,6 +39,6 @@ export const NavBarUser = () => {
           </Anchor>
         </Menu.Item>
       </Menu.Dropdown>
-    </Menu>
+    </Button>
   );
 };
