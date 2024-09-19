@@ -10,7 +10,14 @@ export const NavBarUser = () => {
     signUserOut();
   };
   return (
-    <Button variant="invisible" component={Menu} withinPortal={false} openDelay={100} closeDelay={400}>
+    <Button
+      variant="invisible"
+      component={Menu}
+      withinPortal={false}
+      trigger="click-hover"
+      openDelay={100}
+      closeDelay={400}
+    >
       <Menu.Target>
         <Group>
           <Avatar
