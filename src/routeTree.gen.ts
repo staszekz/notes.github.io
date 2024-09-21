@@ -22,7 +22,9 @@ import { Route as AuthIndexImport } from './routes/_auth.index'
 const VerifyEmailLazyImport = createFileRoute('/verify-email')()
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
+const SettingsLazyImport = createFileRoute('/settings')()
 const ResetPasswordLazyImport = createFileRoute('/reset-password')()
+const ProfileLazyImport = createFileRoute('/profile')()
 const AuthTodosLazyImport = createFileRoute('/_auth/todos')()
 const AuthNotesLazyImport = createFileRoute('/_auth/notes')()
 
@@ -43,12 +45,22 @@ const SigninLazyRoute = SigninLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
 
+const SettingsLazyRoute = SettingsLazyImport.update({
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/settings.lazy').then((d) => d.Route))
+
 const ResetPasswordLazyRoute = ResetPasswordLazyImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/reset-password.lazy').then((d) => d.Route),
 )
+
+const ProfileLazyRoute = ProfileLazyImport.update({
+  path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/profile.lazy').then((d) => d.Route))
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -93,11 +105,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsLazyImport
       parentRoute: typeof rootRoute
     }
     '/signin': {
@@ -154,7 +180,9 @@ export const routeTree = rootRoute.addChildren({
     AuthIndexRoute,
   }),
   LoginRoute,
+  ProfileLazyRoute,
   ResetPasswordLazyRoute,
+  SettingsLazyRoute,
   SigninLazyRoute,
   SignupLazyRoute,
   VerifyEmailLazyRoute,
@@ -170,7 +198,9 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_auth",
         "/login",
+        "/profile",
         "/reset-password",
+        "/settings",
         "/signin",
         "/signup",
         "/verify-email"
@@ -187,8 +217,14 @@ export const routeTree = rootRoute.addChildren({
     "/login": {
       "filePath": "login.tsx"
     },
+    "/profile": {
+      "filePath": "profile.lazy.tsx"
+    },
     "/reset-password": {
       "filePath": "reset-password.lazy.tsx"
+    },
+    "/settings": {
+      "filePath": "settings.lazy.tsx"
     },
     "/signin": {
       "filePath": "signin.lazy.tsx"

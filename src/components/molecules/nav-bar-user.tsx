@@ -1,4 +1,4 @@
-import { Avatar, Group, Menu, Title, Text, Anchor } from '@mantine/core';
+import { Avatar, Group, Menu, Title, Text, Anchor, Button } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 import { IconLogout } from '@tabler/icons-react';
@@ -10,7 +10,14 @@ export const NavBarUser = () => {
     signUserOut();
   };
   return (
-    <Menu trigger="click-hover" openDelay={100} closeDelay={400}>
+    <Button
+      variant="invisible"
+      component={Menu}
+      withinPortal={false}
+      trigger="click-hover"
+      openDelay={100}
+      closeDelay={400}
+    >
       <Menu.Target>
         <Group>
           <Avatar
@@ -27,10 +34,14 @@ export const NavBarUser = () => {
       </Menu.Target>
       <Menu.Dropdown c="var(--primary)">
         <Menu.Item>
-          <Text>Settings</Text>
+          <Text component={Link} to={RoutesDef.SETTINGS} c="var(--secondary)">
+            Settings
+          </Text>
         </Menu.Item>
         <Menu.Item>
-          <Text>My Profile</Text>
+          <Text component={Link} to={RoutesDef.PROFILE} c="var(--secondary)">
+            My Profile
+          </Text>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item onClick={handleSignOutClick} leftSection={<IconLogout stroke={1} />}>
@@ -39,6 +50,6 @@ export const NavBarUser = () => {
           </Anchor>
         </Menu.Item>
       </Menu.Dropdown>
-    </Menu>
+    </Button>
   );
 };
