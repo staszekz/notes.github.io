@@ -34,10 +34,14 @@ export const NavBarUser = () => {
       </Menu.Target>
       <Menu.Dropdown c="var(--primary)">
         <Menu.Item>
-          <Text>Settings</Text>
+          <Text component={Link} to={RoutesDef.SETTINGS} c="var(--secondary)">
+            Settings
+          </Text>
         </Menu.Item>
         <Menu.Item>
-          <Text>My Profile</Text>
+          <Text component={Link} to={RoutesDef.PROFILE} c="var(--secondary)">
+            My Profile
+          </Text>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item onClick={handleSignOutClick} leftSection={<IconLogout stroke={1} />}>

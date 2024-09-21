@@ -7,5 +7,7 @@ export enum RoutesDef {
   VERIFY_EMAIL = '/verify-email',
   TAKEN = '/taken-email',
   HOME = '/',
-  RESET_PASSWORD = '/reset-password'
+  RESET_PASSWORD = '/reset-password',
+  PROFILE = '/profile',
+  SETTINGS = '/settings',
 }

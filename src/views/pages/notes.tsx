@@ -1,7 +1,6 @@
-import { NotesTable } from '@notes/components';
+import { NotesTable, DataDisplay } from '@notes/components';
 import { useQuery } from '@tanstack/react-query';
 import { getNotesQueryOptions } from '@notes/rq';
-import { DataDisplay } from 'src/components/templates/data-display';
 import { Box } from '@mantine/core';
 
 export const Notes = () => {

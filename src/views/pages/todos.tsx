@@ -1,8 +1,7 @@
-import { TodosTable } from '@notes/components';
+import { TodosTable, DataDisplay } from '@notes/components';
 import { Box } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { getTodosQueryOptions } from '@notes/rq';
-import { DataDisplay } from 'src/components/templates/data-display';
 
 export const Todos = () => {
   const { data: notes } = useQuery(getTodosQueryOptions());

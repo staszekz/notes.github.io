@@ -11,7 +11,7 @@ import { columns } from './table-config';
 type Props = {
   isLoading: boolean;
 };
-
+// TODO: użyć search z <Link search={search} /> do paginacji w tabelach oraz reszcie wydoków
 export const TodosTable = ({ isLoading }: Props) => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
