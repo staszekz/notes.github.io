@@ -15,17 +15,17 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthImport } from './routes/_auth'
-import { Route as AuthIndexImport } from './routes/_auth.index'
+import { Route as AuthIndexImport } from './routes/_auth/index'
 
 // Create Virtual Routes
 
 const VerifyEmailLazyImport = createFileRoute('/verify-email')()
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
-const SettingsLazyImport = createFileRoute('/settings')()
 const ResetPasswordLazyImport = createFileRoute('/reset-password')()
-const ProfileLazyImport = createFileRoute('/profile')()
 const AuthTodosLazyImport = createFileRoute('/_auth/todos')()
+const AuthSettingsLazyImport = createFileRoute('/_auth/settings')()
+const AuthProfileLazyImport = createFileRoute('/_auth/profile')()
 const AuthNotesLazyImport = createFileRoute('/_auth/notes')()
 
 // Create/Update Routes
@@ -45,22 +45,12 @@ const SigninLazyRoute = SigninLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/signin.lazy').then((d) => d.Route))
 
-const SettingsLazyRoute = SettingsLazyImport.update({
-  path: '/settings',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/settings.lazy').then((d) => d.Route))
-
 const ResetPasswordLazyRoute = ResetPasswordLazyImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
   import('./routes/reset-password.lazy').then((d) => d.Route),
 )
-
-const ProfileLazyRoute = ProfileLazyImport.update({
-  path: '/profile',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/profile.lazy').then((d) => d.Route))
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -80,12 +70,24 @@ const AuthIndexRoute = AuthIndexImport.update({
 const AuthTodosLazyRoute = AuthTodosLazyImport.update({
   path: '/todos',
   getParentRoute: () => AuthRoute,
-} as any).lazy(() => import('./routes/_auth.todos.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/_auth/todos.lazy').then((d) => d.Route))
+
+const AuthSettingsLazyRoute = AuthSettingsLazyImport.update({
+  path: '/settings',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth/settings.lazy').then((d) => d.Route),
+)
+
+const AuthProfileLazyRoute = AuthProfileLazyImport.update({
+  path: '/profile',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() => import('./routes/_auth/profile.lazy').then((d) => d.Route))
 
 const AuthNotesLazyRoute = AuthNotesLazyImport.update({
   path: '/notes',
   getParentRoute: () => AuthRoute,
-} as any).lazy(() => import('./routes/_auth.notes.lazy').then((d) => d.Route))
+} as any).lazy(() => import('./routes/_auth/notes.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -105,25 +107,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
-    '/profile': {
-      id: '/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof ProfileLazyImport
-      parentRoute: typeof rootRoute
-    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsLazyImport
       parentRoute: typeof rootRoute
     }
     '/signin': {
@@ -154,6 +142,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthNotesLazyImport
       parentRoute: typeof AuthImport
     }
+    '/_auth/profile': {
+      id: '/_auth/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthProfileLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/settings': {
+      id: '/_auth/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthSettingsLazyImport
+      parentRoute: typeof AuthImport
+    }
     '/_auth/todos': {
       id: '/_auth/todos'
       path: '/todos'
@@ -173,20 +175,129 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  AuthRoute: AuthRoute.addChildren({
-    AuthNotesLazyRoute,
-    AuthTodosLazyRoute,
-    AuthIndexRoute,
-  }),
-  LoginRoute,
-  ProfileLazyRoute,
-  ResetPasswordLazyRoute,
-  SettingsLazyRoute,
-  SigninLazyRoute,
-  SignupLazyRoute,
-  VerifyEmailLazyRoute,
-})
+interface AuthRouteChildren {
+  AuthNotesLazyRoute: typeof AuthNotesLazyRoute
+  AuthProfileLazyRoute: typeof AuthProfileLazyRoute
+  AuthSettingsLazyRoute: typeof AuthSettingsLazyRoute
+  AuthTodosLazyRoute: typeof AuthTodosLazyRoute
+  AuthIndexRoute: typeof AuthIndexRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthNotesLazyRoute: AuthNotesLazyRoute,
+  AuthProfileLazyRoute: AuthProfileLazyRoute,
+  AuthSettingsLazyRoute: AuthSettingsLazyRoute,
+  AuthTodosLazyRoute: AuthTodosLazyRoute,
+  AuthIndexRoute: AuthIndexRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthNotesLazyRoute
+  '/profile': typeof AuthProfileLazyRoute
+  '/settings': typeof AuthSettingsLazyRoute
+  '/todos': typeof AuthTodosLazyRoute
+  '/': typeof AuthIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthNotesLazyRoute
+  '/profile': typeof AuthProfileLazyRoute
+  '/settings': typeof AuthSettingsLazyRoute
+  '/todos': typeof AuthTodosLazyRoute
+  '/': typeof AuthIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/_auth/notes': typeof AuthNotesLazyRoute
+  '/_auth/profile': typeof AuthProfileLazyRoute
+  '/_auth/settings': typeof AuthSettingsLazyRoute
+  '/_auth/todos': typeof AuthTodosLazyRoute
+  '/_auth/': typeof AuthIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/profile'
+    | '/settings'
+    | '/todos'
+    | '/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/profile'
+    | '/settings'
+    | '/todos'
+    | '/'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/_auth/notes'
+    | '/_auth/profile'
+    | '/_auth/settings'
+    | '/_auth/todos'
+    | '/_auth/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordLazyRoute: typeof ResetPasswordLazyRoute
+  SigninLazyRoute: typeof SigninLazyRoute
+  SignupLazyRoute: typeof SignupLazyRoute
+  VerifyEmailLazyRoute: typeof VerifyEmailLazyRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordLazyRoute: ResetPasswordLazyRoute,
+  SigninLazyRoute: SigninLazyRoute,
+  SignupLazyRoute: SignupLazyRoute,
+  VerifyEmailLazyRoute: VerifyEmailLazyRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
@@ -198,9 +309,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/_auth",
         "/login",
-        "/profile",
         "/reset-password",
-        "/settings",
         "/signin",
         "/signup",
         "/verify-email"
@@ -210,6 +319,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/notes",
+        "/_auth/profile",
+        "/_auth/settings",
         "/_auth/todos",
         "/_auth/"
       ]
@@ -217,14 +328,8 @@ export const routeTree = rootRoute.addChildren({
     "/login": {
       "filePath": "login.tsx"
     },
-    "/profile": {
-      "filePath": "profile.lazy.tsx"
-    },
     "/reset-password": {
       "filePath": "reset-password.lazy.tsx"
-    },
-    "/settings": {
-      "filePath": "settings.lazy.tsx"
     },
     "/signin": {
       "filePath": "signin.lazy.tsx"
@@ -236,15 +341,23 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "verify-email.lazy.tsx"
     },
     "/_auth/notes": {
-      "filePath": "_auth.notes.lazy.tsx",
+      "filePath": "_auth/notes.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/profile": {
+      "filePath": "_auth/profile.lazy.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/settings": {
+      "filePath": "_auth/settings.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/todos": {
-      "filePath": "_auth.todos.lazy.tsx",
+      "filePath": "_auth/todos.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/": {
-      "filePath": "_auth.index.tsx",
+      "filePath": "_auth/index.tsx",
       "parent": "/_auth"
     }
   }

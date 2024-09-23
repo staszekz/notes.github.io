@@ -1,9 +1,19 @@
+import { createLazyFileRoute } from '@tanstack/react-router';
+
 import { NotesTable, DataDisplay } from '@notes/components';
 import { useQuery } from '@tanstack/react-query';
 import { getNotesQueryOptions } from '@notes/rq';
 import { Box } from '@mantine/core';
 
-export const Notes = () => {
+export const Route = createLazyFileRoute('/_auth/notes')({
+  component: Notes,
+  pendingComponent: () => {
+    console.log('pendingComponent');
+    return <div>Loading...</div>;
+  }
+});
+
+function Notes() {
   const { data: notes } = useQuery(getNotesQueryOptions());
 
   return (
@@ -15,4 +25,4 @@ export const Notes = () => {
       Tiles={() => <Box style={{ color: 'white' }}>Tiles</Box>}
     />
   );
-};
+}

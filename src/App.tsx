@@ -25,7 +25,12 @@ const router = createRouter({
     auth: undefined
   },
   defaultPreload: 'intent',
-  defaultPreloadStaleTime: 0
+  defaultPreloadStaleTime: 0,
+  defaultPendingComponent: () => {
+    console.log('pending');
+    return <Spinner />;
+  },
+  defaultPreloadDelay: 10
 });
 
 declare module '@tanstack/react-router' {
@@ -38,8 +43,9 @@ const customTheme = createTheme(theme);
 
 function AppWithRouter() {
   const auth = useAuthContext();
-
+  //  musza byc oba loadery w routerze i tutaj bo jest auth
   if (auth.loading) {
+    console.log(' auth loading');
     return (
       <LoadingOverlay
         overlayProps={{ color: 'var(--dark-bg-color)' }}
@@ -48,7 +54,9 @@ function AppWithRouter() {
       />
     );
   }
-  return <RouterProvider router={router} context={{ auth }} />;
+  if (!auth.loading) {
+    return <RouterProvider router={router} context={{ auth }} />;
+  }
 }
 
 export function App() {

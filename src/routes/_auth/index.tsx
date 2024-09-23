@@ -1,9 +1,15 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import { MainLayout } from '@notes/layout';
 import { Button, Flex, Title } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { RoutesDef } from '@notes/utils';
 
-export const Home = () => {
+export const Route = createFileRoute('/_auth/')({
+  component: Home
+});
+
+function Home() {
   return (
     <MainLayout>
       <Title pt="xl" order={2}>
@@ -20,7 +26,7 @@ export const Home = () => {
       </Flex>
     </MainLayout>
   );
-};
+}
 
 // TODO: Add unit test for form
 // TODO: Add cypress test for the whole page
