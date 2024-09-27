@@ -27,7 +27,6 @@ const router = createRouter({
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
   defaultPendingComponent: () => {
-    console.log('pending');
     return <Spinner />;
   },
   defaultPreloadDelay: 10
@@ -43,9 +42,7 @@ const customTheme = createTheme(theme);
 
 function AppWithRouter() {
   const auth = useAuthContext();
-  //  musza byc oba loadery w routerze i tutaj bo jest auth
   if (auth.loading) {
-    console.log(' auth loading');
     return (
       <LoadingOverlay
         overlayProps={{ color: 'var(--dark-bg-color)' }}
