@@ -14,7 +14,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     return (
       <>
         <Outlet />
-        <TanStackRouterDevtools />
+        {/* <TanStackRouterDevtools /> */}
         <ReactQueryDevtools initialIsOpen={false} />
       </>
     );
