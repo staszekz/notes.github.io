@@ -11,7 +11,8 @@ import {
   browserLocalPersistence,
   setPersistence,
   sendEmailVerification,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  browserSessionPersistence
 } from 'firebase/auth';
 
 import { collection, doc, setDoc } from 'firebase/firestore';
@@ -28,8 +29,9 @@ export function AuthProvider({ children }) {
 
   async function signIn(email: string, password: string) {
     try {
-      if (rememberMe) {
-        await setPersistence(auth, browserLocalPersistence);
+      if (!rememberMe) {
+        // remember after refresh but not after closing the browser or new card
+        await setPersistence(auth, browserSessionPersistence);
       }
 
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
