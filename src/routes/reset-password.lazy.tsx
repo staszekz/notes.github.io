@@ -1,13 +1,12 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { Paper, Flex, rem, Title, Button, TextInput } from '@mantine/core';
-import { RoutesDef } from '@notes/utils';
 import { IconLogin2, IconMailCheck } from '@tabler/icons-react';
 import { useForm } from '@tanstack/react-form';
-import { Link } from '@tanstack/react-router';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 import { z } from 'zod';
-import classes from './-style.module.css';
+import classes from '../styles/auth.module.css';
 import { useAuthContext } from '@notes/hooks';
+import { ButtonLink } from '@notes/components';
 
 export const Route = createLazyFileRoute('/reset-password')({
   component: ResetPassword
@@ -90,9 +89,9 @@ function ResetPassword() {
           </form>
         )}
         <br />
-        <Button component={Link} variant="notes-transparent-border" size="md" fz={'md'} to={RoutesDef.SIGNIN}>
+        <ButtonLink variant="notes-transparent-border" size="md" fz={'md'} to={'/signin'}>
           Go to Sign In{' '}
-        </Button>
+        </ButtonLink>
       </Flex>
     </Paper>
   );

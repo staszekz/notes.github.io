@@ -1,8 +1,7 @@
-import { Title, Button, Flex, Paper, rem } from '@mantine/core';
-import { RoutesDef } from '@notes/utils';
-import { Link } from '@tanstack/react-router';
+import { Title, Flex, Paper, rem } from '@mantine/core';
 import { IconMailCheck } from '@tabler/icons-react';
 import { createLazyFileRoute } from '@tanstack/react-router';
+import { ButtonLink } from '@notes/components';
 
 export const Route = createLazyFileRoute('/verify-email')({
   component: VerifyEmail
@@ -19,9 +18,9 @@ function VerifyEmail() {
         <Title order={3} c={'var(--white'} mb={'xl'}>
           We have sent you a verification link. Please click on it to verify your e-mail.
         </Title>
-        <Button component={Link} variant="notes-transparent-border" size="md" fz={'md'} to={RoutesDef.SIGNIN}>
+        <ButtonLink variant="notes-transparent-border" size="md" fz={'md'} to={'/signin'}>
           Go to Sign In{' '}
-        </Button>
+        </ButtonLink>
       </Flex>
     </Paper>
   );

@@ -1,6 +1,5 @@
 import { Avatar, Group, Menu, Title, Text, Anchor, Button } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
-import { RoutesDef } from '@notes/utils';
 import { IconLogout } from '@tabler/icons-react';
 import { useAuthContext } from '@notes/hooks';
 
@@ -34,18 +33,18 @@ export const NavBarUser = () => {
       </Menu.Target>
       <Menu.Dropdown c="var(--primary)">
         <Menu.Item>
-          <Text component={Link} to={RoutesDef.SETTINGS} c="var(--secondary)">
+          <Text component={Link} to={'/settings'} c="var(--secondary)">
             Settings
           </Text>
         </Menu.Item>
         <Menu.Item>
-          <Text component={Link} to={RoutesDef.PROFILE} c="var(--secondary)">
+          <Text component={Link} to={'/profile'} c="var(--secondary)">
             My Profile
           </Text>
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item onClick={handleSignOutClick} leftSection={<IconLogout stroke={1} />}>
-          <Anchor underline="never" component={Link} to={RoutesDef.LOGIN} c="black">
+          <Anchor underline="never" component={Link} to={'/login'} c="black">
             log out
           </Anchor>
         </Menu.Item>

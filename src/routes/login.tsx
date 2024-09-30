@@ -1,9 +1,8 @@
-import classes from './-style.module.css';
-import { Box, Button, Flex, Space, Title, Image } from '@mantine/core';
-import { Link } from '@tanstack/react-router';
-import { RoutesDef } from '@notes/utils';
+import classes from '../styles/auth.module.css';
+import { Box, Flex, Space, Title, Image } from '@mantine/core';
 import logo from '../assets/logo.svg';
 import { createFileRoute } from '@tanstack/react-router';
+import { ButtonLink } from '@notes/components';
 
 export const Route = createFileRoute('/login')({
   component: Login
@@ -26,12 +25,12 @@ function Login() {
         Please sign in or sign up to use:
       </Title>
       <Flex gap={'lg'} mt="xl" justify={'center'}>
-        <Button variant="notes-transparent-border" size="xlarge" component={Link} to={RoutesDef.SIGNUP}>
+        <ButtonLink variant="notes-transparent-border" size="xlarge" to={'/signup'}>
           sign up
-        </Button>
-        <Button variant="notes-transparent-border" size="xlarge" component={Link} to={RoutesDef.SIGNIN}>
+        </ButtonLink>
+        <ButtonLink variant="notes-transparent-border" size="xlarge" to={'/signin'}>
           sign in
-        </Button>
+        </ButtonLink>
       </Flex>
     </Box>
   </Box>;

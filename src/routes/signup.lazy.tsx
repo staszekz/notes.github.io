@@ -5,11 +5,11 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, Flex, TextInput, Title } from '@mantine/core';
 import { IconLogin2, IconLogin } from '@tabler/icons-react';
 import { z } from 'zod';
-import classes from './-style.module.css';
+import classes from '../styles/auth.module.css';
 import { useAuthContext } from '@notes/hooks';
-import { RoutesDef } from '@notes/utils';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
+import { ButtonLink } from '@notes/components';
 
 export const Route = createLazyFileRoute('/signup')({
   component: SignUp
@@ -40,7 +40,7 @@ function SignUp() {
     setLoading(true);
     try {
       await signUp(state.values.email, state.values.password, state.values.name);
-      navigate({ to: RoutesDef.VERIFY_EMAIL });
+      navigate({ to: '/verify-email' });
       setLoading(false);
     } catch (error) {
       if ((error as Error).message === 'auth/email-already-in-use') {
@@ -181,17 +181,16 @@ function SignUp() {
             );
           }}
         />
-        <Button
-          component={Link}
+        <ButtonLink
           variant="light"
           size="md"
           fz={'md'}
-          to={RoutesDef.SIGNIN}
+          to={'/signin'}
           className={classes.linkWrapper}
           leftSection={<IconLogin />}
         >
           Go back to sign-in page
-        </Button>
+        </ButtonLink>
       </form>
     </>
   );

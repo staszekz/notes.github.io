@@ -15,7 +15,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
 import { Route as AuthImport } from './routes/_auth'
-import { Route as AuthIndexImport } from './routes/_auth/index'
+import { Route as AuthProfileLayoutImport } from './routes/_auth/_profile-layout'
+import { Route as AuthMainLayoutImport } from './routes/_auth/_main-layout'
+import { Route as AuthMainLayoutIndexImport } from './routes/_auth/_main-layout/index'
 
 // Create Virtual Routes
 
@@ -23,10 +25,18 @@ const VerifyEmailLazyImport = createFileRoute('/verify-email')()
 const SignupLazyImport = createFileRoute('/signup')()
 const SigninLazyImport = createFileRoute('/signin')()
 const ResetPasswordLazyImport = createFileRoute('/reset-password')()
-const AuthTodosLazyImport = createFileRoute('/_auth/todos')()
-const AuthSettingsLazyImport = createFileRoute('/_auth/settings')()
-const AuthProfileLazyImport = createFileRoute('/_auth/profile')()
-const AuthNotesLazyImport = createFileRoute('/_auth/notes')()
+const AuthProfileLayoutSettingsLazyImport = createFileRoute(
+  '/_auth/_profile-layout/settings',
+)()
+const AuthProfileLayoutProfileLazyImport = createFileRoute(
+  '/_auth/_profile-layout/profile',
+)()
+const AuthMainLayoutTodosLazyImport = createFileRoute(
+  '/_auth/_main-layout/todos',
+)()
+const AuthMainLayoutNotesLazyImport = createFileRoute(
+  '/_auth/_main-layout/notes',
+)()
 
 // Create/Update Routes
 
@@ -62,32 +72,50 @@ const AuthRoute = AuthImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthIndexRoute = AuthIndexImport.update({
-  path: '/',
+const AuthProfileLayoutRoute = AuthProfileLayoutImport.update({
+  id: '/_profile-layout',
   getParentRoute: () => AuthRoute,
 } as any)
 
-const AuthTodosLazyRoute = AuthTodosLazyImport.update({
-  path: '/todos',
+const AuthMainLayoutRoute = AuthMainLayoutImport.update({
+  id: '/_main-layout',
   getParentRoute: () => AuthRoute,
-} as any).lazy(() => import('./routes/_auth/todos.lazy').then((d) => d.Route))
+} as any)
 
-const AuthSettingsLazyRoute = AuthSettingsLazyImport.update({
-  path: '/settings',
-  getParentRoute: () => AuthRoute,
+const AuthMainLayoutIndexRoute = AuthMainLayoutIndexImport.update({
+  path: '/',
+  getParentRoute: () => AuthMainLayoutRoute,
+} as any)
+
+const AuthProfileLayoutSettingsLazyRoute =
+  AuthProfileLayoutSettingsLazyImport.update({
+    path: '/settings',
+    getParentRoute: () => AuthProfileLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth/_profile-layout/settings.lazy').then((d) => d.Route),
+  )
+
+const AuthProfileLayoutProfileLazyRoute =
+  AuthProfileLayoutProfileLazyImport.update({
+    path: '/profile',
+    getParentRoute: () => AuthProfileLayoutRoute,
+  } as any).lazy(() =>
+    import('./routes/_auth/_profile-layout/profile.lazy').then((d) => d.Route),
+  )
+
+const AuthMainLayoutTodosLazyRoute = AuthMainLayoutTodosLazyImport.update({
+  path: '/todos',
+  getParentRoute: () => AuthMainLayoutRoute,
 } as any).lazy(() =>
-  import('./routes/_auth/settings.lazy').then((d) => d.Route),
+  import('./routes/_auth/_main-layout/todos.lazy').then((d) => d.Route),
 )
 
-const AuthProfileLazyRoute = AuthProfileLazyImport.update({
-  path: '/profile',
-  getParentRoute: () => AuthRoute,
-} as any).lazy(() => import('./routes/_auth/profile.lazy').then((d) => d.Route))
-
-const AuthNotesLazyRoute = AuthNotesLazyImport.update({
+const AuthMainLayoutNotesLazyRoute = AuthMainLayoutNotesLazyImport.update({
   path: '/notes',
-  getParentRoute: () => AuthRoute,
-} as any).lazy(() => import('./routes/_auth/notes.lazy').then((d) => d.Route))
+  getParentRoute: () => AuthMainLayoutRoute,
+} as any).lazy(() =>
+  import('./routes/_auth/_main-layout/notes.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
@@ -135,60 +163,212 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyEmailLazyImport
       parentRoute: typeof rootRoute
     }
-    '/_auth/notes': {
-      id: '/_auth/notes'
+    '/_auth/_main-layout': {
+      id: '/_auth/_main-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthMainLayoutImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/_profile-layout': {
+      id: '/_auth/_profile-layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthProfileLayoutImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/_main-layout/notes': {
+      id: '/_auth/_main-layout/notes'
       path: '/notes'
       fullPath: '/notes'
-      preLoaderRoute: typeof AuthNotesLazyImport
-      parentRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthMainLayoutNotesLazyImport
+      parentRoute: typeof AuthMainLayoutImport
     }
-    '/_auth/profile': {
-      id: '/_auth/profile'
-      path: '/profile'
-      fullPath: '/profile'
-      preLoaderRoute: typeof AuthProfileLazyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/settings': {
-      id: '/_auth/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthSettingsLazyImport
-      parentRoute: typeof AuthImport
-    }
-    '/_auth/todos': {
-      id: '/_auth/todos'
+    '/_auth/_main-layout/todos': {
+      id: '/_auth/_main-layout/todos'
       path: '/todos'
       fullPath: '/todos'
-      preLoaderRoute: typeof AuthTodosLazyImport
-      parentRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthMainLayoutTodosLazyImport
+      parentRoute: typeof AuthMainLayoutImport
     }
-    '/_auth/': {
-      id: '/_auth/'
+    '/_auth/_profile-layout/profile': {
+      id: '/_auth/_profile-layout/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthProfileLayoutProfileLazyImport
+      parentRoute: typeof AuthProfileLayoutImport
+    }
+    '/_auth/_profile-layout/settings': {
+      id: '/_auth/_profile-layout/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthProfileLayoutSettingsLazyImport
+      parentRoute: typeof AuthProfileLayoutImport
+    }
+    '/_auth/_main-layout/': {
+      id: '/_auth/_main-layout/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthIndexImport
-      parentRoute: typeof AuthImport
+      preLoaderRoute: typeof AuthMainLayoutIndexImport
+      parentRoute: typeof AuthMainLayoutImport
     }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  AuthRoute: AuthRoute.addChildren({
-    AuthNotesLazyRoute,
-    AuthProfileLazyRoute,
-    AuthSettingsLazyRoute,
-    AuthTodosLazyRoute,
-    AuthIndexRoute,
-  }),
-  LoginRoute,
-  ResetPasswordLazyRoute,
-  SigninLazyRoute,
-  SignupLazyRoute,
-  VerifyEmailLazyRoute,
-})
+interface AuthMainLayoutRouteChildren {
+  AuthMainLayoutNotesLazyRoute: typeof AuthMainLayoutNotesLazyRoute
+  AuthMainLayoutTodosLazyRoute: typeof AuthMainLayoutTodosLazyRoute
+  AuthMainLayoutIndexRoute: typeof AuthMainLayoutIndexRoute
+}
+
+const AuthMainLayoutRouteChildren: AuthMainLayoutRouteChildren = {
+  AuthMainLayoutNotesLazyRoute: AuthMainLayoutNotesLazyRoute,
+  AuthMainLayoutTodosLazyRoute: AuthMainLayoutTodosLazyRoute,
+  AuthMainLayoutIndexRoute: AuthMainLayoutIndexRoute,
+}
+
+const AuthMainLayoutRouteWithChildren = AuthMainLayoutRoute._addFileChildren(
+  AuthMainLayoutRouteChildren,
+)
+
+interface AuthProfileLayoutRouteChildren {
+  AuthProfileLayoutProfileLazyRoute: typeof AuthProfileLayoutProfileLazyRoute
+  AuthProfileLayoutSettingsLazyRoute: typeof AuthProfileLayoutSettingsLazyRoute
+}
+
+const AuthProfileLayoutRouteChildren: AuthProfileLayoutRouteChildren = {
+  AuthProfileLayoutProfileLazyRoute: AuthProfileLayoutProfileLazyRoute,
+  AuthProfileLayoutSettingsLazyRoute: AuthProfileLayoutSettingsLazyRoute,
+}
+
+const AuthProfileLayoutRouteWithChildren =
+  AuthProfileLayoutRoute._addFileChildren(AuthProfileLayoutRouteChildren)
+
+interface AuthRouteChildren {
+  AuthMainLayoutRoute: typeof AuthMainLayoutRouteWithChildren
+  AuthProfileLayoutRoute: typeof AuthProfileLayoutRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthMainLayoutRoute: AuthMainLayoutRouteWithChildren,
+  AuthProfileLayoutRoute: AuthProfileLayoutRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof AuthProfileLayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthMainLayoutNotesLazyRoute
+  '/todos': typeof AuthMainLayoutTodosLazyRoute
+  '/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '': typeof AuthProfileLayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthMainLayoutNotesLazyRoute
+  '/todos': typeof AuthMainLayoutTodosLazyRoute
+  '/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/_auth/_main-layout': typeof AuthMainLayoutRouteWithChildren
+  '/_auth/_profile-layout': typeof AuthProfileLayoutRouteWithChildren
+  '/_auth/_main-layout/notes': typeof AuthMainLayoutNotesLazyRoute
+  '/_auth/_main-layout/todos': typeof AuthMainLayoutTodosLazyRoute
+  '/_auth/_profile-layout/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/_auth/_profile-layout/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/_auth/_main-layout/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/todos'
+    | '/profile'
+    | '/settings'
+    | '/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | ''
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/todos'
+    | '/profile'
+    | '/settings'
+    | '/'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/_auth/_main-layout'
+    | '/_auth/_profile-layout'
+    | '/_auth/_main-layout/notes'
+    | '/_auth/_main-layout/todos'
+    | '/_auth/_profile-layout/profile'
+    | '/_auth/_profile-layout/settings'
+    | '/_auth/_main-layout/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordLazyRoute: typeof ResetPasswordLazyRoute
+  SigninLazyRoute: typeof SigninLazyRoute
+  SignupLazyRoute: typeof SignupLazyRoute
+  VerifyEmailLazyRoute: typeof VerifyEmailLazyRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordLazyRoute: ResetPasswordLazyRoute,
+  SigninLazyRoute: SigninLazyRoute,
+  SignupLazyRoute: SignupLazyRoute,
+  VerifyEmailLazyRoute: VerifyEmailLazyRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
@@ -209,11 +389,8 @@ export const routeTree = rootRoute.addChildren({
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/notes",
-        "/_auth/profile",
-        "/_auth/settings",
-        "/_auth/todos",
-        "/_auth/"
+        "/_auth/_main-layout",
+        "/_auth/_profile-layout"
       ]
     },
     "/login": {
@@ -231,25 +408,42 @@ export const routeTree = rootRoute.addChildren({
     "/verify-email": {
       "filePath": "verify-email.lazy.tsx"
     },
-    "/_auth/notes": {
-      "filePath": "_auth/notes.lazy.tsx",
-      "parent": "/_auth"
+    "/_auth/_main-layout": {
+      "filePath": "_auth/_main-layout.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/_main-layout/notes",
+        "/_auth/_main-layout/todos",
+        "/_auth/_main-layout/"
+      ]
     },
-    "/_auth/profile": {
-      "filePath": "_auth/profile.lazy.tsx",
-      "parent": "/_auth"
+    "/_auth/_profile-layout": {
+      "filePath": "_auth/_profile-layout.tsx",
+      "parent": "/_auth",
+      "children": [
+        "/_auth/_profile-layout/profile",
+        "/_auth/_profile-layout/settings"
+      ]
     },
-    "/_auth/settings": {
-      "filePath": "_auth/settings.lazy.tsx",
-      "parent": "/_auth"
+    "/_auth/_main-layout/notes": {
+      "filePath": "_auth/_main-layout/notes.lazy.tsx",
+      "parent": "/_auth/_main-layout"
     },
-    "/_auth/todos": {
-      "filePath": "_auth/todos.lazy.tsx",
-      "parent": "/_auth"
+    "/_auth/_main-layout/todos": {
+      "filePath": "_auth/_main-layout/todos.lazy.tsx",
+      "parent": "/_auth/_main-layout"
     },
-    "/_auth/": {
-      "filePath": "_auth/index.tsx",
-      "parent": "/_auth"
+    "/_auth/_profile-layout/profile": {
+      "filePath": "_auth/_profile-layout/profile.lazy.tsx",
+      "parent": "/_auth/_profile-layout"
+    },
+    "/_auth/_profile-layout/settings": {
+      "filePath": "_auth/_profile-layout/settings.lazy.tsx",
+      "parent": "/_auth/_profile-layout"
+    },
+    "/_auth/_main-layout/": {
+      "filePath": "_auth/_main-layout/index.tsx",
+      "parent": "/_auth/_main-layout"
     }
   }
 }

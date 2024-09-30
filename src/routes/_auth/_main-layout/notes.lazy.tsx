@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getNotesQueryOptions } from '@notes/rq';
 import { Box } from '@mantine/core';
 
-export const Route = createLazyFileRoute('/_auth/notes')({
+export const Route = createLazyFileRoute('/_auth/_main-layout/notes')({
   component: Notes,
   pendingComponent: () => {
     console.log('pendingComponent');

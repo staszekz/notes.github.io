@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { AddNewButton, openNoteModal } from '@notes/components';
 import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
-import { MainLayout } from '@notes/layout';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
 
@@ -23,7 +22,7 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
   ];
 
   return (
-    <MainLayout>
+    <>
       <Grid align="center" justify="space-between" p="xl">
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
           <AddNewButton openModal={openNoteModal} />
@@ -47,6 +46,6 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
       {viewType.value === viewTypes.GRID && <Tiles isLoading={!isData} />}
 
       {!isData && <Title order={3}>Your list is empty! </Title>}
-    </MainLayout>
+    </>
   );
 }

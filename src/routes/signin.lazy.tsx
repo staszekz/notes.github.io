@@ -5,10 +5,11 @@ import { Button, Checkbox, Flex, TextInput, Title, Text } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
 import { useAuthContext } from 'src/hooks/use-auth-context';
-import { Link, useNavigate, useRouter } from '@tanstack/react-router';
-import { RoutesDef, sleep } from '@notes/utils';
+import { useNavigate, useRouter } from '@tanstack/react-router';
+import { sleep } from '@notes/utils';
 import { useState } from 'react';
-import classes from './-style.module.css';
+import classes from '../styles/auth.module.css';
+import { ButtonLink } from '@notes/components';
 
 export const Route = createLazyFileRoute('/signin')({
   component: SignIn
@@ -45,7 +46,7 @@ function SignIn() {
       // https://github.com/TanStack/router/issues/1604
       await sleep(1);
       setLoading(false);
-      navigate({ to: RoutesDef.HOME });
+      navigate({ to: '/' });
     } catch (err) {
       setLoading(false);
       alert((err as Error).message);
@@ -139,21 +140,20 @@ function SignIn() {
             }}
           />
         </Flex>
-        <Button
-          component={Link}
+        <ButtonLink
           variant="light"
           size="md"
           fz={'md'}
-          to={RoutesDef.SIGNUP}
+          to={'/signup'}
           className={classes.linkWrapper}
           leftSection={<IconLogin />}
         >
           Go back to sign-up page
-        </Button>
+        </ButtonLink>
         <Flex justify={'center'}>
-          <Button component={Link} size="xs" fz={'md'} variant="transparent" to={RoutesDef.RESET_PASSWORD}>
+          <ButtonLink size="xs" fz={'md'} variant="transparent" to={'/reset-password'}>
             Forgot password?
-          </Button>
+          </ButtonLink>
         </Flex>
       </form>
     </>
