@@ -21,8 +21,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
   },
   notFoundComponent: () => {
     return <p>This is the notFoundComponent </p>;
-  },
-  pendingComponent: () => {
-    return <p>Loading...</p>;
   }
+  // pendingComponent: () => {
+  //   return <p>Loading...</p>;
+  // }
 });

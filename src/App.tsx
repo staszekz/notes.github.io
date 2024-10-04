@@ -27,7 +27,7 @@ const router = createRouter({
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
   defaultPendingComponent: () => {
-    return <Spinner />;
+    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />;
   },
   defaultPreloadDelay: 10
 });

@@ -2,23 +2,20 @@ import { Table } from '@notes/components';
 import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
 import { getTodosQueryOptions } from '@notes/rq';
 import { TodoWithId } from '@notes/types';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useReactTable } from '@tanstack/react-table';
 import { PaginationState, getCoreRowModel, getPaginationRowModel } from '@tanstack/table-core';
 import { useState } from 'react';
 import { columns } from './table-config';
 
-type Props = {
-  isLoading: boolean;
-};
 // TODO: użyć search z <Link search={search} /> do paginacji w tabelach oraz reszcie wydoków
-export const TodosTable = ({ isLoading }: Props) => {
+export const TodosTable = () => {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10
   });
 
-  const { data: todos } = useQuery(getTodosQueryOptions());
+  const { data: todos } = useSuspenseQuery(getTodosQueryOptions());
   const { removeTodo } = useRemoveTodo();
   const { updateTodo } = useUpdateTodo();
 
@@ -34,5 +31,5 @@ export const TodosTable = ({ isLoading }: Props) => {
     getPaginationRowModel: getPaginationRowModel()
   });
 
-  return <Table<TodoWithId> table={table} isLoading={isLoading} />;
+  return <Table<TodoWithId> table={table} />;
 };
