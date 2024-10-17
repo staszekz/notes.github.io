@@ -1,0 +1,10 @@
+.stickerBox {
+ text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  height:10em;
+  width:10em;
+  padding:1em;
+   font-family: 'Reenie Beanie';
+}

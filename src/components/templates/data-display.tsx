@@ -1,9 +1,8 @@
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { AddNewButton, openNoteModal } from '@notes/components';
-import { Box, ComboboxItem, Grid, Select, Title } from '@mantine/core';
+import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
-import { Spinner } from '../atoms/spinner/spinner';
 
 type Props = {
   isData: boolean;
