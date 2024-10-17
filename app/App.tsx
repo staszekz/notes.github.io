@@ -4,66 +4,47 @@ import '@mantine/dates/styles.css';
 import './index.css';
 
 import { createTheme, MantineProvider } from '@mantine/core';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { ModalsProvider } from '@mantine/modals';
 import { AuthProvider } from './context/auth-context';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { LoadingOverlay } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 
-import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
 import { useAuthContext } from './hooks';
 import { Spinner } from './components/atoms/spinner/spinner';
-
-const queryClient = new QueryClient();
-
-const router = createRouter({
-  routeTree,
-  context: {
-    queryClient,
-    auth: undefined
-  },
-  defaultPreload: 'intent',
-  defaultPreloadStaleTime: 0,
-  defaultPendingComponent: () => {
-    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />;
-  },
-  defaultPreloadDelay: 10
-});
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router;
-  }
-}
+// import { queryClient, router } from './router';
 
 const customTheme = createTheme(theme);
 
-function AppWithRouter() {
-  const auth = useAuthContext();
-  if (auth.loading) {
-    return (
-      <LoadingOverlay
-        overlayProps={{ color: 'var(--dark-bg-color)' }}
-        loaderProps={{ children: <Spinner /> }}
-        visible
-      />
-    );
-  }
-  if (!auth.loading) {
-    return <RouterProvider router={router} context={{ auth }} />;
-  }
-}
+// function AppWithRouter() {
+//   const auth = useAuthContext();
+//   if (auth.loading) {
+//     return (
+//       <LoadingOverlay
+//         overlayProps={{ color: 'var(--dark-bg-color)' }}
+//         loaderProps={{ children: <Spinner /> }}
+//         visible
+//       />
+//     );
+//   }
+//   if (!auth.loading) {
+//     return <RouterProvider router={router} context={{ auth }} />;
+//   }
+// }
 
-export function App() {
+export function App({ children }) {
+  const queryClient = useQueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={customTheme}>
         <Notifications />
         <AuthProvider>
           <ModalsProvider>
-            <AppWithRouter />
+            {children}
+            {/* <AppWithRouter />
+             */}
           </ModalsProvider>
         </AuthProvider>
       </MantineProvider>

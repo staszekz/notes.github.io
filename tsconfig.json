@@ -1,17 +1,18 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "skipLibCheck": true,
     "rootDir": ".",
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ESnext",
     "isolatedModules": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": false,
     "outDir": "dist",
+       "strictNullChecks": true,
     "sourceMap": true,
     "declaration": true,
     "composite": true,
@@ -21,18 +22,18 @@
     "lib": ["esnext", "dom", "dom.iterable"],
     "baseUrl": "./",
     "paths": {
-      "@notes/components": ["src/components/index.ts"],
-      "@notes/utils": ["src/utils/index.ts"],
-      "@notes/types": ["src/types/index.ts"],
-      "@notes/hooks": ["src/hooks/index.ts"],
-      "@notes/context": ["src/context/index.ts"],
-      "@notes/rq": ["src/rq/index.ts"],
-      "@notes/layout": ["src/Layout/index.ts"],
-      "@notes/theme": ["src/Theme"],
-      "@notes/database": ["src/database/index.ts"],
-      "@notes/views": ["src/views/index.ts"]
+      "@notes/components": ["app/components/index.ts"],
+      "@notes/utils": ["app/utils/index.ts"],
+      "@notes/types": ["app/types/index.ts"],
+      "@notes/hooks": ["app/hooks/index.ts"],
+      "@notes/context": ["app/context/index.ts"],
+      "@notes/rq": ["app/rq/index.ts"],
+      "@notes/layout": ["app/Layout/index.ts"],
+      "@notes/theme": ["app/Theme"],
+      "@notes/database": ["app/database/index.ts"],
+      "@notes/views": ["app/views/index.ts"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["app/**/*"],
   "exclude": ["./node_modules/**/*"]
 }

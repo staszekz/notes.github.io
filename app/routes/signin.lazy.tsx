@@ -4,7 +4,7 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { Button, Checkbox, Flex, TextInput, Title, Text } from '@mantine/core';
 import { z } from 'zod';
 import { IconLogin, IconLogin2 } from '@tabler/icons-react';
-import { useAuthContext } from 'src/hooks/use-auth-context';
+import { useAuthContext } from 'app/hooks/use-auth-context';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 import { sleep } from '@notes/utils';
 import { useState } from 'react';

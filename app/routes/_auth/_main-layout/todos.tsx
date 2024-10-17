@@ -4,7 +4,7 @@ import { Box, LoadingOverlay } from '@mantine/core';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTodosQueryOptions } from '@notes/rq';
 import { Suspense } from 'react';
-import { Spinner } from 'src/components/atoms/spinner/spinner';
+import { Spinner } from 'app/components/atoms/spinner/spinner';
 
 export const Route = createFileRoute('/_auth/_main-layout/todos')({
   component: () => (
