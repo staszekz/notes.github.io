@@ -2,7 +2,7 @@ import { Box, Button } from '@mantine/core';
 import classes from './styles.module.css';
 import { Link } from '@tanstack/react-router';
 import { usePrefetchNotesTodos } from '@notes/hooks';
-import { ButtonLink } from 'src/components/atoms';
+import { ButtonLink } from 'app/components/atoms';
 
 export const NavBarButtonWrapper = () => {
   const { prefetchTodos, prefetchNotes } = usePrefetchNotesTodos();

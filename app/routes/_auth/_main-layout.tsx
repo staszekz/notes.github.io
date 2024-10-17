@@ -3,7 +3,7 @@ import { Footer, NavBar } from '@notes/components';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import classes from '../../styles/layout.module.css';
 import { Suspense } from 'react';
-import { Spinner } from 'src/components/atoms/spinner/spinner';
+import { Spinner } from 'app/components/atoms/spinner/spinner';
 
 export const Route = createFileRoute('/_auth/_main-layout')({
   component: () => {

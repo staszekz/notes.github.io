@@ -2,7 +2,7 @@ import { NoteWithId, ControlConfig } from '@notes/types';
 import { getTableControls } from '@notes/utils';
 import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 import { createColumnHelper } from '@tanstack/table-core';
-import { TableControls, openNoteModal, openDeleteModal, openNoteDetailsModal } from 'src/components/molecules';
+import { TableControls, openNoteModal, openDeleteModal, openNoteDetailsModal } from 'app/components/molecules';
 
 const columnHelper = createColumnHelper<NoteWithId>();
 

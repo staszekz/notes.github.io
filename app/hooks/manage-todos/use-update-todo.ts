@@ -1,7 +1,7 @@
 import { editSingleElementFn } from '@notes/rq';
 import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorNotification } from 'src/hooks/notifications/error-notification';
+import { errorNotification } from 'app/hooks/notifications/error-notification';
 
 const key = CollectionType.TODOS
 

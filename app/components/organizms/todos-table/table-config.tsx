@@ -10,7 +10,7 @@ import {
   openNoteDetailsModal,
   openTodoModal,
   openTodoDetailsModal
-} from 'src/components/molecules';
+} from 'app/components/molecules';
 
 const columnHelper = createColumnHelper<TodoWithId>();
 

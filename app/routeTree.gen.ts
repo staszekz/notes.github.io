@@ -209,24 +209,158 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  AuthRoute: AuthRoute.addChildren({
-    AuthMainLayoutRoute: AuthMainLayoutRoute.addChildren({
-      AuthMainLayoutNotesRoute,
-      AuthMainLayoutTodosRoute,
-      AuthMainLayoutIndexRoute,
-    }),
-    AuthProfileLayoutRoute: AuthProfileLayoutRoute.addChildren({
-      AuthProfileLayoutProfileLazyRoute,
-      AuthProfileLayoutSettingsLazyRoute,
-    }),
-  }),
-  LoginRoute,
-  ResetPasswordLazyRoute,
-  SigninLazyRoute,
-  SignupLazyRoute,
-  VerifyEmailLazyRoute,
-})
+interface AuthMainLayoutRouteChildren {
+  AuthMainLayoutNotesRoute: typeof AuthMainLayoutNotesRoute
+  AuthMainLayoutTodosRoute: typeof AuthMainLayoutTodosRoute
+  AuthMainLayoutIndexRoute: typeof AuthMainLayoutIndexRoute
+}
+
+const AuthMainLayoutRouteChildren: AuthMainLayoutRouteChildren = {
+  AuthMainLayoutNotesRoute: AuthMainLayoutNotesRoute,
+  AuthMainLayoutTodosRoute: AuthMainLayoutTodosRoute,
+  AuthMainLayoutIndexRoute: AuthMainLayoutIndexRoute,
+}
+
+const AuthMainLayoutRouteWithChildren = AuthMainLayoutRoute._addFileChildren(
+  AuthMainLayoutRouteChildren,
+)
+
+interface AuthProfileLayoutRouteChildren {
+  AuthProfileLayoutProfileLazyRoute: typeof AuthProfileLayoutProfileLazyRoute
+  AuthProfileLayoutSettingsLazyRoute: typeof AuthProfileLayoutSettingsLazyRoute
+}
+
+const AuthProfileLayoutRouteChildren: AuthProfileLayoutRouteChildren = {
+  AuthProfileLayoutProfileLazyRoute: AuthProfileLayoutProfileLazyRoute,
+  AuthProfileLayoutSettingsLazyRoute: AuthProfileLayoutSettingsLazyRoute,
+}
+
+const AuthProfileLayoutRouteWithChildren =
+  AuthProfileLayoutRoute._addFileChildren(AuthProfileLayoutRouteChildren)
+
+interface AuthRouteChildren {
+  AuthMainLayoutRoute: typeof AuthMainLayoutRouteWithChildren
+  AuthProfileLayoutRoute: typeof AuthProfileLayoutRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthMainLayoutRoute: AuthMainLayoutRouteWithChildren,
+  AuthProfileLayoutRoute: AuthProfileLayoutRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '': typeof AuthProfileLayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthMainLayoutNotesRoute
+  '/todos': typeof AuthMainLayoutTodosRoute
+  '/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRoutesByTo {
+  '': typeof AuthProfileLayoutRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/notes': typeof AuthMainLayoutNotesRoute
+  '/todos': typeof AuthMainLayoutTodosRoute
+  '/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/reset-password': typeof ResetPasswordLazyRoute
+  '/signin': typeof SigninLazyRoute
+  '/signup': typeof SignupLazyRoute
+  '/verify-email': typeof VerifyEmailLazyRoute
+  '/_auth/_main-layout': typeof AuthMainLayoutRouteWithChildren
+  '/_auth/_profile-layout': typeof AuthProfileLayoutRouteWithChildren
+  '/_auth/_main-layout/notes': typeof AuthMainLayoutNotesRoute
+  '/_auth/_main-layout/todos': typeof AuthMainLayoutTodosRoute
+  '/_auth/_profile-layout/profile': typeof AuthProfileLayoutProfileLazyRoute
+  '/_auth/_profile-layout/settings': typeof AuthProfileLayoutSettingsLazyRoute
+  '/_auth/_main-layout/': typeof AuthMainLayoutIndexRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | ''
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/todos'
+    | '/profile'
+    | '/settings'
+    | '/'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | ''
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/notes'
+    | '/todos'
+    | '/profile'
+    | '/settings'
+    | '/'
+  id:
+    | '__root__'
+    | '/_auth'
+    | '/login'
+    | '/reset-password'
+    | '/signin'
+    | '/signup'
+    | '/verify-email'
+    | '/_auth/_main-layout'
+    | '/_auth/_profile-layout'
+    | '/_auth/_main-layout/notes'
+    | '/_auth/_main-layout/todos'
+    | '/_auth/_profile-layout/profile'
+    | '/_auth/_profile-layout/settings'
+    | '/_auth/_main-layout/'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  ResetPasswordLazyRoute: typeof ResetPasswordLazyRoute
+  SigninLazyRoute: typeof SigninLazyRoute
+  SignupLazyRoute: typeof SignupLazyRoute
+  VerifyEmailLazyRoute: typeof VerifyEmailLazyRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  ResetPasswordLazyRoute: ResetPasswordLazyRoute,
+  SigninLazyRoute: SigninLazyRoute,
+  SignupLazyRoute: SignupLazyRoute,
+  VerifyEmailLazyRoute: VerifyEmailLazyRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
