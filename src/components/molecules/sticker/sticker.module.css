@@ -3,8 +3,11 @@
   color:#000;
   background:#ffc;
   display:block;
-  height:10em;
-  width:10em;
-  padding:1em;
+  min-width:10rem;
+  aspect-ratio: 1/1;
+  padding:1rem;
+    transition: transform .15s linear;
    font-family: 'Reenie Beanie';
+     box-shadow: 0 4px 8px rgba(75, 156, 211, 0.5);
+     transform: rotate(-6deg);
 }
