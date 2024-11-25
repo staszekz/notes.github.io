@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { TodosTable, DataDisplay } from '@notes/components';
+import { TodosTable, DataDisplay, TodosStickers } from '@notes/components';
 import { Box, LoadingOverlay } from '@mantine/core';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { getTodosQueryOptions } from '@notes/rq';
@@ -29,7 +29,7 @@ function Todos() {
       isData={Boolean(todos?.length)}
       title="My Private Todos"
       Table={TodosTable}
-      Stickers={() => <Box style={{ color: 'white' }}>strckers</Box>}
+      Stickers={TodosStickers}
       Tiles={() => <Box style={{ color: 'white' }}>Tiles</Box>}
     />
   );
