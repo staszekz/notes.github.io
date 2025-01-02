@@ -1,0 +1,9 @@
+.layout {
+  margin-top: 12vh;
+  background: var(--dark-bg-color);
+  flex: 1
+}
+
+.appContainer {
+  min-height: 100vh;
+}

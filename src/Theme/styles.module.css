@@ -39,6 +39,38 @@
     }
   }
 
+&[data-variant="invisible"]{
+  background-color: transparent;
+  border: none;
+  height: auto;
+  transform: none;
+  &:hover {
+      background-color: transparent;
+        border: none;
+          box-shadow: none;
+  }
+}
+
+  &[data-variant='secondary'] {
+    background-color: var(--secondary);
+    color: var(--white);
+  }
+
+  &[data-variant='danger'] {
+    background-color: var(--red);
+    color: var(--white);
+  }
+
+  &[data-variant='info'] {
+    background-color: var(--info);
+    color: var(--white);
+  }
+
+  &[data-variant='dark'] {
+    background-color: var(--dark);
+    color: var(--white);
+  }
+
   &[data-variant='warning'] {
     background-color: var(--warning);
     color: var(--white);

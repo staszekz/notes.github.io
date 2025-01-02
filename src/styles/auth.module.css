@@ -1,0 +1,26 @@
+.textInput label {
+  color: var(--primary);
+  font-weight: 600;
+}
+.linkWrapper {
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 2rem;
+}
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.loginWrapper {
+  margin: 6rem auto;
+}
+
+@media (orientation: landscape) {
+  .submitButton {
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,29 @@
+.bar {
+  width: 50%;
+  margin-right: 2rem;
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.wrapper {
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  height: 12vh;
+  width: 100%;
+  max-width: 1980px;
+  border-bottom: 2px solid var(--primary);
+  background: var(--dark-bg-color);
+  position: fixed;
+  top: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 2rem;
+  font-size: 2rem;
+  color: var(--primary);
+}

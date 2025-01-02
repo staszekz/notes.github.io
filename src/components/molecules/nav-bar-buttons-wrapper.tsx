@@ -1,20 +1,23 @@
 import { Box, Button } from '@mantine/core';
 import classes from './styles.module.css';
 import { Link } from '@tanstack/react-router';
-import { RoutesDef } from '@notes/utils';
+import { usePrefetchNotesTodos } from '@notes/hooks';
+import { ButtonLink } from 'src/components/atoms';
 
 export const NavBarButtonWrapper = () => {
+  const { prefetchTodos, prefetchNotes } = usePrefetchNotesTodos();
+
   return (
     <Box className={classes.buttonWrapper}>
-      <Button variant="white" size="small" component={Link} to={RoutesDef.HOME}>
+      <ButtonLink variant="white" size="small" to={'/'}>
         home
-      </Button>
-      <Button variant="white" size="small" component={Link} to={RoutesDef.TODOS}>
+      </ButtonLink>
+      <ButtonLink variant="white" size="small" onMouseEnter={prefetchTodos} to={'/todos'}>
         todos
-      </Button>
-      <Button variant="white" size="small" component={Link} to={RoutesDef.NOTES}>
+      </ButtonLink>
+      <ButtonLink variant="white" size="small" onMouseEnter={prefetchNotes} to={'/notes'}>
         notes
-      </Button>
+      </ButtonLink>
     </Box>
   );
 };

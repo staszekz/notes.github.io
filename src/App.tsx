@@ -25,7 +25,11 @@ const router = createRouter({
     auth: undefined
   },
   defaultPreload: 'intent',
-  defaultPreloadStaleTime: 0
+  defaultPreloadStaleTime: 0,
+  defaultPendingComponent: () => {
+    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />;
+  },
+  defaultPreloadDelay: 10
 });
 
 declare module '@tanstack/react-router' {
@@ -38,7 +42,6 @@ const customTheme = createTheme(theme);
 
 function AppWithRouter() {
   const auth = useAuthContext();
-
   if (auth.loading) {
     return (
       <LoadingOverlay
@@ -48,7 +51,9 @@ function AppWithRouter() {
       />
     );
   }
-  return <RouterProvider router={router} context={{ auth }} />;
+  if (!auth.loading) {
+    return <RouterProvider router={router} context={{ auth }} />;
+  }
 }
 
 export function App() {
