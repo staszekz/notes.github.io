@@ -1,11 +1,11 @@
 import { keepPreviousData, queryOptions } from '@tanstack/react-query'
 import { getCollection } from '@notes/rq';
-import { CollectionType, Note, Todo } from '@notes/types';
+import { CollectionType, Note, NoteWithId, Todo, TodoWithId } from '@notes/types';
 
 export function getNotesQueryOptions() {
   return queryOptions({
     queryKey: [CollectionType.NOTES],
-    queryFn: async (): Promise<(Note & { id: string })[]> => await getCollection<Note>({ key: CollectionType.NOTES }),
+    queryFn: async (): Promise<(NoteWithId)[]> => await getCollection<Note>({ key: CollectionType.NOTES }),
     staleTime: 30000,
     placeholderData: keepPreviousData
   })
@@ -15,7 +15,7 @@ export function getNotesQueryOptions() {
 export function getTodosQueryOptions() {
   return queryOptions({
     queryKey: [CollectionType.TODOS],
-    queryFn: async (): Promise<(Todo & { id: string })[]> => await getCollection<Todo>({ key: CollectionType.TODOS }),
+    queryFn: async (): Promise<(TodoWithId )[]> => await getCollection<Todo>({ key: CollectionType.TODOS }),
     staleTime: 30000,
     placeholderData: keepPreviousData
   })

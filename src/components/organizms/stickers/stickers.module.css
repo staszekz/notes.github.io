@@ -1,0 +1,16 @@
+.stickerWrapper {
+  & li:nth-child(even) {
+    transform: rotate(4deg);
+    position: relative;
+    top: 5px;
+    background: #cfc;
+  }
+  & li:nth-child(3n) {
+    transform: rotate(-3deg);
+    position: relative;
+    top: -5px;
+    background: #ccf;
+  }
+
+}
+

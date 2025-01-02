@@ -7,7 +7,7 @@
   justify-content: flex-end;
 }
 .wrapper {
-  z-index: 2;
+  z-index: 99999;
   display: flex;
   justify-content: space-between;
   height: 12vh;

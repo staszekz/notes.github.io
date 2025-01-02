@@ -1,7 +1,26 @@
-import { Box } from '@mantine/core';
-import classes from './styles.module.css';
-
+import { Box, Flex } from '@mantine/core';
+import { AnchorLink } from '../../atoms';
 
 export function Footer() {
-  return <Box className={classes.footerWrapper}>Footer </Box>;
+  return (
+    <Flex
+      wrap="wrap"
+      pos={'sticky'}
+      bg={'var(--dark-bg-color)'}
+      c={'var(--primary)'}
+      p={'1rem'}
+      bottom={0}
+      justify={'space-between'}
+      style={{ borderTop: '2px solid var(--primary)' }}
+    >
+      <Box>made with ❤ by Staszek Zajaczkowski</Box>
+      <Box>
+        visit:{' '}
+        <AnchorLink href="https://www.staszek.ovh" target="_blank" rel="noopener noreferrer">
+          staszek.ovh
+        </AnchorLink>
+      </Box>
+      <Box>&#169; notes&todos {new Date().getFullYear()}</Box>
+    </Flex>
+  );
 }

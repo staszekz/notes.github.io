@@ -1,0 +1,12 @@
+.stickerBox {
+ text-decoration:none;
+  color:#000;
+  background:#ffc;
+  display:block;
+  min-width:10rem;
+  aspect-ratio: 1/1;
+  padding:1rem;
+    font-family: 'Reenie Beanie', serif;
+     box-shadow: 0 4px 8px rgba(75, 156, 211, 0.5);
+     transform: rotate(-6deg);
+}

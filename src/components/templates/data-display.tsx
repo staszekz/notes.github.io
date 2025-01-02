@@ -1,16 +1,15 @@
-import { Suspense, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { AddNewButton, openNoteModal } from '@notes/components';
-import { Box, ComboboxItem, Grid, Select, Title } from '@mantine/core';
+import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
-import { Spinner } from '../atoms/spinner/spinner';
 
 type Props = {
   isData: boolean;
   title: string;
-  Table: () => JSX.Element;
-  Stickers?: React.FC;
-  Tiles?: React.FC;
+  Table: () => ReactNode;
+  Stickers: () => ReactNode;
+  Tiles: () => ReactNode;
 };
 
 export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
@@ -18,7 +17,7 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
 
   const options = [
     formOption<ViewType>(viewTypes.TABLE),
-    formOption<ViewType>(viewTypes.GRID),
+    // formOption<ViewType>(viewTypes.GRID),
     formOption<ViewType>(viewTypes.STICKERS)
   ];
 
@@ -44,7 +43,7 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
       </Grid>
       {viewType.value === viewTypes.TABLE && <Table />}
       {viewType.value === viewTypes.STICKERS && <Stickers />}
-      {viewType.value === viewTypes.GRID && <Tiles />}
+      {/*{viewType.value === viewTypes.GRID && <Tiles />}*/}
 
       {!isData && <Title order={3}>Your list is empty! </Title>}
     </>

@@ -1,16 +1,16 @@
-import { Box, LoadingOverlay } from '@mantine/core';
+import { Box, Flex, LoadingOverlay } from '@mantine/core';
+import { Suspense } from 'react';
 import { Footer, NavBar } from '@notes/components';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 import classes from '../../styles/layout.module.css';
-import { Suspense } from 'react';
 import { Spinner } from 'src/components/atoms/spinner/spinner';
 
 export const Route = createFileRoute('/_auth/_main-layout')({
   component: () => {
     return (
-      <Box className={classes.appContainer}>
+      <Flex direction={'column'} className={classes.appContainer}>
         <NavBar />
-        <Box className={classes.layout} pos={'relative'}>
+        <Box className={classes.layout} component="main">
           <Suspense
             fallback={
               <LoadingOverlay
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_auth/_main-layout')({
           </Suspense>
         </Box>
         <Footer />
-      </Box>
+      </Flex>
     );
   }
 });
