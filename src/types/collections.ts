@@ -4,6 +4,7 @@ export type Note = {
   title: string;
   createdOn: Timestamp;
   content: string;
+  completed?: boolean;
 };
 
 export type NoteWithId = Note & { id: string };
