@@ -8,8 +8,8 @@ type Props = {
   isData: boolean;
   title: string;
   Table: () => ReactNode;
-  Stickers:()=>ReactNode;
-  Tiles:()=>ReactNode;
+  Stickers: () => ReactNode;
+  Tiles: () => ReactNode;
 };
 
 export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
@@ -17,7 +17,7 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
 
   const options = [
     formOption<ViewType>(viewTypes.TABLE),
-    formOption<ViewType>(viewTypes.GRID),
+    // formOption<ViewType>(viewTypes.GRID),
     formOption<ViewType>(viewTypes.STICKERS)
   ];
 
@@ -43,7 +43,7 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
       </Grid>
       {viewType.value === viewTypes.TABLE && <Table />}
       {viewType.value === viewTypes.STICKERS && <Stickers />}
-      {viewType.value === viewTypes.GRID && <Tiles />}
+      {/*{viewType.value === viewTypes.GRID && <Tiles />}*/}
 
       {!isData && <Title order={3}>Your list is empty! </Title>}
     </>
