@@ -3,7 +3,7 @@ import { flexRender, Table as TTable } from '@tanstack/react-table';
 import { Pagination } from '@notes/components';
 import classes from './table.module.css';
 
-export function Table<T>({ table }: { table: TTable<T> }) {
+export function Table<T extends { completed?: boolean }>({ table }: { table: TTable<T> }) {
   return (
     <div className={classes.tableWrapper}>
       <MantineTable stickyHeader striped highlightOnHover>
@@ -25,7 +25,12 @@ export function Table<T>({ table }: { table: TTable<T> }) {
           {table.getRowModel().rows.map(row => (
             <MantineTable.Tr key={row.id}>
               {row.getVisibleCells().map(cell => (
-                <MantineTable.Td fz={'md'} className={classes.tableCell} key={cell.id}>
+                <MantineTable.Td
+                  fz={'md'}
+                  td={row.original.completed ? 'line-through' : undefined}
+                  className={classes.tableCell}
+                  key={cell.id}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </MantineTable.Td>
               ))}

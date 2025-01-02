@@ -11,12 +11,6 @@
     top: -5px;
     background: #ccf;
   }
-  & li:hover,
-  & li:focus {
-    transform: scale(1.20);
-    z-index: 2;
-    top: 0;
-    box-shadow: 2px 4px 8px rgba(75, 156, 211, 0.7);
-  }
 
 }
+

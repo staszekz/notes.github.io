@@ -25,6 +25,8 @@ export const Route = createFileRoute('/_auth/_main-layout/notes')({
 
 function Notes() {
   const { data: notes } = useSuspenseQuery(getNotesQueryOptions());
+
+
   return (
     <DataDisplay
       isData={Boolean(notes?.length)}

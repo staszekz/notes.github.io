@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { AddNewButton, openNoteModal } from '@notes/components';
 import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
@@ -7,9 +7,9 @@ import { formOption } from '@notes/utils';
 type Props = {
   isData: boolean;
   title: string;
-  Table: () => JSX.Element;
-  Stickers?: React.FC;
-  Tiles?: React.FC;
+  Table: () => ReactNode;
+  Stickers:()=>ReactNode;
+  Tiles:()=>ReactNode;
 };
 
 export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {

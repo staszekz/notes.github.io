@@ -6,7 +6,7 @@ export type Note = {
   content: string;
 };
 
-export type NoteWithId = Note & { id: string }
+export type NoteWithId = Note & { id: string };
 
 export type Todo = {
   title: string;
@@ -16,11 +16,10 @@ export type Todo = {
   deadline: Timestamp | null;
 };
 
-export type TodoWithId = Todo & { id: string }
+export type TodoWithId = Todo & { id: string };
 
 export enum CollectionType {
   NOTES = 'notes',
   TODOS = 'todos',
   USERS = 'users'
 }
-
