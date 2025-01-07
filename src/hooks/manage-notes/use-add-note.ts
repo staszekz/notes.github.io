@@ -1,5 +1,5 @@
 import { addElementFn, notesQueries } from '@notes/rq';
-import { CollectionType, Note } from '@notes/types';
+import { CollectionType, Note, NoteWithId } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const queryKey = notesQueries.allNotes().queryKey;
@@ -13,8 +13,8 @@ export const useAddNote = () => {
     onMutate: async ({ element }: { element: Note }) => {
       await queryClient.cancelQueries({ queryKey });
       const previousNotes = queryClient.getQueryData(queryKey);
-      const newNotes = [element, ...previousNotes];
-      queryClient.setQueryData(queryKey, newNotes);
+      const newNotes = [element, ...(previousNotes as NoteWithId[])];
+      queryClient.setQueryData(queryKey, newNotes as NoteWithId[]);
       return () => {
         queryClient.setQueryData(queryKey, previousNotes);
       };

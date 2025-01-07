@@ -14,7 +14,7 @@ export const useUpdateNote = () => {
       await queryClient.cancelQueries({ queryKey });
       const previousNotes = queryClient.getQueryData(queryKey) as NoteWithId[];
       const newNotes = previousNotes.map(note => (note.id === id ? element : note));
-      queryClient.setQueryData(queryKey, newNotes);
+      queryClient.setQueryData(queryKey, newNotes as NoteWithId[]);
       return () => {
         queryClient.setQueryData(queryKey, previousNotes);
       };

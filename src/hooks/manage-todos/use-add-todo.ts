@@ -1,5 +1,5 @@
 import { addElementFn, todosQueries } from '@notes/rq';
-import { CollectionType, Todo } from '@notes/types';
+import { CollectionType, Todo, TodoWithId } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const queryKey = todosQueries.allTodos().queryKey;
@@ -12,11 +12,11 @@ export const useAddTodo = () => {
       addElementFn({ element, key: CollectionType.TODOS }),
     onMutate: async ({ element }: { element: Todo }) => {
       await queryClient.cancelQueries({ queryKey });
-      const previousNotes = queryClient.getQueryData(queryKey);
-      const newNotes = [element, ...previousNotes];
-      queryClient.setQueryData(queryKey, newNotes);
+      const previousTotes = queryClient.getQueryData(queryKey) as Todo[];
+      const newNotes = [element, ...previousTotes];
+      queryClient.setQueryData(queryKey, newNotes as TodoWithId[]);
       return () => {
-        queryClient.setQueryData(queryKey, previousNotes);
+        queryClient.setQueryData(queryKey, previousTotes as TodoWithId[]);
       };
     },
     onError: (error, variables, rollback) => {

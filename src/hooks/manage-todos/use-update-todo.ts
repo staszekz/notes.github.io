@@ -15,7 +15,7 @@ export const useUpdateTodo = () => {
       await queryClient.cancelQueries({ queryKey });
       const previousNotes = queryClient.getQueryData(queryKey) as TodoWithId[];
       const newTodos = previousNotes.map(todo => (todo.id === id ? element : todo));
-      queryClient.setQueryData(queryKey, newTodos);
+      queryClient.setQueryData(queryKey, newTodos as TodoWithId[]);
       return () => {
         queryClient.setQueryData(queryKey, previousNotes);
       };
