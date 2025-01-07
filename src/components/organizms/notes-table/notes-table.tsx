@@ -1,6 +1,6 @@
 import { Table } from '@notes/components';
 import { useRemoveNote } from '@notes/hooks';
-import { getNotesQueryOptions } from '@notes/rq';
+import { notesQueries } from '@notes/rq';
 import { NoteWithId } from '@notes/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useReactTable } from '@tanstack/react-table';
@@ -14,7 +14,7 @@ export const NotesTable = () => {
     pageSize: 10
   });
 
-  const { data: notes } = useSuspenseQuery(getNotesQueryOptions());
+  const { data: notes } = useSuspenseQuery(notesQueries.allNotes());
   const { removeNote } = useRemoveNote();
 
   // TODO: get Table type

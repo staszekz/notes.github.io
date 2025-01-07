@@ -1,8 +1,9 @@
 import { FC, ReactNode, useState } from 'react';
-import { AddNewButton, openNoteModal } from '@notes/components';
+import { AddNewButton, openNoteModal, openTodoModal } from '@notes/components';
 import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
+import { useLocation, useParams } from '@tanstack/react-router';
 
 type Props = {
   isData: boolean;
@@ -12,20 +13,25 @@ type Props = {
   Tiles: () => ReactNode;
 };
 
+const options = [
+  formOption<ViewType>(viewTypes.TABLE),
+  // formOption<ViewType>(viewTypes.GRID),
+  formOption<ViewType>(viewTypes.STICKERS)
+];
+
 export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
   const [viewType, setViewType] = useState<ComboboxItem>(formOption<ViewType>(viewTypes.TABLE));
 
-  const options = [
-    formOption<ViewType>(viewTypes.TABLE),
-    // formOption<ViewType>(viewTypes.GRID),
-    formOption<ViewType>(viewTypes.STICKERS)
-  ];
+  const pathname = useLocation({
+    select: location => location.pathname
+  });
 
+  const isNotes = pathname.includes('notes');
   return (
     <>
       <Grid align="center" justify="space-between" p="xl">
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
-          <AddNewButton openModal={openNoteModal} />
+          <AddNewButton openModal={isNotes ? openNoteModal : openTodoModal} />
         </Grid.Col>
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
           <Title order={2}>{title}</Title>

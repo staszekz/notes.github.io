@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Box, LoadingOverlay } from '@mantine/core';
 
 import { NotesTable, DataDisplay, NotesStickers } from '@notes/components';
-import { getNotesQueryOptions } from '@notes/rq';
+import { notesQueries } from '@notes/rq';
 import { Suspense } from 'react';
 import { Spinner } from 'src/components/atoms/spinner/spinner';
 
@@ -24,8 +24,7 @@ export const Route = createFileRoute('/_auth/_main-layout/notes')({
 });
 
 function Notes() {
-  const { data: notes } = useSuspenseQuery(getNotesQueryOptions());
-
+  const { data: notes } = useSuspenseQuery(notesQueries.allNotes());
 
   return (
     <DataDisplay

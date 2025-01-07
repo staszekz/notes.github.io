@@ -1,6 +1,6 @@
 import { Table } from '@notes/components';
 import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
-import { getTodosQueryOptions } from '@notes/rq';
+import { todosQueries } from '@notes/rq';
 import { TodoWithId } from '@notes/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useReactTable } from '@tanstack/react-table';
@@ -15,7 +15,7 @@ export const TodosTable = () => {
     pageSize: 10
   });
 
-  const { data: todos } = useSuspenseQuery(getTodosQueryOptions());
+  const { data: todos } = useSuspenseQuery(todosQueries.allTodos());
   const { removeTodo } = useRemoveTodo();
   const { updateTodo } = useUpdateTodo();
 

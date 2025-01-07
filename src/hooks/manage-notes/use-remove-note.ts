@@ -1,16 +1,14 @@
-import { deleteSingleElementFn } from '@notes/rq';
+import { deleteSingleElementFn, notesQueries } from '@notes/rq';
 import { CollectionType } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const key = CollectionType.NOTES
-
 export const useRemoveNote = () => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (id: string): Promise<void> => deleteSingleElementFn({ id, key }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [key] })
+    mutationFn: async (id: string): Promise<void> => deleteSingleElementFn({ id, key: CollectionType.NOTES }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: notesQueries.allNotes().queryKey });
     }
   });
 
@@ -19,7 +17,5 @@ export const useRemoveNote = () => {
     removeNote: mutation.mutate,
     isNoteRemoving: mutation.isPending,
     isNoteRemoveError: mutation.isError
-  }
+  };
 };
-
-

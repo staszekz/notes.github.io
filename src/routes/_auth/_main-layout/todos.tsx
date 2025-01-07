@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { TodosTable, DataDisplay, TodosStickers } from '@notes/components';
 import { Box, LoadingOverlay } from '@mantine/core';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getTodosQueryOptions } from '@notes/rq';
+import { todosQueries } from '@notes/rq';
 import { Suspense } from 'react';
 import { Spinner } from 'src/components/atoms/spinner/spinner';
 
@@ -23,7 +23,7 @@ export const Route = createFileRoute('/_auth/_main-layout/todos')({
 });
 
 function Todos() {
-  const { data: todos } = useSuspenseQuery(getTodosQueryOptions());
+  const { data: todos } = useSuspenseQuery(todosQueries.allTodos());
   return (
     <DataDisplay
       isData={Boolean(todos?.length)}
