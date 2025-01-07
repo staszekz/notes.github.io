@@ -1,14 +1,14 @@
-import { getNotesQueryOptions, getTodosQueryOptions } from '@notes/rq';
+import { notesQueries, todosQueries } from '@notes/rq';
 import { useQueryClient } from '@tanstack/react-query';
 
 export function usePrefetchNotesTodos() {
   const queryClient = useQueryClient();
 
-  function prefetchNotes() {
-    queryClient.prefetchQuery(getNotesQueryOptions());
+  async function prefetchNotes() {
+    await queryClient.prefetchQuery(notesQueries.allNotes());
   }
-  function prefetchTodos() {
-    queryClient.prefetchQuery(getTodosQueryOptions());
+  async function prefetchTodos() {
+    await queryClient.prefetchQuery(todosQueries.allTodos());
   }
   return {
     prefetchNotes,

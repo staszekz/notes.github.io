@@ -2,6 +2,7 @@ import { Title, Text, Button, Flex, Divider } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
 import { NoteWithId, TodoWithId } from '@notes/types';
+import { MutateOptions } from '@tanstack/react-query';
 
 export function openNoteModal(data?: NoteWithId) {
   return modals.open({
@@ -10,6 +11,7 @@ export function openNoteModal(data?: NoteWithId) {
     children: <NoteManagementForm data={data} />
   });
 }
+
 // TODO: dodać jakis SnackBAr z info co się dzije i można to z mutacji wziac. Globalny state context lub useQUery ?
 // onSuccess: (newUser) => {
 //     alert(`name updated to ${newUser.name}`)
@@ -40,7 +42,14 @@ export function openTodoModal(data?: TodoWithId) {
   });
 }
 
-export const openDeleteModal = (id: string, deleteFn) => {
+export const openDeleteModal = (
+  id: string,
+  deleteFn: {
+    (variables: string, options?: MutateOptions<void, Error, string, unknown> | undefined): void;
+    (variables: string, options?: MutateOptions<void, Error, string, unknown> | undefined): void;
+    (arg0: string): void;
+  }
+) => {
   return modals.openConfirmModal({
     title: 'Delete note',
     centered: true,

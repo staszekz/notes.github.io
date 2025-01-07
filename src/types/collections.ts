@@ -10,6 +10,7 @@ export type Note = {
 export type NoteWithId = Note & { id: string };
 
 export type Todo = {
+  id?: string;
   title: string;
   createdOn: Timestamp;
   content: string;
