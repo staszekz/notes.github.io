@@ -21,7 +21,7 @@ export const useUpdateTodo = () => {
       };
     },
     onError: (error, variables, rollback) => {
-      errorNotification();
+      errorNotification({ message: error?.message });
       rollback?.();
     },
     onSettled: async () => {

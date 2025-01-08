@@ -4,9 +4,9 @@ import '@mantine/dates/styles.css';
 import './index.css';
 
 import { createTheme, MantineProvider } from '@mantine/core';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ModalsProvider } from '@mantine/modals';
-import { AuthProvider } from './context/auth-context';
+import { AuthProvider } from '@notes/context';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { LoadingOverlay } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
@@ -15,8 +15,25 @@ import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
 import { useAuthContext } from './hooks';
 import { Spinner } from './components/atoms/spinner/spinner';
+import { errorNotification } from './hooks/notifications/error-notification';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // throwOnError: (error, query) => {
+      //   return typeof query.state.data === 'undefined';
+      // }
+      throwOnError: true
+    }
+  },
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (typeof query.state.data !== 'undefined') {
+        errorNotification({ message: error?.message });
+      }
+    }
+  })
+});
 
 const router = createRouter({
   routeTree,
@@ -26,10 +43,11 @@ const router = createRouter({
   },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
-  defaultPendingComponent: () => {
-    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />;
-  },
-  defaultPreloadDelay: 10
+  defaultPendingComponent: () => (
+    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />
+  ),
+  defaultPreloadDelay: 10,
+  defaultErrorComponent: () => <div>Error occurred</div> // TODO: custom error component fix with Error Boundary
 });
 
 declare module '@tanstack/react-router' {
