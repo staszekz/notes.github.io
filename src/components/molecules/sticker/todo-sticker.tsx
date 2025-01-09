@@ -1,11 +1,11 @@
 import { ActionIcon, Card, Group, Menu, rem, Text } from '@mantine/core';
 import classes from './sticker.module.css';
-import { TodoWithId } from '@notes/types';
-import { IconDots, IconEdit, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { Todo } from '@notes/types';
+import { IconDots, IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
 import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
 import { openDeleteModal, openTodoModal } from '../modals';
 
-export function TodoSticker({ data }: { data: TodoWithId }) {
+export function TodoSticker({ data }: { data: Todo }) {
   const { removeTodo } = useRemoveTodo();
   const { updateTodo } = useUpdateTodo();
   const completed = data.completed ? 'line-through' : undefined;

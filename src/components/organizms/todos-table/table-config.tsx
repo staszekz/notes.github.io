@@ -1,18 +1,11 @@
 import { Checkbox, Flex } from '@mantine/core';
-import { TodoWithId, ControlConfig } from '@notes/types';
+import { Todo, ControlConfig } from '@notes/types';
 import { getTableControls } from '@notes/utils';
 import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 import { createColumnHelper } from '@tanstack/table-core';
-import {
-  TableControls,
-  openNoteModal,
-  openDeleteModal,
-  openNoteDetailsModal,
-  openTodoModal,
-  openTodoDetailsModal
-} from 'src/components/molecules';
+import { TableControls, openDeleteModal, openTodoModal, openTodoDetailsModal } from 'src/components/molecules';
 
-const columnHelper = createColumnHelper<TodoWithId>();
+const columnHelper = createColumnHelper<Todo>();
 
 // dodać tez last modified on
 export const columns = ({ updateTodo, removeTodo }) => [
@@ -66,7 +59,7 @@ export const columns = ({ updateTodo, removeTodo }) => [
   })
 ];
 
-const controlsConfig = ({ removeTodo }): ControlConfig<TodoWithId> => ({
+const controlsConfig = ({ removeTodo }): ControlConfig<Todo> => ({
   Edit: {
     onClick: openTodoModal,
     icon: <IconEdit />,

@@ -3,7 +3,7 @@ import { flexRender, Table as TTable } from '@tanstack/react-table';
 import { Pagination } from '@notes/components';
 import classes from './table.module.css';
 
-export function Table<T extends { completed?: boolean }>({ table }: { table: TTable<T> }) {
+export function Table<T>({ table }: { table: TTable<T> }) {
   return (
     <div className={classes.tableWrapper}>
       <MantineTable stickyHeader striped highlightOnHover>
@@ -27,7 +27,7 @@ export function Table<T extends { completed?: boolean }>({ table }: { table: TTa
               {row.getVisibleCells().map(cell => (
                 <MantineTable.Td
                   fz={'md'}
-                  td={row.original.completed ? 'line-through' : undefined}
+                  td={hasCompletedProperty(row.original) && row.original.completed ? 'line-through' : undefined}
                   className={classes.tableCell}
                   key={cell.id}
                 >
@@ -41,4 +41,8 @@ export function Table<T extends { completed?: boolean }>({ table }: { table: TTa
       <Pagination table={table} />
     </div>
   );
+}
+// todos have completed property and notes do not have it
+function hasCompletedProperty<T>(row: T): row is T & { completed: boolean } {
+  return (row as any).completed !== undefined;
 }

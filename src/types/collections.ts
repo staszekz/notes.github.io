@@ -1,23 +1,24 @@
 import { Timestamp } from 'firebase/firestore';
+import z from 'zod';
 
-export type Note = {
-  title: string;
-  createdOn: Timestamp;
-  content: string;
-  completed?: boolean;
-};
+export const noteSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  createdOn: z.instanceof(Timestamp),
+  content: z.string()
+});
 
-export type NoteWithId = Note & { id: string };
+export const todoSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  createdOn: z.instanceof(Timestamp),
+  content: z.string(),
+  completed: z.boolean(),
+  deadline: z.instanceof(Timestamp).nullable()
+});
 
-export type Todo = {
-  title: string;
-  createdOn: Timestamp;
-  content: string;
-  completed: boolean;
-  deadline: Timestamp | null;
-};
-
-export type TodoWithId = Todo & { id: string };
+export type Note = z.infer<typeof noteSchema>;
+export type Todo = z.infer<typeof todoSchema>;
 
 export enum CollectionType {
   NOTES = 'notes',

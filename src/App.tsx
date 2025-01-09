@@ -20,10 +20,10 @@ import { errorNotification } from './hooks/notifications/error-notification';
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // throwOnError: (error, query) => {
-      //   return typeof query.state.data === 'undefined';
-      // }
-      throwOnError: true
+      throwOnError: (error, query) => {
+        // only throw error if query has no data, prevents background data sync errors
+        return typeof query.state.data === 'undefined';
+      }
     }
   },
   queryCache: new QueryCache({
@@ -91,8 +91,6 @@ export function App() {
 
 // zrobic panel użytkownika z usuwaniem, zmiana Nazwy,
 // => czy panel powinien być tylko online z firebase,
-// czy poprzez useQuery i mutacje?
-//  zmiana hasła, zmiana emaila etc
 
 // dorobić baner co jest dziś do zrobienia
 // dorobić info które zadania się zbliżają dozrobienia

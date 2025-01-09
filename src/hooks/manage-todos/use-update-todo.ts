@@ -1,5 +1,5 @@
 import { editSingleElementFn, todosQueries } from '@notes/rq';
-import { CollectionType, Todo, TodoWithId } from '@notes/types';
+import { CollectionType, Todo } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { errorNotification } from 'src/hooks/notifications/error-notification';
 
@@ -13,11 +13,18 @@ export const useUpdateTodo = () => {
       editSingleElementFn({ element, key: CollectionType.TODOS, id }),
     onMutate: async ({ element, id }) => {
       await queryClient.cancelQueries({ queryKey });
-      const previousNotes = queryClient.getQueryData(queryKey) as TodoWithId[];
-      const newTodos = previousNotes.map(todo => (todo.id === id ? element : todo));
-      queryClient.setQueryData(queryKey, newTodos as TodoWithId[]);
+      const previousTodos = queryClient.getQueryData(queryKey);
+      if (!previousTodos) return;
+
+      const index = previousTodos.findIndex(todo => todo.id === id);
+      if (index === -1) return;
+
+      const newTodos = [...previousTodos];
+      newTodos[index] = element;
+
+      queryClient.setQueryData(queryKey, newTodos);
       return () => {
-        queryClient.setQueryData(queryKey, previousNotes);
+        queryClient.setQueryData(queryKey, previousTodos);
       };
     },
     onError: (error, variables, rollback) => {

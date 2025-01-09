@@ -5,17 +5,17 @@ import { useAddTodo, useUpdateTodo } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
-import { TodoWithId } from '@notes/types';
+import { Todo } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
 import { removeId } from '@notes/utils';
 
-export const TodoManagementForm = ({ data }: { data?: TodoWithId }) => {
+export const TodoManagementForm = ({ data }: { data?: Todo }) => {
   const { addTodo, isTodoAdding } = useAddTodo();
   const { updateTodo, isTodoUpdating } = useUpdateTodo();
 
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
-      ? removeId<TodoWithId>(data)
+      ? removeId<Todo>(data)
       : {
           title: '',
           content: '',

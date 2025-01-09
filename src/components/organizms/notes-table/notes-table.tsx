@@ -1,7 +1,7 @@
 import { Table } from '@notes/components';
 import { useRemoveNote } from '@notes/hooks';
 import { notesQueries } from '@notes/rq';
-import { NoteWithId } from '@notes/types';
+import { Note } from '@notes/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useReactTable } from '@tanstack/react-table';
 import { PaginationState, getCoreRowModel, getPaginationRowModel } from '@tanstack/table-core';
@@ -29,5 +29,5 @@ export const NotesTable = () => {
     getPaginationRowModel: getPaginationRowModel()
   });
 
-  return <Table<NoteWithId> table={table} />;
+  return <Table<Note> table={table} />;
 };

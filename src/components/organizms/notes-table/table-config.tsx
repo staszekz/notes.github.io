@@ -1,10 +1,10 @@
-import { NoteWithId, ControlConfig } from '@notes/types';
+import { Note, ControlConfig } from '@notes/types';
 import { getTableControls } from '@notes/utils';
 import { IconEdit, IconTrash, IconBubbleText } from '@tabler/icons-react';
 import { createColumnHelper } from '@tanstack/table-core';
 import { TableControls, openNoteModal, openDeleteModal, openNoteDetailsModal } from 'src/components/molecules';
 
-const columnHelper = createColumnHelper<NoteWithId>();
+const columnHelper = createColumnHelper<Note>();
 
 export const columns = ({ removeNote }) => [
   columnHelper.display({
@@ -31,7 +31,7 @@ export const columns = ({ removeNote }) => [
   })
 ];
 
-const controlsConfig = ({ removeNote }): ControlConfig<NoteWithId> => ({
+const controlsConfig = ({ removeNote }): ControlConfig<Note> => ({
   Edit: {
     onClick: openNoteModal,
     icon: <IconEdit />,
