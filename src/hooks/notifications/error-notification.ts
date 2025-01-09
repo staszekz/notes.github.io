@@ -2,7 +2,7 @@ import { notifications } from '@mantine/notifications';
 
 export const errorNotification = ({ message }: { message: string }) => {
   notifications.show({
-    title: 'An error occured',
+    title: 'An error occurred',
     message:
       message || 'There has been an error while updating the todo, please try again later or contact the administrator',
     color: 'red',

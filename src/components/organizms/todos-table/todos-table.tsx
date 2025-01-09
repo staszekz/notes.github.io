@@ -1,7 +1,7 @@
 import { Table } from '@notes/components';
 import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
 import { todosQueries } from '@notes/rq';
-import { TodoWithId } from '@notes/types';
+import { Todo } from '@notes/types';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useReactTable } from '@tanstack/react-table';
 import { PaginationState, getCoreRowModel, getPaginationRowModel } from '@tanstack/table-core';
@@ -31,5 +31,5 @@ export const TodosTable = () => {
     getPaginationRowModel: getPaginationRowModel()
   });
 
-  return <Table<TodoWithId> table={table} />;
+  return <Table<Todo> table={table} />;
 };

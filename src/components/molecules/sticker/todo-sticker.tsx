@@ -1,14 +1,15 @@
 import { ActionIcon, Card, Group, Menu, rem, Text } from '@mantine/core';
 import classes from './sticker.module.css';
-import { TodoWithId } from '@notes/types';
-import { IconDots, IconEdit, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { Todo } from '@notes/types';
+import { IconDots, IconEdit, IconEye, IconTrash } from '@tabler/icons-react';
 import { useRemoveTodo, useUpdateTodo } from '@notes/hooks';
 import { openDeleteModal, openTodoModal } from '../modals';
 
-export function TodoSticker({ data }: { data: TodoWithId }) {
+export function TodoSticker({ data }: { data: Todo }) {
   const { removeTodo } = useRemoveTodo();
   const { updateTodo } = useUpdateTodo();
   const completed = data.completed ? 'line-through' : undefined;
+
   return (
     <Card component="li" withBorder shadow="sm" className={classes.stickerBox} pos={'relative'}>
       <Card.Section withBorder inheritPadding py="xs">
@@ -35,8 +36,7 @@ export function TodoSticker({ data }: { data: TodoWithId }) {
                 leftSection={<IconEye style={{ width: rem(14), height: rem(14) }} />}
                 onClick={() => {
                   updateTodo({
-                    element: { ...data, completed: !data.completed },
-                    id: data.id
+                    element: { ...data, completed: !data.completed }
                   });
                 }}
               >

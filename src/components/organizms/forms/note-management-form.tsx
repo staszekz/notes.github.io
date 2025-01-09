@@ -5,17 +5,16 @@ import { zodValidator } from '@tanstack/zod-form-adapter';
 import { useAddNote, useUpdateNote } from '@notes/hooks';
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { NoteWithId } from '@notes/types';
+import { Note } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
-import { removeId } from '@notes/utils';
 
-export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
+export const NoteManagementForm = ({ data }: { data?: Note }) => {
   const { addNote, isNoteAdding } = useAddNote();
   const { updateNote, isNoteUpdating } = useUpdateNote();
 
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
-      ? removeId<NoteWithId>(data)
+      ? data
       : {
           title: '',
           content: '',
@@ -23,7 +22,7 @@ export const NoteManagementForm = ({ data }: { data?: NoteWithId }) => {
         },
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
-      data ? updateNote({ element: value, id: data.id }) : addNote({ element: value });
+      data ? updateNote({ element: value as Note }) : addNote({ element: value as Omit<Note, 'id>'> });
       modals.closeAll();
     }
   });

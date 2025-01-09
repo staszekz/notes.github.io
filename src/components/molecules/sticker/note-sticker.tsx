@@ -1,17 +1,16 @@
-import { ActionIcon, Box, Card, Group, Menu, rem, Text } from '@mantine/core';
+import { ActionIcon, Card, Group, Menu, rem, Text } from '@mantine/core';
 import classes from './sticker.module.css';
-import { NoteWithId } from '@notes/types';
-import { IconDots, IconEdit, IconEye, IconFileZip, IconTrash } from '@tabler/icons-react';
+import { Note } from '@notes/types';
+import { IconDots, IconEdit, IconTrash } from '@tabler/icons-react';
 import { useRemoveNote } from '@notes/hooks';
 import { openDeleteModal, openNoteModal } from '../modals';
 
-export function NoteSticker({ data }: { data: NoteWithId }) {
+export function NoteSticker({ data }: { data: Note }) {
   const { removeNote } = useRemoveNote();
 
   return (
     <Card component="li" withBorder shadow="sm" className={classes.stickerBox}>
       <Card.Section withBorder inheritPadding py="xs">
-
         <Group justify="space-between">
           <Text fw={500}> {data.title}</Text>
           <Menu withinPortal position="bottom-end" shadow="sm">
@@ -22,8 +21,11 @@ export function NoteSticker({ data }: { data: NoteWithId }) {
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<IconEdit style={{ width: rem(14), height: rem(14)}}/>  } onClick={()=> openNoteModal(data)} >
-               Edit
+              <Menu.Item
+                leftSection={<IconEdit style={{ width: rem(14), height: rem(14) }} />}
+                onClick={() => openNoteModal(data)}
+              >
+                Edit
               </Menu.Item>
               <Menu.Item
                 leftSection={<IconTrash style={{ width: rem(14), height: rem(14) }} />}
@@ -35,9 +37,8 @@ export function NoteSticker({ data }: { data: NoteWithId }) {
             </Menu.Dropdown>
           </Menu>
         </Group>
-        </Card.Section>
+      </Card.Section>
       <Text>{data.content}</Text>
     </Card>
   );
 }
-

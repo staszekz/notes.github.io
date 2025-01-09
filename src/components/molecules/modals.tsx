@@ -1,10 +1,10 @@
 import { Title, Text, Button, Flex, Divider } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { NoteManagementForm, TodoManagementForm } from '@notes/components';
-import { NoteWithId, TodoWithId } from '@notes/types';
+import { Note, Todo } from '@notes/types';
 import { MutateOptions } from '@tanstack/react-query';
 
-export function openNoteModal(data?: NoteWithId) {
+export function openNoteModal(data?: Note) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
@@ -34,7 +34,7 @@ export function openNoteModal(data?: NoteWithId) {
 //     }
 //   })
 // }
-export function openTodoModal(data?: TodoWithId) {
+export function openTodoModal(data?: Todo) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
@@ -64,7 +64,7 @@ export const openDeleteModal = (
   });
 };
 
-export function openTodoDetailsModal(data?: TodoWithId) {
+export function openTodoDetailsModal(data?: Todo) {
   modals.open({
     title: (
       <Text fw={700} size="lg">
@@ -88,7 +88,7 @@ export function openTodoDetailsModal(data?: TodoWithId) {
   });
 }
 
-export function openNoteDetailsModal(data?: NoteWithId) {
+export function openNoteDetailsModal(data?: Note) {
   modals.open({
     title: (
       <Text fw={700} size="lg">
