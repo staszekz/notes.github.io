@@ -43,8 +43,7 @@ export const columns = ({ updateTodo, removeTodo }) => [
             variant="outline"
             onChange={e => {
               updateTodo({
-                element: { ...props.row.original, completed: e.target.checked },
-                id: props.row.original.id
+                element: { ...props.row.original, completed: e.target.checked }
               });
             }}
             checked={props.cell.getValue()}
