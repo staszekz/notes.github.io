@@ -9,14 +9,14 @@ export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ element, id }: { element: Todo; id: string }): Promise<void> =>
-      editSingleElementFn({ element, key: CollectionType.TODOS, id }),
-    onMutate: async ({ element, id }) => {
+    mutationFn: async ({ element }: { element: Todo }) =>
+      editSingleElementFn({ element, key: CollectionType.TODOS, id: element.id }),
+    onMutate: async ({ element }) => {
       await queryClient.cancelQueries({ queryKey });
       const previousTodos = queryClient.getQueryData(queryKey);
       if (!previousTodos) return;
 
-      const index = previousTodos.findIndex(todo => todo.id === id);
+      const index = previousTodos.findIndex(todo => todo.id === element.id);
       if (index === -1) return;
 
       const newTodos = [...previousTodos];

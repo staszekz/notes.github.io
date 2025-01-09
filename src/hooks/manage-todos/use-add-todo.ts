@@ -9,9 +9,9 @@ export const useAddTodo = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ element }: { element: Todo }): Promise<void> =>
+    mutationFn: async ({ element }: { element: Omit<Todo, 'id>'> }) =>
       addElementFn({ element, key: CollectionType.TODOS }),
-    onMutate: async ({ element }: { element: Todo }) => {
+    onMutate: async ({ element }: { element: Omit<Todo, 'id>'> }) => {
       await queryClient.cancelQueries({ queryKey });
       const previousTotes = queryClient.getQueryData(queryKey);
       if (!previousTotes) return;

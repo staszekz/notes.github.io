@@ -9,9 +9,9 @@ export const useAddNote = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async ({ element }: { element: Note }): Promise<void> =>
+    mutationFn: async ({ element }: { element: Omit<Note, 'id>'> }) =>
       addElementFn({ element, key: CollectionType.NOTES }),
-    onMutate: async ({ element }: { element: Note }) => {
+    onMutate: async ({ element }: { element: Omit<Note, 'id>'> }) => {
       await queryClient.cancelQueries({ queryKey });
       const previousNotes = queryClient.getQueryData(queryKey);
       if (!previousNotes) return;

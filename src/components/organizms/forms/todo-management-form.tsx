@@ -7,7 +7,6 @@ import { DateTimePicker } from '@mantine/dates';
 import { modals } from '@mantine/modals';
 import { Todo } from '@notes/types';
 import { Timestamp } from 'firebase/firestore';
-import { removeId } from '@notes/utils';
 
 export const TodoManagementForm = ({ data }: { data?: Todo }) => {
   const { addTodo, isTodoAdding } = useAddTodo();
@@ -15,7 +14,7 @@ export const TodoManagementForm = ({ data }: { data?: Todo }) => {
 
   const { Field, Subscribe, handleSubmit } = useForm({
     defaultValues: data
-      ? removeId<Todo>(data)
+      ? data
       : {
           title: '',
           content: '',
@@ -25,7 +24,7 @@ export const TodoManagementForm = ({ data }: { data?: Todo }) => {
         },
     validatorAdapter: zodValidator(),
     onSubmit: async ({ value }) => {
-      data ? updateTodo({ element: value, id: data.id }) : addTodo({ element: value });
+      data ? updateTodo({ element: value as Todo }) : addTodo({ element: value as Omit<Todo, 'id>'> });
       modals.closeAll();
     }
   });
