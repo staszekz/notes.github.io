@@ -43,9 +43,9 @@ const router = createRouter({
   },
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 0,
-  defaultPendingComponent: () => (
-    <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />
-  ),
+  // defaultPendingComponent: () => (
+  //   <LoadingOverlay overlayProps={{ color: 'var(--dark-bg-color)' }} loaderProps={{ children: <Spinner /> }} visible />
+  // ),
   defaultPreloadDelay: 10,
   defaultErrorComponent: () => <div>Error occurred</div> // TODO: custom error component fix with Error Boundary
 });

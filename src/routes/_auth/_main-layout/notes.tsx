@@ -1,31 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Box, LoadingOverlay } from '@mantine/core';
+import { Box } from '@mantine/core';
 
 import { NotesTable, DataDisplay, NotesStickers } from '@notes/components';
 import { notesQueries } from '@notes/rq';
-import { Suspense } from 'react';
-import { Spinner } from 'src/components/atoms/spinner/spinner';
 
 export const Route = createFileRoute('/_auth/_main-layout/notes')({
-  component: () => (
-    <Suspense
-      fallback={
-        <LoadingOverlay
-          overlayProps={{ color: 'var(--dark-bg-color)' }}
-          loaderProps={{ children: <Spinner /> }}
-          visible
-        />
-      }
-    >
-      <Notes />
-    </Suspense>
-  )
+  component: () => <Notes />
 });
 
 function Notes() {
-  const { data: notes } = useSuspenseQuery(notesQueries.allNotes());
+  const res = useSuspenseQuery(notesQueries.allNotes());
 
+  const notes = res.data;
   return (
     <DataDisplay
       isData={Boolean(notes?.length)}

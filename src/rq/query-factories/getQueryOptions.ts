@@ -11,7 +11,8 @@ export const notesQueries = {
         return noteSchema.array().parse(data);
       },
       staleTime: 30000,
-      placeholderData: keepPreviousData
+      placeholderData: keepPreviousData,
+      networkMode: 'offlineFirst'
     })
 };
 
@@ -24,6 +25,7 @@ export const todosQueries = {
         return todoSchema.array().parse(data);
       },
       staleTime: 30000,
-      placeholderData: keepPreviousData
+      placeholderData: keepPreviousData,
+      networkMode: 'offlineFirst'
     })
 };
