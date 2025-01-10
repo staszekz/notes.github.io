@@ -1,25 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { TodosTable, DataDisplay, TodosStickers } from '@notes/components';
-import { Box, LoadingOverlay } from '@mantine/core';
+import { Box } from '@mantine/core';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { todosQueries } from '@notes/rq';
-import { Suspense } from 'react';
-import { Spinner } from 'src/components/atoms/spinner/spinner';
 
 export const Route = createFileRoute('/_auth/_main-layout/todos')({
-  component: () => (
-    <Suspense
-      fallback={
-        <LoadingOverlay
-          overlayProps={{ color: 'var(--dark-bg-color)' }}
-          loaderProps={{ children: <Spinner /> }}
-          visible
-        />
-      }
-    >
-      <Todos />
-    </Suspense>
-  )
+  component: () => <Todos />
 });
 
 function Todos() {

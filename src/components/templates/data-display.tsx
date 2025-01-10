@@ -1,9 +1,10 @@
-import { FC, ReactNode, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { AddNewButton, openNoteModal, openTodoModal } from '@notes/components';
-import { ComboboxItem, Grid, Select, Title } from '@mantine/core';
+import { ComboboxItem, Grid, Select, Title, Text, Flex } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
-import { useLocation, useParams } from '@tanstack/react-router';
+import { useLocation } from '@tanstack/react-router';
+import { useNetwork } from '@mantine/hooks';
 
 type Props = {
   isData: boolean;
@@ -19,13 +20,12 @@ const options = [
   formOption<ViewType>(viewTypes.STICKERS)
 ];
 
-export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
+export function DataDisplay({ isData, title, Table, Stickers }: Props) {
   const [viewType, setViewType] = useState<ComboboxItem>(formOption<ViewType>(viewTypes.TABLE));
-
+  const { online } = useNetwork();
   const pathname = useLocation({
     select: location => location.pathname
   });
-
   const isNotes = pathname.includes('notes');
   return (
     <>
@@ -34,7 +34,21 @@ export function DataDisplay({ isData, title, Table, Stickers, Tiles }: Props) {
           <AddNewButton openModal={isNotes ? openNoteModal : openTodoModal} />
         </Grid.Col>
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
-          <Title order={2}>{title}</Title>
+          <Flex direction={'column'} align={'center'}>
+            <Title order={2}>{title}</Title>
+
+            <Text
+              size="lg"
+              c={'var(--red)'}
+              fs={'italic'}
+              ff={'auto'}
+              style={{ visibility: online ? 'hidden' : 'visible' }}
+            >
+              <Flex direction={'row'} align={'center'}>
+                you are offline{' '}
+              </Flex>
+            </Text>
+          </Flex>
         </Grid.Col>
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
           <Select
