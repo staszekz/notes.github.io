@@ -1,4 +1,14 @@
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc, orderBy, query } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  orderBy,
+  query,
+  getCountFromServer
+} from 'firebase/firestore';
 import { database, auth } from '@notes/database';
 import { CollectionType } from '@notes/types';
 
@@ -8,6 +18,13 @@ export async function getCollection<T>({ key }: { key: CollectionType }): Promis
   const q = query(collection(database, 'users', uid, key), orderBy('createdOn', 'desc'));
   const res = await getDocs(q);
   return res.docs.map(doc => ({ ...(doc.data() as T), id: doc.id }));
+}
+
+export async function getCollectionCount({ key }: { key: CollectionType }) {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('User not authenticated');
+  const q = query(collection(database, 'users', uid, key));
+  return await getCountFromServer(q);
 }
 
 export async function addElementFn<T extends { [x: string]: any }>({
