@@ -1,10 +1,11 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { AddNewButton, openNoteModal, openTodoModal } from '@notes/components';
-import { ComboboxItem, Grid, Select, Title, Text, Flex } from '@mantine/core';
+import { Grid, Select, Title, Text, Flex } from '@mantine/core';
 import { ViewType, viewTypes } from '@notes/types';
 import { formOption } from '@notes/utils';
 import { useLocation } from '@tanstack/react-router';
 import { useNetwork } from '@mantine/hooks';
+import { useDisplayViewContext } from '../../hooks/contexts-hooks/use-display-view-context';
 
 type Props = {
   isData: boolean;
@@ -21,7 +22,8 @@ const options = [
 ];
 
 export function DataDisplay({ isData, title, Table, Stickers }: Props) {
-  const [viewType, setViewType] = useState<ComboboxItem>(formOption<ViewType>(viewTypes.TABLE));
+  const { view, setView } = useDisplayViewContext();
+
   const { online } = useNetwork();
   const pathname = useLocation({
     select: location => location.pathname
@@ -55,14 +57,15 @@ export function DataDisplay({ isData, title, Table, Stickers }: Props) {
             c={'var(--primary)'}
             label="Change display view:"
             data={options}
-            value={viewType.value}
+            value={view}
             allowDeselect={false}
-            onChange={(_value, option) => setViewType(option)}
+            // because Mantine Select only accepts string as value we need to cast it to ViewType
+            onChange={_value => setView(_value as ViewType)}
           />
         </Grid.Col>
       </Grid>
-      {viewType.value === viewTypes.TABLE && <Table />}
-      {viewType.value === viewTypes.STICKERS && <Stickers />}
+      {view === viewTypes.TABLE && <Table />}
+      {view === viewTypes.STICKERS && <Stickers />}
       {/*{viewType.value === viewTypes.GRID && <Tiles />}*/}
 
       {!isData && <Title order={3}>Your list is empty! </Title>}

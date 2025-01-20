@@ -1,5 +1,6 @@
+import React, { Dispatch } from 'react';
 import { User, UserCredential } from 'firebase/auth';
-import React from 'react';
+import { ViewType } from './views';
 
 export type TContextAuth = {
   user: User | null;
@@ -8,4 +9,8 @@ export type TContextAuth = {
   setRememberMe: React.Dispatch<React.SetStateAction<boolean>>;
   loading: boolean;
   resetPassword: (email: string) => void;
+};
+export type TContextDisplayView = {
+  view: ViewType;
+  setView: Dispatch<React.SetStateAction<ViewType>>;
 };

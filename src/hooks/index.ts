@@ -1,4 +1,4 @@
-export * from './auth/use-auth-context';
+export * from './contexts-hooks/use-auth-context';
 export * from './auth/use-auth';
 export * from './auth/use-user';
 export * from './manage-notes/use-add-note';
