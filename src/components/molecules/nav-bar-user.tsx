@@ -1,12 +1,13 @@
 import { Avatar, Group, Menu, Title, Text, Anchor, Button, Flex } from '@mantine/core';
 import { Link } from '@tanstack/react-router';
 import { IconLogout } from '@tabler/icons-react';
-import { useAuthContext } from '@notes/hooks';
+import { useUser } from '@notes/hooks';
 import { IconWifiOff } from '@tabler/icons-react';
 import { useNetwork } from '@mantine/hooks';
 
 export const NavBarUser = () => {
-  const { user, signUserOut } = useAuthContext();
+  const { user, signUserOut } = useUser();
+
   const handleSignOutClick = async () => {
     await signUserOut();
   };

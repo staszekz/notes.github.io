@@ -1,5 +1,5 @@
 import { keepPreviousData, queryOptions } from '@tanstack/react-query';
-import { getCollection } from '@notes/rq';
+import { getCollection, getCollectionCount } from '@notes/rq';
 import { CollectionType, Note, noteSchema, Todo, todoSchema } from '@notes/types';
 
 export const notesQueries = {
@@ -13,6 +13,14 @@ export const notesQueries = {
       staleTime: 30000,
       placeholderData: keepPreviousData,
       networkMode: 'offlineFirst'
+    }),
+  notesCount: () =>
+    queryOptions({
+      queryKey: [CollectionType.NOTES, 'count'],
+      queryFn: async () => {
+        return getCollectionCount({ key: CollectionType.NOTES });
+      },
+      staleTime: 30000
     })
 };
 
@@ -27,5 +35,15 @@ export const todosQueries = {
       staleTime: 30000,
       placeholderData: keepPreviousData,
       networkMode: 'offlineFirst'
+    }),
+  todosCount: () =>
+    queryOptions({
+      queryKey: [CollectionType.NOTES, 'count'],
+      queryFn: async () => {
+        const snapshot = await getCollectionCount({ key: CollectionType.TODOS });
+        return snapshot.data();
+      },
+      select: data => data.count,
+      staleTime: 30000
     })
 };
