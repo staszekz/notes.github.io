@@ -1,7 +1,7 @@
 import { DonutChart } from '@mantine/charts';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import { useCounts } from '../../../hooks/counts/use-counts';
-import { Avatar, Flex, Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core';
+import { Avatar, Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { todosQueries } from '@notes/rq';
 import { useQuery } from '@tanstack/react-query';
 

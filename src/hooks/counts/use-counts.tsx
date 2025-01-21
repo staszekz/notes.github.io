@@ -1,4 +1,4 @@
-import { useQueries, useSuspenseQueries } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { notesQueries, todosQueries } from '@notes/rq';
 
 export const useCounts = () => {
