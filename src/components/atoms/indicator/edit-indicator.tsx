@@ -5,14 +5,17 @@ import { ReactNode } from 'react';
 export function EditIndicator({
   children,
   offset,
-  onClick
+  onClick,
+  disabled
 }: {
   children: ReactNode;
   offset?: number;
   onClick?: () => void;
+  disabled?: boolean;
 }) {
   return (
     <Indicator
+      disabled={disabled}
       offset={offset}
       color={'transparent'}
       label={

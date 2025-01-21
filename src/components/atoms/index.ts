@@ -4,3 +4,5 @@ export * from './add-new-button/add-new-button';
 export * from './custom-link/button-link';
 export * from './custom-link/anchor-link';
 export * from './indicator/edit-indicator';
+export * from './indicator/edit-indicator';
+export * from './view-select/select-view';
