@@ -1,13 +1,18 @@
 import { Title, Text, Button, Flex, Divider } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { NoteManagementForm, TodoManagementForm } from '@notes/components';
+import { NoteManagementForm, ResetPasswordForm, TodoManagementForm } from '@notes/components';
 import { Note, Todo } from '@notes/types';
 import { MutateOptions } from '@tanstack/react-query';
+import { notifications } from '@mantine/notifications';
 
 export function openNoteModal(data?: Note) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
     children: <NoteManagementForm data={data} />
   });
 }
@@ -38,6 +43,10 @@ export function openTodoModal(data?: Todo) {
   return modals.open({
     title: <Title size={'1.5rem'}>{data ? 'Edit: ' : 'Add:'}</Title>,
     centered: true,
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
     children: <TodoManagementForm data={data} />
   });
 }
@@ -58,6 +67,10 @@ export const openDeleteModal = (
       confirm: 'Delete',
       cancel: 'Cancel'
     },
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
     confirmProps: { fz: 'md', variant: 'notes-danger' },
     cancelProps: { fz: 'md' },
     onConfirm: () => deleteFn(id)
@@ -72,6 +85,10 @@ export function openTodoDetailsModal(data?: Todo) {
       </Text>
     ),
     centered: true,
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
     children: (
       <>
         <Text ta="center" size="xl">
@@ -95,6 +112,10 @@ export function openNoteDetailsModal(data?: Note) {
         Details:
       </Text>
     ),
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
     centered: true,
     children: (
       <>
@@ -109,5 +130,33 @@ export function openNoteDetailsModal(data?: Note) {
         </Flex>
       </>
     )
+  });
+}
+
+function closeModalAndShowSnackbar() {
+  modals.closeAll();
+  notifications.show({
+    title: 'Password reset',
+    message: 'E-mail with instruction to reset password has been sent',
+    color: 'var(--primary)',
+    position: 'top-center',
+    autoClose: 5000,
+    withCloseButton: true
+  });
+}
+export function openResetModal() {
+  modals.open({
+    title: (
+      <Text fw={700} size="lg">
+        Reset Password
+      </Text>
+    ),
+    id: 'reset-password',
+    overlayProps: {
+      backgroundOpacity: 0.55,
+      blur: 3
+    },
+    centered: true,
+    children: <ResetPasswordForm onSubmit={closeModalAndShowSnackbar} />
   });
 }

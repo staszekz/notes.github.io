@@ -1,11 +1,10 @@
 import { ReactNode } from 'react';
-import { AddNewButton, openNoteModal, openTodoModal } from '@notes/components';
-import { Grid, Select, Title, Text, Flex } from '@mantine/core';
-import { ViewType, viewTypes } from '@notes/types';
-import { formOption } from '@notes/utils';
+import { AddNewButton, openNoteModal, openTodoModal, SelectView } from '@notes/components';
+import { Grid, Title, Text, Flex } from '@mantine/core';
+import { viewTypes } from '@notes/types';
 import { useLocation } from '@tanstack/react-router';
 import { useNetwork } from '@mantine/hooks';
-import { useDisplayViewContext } from '../../hooks/contexts-hooks/use-display-view-context';
+import { useDisplayViewContext } from '@notes/hooks';
 
 type Props = {
   isData: boolean;
@@ -15,14 +14,8 @@ type Props = {
   Tiles: () => ReactNode;
 };
 
-const options = [
-  formOption<ViewType>(viewTypes.TABLE),
-  // formOption<ViewType>(viewTypes.GRID),
-  formOption<ViewType>(viewTypes.STICKERS)
-];
-
 export function DataDisplay({ isData, title, Table, Stickers }: Props) {
-  const { view, setView } = useDisplayViewContext();
+  const { view } = useDisplayViewContext();
 
   const { online } = useNetwork();
   const pathname = useLocation({
@@ -53,15 +46,7 @@ export function DataDisplay({ isData, title, Table, Stickers }: Props) {
           </Flex>
         </Grid.Col>
         <Grid.Col span={3} order={{ base: 1, sm: 2, lg: 1 }}>
-          <Select
-            c={'var(--primary)'}
-            label="Change display view:"
-            data={options}
-            value={view}
-            allowDeselect={false}
-            // because Mantine Select only accepts string as value we need to cast it to ViewType
-            onChange={_value => setView(_value as ViewType)}
-          />
+          <SelectView />
         </Grid.Col>
       </Grid>
       {view === viewTypes.TABLE && <Table />}

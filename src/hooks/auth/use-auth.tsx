@@ -13,6 +13,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { database } from '@notes/database';
 import { CollectionType } from '@notes/types';
 import { FirebaseError } from 'firebase/app';
+import { errorNotification } from '../notifications/error-notification';
 
 export const useAuth = () => {
   const [rememberMe, setRememberMe] = useState(false);
@@ -33,10 +34,13 @@ export const useAuth = () => {
       return await signInWithEmailAndPassword(auth, email, password); // is returning userCredential
     } catch (error) {
       if (error instanceof FirebaseError) {
+        errorNotification({ message: error.code });
         throw new Error(error.code);
       } else if (error instanceof Error) {
+        errorNotification({ message: error.message });
         throw new Error(error.message);
       } else {
+        errorNotification({ message: 'An unknown error occurred' });
         throw new Error('An unknown error occurred');
       }
     }
@@ -51,16 +55,24 @@ export const useAuth = () => {
       return userCredential;
     } catch (err) {
       if (err instanceof FirebaseError) {
+        errorNotification({ message: err.code });
         throw new Error(err.code);
       } else {
+        errorNotification({ message: String(err) });
         throw new Error(String(err));
       }
     }
   };
 
-  const resetPassword = (email: string) => {
-    sendPasswordResetEmail(auth, email).catch(error => {
-      console.error(error.code, error.message);
+  const resetPassword = async (email: string) => {
+    await sendPasswordResetEmail(auth, email).catch(err => {
+      if (err instanceof FirebaseError) {
+        errorNotification({ message: err.code });
+        throw new Error(err.code);
+      } else {
+        errorNotification({ message: String(err) });
+        throw new Error(String(err));
+      }
     });
   };
 

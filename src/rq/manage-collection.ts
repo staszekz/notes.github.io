@@ -24,6 +24,7 @@ export async function getCollectionCount({ key }: { key: CollectionType }) {
   const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('User not authenticated');
   const q = query(collection(database, 'users', uid, key));
+
   return await getCountFromServer(q);
 }
 
