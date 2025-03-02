@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useRef } from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 import z from 'zod';
 import { Avatar, Text, Group, Paper, Stack, Title, Input, Button } from '@mantine/core';
@@ -14,7 +14,8 @@ export const Route = createLazyFileRoute('/_auth/_profile-layout/settings')({
 });
 
 function Settings() {
-  const { user, updateUserData } = useUser();
+  const { user, updateUserData, uploadPhoto } = useUser();
+
   const [disableState, dispatch] = useReducer(reducer, {
     name: false,
     email: false,
@@ -37,6 +38,11 @@ function Settings() {
     }
   });
 
+  async function uploadAvatar(photo: File) {
+    await uploadPhoto({ file: photo });
+  }
+
+  const inputAvatarRef = useRef<HTMLInputElement>(null);
   return (
     <Paper shadow="sm" radius="md" p="lg" w={{ base: '100%', md: '50%' }} mx={'auto'} mt={'xl'}>
       <form
@@ -55,19 +61,39 @@ function Settings() {
             name="avatar"
             validators={{ onSubmit: z.string().url() }}
             children={() => (
-              <EditIndicator offset={9} onClick={() => toggleEdit('avatar')}>
-                {/*TODO: add modal when edit cliked and there should be validation and input, chyba musi tam być nowy*/}
-                {/*form? Sprawdzić czy zadziała ten czy ma byćnowy*/}
-                <Avatar
-                  size={'xl'}
-                  src={
-                    user?.photoURL ||
-                    'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
-                  } // TODO: change with custom user photo and default to some avatar
-                  radius="50%"
-                  alt="User avatar"
+              <>
+                <input
+                  type={'file'}
+                  ref={inputAvatarRef}
+                  accept="image/*"
+                  // hidden
+                  onChange={e => {
+                    if (e.target.files && e.target.files.length > 0) {
+                      uploadAvatar(e.target.files[0]);
+                    }
+                  }}
+                  style={{ display: 'none' }}
                 />
-              </EditIndicator>
+
+                <EditIndicator
+                  offset={9}
+                  onClick={() => {
+                    inputAvatarRef.current?.click();
+                  }}
+                >
+                  {/*TODO: add modal when edit cliked and there should be validation and input, chyba musi tam być nowy*/}
+                  {/*form? Sprawdzić czy zadziała ten czy ma byćnowy*/}
+                  <Avatar
+                    size={'xl'}
+                    src={
+                      user?.photoURL ||
+                      'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+                    } // TODO: change with custom user photo and default to some avatar
+                    radius="50%"
+                    alt="User avatar"
+                  />
+                </EditIndicator>
+              </>
             )}
           />
           <Stack align="stretch">
@@ -97,12 +123,12 @@ function Settings() {
                 name={'email'}
                 validators={{ onChange: z.string().email() }}
                 children={({ state, handleChange, handleBlur }) => (
-                  <EditIndicator disabled={!!disableState.email} onClick={() => toggleEdit('email')}>
+                  <EditIndicator disabled={true} onClick={() => toggleEdit('email')}>
                     <Input
                       w={200}
                       onChange={e => handleChange(e.target.value)}
                       onBlur={handleBlur}
-                      disabled={!disableState.email}
+                      disabled
                       value={state.value}
                     />
                   </EditIndicator>

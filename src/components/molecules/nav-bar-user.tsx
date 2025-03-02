@@ -38,15 +38,11 @@ export const NavBarUser = () => {
           </Group>
         </Menu.Target>
         <Menu.Dropdown c="var(--primary)">
-          <Menu.Item>
-            <Text component={Link} to={'/settings'} c="var(--secondary)">
-              Settings
-            </Text>
+          <Menu.Item component={Link} to={'/settings'}>
+            <Text c="var(--secondary)">Settings</Text>
           </Menu.Item>
-          <Menu.Item>
-            <Text component={Link} to={'/profile'} c="var(--secondary)">
-              My Profile
-            </Text>
+          <Menu.Item component={Link} to={'/profile'}>
+            <Text c={'var(--secondary)'}>My Profile</Text>
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item onClick={handleSignOutClick} leftSection={<IconLogout stroke={1} />}>

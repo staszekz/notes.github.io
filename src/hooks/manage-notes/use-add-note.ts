@@ -1,7 +1,7 @@
 import { addElementFn, notesQueries } from '@notes/rq';
 import { CollectionType, Note } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorNotification } from '../notifications/error-notification';
+import { notification } from '../notifications/notification';
 
 const queryKey = notesQueries.allNotes().queryKey;
 
@@ -22,7 +22,7 @@ export const useAddNote = () => {
       };
     },
     onError: (error, variables, rollback) => {
-      errorNotification({ message: error?.message });
+      notification({ message: error?.message, type: 'error', title: 'An error occured' });
       rollback?.();
     },
     onSettled: async () => {
