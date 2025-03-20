@@ -12,7 +12,10 @@ export function NoteSticker({ data }: { data: Note }) {
     <Card component="li" withBorder shadow="sm" className={classes.stickerBox}>
       <Card.Section withBorder inheritPadding py="xs">
         <Group justify="space-between">
-          <Text fw={500}> {data.title}</Text>
+          <Text fw={500} fz={rem(28)}>
+            {' '}
+            {data.title}
+          </Text>
           <Menu withinPortal position="bottom-end" shadow="sm">
             <Menu.Target>
               <ActionIcon variant="subtle" color="gray">
@@ -38,7 +41,7 @@ export function NoteSticker({ data }: { data: Note }) {
           </Menu>
         </Group>
       </Card.Section>
-      <Text>{data.content}</Text>
+      <Text fz={rem(24)}>{data.content}</Text>
     </Card>
   );
 }

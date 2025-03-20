@@ -88,7 +88,7 @@ function Settings() {
                     src={
                       user?.photoURL ||
                       'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
-                    } // TODO: change with custom user photo and default to some avatar
+                    }
                     radius="50%"
                     alt="User avatar"
                   />

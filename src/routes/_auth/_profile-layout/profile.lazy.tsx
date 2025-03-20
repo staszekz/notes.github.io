@@ -4,6 +4,7 @@ import { useCounts } from '../../../hooks/counts/use-counts';
 import { Avatar, Group, Paper, Skeleton, Stack, Text, Title } from '@mantine/core';
 import { todosQueries } from '@notes/rq';
 import { useQuery } from '@tanstack/react-query';
+import { useUser } from '@notes/hooks';
 
 export const Route = createLazyFileRoute('/_auth/_profile-layout/profile')({
   component: Profile
@@ -12,6 +13,7 @@ export const Route = createLazyFileRoute('/_auth/_profile-layout/profile')({
 function Profile() {
   const { todosCount, notesCount, todosIsPending, notesIsPending } = useCounts();
   const { data } = useQuery(todosQueries.allTodos());
+  const { user } = useUser();
   const completedTodos = data?.filter(todo => todo.completed).length || 10;
 
   return (
@@ -20,7 +22,9 @@ function Profile() {
         <Title size={'h2'}>Profile:</Title>
         <Avatar
           size={'xl'}
-          src={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'} // TODO: change with custom user photo and default to some avatar
+          src={
+            user?.photoURL || 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+          }
           radius="50%"
           alt="User avatar"
         />

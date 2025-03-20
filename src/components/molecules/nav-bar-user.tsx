@@ -26,11 +26,14 @@ export const NavBarUser = () => {
         <Menu.Target>
           <Group>
             <Avatar
-              src={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'} // TODO: change with custom user photo and default to some avatar
+              src={
+                user?.photoURL ||
+                'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+              }
               radius="xl"
             />
             <div>
-              <Title size={'h4'}>Hello, {user?.providerData?.[0]?.displayName}!</Title>
+              <Title size={'h4'}>Hello, {user?.displayName}!</Title>
               <Text c="dimmed" size="xs">
                 Nice to see you !
               </Text>
