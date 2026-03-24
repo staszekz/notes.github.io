@@ -10,7 +10,7 @@ export function ResetPasswordForm({ onSubmit }: { onSubmit?: () => void }) {
   const { resetPassword } = useAuthContext();
   const { Field, Subscribe, handleSubmit, state } = useForm({
     defaultValues: { email: '' },
-    validatorAdapter: zodValidator(),
+    // validatorAdapter: zodValidator(),
     onSubmit: async () => {
       resetPassword(state.values.email);
       onSubmit?.();

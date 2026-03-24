@@ -39,6 +39,7 @@ function Settings() {
   });
 
   async function uploadAvatar(photo: File) {
+    if (!photo) return;
     await uploadPhoto({ file: photo });
   }
 
