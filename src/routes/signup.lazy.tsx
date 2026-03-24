@@ -40,7 +40,7 @@ function SignUp() {
     setLoading(true);
     try {
       await signUp(state.values.email, state.values.password, state.values.name);
-      navigate({ to: '/verify-email' });
+      await navigate({ to: '/verify-email' });
       setLoading(false);
     } catch (error) {
       if ((error as Error).message === 'auth/email-already-in-use') {

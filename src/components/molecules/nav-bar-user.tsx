@@ -26,11 +26,14 @@ export const NavBarUser = () => {
         <Menu.Target>
           <Group>
             <Avatar
-              src={'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'} // TODO: change with custom user photo and default to some avatar
+              src={
+                user?.photoURL ||
+                'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+              }
               radius="xl"
             />
             <div>
-              <Title size={'h4'}>Hello, {user?.providerData?.[0]?.displayName}!</Title>
+              <Title size={'h4'}>Hello, {user?.displayName}!</Title>
               <Text c="dimmed" size="xs">
                 Nice to see you !
               </Text>
@@ -38,15 +41,11 @@ export const NavBarUser = () => {
           </Group>
         </Menu.Target>
         <Menu.Dropdown c="var(--primary)">
-          <Menu.Item>
-            <Text component={Link} to={'/settings'} c="var(--secondary)">
-              Settings
-            </Text>
+          <Menu.Item component={Link} to={'/settings'}>
+            <Text c="var(--secondary)">Settings</Text>
           </Menu.Item>
-          <Menu.Item>
-            <Text component={Link} to={'/profile'} c="var(--secondary)">
-              My Profile
-            </Text>
+          <Menu.Item component={Link} to={'/profile'}>
+            <Text c={'var(--secondary)'}>My Profile</Text>
           </Menu.Item>
           <Menu.Divider />
           <Menu.Item onClick={handleSignOutClick} leftSection={<IconLogout stroke={1} />}>

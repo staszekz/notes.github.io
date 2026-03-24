@@ -18,8 +18,10 @@ export const notesQueries = {
     queryOptions({
       queryKey: [CollectionType.NOTES, 'count'],
       queryFn: async () => {
-        return getCollectionCount({ key: CollectionType.NOTES });
+        const snapshot = await getCollectionCount({ key: CollectionType.NOTES });
+        return snapshot.data();
       },
+      select: data => data.count,
       staleTime: 30000
     })
 };
@@ -38,7 +40,7 @@ export const todosQueries = {
     }),
   todosCount: () =>
     queryOptions({
-      queryKey: [CollectionType.NOTES, 'count'],
+      queryKey: [CollectionType.TODOS, 'count'],
       queryFn: async () => {
         const snapshot = await getCollectionCount({ key: CollectionType.TODOS });
         return snapshot.data();

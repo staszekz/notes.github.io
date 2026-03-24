@@ -1,7 +1,7 @@
 import { editSingleElementFn, todosQueries } from '@notes/rq';
 import { CollectionType, Todo } from '@notes/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { errorNotification } from 'src/hooks/notifications/error-notification';
+import { notification } from 'src/hooks/notifications/notification';
 
 const queryKey = todosQueries.allTodos().queryKey;
 
@@ -28,7 +28,7 @@ export const useUpdateTodo = () => {
       };
     },
     onError: (error, variables, rollback) => {
-      errorNotification({ message: error?.message });
+      notification({ message: error?.message, type: 'error', title: 'An error occured' });
       rollback?.();
     },
     onSettled: async () => {

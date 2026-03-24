@@ -1,0 +1,17 @@
+---
+description: Standards for Notes & Todos React/Firebase codebase
+alwaysApply: true
+---
+
+# Notes & Todos Engineering Rules
+
+- Keep components small and focused; extract logic into hooks before components become large.
+- Use named exports by default; use default export only when framework/API requires it.
+- Use kebab-case for file names.
+- Do not add new UI or data libraries without checking the existing stack first.
+- Avoid manual memoization unless required by external libraries.
+- Fix type errors immediately; do not bypass with `any` or unsafe casts.
+- Validate form and data boundaries with Zod where applicable.
+- Keep Firebase access in dedicated data/query layers (`src/rq`, hooks), not inline in presentation components.
+- Prefer optimistic updates with rollback for write operations affecting lists.
+- Add or update tests for behavior changes (unit/integration first; e2e for critical flows).

@@ -16,7 +16,7 @@
   }
  &:disabled,
   &[data-disabled] {
-    border-color: light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4)) !important;
+    border-color: var(--mantine-color-gray-3) !important;
     background-color: transparent !important;
     color: var(--primary) !important;
   }
@@ -38,7 +38,16 @@
       border-color: var(--red);
     }
   }
-
+  &[data-variant='notes-danger-border'] {
+    background-color: var(--white);
+    color: var(--red);
+    border: var(--border-small);
+    border-color: var(--red);
+    &:hover {
+      background-color: var(--red);
+      color: var(--white);
+    }
+  }
 &[data-variant="invisible"]{
   background-color: transparent;
   border: none;
@@ -58,16 +67,6 @@
 
   &[data-variant='danger'] {
     background-color: var(--red);
-    color: var(--white);
-  }
-
-  &[data-variant='info'] {
-    background-color: var(--info);
-    color: var(--white);
-  }
-
-  &[data-variant='dark'] {
-    background-color: var(--dark);
     color: var(--white);
   }
 

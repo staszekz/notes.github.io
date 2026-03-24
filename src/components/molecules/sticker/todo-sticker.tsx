@@ -14,8 +14,7 @@ export function TodoSticker({ data }: { data: Todo }) {
     <Card component="li" withBorder shadow="sm" className={classes.stickerBox} pos={'relative'}>
       <Card.Section withBorder inheritPadding py="xs">
         <Group justify="space-between">
-          <Text td={completed} fw={500}>
-            {' '}
+          <Text td={completed} fz={rem(28)} fw={500}>
             {data.title}
           </Text>
           <Menu withinPortal position="bottom-end" shadow="sm">
@@ -54,9 +53,11 @@ export function TodoSticker({ data }: { data: Todo }) {
         </Group>
       </Card.Section>
 
-      <Text td={completed}>{data.content}</Text>
+      <Text fz={rem(24)} td={completed}>
+        {data.content}
+      </Text>
       <Card.Section withBorder w={'100%'} bottom={'24px'} pos={'absolute'}>
-        <Text td={completed} fw={700} size="xl">
+        <Text td={completed} fz={rem(20)} fw={700} size="xl">
           Deadline: {data.deadline?.toDate().toLocaleString()}
         </Text>
       </Card.Section>

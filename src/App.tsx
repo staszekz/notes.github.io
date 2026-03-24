@@ -1,6 +1,7 @@
 import '@mantine/notifications/styles.css';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/charts/styles.css';
 import './index.css';
 
 import { createTheme, MantineProvider } from '@mantine/core';
@@ -15,7 +16,7 @@ import { routeTree } from './routeTree.gen';
 import { theme } from './Theme';
 import { useAuthContext } from './hooks';
 import { Spinner } from './components/atoms/spinner/spinner';
-import { errorNotification } from './hooks/notifications/error-notification';
+import { notification } from './hooks/notifications/notification';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,7 +30,7 @@ const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
       if (typeof query.state.data !== 'undefined') {
-        errorNotification({ message: error?.message });
+        notification({ message: error?.message, type: 'error', title: 'An error occured' });
       }
     }
   })

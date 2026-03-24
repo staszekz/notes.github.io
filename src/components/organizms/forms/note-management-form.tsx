@@ -29,10 +29,10 @@ export const NoteManagementForm = ({ data }: { data?: Note }) => {
   return (
     <form
       className="form-wrapper"
-      onSubmit={e => {
+      onSubmit={async e => {
         e.preventDefault();
         e.stopPropagation();
-        handleSubmit();
+        await handleSubmit();
       }}
     >
       <Field
